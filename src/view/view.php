@@ -6,9 +6,10 @@
     <link rel="stylesheet" href="<?php echo('css/app.css') ?>"/>
     <link rel="shortcut icon" href="assets/logo/logoSansOmbre.png" type="image/x-icon">
 </head>
-<body>
+<body class="layout">
     <header>
-
+        <img src="assets/menu/menu.png" alt="Icone de menu"/>
+        <p>VoteIt<span class="colored">.</span></p>
     </header>
 
     <main>

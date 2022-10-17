@@ -1,0 +1,23 @@
+.layout{
+  header{
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+
+    img{
+      height: 80px;
+      margin-left: 15px;
+      margin-top: 15px;
+    }
+    p {
+      font-family: "Poppins Medium";
+      font-size: 85px;
+      margin-top: 5px;
+      margin-right: 15px;
+
+      .colored{
+        color: #84B28F;
+      }
+    }
+  }
+}

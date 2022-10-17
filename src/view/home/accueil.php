@@ -13,7 +13,7 @@
 
     <main class="accueil--container">
         <div>
-            <h1>VoteIt<span id="colored">.</span></h1>
+            <h1>VoteIt<span class="colored">.</span></h1>
             <h2>Just vote it !</h2>
             <img src="assets/accueil/illustration.svg" alt="Illustration de la page d'accueil"/>
         </div>
