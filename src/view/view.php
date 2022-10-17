@@ -7,6 +7,7 @@
     <link rel="shortcut icon" href="assets/logo/logoSansOmbre.png" type="image/x-icon">
 </head>
 <body class="layout">
+    <?php require('menu.php'); ?>
     <header>
         <img src="assets/menu/menu.png" alt="Icone de menu"/>
         <p>VoteIt<span class="colored">.</span></p>
