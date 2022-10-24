@@ -7,10 +7,25 @@
     <link rel="shortcut icon" href="assets/logo/logoSansOmbre.png" type="image/x-icon">
 </head>
 <body class="layout">
-    <?php require('menu.php'); ?>
     <header>
-        <img src="assets/menu/menu.png" alt="Icone de menu"/>
-        <p>VoteIt<span class="colored">.</span></p>
+        <section class="header-mobile">
+            <img src="assets/menu/menu.png" alt="Icone de menu"/>
+            <p>VoteIt<span class="colored">.</span></p>
+        </section>
+        <section class="header-desktop">
+            <div>
+                <a href="#"><img src="assets/logo/logoSansOmbre.png" alt="Logo du site internet"></a>
+                <input type="text" name="search" id="search" placeholder="Recherche">
+            </div>
+            <div>
+                <nav>
+                    <a href="frontController.php?controller=home&action=home"><p>Accueil</p></a>
+                    <a href="frontController.php?controller=votes&action=home"><p>Votes</p></a>
+                    <a href="frontController.php?controller=profil&action=home"><p>Profil</p></a>
+                </nav>
+                <a href="#"><img src="assets/logo/logoAvecOmbre.png" alt="Icone du profile de la personne"></a>
+            </div>
+        </section>
     </header>
 
     <main>
