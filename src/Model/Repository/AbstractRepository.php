@@ -33,7 +33,7 @@ abstract class AbstractRepository{
         $pdoStatement = Model::getPdo()->prepare($sql);
 
         $values = array(
-            "valuePrimmaire" => $valuePrimaire,
+            "valuePrimaire" => $valuePrimaire,
             //nomdutag => valeur, ...
         );
         // On donne les valeurs et on exécute la requête

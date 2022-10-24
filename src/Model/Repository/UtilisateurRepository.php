@@ -7,7 +7,7 @@ class UtilisateurRepository extends AbstractRepository {
 
     protected function getNomTable(): string
     {
-        return "vit_Utilisateur";
+        return "vit_Utilisateurs";
     }
 
     protected function construire(array $objetFormatTableau): Utilisateur{
@@ -28,5 +28,34 @@ class UtilisateurRepository extends AbstractRepository {
             4 => 'iconeLink',
             5 => 'mailUtilisateur',
             6 => 'gradeUtilisateur'];
+    }
+    
+    public static function selectUserByIdUser($idUser){
+        $sql = " SELECT * FROM vit_Utilisateurs WHERE idUtilisateur=:valuePrimaire";
+        // Préparation de la requête
+        $pdoStatement = Model::getPdo()->prepare($sql);
+
+        $values = array(
+            "valuePrimaire" => $valuePrimaire,
+            //nomdutag => valeur, ...
+        );
+        // On donne les valeurs et on exécute la requête
+        $pdoStatement->execute($values);
+
+        // On récupère les résultats comme précédemment
+        // Note: fetch() renvoie false si pas de voiture correspondante
+        $ressultatSQL = $pdoStatement->fetch();
+
+        if (!$ressultatSQL) {
+
+            $res = null;
+
+        } else {
+
+            $res = static::construire($ressultatSQL);
+
+        }
+
+        return $res;
     }
 }

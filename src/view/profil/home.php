@@ -14,8 +14,6 @@ use App\VoteIt\Model\Repository\UtilisateurRepository;
 $idUser = $_GET['idUtilisateur'];
 $user = (new UtilisateurRepository())->select($idUser);
 
-
-
 if($user == NULL){
      echo"l'utilisateur n'existe pas";
 }
