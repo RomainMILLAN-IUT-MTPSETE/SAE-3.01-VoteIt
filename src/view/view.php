@@ -7,9 +7,14 @@
     <link rel="shortcut icon" href="assets/logo/logoSansOmbre.png" type="image/x-icon">
 </head>
 <body class="layout">
+    <?php
+    if(isset($_GET['menu']) AND $_GET['menu']=="on"){
+        require_once 'menu.php';
+    }
+    ?>
     <header>
         <section class="header-mobile">
-            <img src="assets/menu/menu.png" alt="Icone de menu"/>
+            <a href="<?php echo('http://' . $_SERVER['HTTP_HOST']) . $_SERVER['REQUEST_URI'] . '&menu=on' ?>"><img src="assets/menu/menu.png" alt="Icone de menu"/></a>
             <p>VoteIt<span class="colored">.</span></p>
         </section>
         <section class="header-desktop">
