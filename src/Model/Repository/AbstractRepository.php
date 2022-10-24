@@ -26,14 +26,14 @@ abstract class AbstractRepository{
 
     }
 
-    public function select(string $immatriculation){
+    public function select(string $valuePrimaire){
 
-        $sql = " SELECT * FROM " .  static::getNomTable() . " WHERE " .  static::getNomClePrimaire() . "=:immatriculation";
+        $sql = " SELECT * FROM " .  static::getNomTable() . " WHERE " .  static::getNomClePrimaire() . "=:valuePrimmaire";
         // Préparation de la requête
         $pdoStatement = Model::getPdo()->prepare($sql);
 
         $values = array(
-            "immatriculation" => $immatriculation,
+            "valuePrimmaire" => $valuePrimaire,
             //nomdutag => valeur, ...
         );
         // On donne les valeurs et on exécute la requête
@@ -41,15 +41,15 @@ abstract class AbstractRepository{
 
         // On récupère les résultats comme précédemment
         // Note: fetch() renvoie false si pas de voiture correspondante
-        $voiture = $pdoStatement->fetch();
+        $ressultatSQL = $pdoStatement->fetch();
 
-        if (!$voiture) {
+        if (!$ressultatSQL) {
 
             $res = null;
 
         } else {
 
-            $res = static::construire($voiture);
+            $res = static::construire($ressultatSQL);
 
         }
 

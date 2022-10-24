@@ -1,4 +1,4 @@
-<form class="profil-connexion--container" action="#" method="post">
+<form class="profil-connexion--container" action="frontController.php?controller=profil&action=register" method="post">
     <h2>Inscription</h2>
 
     <div>
@@ -11,7 +11,19 @@
     </div>
     <div>
         <label for="password">Mot de passe</label>
-        <input type="text" name="password" id="password" placeholder="********"/>
+        <input type="password" name="password" id="password" placeholder="********"/>
+    </div>
+    <div>
+        <label for="prenom">Prénom</label>
+        <input type="text" name="prenom" id="prenom" placeholder="John"/>
+    </div>
+    <div>
+        <label for="nom">Nom</label>
+        <input type="text" name="nom" id="nom" placeholder="DOE"/>
+    </div>
+    <div>
+        <label for="dtnaissance">Date de Naissance</label>
+        <input type="date" name="dtnaissance" id="dtnaissance" placeholder="01-01-2001"/>
     </div>
     <div id="checkbox-div">
         <input type="checkbox" name="conditionandcasuse" id="conditionandcasuse">

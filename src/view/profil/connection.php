@@ -1,4 +1,4 @@
-<form class="profil-connexion--container" action="#" method="post">
+<form class="profil-connexion--container" action="frontController?controller=profil&action=connected" method="post">
     <h2>Connection</h2>
 
     <div>
