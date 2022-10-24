@@ -41,6 +41,6 @@ class ControllerProfil{
     }
 
     public static function affichage(){
-        self::afficheVue('view.php',['pageTitle'=>"affichage",'cheminVueBody'=>"profil/home.php"]);
+        self::afficheVue('view.php',['pagetitle'=>"affichage",'cheminVueBody'=>"profil/home.php"]);
 }
 }
