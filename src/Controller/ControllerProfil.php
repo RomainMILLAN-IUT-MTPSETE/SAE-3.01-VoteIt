@@ -39,4 +39,8 @@ class ControllerProfil{
             ControllerProfil::inscription();
         }
     }
+
+    public static function affichage(){
+        self::afficheVue('view.php',['pageTitle'=>"affichage",'cheminVueBody'=>"profil/home.php"]);
+}
 }

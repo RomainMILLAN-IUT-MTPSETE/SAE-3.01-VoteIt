@@ -28,7 +28,7 @@ abstract class AbstractRepository{
 
     public function select(string $valuePrimaire){
 
-        $sql = " SELECT * FROM " .  static::getNomTable() . " WHERE " .  static::getNomClePrimaire() . "=:valuePrimmaire";
+        $sql = " SELECT * FROM " .  static::getNomTable() . " WHERE " .  static::getNomClePrimaire() . "=:valuePrimaire";
         // Préparation de la requête
         $pdoStatement = Model::getPdo()->prepare($sql);
 

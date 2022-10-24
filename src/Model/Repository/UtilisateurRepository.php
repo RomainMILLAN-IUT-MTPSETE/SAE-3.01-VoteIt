@@ -11,7 +11,7 @@ class UtilisateurRepository extends AbstractRepository {
     }
 
     protected function construire(array $objetFormatTableau): Utilisateur{
-        return new Utilisateur($objetFormatTableau['identifiant'], $objetFormatTableau['nom'], $objetFormatTableau['prenom'], $objetFormatTableau['dateNaissance'], $objetFormatTableau['mail'], $objetFormatTableau['iconeLink'], $objetFormatTableau['grade']);
+        return new Utilisateur($objetFormatTableau['idUtilisateur'], $objetFormatTableau['nomUtilisateur'], $objetFormatTableau['prenomUtilisateur'], $objetFormatTableau['dateNaissanceUtilisateur'], $objetFormatTableau['iconeLink'], $objetFormatTableau['mailUtilisateur'], $objetFormatTableau['gradeUtilisateur']);
     }
 
     protected function getNomClePrimaire(): string
