@@ -24,7 +24,7 @@ if($user == NULL){
 ?>
 
  <img src="<?php echo($user->getMail()) ?>">
-<div id="bouton"> <button>Modifier profile : <img src="assets/logo/modif.png"></button></div>
+<div id="bouton"> <button>Modifier profile : <img id="modif" src="assets/logo/modif.png"></button></div>
 
 <div id="idgrade">
 <h1 ID="iden">
