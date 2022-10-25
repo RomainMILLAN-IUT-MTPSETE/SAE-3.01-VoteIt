@@ -1,12 +1,12 @@
-.listeQuestion{
+/*VOTE HOME*/
+.votes-home--container .listeQuestion{
     width: 100vw;
     display: flex;
     justify-content: center;
     align-items: center;
 
 }
-
-#vote {
+.votes-home--container #vote {
     padding: 8px 12px;
     background-color: #84B38F;
     border : solid 1px black;
@@ -14,41 +14,38 @@
     font-size: 14px;
     margin-top: 30px;
 }
-
-#imgPropose {
+.votes-home--container #imgPropose {
     width: 17px;
     height: 17px;
 }
-
-
-#question-title--container {
+.votes-home--container #question-title--container {
     display: flex;
     flex-direction: row;
     border-bottom: 3px solid #9BD2A7;
 }
-.listeQuestion2 {
+.votes-home--container .listeQuestion2 {
     display: flex;
     flex-direction: row;
 }
-#question-title {
+.votes-home--container #question-title {
     font-size: 25px;
     height: 0px;
     font-weight: bolder;
     margin-left: 289px;
 }
-#question-title .colored {
+.votes-home--container #question-title .colored {
     color: #9BD2A7;
 }
-div#question-title--container {
+.votes-home--container div#question-title--container {
     width: 400px;
     text-align: right;
 }
-#imgFiltre {
+.votes-home--container #imgFiltre {
     width: 30px;
     height: 30px;
     margin-left: 10px;
 }
-a#filtre {
+.votes-home--container a#filtre {
     display: flex;
     flex-direction: row;
     align-items: center;

@@ -12,11 +12,11 @@
             }else {
                 ?><a href="frontController.php?controller=home&action=home"><p><span class="colored">•</span> Accueil</p></a><?php
             }
-            if($_GET['controller'] == "votes"){
-                ?><a href="frontController.php?controller=votes&action=readAll"><p><span>•</span> <span class="bolder">Votes</span></p></a><?php
+            if($_GET['controller'] == "questions"){
+                ?><a href="frontController.php?controller=questions&action=readAll"><p><span>•</span> <span class="bolder">Votes</span></p></a><?php
 
             }else {
-                ?><a href="frontController.php?controller=votes&action=readAll"><p><span class="colored">•</span> Votes</p></a><?php
+                ?><a href="frontController.php?controller=questions&action=readAll"><p><span class="colored">•</span> Votes</p></a><?php
             }
             if($_GET['controller'] == "profil"){
                 ?><a href="frontController.php?controller=profil&action=home"><p><span>•</span> <span class="bolder">Profil</span></p></a><?php

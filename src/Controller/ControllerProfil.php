@@ -11,6 +11,11 @@ class ControllerProfil{
         require __DIR__ . "/../view/$cheminVue"; // Charge la vue
     }
 
+    public static function home(){
+        self::afficheVue('view.php', ['pagetitle' => "Affichage", 'cheminVueBody' => "profil/home.php"]);
+    }
+
+
     public static function inscription(){
         self::afficheVue('view.php', ['pagetitle' => "Inscription", 'cheminVueBody' => "profil/inscription.php"]);
     }
@@ -18,11 +23,6 @@ class ControllerProfil{
     public static function connection(){
         self::afficheVue('view.php', ['pagetitle' => "Connection", 'cheminVueBody' => "profil/connection.php"]);
     }
-
-    public static function affichage(){
-        self::afficheVue('view.php', ['pagetitle' => "Affichage", 'cheminVueBody' => "profil/home.php"]);
-    }
-
     //Function to not see
     public static function register(){
         if(isset($_POST['identifiant']) AND isset($_POST['mail']) AND isset($_POST['password']) AND isset($_POST['prenom']) AND isset($_POST['nom']) AND isset($_POST['dtnaissance']) AND isset($_POST['conditionandcasuse'])){
@@ -43,8 +43,4 @@ class ControllerProfil{
             ControllerProfil::inscription();
         }
     }
-
-    public static function affichage(){
-        self::afficheVue('view.php',['pagetitle'=>"affichage",'cheminVueBody'=>"profil/home.php"]);
-}
 }

@@ -15,8 +15,4 @@ class ControllerHome{
     public static function home(){
         self::afficheVue('view.php', ['pagetitle' => "VoteIt", 'cheminVueBody' => "home/home.php"]);
     }
-
-    public static function temp(){
-        self::afficheVue('view.php', ['pagetitle' => "VoteIt", 'cheminVueBody' => "home/temp.php"]);
-    }
 }

@@ -1,0 +1,78 @@
+.layout header .header-mobile {
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+}
+@media (min-width: 1000px) {
+    .layout header .header-mobile {
+        display: none;
+    }
+}
+.layout header .header-mobile img {
+    height: 80px;
+    margin-left: 15px;
+    margin-top: 15px;
+}
+.layout header .header-mobile p {
+    font-family: "Poppins Medium";
+    font-size: 85px;
+    margin-top: 5px;
+    margin-right: 15px;
+}
+.layout header .header-mobile p .colored {
+    color: #84B28F;
+}
+.layout header .header-desktop {
+    display: none;
+}
+@media (min-width: 1000px) {
+    .layout header .header-desktop {
+        background-color: white;
+        display: flex;
+        flex-direction: row;
+        justify-content: space-between;
+    }
+    .layout header .header-desktop div {
+        display: flex;
+        flex-direction: row;
+        align-items: center;
+    }
+    .layout header .header-desktop div:nth-child(1) a img {
+        height: 70px;
+        margin-top: 10px;
+        margin-left: 20px;
+    }
+    .layout header .header-desktop div:nth-child(1) input {
+        height: 30px;
+        width: 200px;
+        border: none;
+        border-radius: 5px;
+        background-color: #F9F9F9;
+        border: 0.25px solid black;
+        margin-left: 25px;
+    }
+    .layout header .header-desktop div:last-child {
+        align-items: center;
+    }
+    .layout header .header-desktop div:last-child nav {
+        margin-right: 50px;
+        display: flex;
+        flex-direction: row;
+    }
+    .layout header .header-desktop div:last-child nav a {
+        margin-right: 25px;
+        text-decoration: none;
+        color: black;
+    }
+    .layout header .header-desktop div:last-child nav p {
+        max-height: 55.63px;
+    }
+    .layout header .header-desktop div:last-child nav p:hover {
+        border-bottom: 1.5px solid #84B28F;
+    }
+    .layout header .header-desktop div:last-child a img {
+        height: 60px;
+        margin-right: 25px;
+        margin-left: 0px;
+    }
+}

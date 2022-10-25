@@ -1,3 +1,4 @@
+<link rel="stylesheet" href="css/Profil/profil-connexion.css">
 <form class="profil-connexion--container" action="frontController.php?controller=profil&action=register" method="post">
     <h2>Inscription</h2>
 

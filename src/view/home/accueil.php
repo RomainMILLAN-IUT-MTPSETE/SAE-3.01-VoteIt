@@ -4,6 +4,7 @@
     <meta charset="UTF-8">
     <title>Bienvenue sur VoteIt</title>
     <link rel="stylesheet" href="<?php echo('css/app.css') ?>"/>
+    <link rel="stylesheet" href="<?php echo('css/accueil.css') ?>"/>
     <link rel="shortcut icon" href="assets/logo/logoSansOmbre.png" type="image/x-icon">
 </head>
 <body>
