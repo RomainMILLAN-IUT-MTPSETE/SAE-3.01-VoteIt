@@ -70,3 +70,8 @@
     }
 }
 
+.questions-list--container {
+    width: 60%;
+    margin: auto;
+}
+

@@ -7,4 +7,11 @@
         </div>
         <a href="assets/question/imageFiltre.pn" id="filtre">Filtrer <img id="imgFiltre" src="assets/questions/home/filter.png" alt="Icone de filtre"></a>
     </section>
+    <section class="questions-list--container">
+        <?php
+        foreach ($questions as $item){
+            var_dump($item);
+        }
+        ?>
+    </section>
 </section>
