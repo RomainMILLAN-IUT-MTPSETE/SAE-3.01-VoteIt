@@ -3,6 +3,7 @@ namespace App\VoteIt\Model\DataObject;
 
 class Utilisateur extends AbstractDataObject {
     private String $identifiant;
+    private String $motDePasse;
     private String $nom;
     private String $prenom;
     private String $dateNaissance;
@@ -19,9 +20,10 @@ class Utilisateur extends AbstractDataObject {
      * @param String $iconeLink
      * @param String $grade
      */
-    public function __construct(string $identifiant, string $nom, string $prenom, string $dateNaissance, string $mail, string $iconeLink, string $grade)
+    public function __construct(string $identifiant, string $motdepasse, string $nom, string $prenom, string $dateNaissance, string $mail, string $iconeLink, string $grade)
     {
         $this->identifiant = $identifiant;
+        $this->motDePasse = $motdepasse;
         $this->nom = $nom;
         $this->prenom = $prenom;
         $this->dateNaissance = $dateNaissance;
@@ -35,6 +37,7 @@ class Utilisateur extends AbstractDataObject {
         {
             return array(
                 "idUtilisateur" => $this->getIdentifiant(),
+                "motDePasseUtilisateur" => $this->getMotDePasse(),
                 "nomUtilisateur" => $this->getNom(),
                 "prenomUtilisateur" => $this->getPrenom(),
                 "dateNaissanceUtilisateur" => $this->getDateNaissance(),
@@ -156,6 +159,24 @@ class Utilisateur extends AbstractDataObject {
     {
         $this->grade = $grade;
     }
+
+    /**
+     * @return String
+     */
+    public function getMotDePasse(): string
+    {
+        return $this->motDePasse;
+    }
+
+    /**
+     * @param String $motDePasse
+     */
+    public function setMotDePasse(string $motDePasse): void
+    {
+        $this->motDePasse = $motDePasse;
+    }
+
+
 
 
     //GETTER & SETTER

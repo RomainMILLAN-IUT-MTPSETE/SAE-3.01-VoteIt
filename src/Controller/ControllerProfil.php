@@ -27,8 +27,9 @@ class ControllerProfil{
 
     //Function to not see
     public static function register(){
-        if(isset($_POST['identifiant']) AND isset($_POST['mail']) AND isset($_POST['password']) AND isset($_POST['prenom']) AND isset($_POST['nom']) AND isset($_POST['dtnaissance']) AND isset($_POST['conditionandcasuse'])){
+        if(isset($_POST['identifiant']) AND isset($_POST['password']) AND isset($_POST['mail']) AND isset($_POST['password']) AND isset($_POST['prenom']) AND isset($_POST['nom']) AND isset($_POST['dtnaissance']) AND isset($_POST['conditionandcasuse'])){
             $identifiant = $_POST['identifiant'];
+            $password = $_POST['password'];
             $mail = $_POST['mail'];
             $password = $_POST['password'];
             $prenom = $_POST['prenom'];
@@ -37,7 +38,7 @@ class ControllerProfil{
             $condition = $_POST['conditionandcasuse'];
 
             if($condition == true){
-                $user = new Utilisateur($identifiant, $nom, $prenom, $dtnaissance, $mail, '1', 'user');
+                $user = new Utilisateur($identifiant, $password, $nom, $prenom, $dtnaissance, $mail, '1', 'user');
                 (new UtilisateurRepository())->create($user);
                 self::home();
             }else {
@@ -45,6 +46,18 @@ class ControllerProfil{
             }
         }else {
             ControllerProfil::inscription();
+        }
+    }
+    public static function connected(){
+        if(isset($_POST['identifiant']) AND isset($_POST['password'])){
+            $identifiant = $_POST['identifiant'];
+            $password = $_POST['password'];
+
+            if((new UtilisateurRepository())->connectionCheckBD($identifiant, $password) == true){
+                self::home();
+            }else {
+                echo("NON OK");
+            }
         }
     }
 }
