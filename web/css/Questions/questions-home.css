@@ -1,18 +1,14 @@
 /*VOTE HOME*/
-.votes-home--container .listeQuestion{
-    width: 100vw;
-    display: flex;
-    justify-content: center;
-    align-items: center;
-
-}
-.votes-home--container #vote {
+.votes-home--container #proposerQuestionButton {
+    display: block;
     padding: 8px 12px;
     background-color: #84B38F;
     border : solid 1px black;
     border-radius: 10px;
     font-size: 14px;
+    margin: auto;
     margin-top: 30px;
+    margin-bottom: 20px;
 }
 .votes-home--container #imgPropose {
     width: 17px;
@@ -21,25 +17,27 @@
 .votes-home--container #question-title--container {
     display: flex;
     flex-direction: row;
-    border-bottom: 3px solid #9BD2A7;
+    border-bottom: 2px solid #9BD2A7;
 }
-.votes-home--container .listeQuestion2 {
+.votes-home--container .listeQuestion {
     display: flex;
     flex-direction: row;
 }
 .votes-home--container #question-title {
     font-size: 25px;
-    height: 0px;
     font-weight: bolder;
-    margin-left: 289px;
+    margin-left: auto;
+    margin-right: 0;
+    margin-bottom: 0px;
 }
 .votes-home--container #question-title .colored {
     color: #9BD2A7;
 }
 .votes-home--container div#question-title--container {
-    width: 400px;
+    width: 30vw;
     text-align: right;
 }
+
 .votes-home--container #imgFiltre {
     width: 30px;
     height: 30px;
@@ -51,6 +49,24 @@
     align-items: center;
     text-decoration: none;
     color: black;
-    margin-left: 800px;
+    margin-left: 50%;
+}
+
+@media (max-width: 1000px){
+    .votes-home--container #proposerQuestionButton{
+        font-size: 35px;
+    }
+
+    .votes-home--container #question-title{
+        font-size: 45px;
+    }
+
+    .votes-home--container a#filtre{
+        font-size: 40px;
+    }
+    .votes-home--container #imgFiltre{
+        height: 40px;
+        width: 40px;
+    }
 }
 

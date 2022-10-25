@@ -1,15 +1,10 @@
 <link rel="stylesheet" href="css/Questions/questions-home.css" type="text/css" >
 <section class="votes-home--container">
+    <button id="proposerQuestionButton">Proposer une Question <img id="imgPropose" src="assets/questions/home/button-newquestion.png" alt="Icone de nouvelle question"></button>
     <section class="listeQuestion">
-        <button id="vote">Proposer une Question <img id="imgPropose" src="assets/question/imageProposer.png" alt="bleme"></button>
-    </section>
-    <section class="listeQuestion2">
         <div id="question-title--container">
             <p id="question-title">Question <span class="colored">:</span></p>
         </div>
-        <div id="aFiltre">
-            <a href="assets/question/imageFiltre.pn" id="filtre">Filtrer
-                <img id="imgFiltre" src="assets/question/imageFiltre.png" alt="bleme"></a>
-        </div>
+        <a href="assets/question/imageFiltre.pn" id="filtre">Filtrer <img id="imgFiltre" src="assets/questions/home/filter.png" alt="Icone de filtre"></a>
     </section>
 </section>
