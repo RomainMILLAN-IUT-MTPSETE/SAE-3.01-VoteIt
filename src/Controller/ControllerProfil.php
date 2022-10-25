@@ -15,7 +15,6 @@ class ControllerProfil{
         self::afficheVue('view.php', ['pagetitle' => "Affichage", 'cheminVueBody' => "profil/home.php"]);
     }
 
-
     public static function inscription(){
         self::afficheVue('view.php', ['pagetitle' => "Inscription", 'cheminVueBody' => "profil/inscription.php"]);
     }
@@ -23,6 +22,9 @@ class ControllerProfil{
     public static function connection(){
         self::afficheVue('view.php', ['pagetitle' => "Connection", 'cheminVueBody' => "profil/connection.php"]);
     }
+
+
+
     //Function to not see
     public static function register(){
         if(isset($_POST['identifiant']) AND isset($_POST['mail']) AND isset($_POST['password']) AND isset($_POST['prenom']) AND isset($_POST['nom']) AND isset($_POST['dtnaissance']) AND isset($_POST['conditionandcasuse'])){
@@ -36,6 +38,8 @@ class ControllerProfil{
 
             if($condition == true){
                 $user = new Utilisateur($identifiant, $nom, $prenom, $dtnaissance, $mail, '1', 'user');
+                (new UtilisateurRepository())->create($user);
+                self::home();
             }else {
                 ControllerProfil::inscription();
             }

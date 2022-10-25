@@ -34,13 +34,13 @@ class Utilisateur extends AbstractDataObject {
     {
         {
             return array(
-                "identifiant" => $this->getIdentifiant(),
-                "nom" => $this->getNom(),
-                "prenom" => $this->getPrenom(),
-                "dateNaissance" => $this->getDateNaissance(),
-                "mail" => $this->getMail(),
-                "iconeLink" => $this->getIconeLink(),
-                "grade" => $this->getGrade(),
+                "idUtilisateur" => $this->getIdentifiant(),
+                "nomUtilisateur" => $this->getNom(),
+                "prenomUtilisateur" => $this->getPrenom(),
+                "dateNaissanceUtilisateur" => $this->getDateNaissance(),
+                "iconeLink" => $this->getMail(),
+                "mailUtilisateur" => $this->getIconeLink(),
+                "gradeUtilisateur" => $this->getGrade(),
             );
         }
     }
