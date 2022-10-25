@@ -10,7 +10,11 @@
     <section class="questions-list--container">
         <?php
         foreach ($questions as $item){
-            var_dump($item);
+            ?>
+            <div class="question-div">
+
+            </div>
+            <?php
         }
         ?>
     </section>
