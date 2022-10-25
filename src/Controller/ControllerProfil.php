@@ -5,6 +5,7 @@ use App\VoteIt\Model\DataObject\Utilisateur;
 use App\VoteIt\Model\Repository\UtilisateurRepository;
 
 class ControllerProfil{
+
     private static function afficheVue(string $cheminVue, array $parametres = []) : void {
         extract($parametres); // Crée des variables à partir du tableau $parametres
         require __DIR__ . "/../view/$cheminVue"; // Charge la vue
@@ -18,6 +19,9 @@ class ControllerProfil{
         self::afficheVue('view.php', ['pagetitle' => "Connection", 'cheminVueBody' => "profil/connection.php"]);
     }
 
+    public static function affichage(){
+        self::afficheVue('view.php', ['pagetitle' => "Affichage", 'cheminVueBody' => "profil/home.php"]);
+    }
 
     //Function to not see
     public static function register(){

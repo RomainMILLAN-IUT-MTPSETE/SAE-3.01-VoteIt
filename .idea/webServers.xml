@@ -2,8 +2,6 @@
 <project version="4">
   <component name="WebServers">
     <option name="servers">
-      <webServer id="6e4928af-9682-4341-a79b-3f457d02b5a3" name="IUT Serveur" url="https://webinfo.iutmontp.univ-montp2.fr/~pierreg/VoteIt/">
-        <fileTransfer rootFolder="/home/ann2/pierreg/public_html/VoteIt" accessType="SFTP" host="162.38.222.93" port="6666" sshConfigId="4f3f6a6f-a4a0-44f1-88fe-540ca95a8840" sshConfig="pierreg@162.38.222.93:6666 password">
           <advancedOptions>
             <advancedOptions dataProtectionLevel="Private" keepAliveTimeout="0" passiveMode="true" shareSSLContext="true" />
           </advancedOptions>
