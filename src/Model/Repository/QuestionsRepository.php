@@ -12,7 +12,7 @@ class QuestionsRepository extends AbstractRepository {
 
     protected function construire(array $objetFormatTableau)
     {
-        return new Question($objetFormatTableau['idQuestion'], $objetFormatTableau['autheur'], $objetFormatTableau['titreQuestion'], $objetFormatTableau['texteQuestion'], $objetFormatTableau['ecritureDateDebut'], $objetFormatTableau['ecritureDateFin'], $objetFormatTableau['voteDateDebut'], $objetFormatTableau['voteDateFin']);
+        return new Question($objetFormatTableau['idQuestion'], $objetFormatTableau['autheur'], $objetFormatTableau['titreQuestion'], $objetFormatTableau['texteQuestion'], $objetFormatTableau['ecritureDateDebut'], $objetFormatTableau['ecritureDateFin'], $objetFormatTableau['voteDateDebut'], $objetFormatTableau['voteDateFin'], $objetFormatTableau['categorieQuestion']);
     }
 
     protected function getNomClePrimaire(): string
@@ -29,6 +29,7 @@ class QuestionsRepository extends AbstractRepository {
             4 => 'ecritureDateDebut',
             5 => 'ecritureDateFin',
             6 => 'voteDateDebut',
-            7 => 'voteDateFin'];
+            7 => 'voteDateFin',
+            8 => 'categorieQuestion'];
     }
 }

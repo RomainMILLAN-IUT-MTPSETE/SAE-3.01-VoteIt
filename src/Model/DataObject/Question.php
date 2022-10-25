@@ -10,6 +10,7 @@ class Question extends AbstractDataObject {
     private String $dateEcritureFin;
     private String $dateVoteDebut;
     private String $dateVoteFin;
+    private String $categorieQuestion;
 
     /**
      * @param String $idQuestion
@@ -20,7 +21,7 @@ class Question extends AbstractDataObject {
      * @param String $dateVoteDebut
      * @param String $dateVoteFin
      */
-    public function __construct(string $idQuestion, string $autheur, string $titreQuestion, string $texteQuestion, string $dateEcritureDebut, string $dateEcritureFin, string $dateVoteDebut, string $dateVoteFin)
+    public function __construct(string $idQuestion, string $autheur, string $titreQuestion, string $texteQuestion, string $dateEcritureDebut, string $dateEcritureFin, string $dateVoteDebut, string $dateVoteFin, string $categorieQuestion)
     {
         $this->idQuestion = $idQuestion;
         $this->autheur = $autheur;
@@ -30,6 +31,7 @@ class Question extends AbstractDataObject {
         $this->dateEcritureFin = $dateEcritureFin;
         $this->dateVoteDebut = $dateVoteDebut;
         $this->dateVoteFin = $dateVoteFin;
+        $this->categorieQuestion = $categorieQuestion;
     }
 
 
@@ -43,6 +45,7 @@ class Question extends AbstractDataObject {
             "dateEcritureFin" => $this->getDateEcritureFin(),
             "dateVoteDebut" => $this->getDateVoteDebut(),
             "dateVoteFin" => $this->getDateVoteFin(),
+            "categorieQuestion" => $this->getCategorieQuestion(),
         );
     }
 
@@ -173,6 +176,24 @@ class Question extends AbstractDataObject {
     {
         $this->autheur = $autheur;
     }
+
+    /**
+     * @return String
+     */
+    public function getCategorieQuestion(): string
+    {
+        return $this->categorieQuestion;
+    }
+
+    /**
+     * @param String $categorieQuestion
+     */
+    public function setCategorieQuestion(string $categorieQuestion): void
+    {
+        $this->categorieQuestion = $categorieQuestion;
+    }
+
+
 
 
 
