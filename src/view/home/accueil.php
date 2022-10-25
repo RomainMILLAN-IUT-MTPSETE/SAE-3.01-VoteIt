@@ -17,7 +17,6 @@
             <h2>Just vote it !</h2>
             <img src="assets/accueil/illustration.svg" alt="Illustration de la page d'accueil"/>
         </div>
-
         <a href="frontController.php?controller=home&action=home"><button>Accéder au site <img src="assets/accueil/idea.png" alt="Icone d'idée"></button></a>
     </main>
 

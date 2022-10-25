@@ -1,16 +1,6 @@
 <?php
 namespace App\VoteIt\view\profil;
 use App\VoteIt\Model\Repository\UtilisateurRepository;
-?>
-
-<!DOCTYPE html>
-<html>
-<head>
-    <link rel="stylesheet" href="<?php echo('css/profil.css') ?>"/>
-     <title></title>
-</head>
-<body>
-<?php
 
 $idUser = $_GET['idUtilisateur'];
 $user = (new UtilisateurRepository())->select($idUser);
@@ -60,8 +50,3 @@ if($user == NULL){
     Date de naissance :
 </h2>
 <p><?php echo($user->getDateNaissance()) ?> </p>
-
-
-
-</body>
-</html>
