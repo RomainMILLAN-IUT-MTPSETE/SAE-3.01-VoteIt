@@ -2,6 +2,8 @@
 <project version="4">
   <component name="WebServers">
     <option name="servers">
+      <webServer id="7091081a-a655-474b-a377-6ec889b2c00a" name="IUT" url="http://webinfo.iutmontp.univ-montp2.fr/~pierreg/">
+        <fileTransfer rootFolder="/home/ann2/pierreg/public_html/" accessType="SFTP" host="162.38.222.93" port="6666" sshConfigId="5e64d031-f2d5-4224-bf22-906c36bbd01e" sshConfig="pierreg@162.38.222.93:6666 password">
           <advancedOptions>
             <advancedOptions dataProtectionLevel="Private" keepAliveTimeout="0" passiveMode="true" shareSSLContext="true" />
           </advancedOptions>
