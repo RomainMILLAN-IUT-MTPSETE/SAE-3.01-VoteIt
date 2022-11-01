@@ -1,4 +1,8 @@
 /*VOTE HOME*/
+@font-face {
+    font-family: "Poppins Light";
+    src: url("../../assets/fonts/Poppins/Poppins-Light.ttf");
+}
 .votes-home--container #proposerQuestionButton {
     display: block;
     padding: 8px 12px;
@@ -9,6 +13,8 @@
     margin: auto;
     margin-top: 30px;
     margin-bottom: 20px;
+    font-family: "Poppins Light";
+    font-weight: bold;
 }
 .votes-home--container #imgPropose {
     width: 17px;
@@ -17,11 +23,29 @@
 .votes-home--container #question-title--container {
     display: flex;
     flex-direction: row;
-    border-bottom: 2px solid #9BD2A7;
 }
-.votes-home--container .listeQuestion {
+
+a {
     display: flex;
     flex-direction: row;
+    align-items: center;
+
+}
+
+.listeQuestion {
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+}
+
+a#filtre {
+    text-align: end;
+    margin-right: 50px;
+    text-decoration: none;
+    color: black;
+    font-family: "Poppins Light";
+    font-weight: bolder;
+
 }
 .votes-home--container #question-title {
     font-size: 25px;
@@ -29,20 +53,39 @@
     margin-left: auto;
     margin-right: 0;
     margin-bottom: 0px;
+    font-family: "Poppins Light";
+
 }
-.votes-home--container #question-title .colored {
+.colored {
     color: #9BD2A7;
+    font-weight: bolder;
+}
+
+p#question-title {
+    border-bottom : solid 2px #9BD2A7;
+    width: 350px;
+    text-align: end;
+    font-family: "Poppins Light";
+    font-weight: bolder;
 }
 .votes-home--container div#question-title--container {
     width: 30vw;
     text-align: right;
+    border-bottom : solid 2px #9BD2A7;
+
+}
+div#question-title--container {
+    border-bottom : solid 2px #9BD2A7;
+    height: 18px;
+    width: 300px;
 }
 
-.votes-home--container #imgFiltre {
-    width: 30px;
-    height: 30px;
+.listeQuestion #imgFiltre {
+    max-width: 30px;
+    max-height: 30px;
     margin-left: 10px;
 }
+
 .votes-home--container a#filtre {
     display: flex;
     flex-direction: row;
@@ -52,9 +95,39 @@
     margin-left: 50%;
 }
 
+#titreQuestion {
+    font-weight: bold;
+    font-size: 25px;
+    border-top: solid 4px black;
+    border-right: solid 4px black;
+    border-left: solid 4px black;
+    text-align: center;
+    margin-left: 300px;
+    margin-right: 300px;
+    border-top-left-radius: 10px;
+    border-top-right-radius: 10px;
+    margin-top: 20px;
+    font-family: "Poppins Light";
+}
+#texteQuestion {
+    height: 60px;
+    font-size: 15px;
+    border-bottom: solid 4px black;
+    border-right: solid 4px black;
+    border-left: solid 4px black;
+    text-align: center;
+    margin-left: 300px;
+    margin-right: 300px;
+    border-bottom-right-radius: 10px;
+    border-bottom-left-radius: 10px;
+    margin-bottom: auto;
+    font-family: "Poppins Light";
+}
+
+
 @media (max-width: 1000px){
     .votes-home--container #proposerQuestionButton{
-        font-size: 35px;
+        font-size: 20px;
     }
 
     .votes-home--container #question-title{
@@ -64,9 +137,52 @@
     .votes-home--container a#filtre{
         font-size: 40px;
     }
+
+    a#filtre {
+        display: flex;
+        flex-direction: row;
+    }
     .votes-home--container #imgFiltre{
-        height: 40px;
-        width: 40px;
+        max-height: 10px;
+        max-width: 10px;
+    }
+
+    p#question-title {
+        border-bottom : solid 2px #9BD2A7;
+        margin-right: 450px;
+        text-align: end;
+    }
+    .listeQuestion {
+        display: flex;
+        flex-direction: row;
+        justify-content: space-between;
+    }
+    #titreQuestion {
+        font-weight: bold;
+        font-size: 22px;
+        border-top: solid 3px black;
+        border-right: solid 3px black;
+        border-left: solid 3px black;
+        text-align: center;
+        margin-left: 150px;
+        margin-right: 150px;
+        border-top-left-radius: 10px;
+        border-top-right-radius: 10px;
+        padding-top: 10px;
+        margin-top: 30px;
+    }
+    #texteQuestion {
+        height: 60px;
+        font-size: 15px;
+        border-bottom: solid 3px black;
+        border-right: solid 3px black;
+        border-left: solid 3px black;
+        text-align: center;
+        margin-left: 150px;
+        margin-right: 150px;
+        border-bottom-right-radius: 10px;
+        border-bottom-left-radius: 10px;
+
     }
 }
 
@@ -82,4 +198,6 @@
     border: 1px solid black;
     border-radius: 10px;
 }
+
+
 

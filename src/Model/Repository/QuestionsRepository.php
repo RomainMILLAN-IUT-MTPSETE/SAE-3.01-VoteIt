@@ -32,4 +32,5 @@ class QuestionsRepository extends AbstractRepository {
             7 => 'voteDateFin',
             8 => 'categorieQuestion'];
     }
+
 }
