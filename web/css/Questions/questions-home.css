@@ -3,6 +3,7 @@
     font-family: "Poppins Light";
     src: url("../../assets/fonts/Poppins/Poppins-Light.ttf");
 }
+
 .votes-home--container #proposerQuestionButton {
     display: block;
     padding: 8px 12px;
@@ -16,10 +17,12 @@
     font-family: "Poppins Light";
     font-weight: bold;
 }
+
 .votes-home--container #imgPropose {
     width: 17px;
     height: 17px;
 }
+
 .votes-home--container #question-title--container {
     display: flex;
     flex-direction: row;
@@ -40,22 +43,22 @@ a {
 
 a#filtre {
     text-align: end;
-    margin-right: 50px;
+    margin-right: 150px;
     text-decoration: none;
     color: black;
     font-family: "Poppins Light";
     font-weight: bolder;
 
 }
+
 .votes-home--container #question-title {
     font-size: 25px;
     font-weight: bolder;
     margin-left: auto;
-    margin-right: 0;
-    margin-bottom: 0px;
     font-family: "Poppins Light";
 
 }
+
 .colored {
     color: #9BD2A7;
     font-weight: bolder;
@@ -68,12 +71,14 @@ p#question-title {
     font-family: "Poppins Light";
     font-weight: bolder;
 }
+
 .votes-home--container div#question-title--container {
     width: 30vw;
     text-align: right;
     border-bottom : solid 2px #9BD2A7;
 
 }
+
 div#question-title--container {
     border-bottom : solid 2px #9BD2A7;
     height: 18px;
@@ -98,32 +103,71 @@ div#question-title--container {
 #titreQuestion {
     font-weight: bold;
     font-size: 25px;
-    border-top: solid 4px black;
-    border-right: solid 4px black;
-    border-left: solid 4px black;
+    border-top: solid 3px black;
+    border-right: solid 3px black;
+    border-left: solid 3px black;
     text-align: center;
     margin-left: 300px;
     margin-right: 300px;
     border-top-left-radius: 10px;
     border-top-right-radius: 10px;
-    margin-top: 20px;
-    font-family: "Poppins Light";
-}
-#texteQuestion {
-    height: 60px;
-    font-size: 15px;
-    border-bottom: solid 4px black;
-    border-right: solid 4px black;
-    border-left: solid 4px black;
-    text-align: center;
-    margin-left: 300px;
-    margin-right: 300px;
-    border-bottom-right-radius: 10px;
-    border-bottom-left-radius: 10px;
-    margin-bottom: auto;
+    margin-top: 50px;
     font-family: "Poppins Light";
 }
 
+#texteQuestion {
+    height: 60px;
+    font-size: 15px;
+    border-right: solid 3px black;
+    border-left: solid 3px black;
+    text-align: center;
+    margin-left: 300px;
+    margin-right: 300px;
+    font-family: "Poppins Light";
+    display: flex;
+    flex-direction: column;
+}
+
+#auteurEtCategorie{
+    font-size: 15px;
+    border-right: solid 3px black;
+    border-left: solid 3px black;
+    border-bottom: solid 3px black;
+    border-bottom-left-radius: 10px;
+    border-bottom-right-radius: 10px;
+    margin-left: 300px;
+    margin-right: 300px;
+    font-family: "Poppins Light";
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+    align-items: baseline;
+    padding-top: 20px;
+    padding-bottom: 5px;
+}
+
+#categorie {
+    background-color: #b0b0b0;
+    border-radius: 10px;
+    border: solid 1px #b0b0b0;
+    margin-right: 5px;
+    padding: 3px;
+}
+.ball {
+    width: 20px;
+    height: 20px;
+    border-radius: 15px;
+    background-color: #b0b0b0;
+    margin-right: 5px;
+    margin-left: 10px;
+
+}
+
+#auteur {
+    font-weight: bold;
+    display: flex;
+    flex-direction: row;
+}
 
 @media (max-width: 1000px){
     .votes-home--container #proposerQuestionButton{
@@ -141,6 +185,7 @@ div#question-title--container {
     a#filtre {
         display: flex;
         flex-direction: row;
+        margin-right: 200px;
     }
     .votes-home--container #imgFiltre{
         max-height: 10px;
@@ -149,40 +194,55 @@ div#question-title--container {
 
     p#question-title {
         border-bottom : solid 2px #9BD2A7;
-        margin-right: 450px;
+        margin-right: 200px;
         text-align: end;
+        min-width: 92px;
     }
     .listeQuestion {
         display: flex;
         flex-direction: row;
-        justify-content: space-between;
+        justify-content: normal;
     }
     #titreQuestion {
-        font-weight: bold;
-        font-size: 22px;
-        border-top: solid 3px black;
-        border-right: solid 3px black;
-        border-left: solid 3px black;
-        text-align: center;
-        margin-left: 150px;
-        margin-right: 150px;
-        border-top-left-radius: 10px;
-        border-top-right-radius: 10px;
-        padding-top: 10px;
-        margin-top: 30px;
-    }
+         font-weight: bold;
+         font-size: 22px;
+         border-top: solid 3px black;
+         border-right: solid 3px black;
+         border-left: solid 3px black;
+         text-align: center;
+         margin-left: 150px;
+         margin-right: 150px;
+         border-top-left-radius: 10px;
+         border-top-right-radius: 10px;
+         padding-top: 10px;
+         margin-top: 30px;
+     }
     #texteQuestion {
         height: 60px;
-        font-size: 15px;
-        border-bottom: solid 3px black;
+        font-size: 10px;
         border-right: solid 3px black;
         border-left: solid 3px black;
         text-align: center;
         margin-left: 150px;
         margin-right: 150px;
-        border-bottom-right-radius: 10px;
+    }
+    #auteurEtCategorie{
+        font-size: 10px;
+        border-right: solid 3px black;
+        border-left: solid 3px black;
+        border-bottom: solid 3px black;
         border-bottom-left-radius: 10px;
-
+        border-bottom-right-radius: 10px;
+        margin-left: 150px;
+        margin-right: 150px;
+        font-family: "Poppins Light";
+        display: flex;
+        flex-direction: row;
+        justify-content: space-between;
+        align-items: baseline;
+        padding-top: 20px;
+        padding-bottom: 5px;
+        margin-top: auto;
     }
 }
 
