@@ -86,8 +86,8 @@ div#question-title--container {
 }
 
 .listeQuestion #imgFiltre {
-    max-width: 30px;
-    max-height: 30px;
+    width: 30px;
+    height: 30px;
     margin-left: 10px;
 }
 
@@ -100,29 +100,40 @@ div#question-title--container {
     margin-left: 50%;
 }
 
+.question-id--container{
+    display: block;
+    margin: auto;
+    width: 1000px;
+    border: 1px solid black;
+    border-radius: 10px;
+    margin-top: 30px;
+}
+
 #titreQuestion {
     font-weight: bold;
     font-size: 25px;
-    border-top: solid 3px black;
+    /*border-top: solid 3px black;
     border-right: solid 3px black;
-    border-left: solid 3px black;
-    text-align: center;
-    margin-left: 300px;
-    margin-right: 300px;
+    border-left: solid 3px black;*/
+    text-align: left;
+    /*margin-left: 300px;
+    margin-right: 300px;*/
+    margin-left: 15px;
     border-top-left-radius: 10px;
     border-top-right-radius: 10px;
-    margin-top: 50px;
+    margin-top: 15px;
     font-family: "Poppins Light";
 }
 
 #texteQuestion {
     height: 60px;
     font-size: 15px;
-    border-right: solid 3px black;
-    border-left: solid 3px black;
-    text-align: center;
-    margin-left: 300px;
-    margin-right: 300px;
+    /*border-right: solid 3px black;
+    border-left: solid 3px black;*/
+    text-align: left;
+    /*margin-left: 300px;
+    margin-right: 300px;*/
+    margin-left: 30px;
     font-family: "Poppins Light";
     display: flex;
     flex-direction: column;
@@ -130,13 +141,13 @@ div#question-title--container {
 
 #auteurEtCategorie{
     font-size: 15px;
-    border-right: solid 3px black;
+    /*border-right: solid 3px black;
     border-left: solid 3px black;
-    border-bottom: solid 3px black;
+    border-bottom: solid 3px black;*/
     border-bottom-left-radius: 10px;
     border-bottom-right-radius: 10px;
-    margin-left: 300px;
-    margin-right: 300px;
+    /*margin-left: 300px;
+    margin-right: 300px;*/
     font-family: "Poppins Light";
     display: flex;
     flex-direction: row;
@@ -171,11 +182,13 @@ div#question-title--container {
 
 @media (max-width: 1000px){
     .votes-home--container #proposerQuestionButton{
-        font-size: 20px;
+        font-size: 30px;
+        margin-left: 55vw;
     }
 
-    .votes-home--container #question-title{
-        font-size: 45px;
+    .votes-home--container #imgPropose {
+        width: 27px;
+        height: 27px;
     }
 
     .votes-home--container a#filtre{
@@ -185,64 +198,38 @@ div#question-title--container {
     a#filtre {
         display: flex;
         flex-direction: row;
-        margin-right: 200px;
+        margin-right: 100px;
+        font-size: 45px;
     }
-    .votes-home--container #imgFiltre{
-        max-height: 10px;
-        max-width: 10px;
+    a#filtre img{
+        height: 50px;
+        width: 50px;
     }
 
     p#question-title {
         border-bottom : solid 2px #9BD2A7;
-        margin-right: 200px;
+        margin-right: 400px;
         text-align: end;
+        font-size: 50px;
         min-width: 92px;
     }
+
     .listeQuestion {
         display: flex;
         flex-direction: row;
         justify-content: normal;
     }
+    .question-id--container{
+        width: 800px;
+    }
     #titreQuestion {
-         font-weight: bold;
-         font-size: 22px;
-         border-top: solid 3px black;
-         border-right: solid 3px black;
-         border-left: solid 3px black;
-         text-align: center;
-         margin-left: 150px;
-         margin-right: 150px;
-         border-top-left-radius: 10px;
-         border-top-right-radius: 10px;
-         padding-top: 10px;
-         margin-top: 30px;
+        font-size: 35px;
      }
     #texteQuestion {
-        height: 60px;
-        font-size: 10px;
-        border-right: solid 3px black;
-        border-left: solid 3px black;
-        text-align: center;
-        margin-left: 150px;
-        margin-right: 150px;
+        font-size: 20px;
+        min-height: 50px;
     }
     #auteurEtCategorie{
-        font-size: 10px;
-        border-right: solid 3px black;
-        border-left: solid 3px black;
-        border-bottom: solid 3px black;
-        border-bottom-left-radius: 10px;
-        border-bottom-right-radius: 10px;
-        margin-left: 150px;
-        margin-right: 150px;
-        font-family: "Poppins Light";
-        display: flex;
-        flex-direction: row;
-        justify-content: space-between;
-        align-items: baseline;
-        padding-top: 20px;
-        padding-bottom: 5px;
-        margin-top: auto;
     }
 }
 

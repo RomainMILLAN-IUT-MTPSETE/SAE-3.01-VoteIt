@@ -8,29 +8,26 @@
 </section>
 <?php
         foreach ($questions as $id) { ?>
-            <div id="titreQuestion" >
-            <?php
-            echo $id->getTitreQuestion();
-            ?>
+            <div class="question-id--container">
+                <div id="titreQuestion" >
+                    <?php
+                    echo $id->getTitreQuestion();
+                    ?>
+                </div>
+                <div id="texteQuestion" >
+                    <?php echo $id->getTexteQuestion(); ?>
+                </div>
+                <div id="auteurEtCategorie">
+                    <div id="auteur">
+                        <div class="ball">
+                        </div>
+                        <?php echo $id->getAutheur();?>
+                    </div>
+                    <div id="categorie" >
+                        <?php echo $id->getCategorieQuestion();?>
+                    </div>
+                </div>
             </div>
-                     <div id="texteQuestion" >
-                     <?php
-                     echo $id->getTexteQuestion();
-                     ?>
-                     </div>
-                            <div id="auteurEtCategorie">
-                            <div id="auteur">
-                            <div class="ball"></div>
-                            <?php
-                            echo $id->getAutheur();
-                            ?>
-                            </div>
-                            <div id="categorie" >
-                            <?php
-                            echo $id->getCategorieQuestion();
-                            ?>
-                            </div>
-                            </div>
 
         <?php } ?>
 
