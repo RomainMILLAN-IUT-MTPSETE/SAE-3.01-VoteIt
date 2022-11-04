@@ -20,6 +20,13 @@
         </div>
     </section>
     <section class="reponse--container">
-
+        <div class="reponse-id--container">
+            <p class="reponse-number">Réponse n°1</p>
+            <p class="reponse-txt">Voyons s’il était mieux d’être un enfant avant à travers la musique !Voyons s’il était mieux d’être un enfant avant à travers la musique !Voyons s’il était mieux d’être un enfant avant à travers la musique !</p>
+            <div class="autheur-and-nb-vote--container">
+                <p class="autheur-reponse">Autheur: John Doe</p>
+                <span class="nbVote-reponse"><img src="assets/questions/see/like.png" alt="Icone LikeVoteNombre">148</span>
+            </div>
+        </div>
     </section>
 </section>
