@@ -17,4 +17,5 @@
 .sub-see-question-container h2{
     border-bottom: 1px solid #84B38F;
     min-width: 0px;
+    padding-left: 15px;
 }
