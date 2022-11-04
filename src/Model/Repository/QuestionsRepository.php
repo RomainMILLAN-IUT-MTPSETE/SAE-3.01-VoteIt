@@ -12,7 +12,7 @@ class QuestionsRepository extends AbstractRepository {
 
     protected function construire(array $objetFormatTableau)
     {
-        return new Question($objetFormatTableau['idQuestion'], $objetFormatTableau['autheur'], $objetFormatTableau['titreQuestion'], $objetFormatTableau['texteQuestion'], $objetFormatTableau['ecritureDateDebut'], $objetFormatTableau['ecritureDateFin'], $objetFormatTableau['voteDateDebut'], $objetFormatTableau['voteDateFin'], $objetFormatTableau['categorieQuestion']);
+        return new Question($objetFormatTableau['idQuestion'], $objetFormatTableau['autheur'], $objetFormatTableau['titreQuestion'], $objetFormatTableau['texteQuestion'], $objetFormatTableau['planQuestion'], $objetFormatTableau['ecritureDateDebut'], $objetFormatTableau['ecritureDateFin'], $objetFormatTableau['voteDateDebut'], $objetFormatTableau['voteDateFin'], $objetFormatTableau['categorieQuestion']);
     }
 
     protected function getNomClePrimaire(): string
@@ -26,11 +26,12 @@ class QuestionsRepository extends AbstractRepository {
             1 => 'autheur',
             2 => 'titreQuestion',
             3 => 'texteQuestion',
-            4 => 'ecritureDateDebut',
-            5 => 'ecritureDateFin',
-            6 => 'voteDateDebut',
-            7 => 'voteDateFin',
-            8 => 'categorieQuestion'];
+            4 => 'planQuestion',
+            5 => 'ecritureDateDebut',
+            6 => 'ecritureDateFin',
+            7 => 'voteDateDebut',
+            8 => 'voteDateFin',
+            9 => 'categorieQuestion'];
     }
 
 }

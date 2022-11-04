@@ -1,0 +1,20 @@
+.question-see--container{
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+}
+
+.reponse--container{
+    width: 45%;
+    background-color: red;
+}
+
+.sect-see-question{
+    display: flex;
+    flex-direction: column;
+}
+
+.sub-see-question-container h2{
+    border-bottom: 1px solid #84B38F;
+    min-width: 0px;
+}
