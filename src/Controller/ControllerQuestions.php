@@ -3,6 +3,7 @@ namespace App\VoteIt\Controller;
 
 use App\VoteIt\Model\DataObject\Question;
 use App\VoteIt\Model\Repository\QuestionsRepository;
+use App\VoteIt\Model\Repository\ReponsesRepository;
 
 class ControllerQuestions{
     private static function afficheVue(string $cheminVue, array $parametres = []) : void {
@@ -19,7 +20,8 @@ class ControllerQuestions{
         if(isset($_GET['idQuestion'])){
             $idQuestion = $_GET['idQuestion'];
             $question = (new QuestionsRepository())->select($idQuestion);
-            self::afficheVue('view.php', ['pagetitle' => "VoteIt - Questions", 'cheminVueBody' => "questions/see.php", "question" => $question]);
+            $reponses = (new ReponsesRepository())->selectAllReponeByQuestionId($idQuestion);
+            self::afficheVue('view.php', ['pagetitle' => "VoteIt - Questions", 'cheminVueBody' => "questions/see.php", "question" => $question, "reponses" => $reponses]);
         }
     }
 }
