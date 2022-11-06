@@ -15,10 +15,11 @@
         </div>
         <div class="sub-see-question-container" id="sub-see-question-container-delais">
             <h2><span class="title-sub-see-question">Délais:</span></h2>
-            <p id="sub-see-question-container-delais-pfirst">Ecriture des réponses: Du <?php echo($question->getDateEcritureDebut()); ?> au <?php echo($question->getDateEcritureFin()); ?></p>
+            <p id="sub-see-question-container-delais-pfirst">Réponses: Du <?php echo($question->getDateEcritureDebut()); ?> au <?php echo($question->getDateEcritureFin()); ?></p>
             <p>Vote: Du <?php echo($question->getDateVoteDebut()) ?> au <?php echo($question->getDateVoteFin()) ?></p>
         </div>
     </section>
+    <hr class="inter-container-mobile" WIDTH="100px" COLOR="BLACK">
     <section class="reponse--container">
         <?php
         foreach ($reponses as $item){
