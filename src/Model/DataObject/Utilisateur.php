@@ -41,8 +41,8 @@ class Utilisateur extends AbstractDataObject {
                 "nomUtilisateur" => $this->getNom(),
                 "prenomUtilisateur" => $this->getPrenom(),
                 "dateNaissanceUtilisateur" => $this->getDateNaissance(),
-                "iconeLink" => $this->getMail(),
-                "mailUtilisateur" => $this->getIconeLink(),
+                "mailUtilisateur" => $this->getMail(),
+                "iconeLink" => $this->getIconeLink(),
                 "gradeUtilisateur" => $this->getGrade(),
             );
         }

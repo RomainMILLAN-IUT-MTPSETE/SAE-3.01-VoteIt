@@ -23,6 +23,10 @@ class ControllerProfil{
         self::afficheVue('view.php', ['pagetitle' => "Connection", 'cheminVueBody' => "profil/connection.php"]);
     }
 
+    public static function modification(){
+        self:self::afficheVue('view.php',['pagetitle'=>"Modification",'cheminVueBody'=>"profil/modification.php"]);
+    }
+
 
 
     //Function to not see

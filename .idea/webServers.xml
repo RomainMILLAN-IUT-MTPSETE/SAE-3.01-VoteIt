@@ -2,6 +2,8 @@
 <project version="4">
   <component name="WebServers">
     <option name="servers">
+      <webServer id="bd733900-81d3-4e87-872d-970e679bb4f6" name="iut" url="https://webinfo.iutmontp.univ-montp2.fr/~treguiere">
+        <fileTransfer rootFolder="/home/ann2/treguiere/public_html/" accessType="SFTP" host="162.38.222.93" port="6666" sshConfigId="2a91983f-eeb1-4e9e-aaf5-14168ae21c62" sshConfig="treguiere@162.38.222.93:6666 password">
           <advancedOptions>
             <advancedOptions dataProtectionLevel="Private" keepAliveTimeout="0" passiveMode="true" shareSSLContext="true" />
           </advancedOptions>

@@ -3,8 +3,6 @@
 
     padding-left: 45px;
 
-
-
 }
 #iden{
     text-decoration: underline;
@@ -17,11 +15,16 @@
 p{
 
     padding-left: 55px;
+    font-size: 20px;
 }
 
-div{
+#idgrade{
     padding-left: 200px;
+
+
 }
+
+
 
 button{
     font-size: 25px;
@@ -31,26 +34,25 @@ button{
     border: none;
     position: relative;
 
-
 }
 
 #bouton{
-    padding-left: 60%;
-
-
-
-
-
+    margin-left: 60%;
 }
 #modif{
     width: 20px;
     height: 20px;
 }
 
-#image{
+
+
+#icone{
+    width: 120px;
+    height: 120px;
     float: left;
 }
 
-#icone{
-    mso-default-height: 20px;
+#colone{
+    display: table;
+    clear: both;
 }

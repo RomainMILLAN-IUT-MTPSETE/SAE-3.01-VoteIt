@@ -14,26 +14,42 @@ if ($user == NULL) {
     //</div>
 }
 
-// <img src="<?php echo($user->getMail())
+// <img src="<?php echo($user->getIconeLink())
 ?>
 
 <link rel="stylesheet" href="css/Profil/profil-home.css">
+
 <div id="bouton">
-    <button>Modifier profile : <img id="modif" src="assets/logo/modif.png"></button>
+  <a href="frontController.php?controller=profil&action=modification" ><button>Modifier profile : <img id="modif" src="assets/logo/modif.png"></button></a>
 </div>
+
+<div id="colone">
+
+<div id="image">
+      <img   id="icone" src="assets/logo/logoSansOmbre.png">
+    </div>
+
 <div id="idgrade">
+
     <h1 ID="iden">Identifiant :</h1>
     <p> <?php echo($user->getIdentifiant()) ?> </p>
+
     <h2 ID="grade">Grade :</h2>
     <p><?php echo($user->getGrade()) ?> </p>
 </div>
 
+</div>
+
+
 
 <h2 ID="souligner">E-mail :</h2>
 <p><?php echo($user->getIconeLink()) ?></p>
+
 <h2 ID="souligner">Nom :</h2>
 <p><?php echo($user->getNom()) ?></p>
+
 <h2 ID="souligner">Prenom :</h2>
 <p><?php echo($user->getPrenom()) ?> </p>
+
 <h2 ID="souligner">Date de naissance :</h2>
 <p><?php echo($user->getDateNaissance()) ?> </p>
