@@ -23,3 +23,21 @@ li {
     font-size: 17.5px;
 }
 
+@media (max-width: 1000px){
+    .title--container{
+        width: 35%;
+    }
+
+    .title--container h2 {
+        font-size: 55px;
+    }
+
+    ul {
+        margin-left: 10%;
+    }
+
+    li {
+        font-size: 21.5px;
+    }
+}
+
