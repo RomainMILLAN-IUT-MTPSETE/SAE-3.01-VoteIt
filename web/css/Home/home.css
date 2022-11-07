@@ -1,0 +1,51 @@
+.home--container{
+
+}
+
+.title {
+    border-bottom: 1px solid #84B38F;
+    width: 25%;
+    margin-top: 30px;
+}
+
+.title h2 {
+    text-align: right;
+    margin-bottom: 0px;
+    font-size: 20px;
+}
+
+.text{
+    width: 90%;
+    margin-left: 5%;
+}
+
+.text-bottom p {
+    margin-top: 0px;
+    margin-bottom: 0px;
+}
+
+.text-bottom p:nth-child(1){
+    margin-top: 15px;
+}
+
+.student--container p {
+    margin-bottom: 0px;
+}
+
+.student-list--container p {
+    margin-top: 0px;
+    margin-bottom: 0px;
+    margin-left: 25px;
+}
+
+@media (max-width: 1000px) {
+    .title{
+        width: 50%;
+    }
+    .title h2 {
+        font-size: 50px;
+    }
+    .text{
+        margin-top: 20px;
+    }
+}
