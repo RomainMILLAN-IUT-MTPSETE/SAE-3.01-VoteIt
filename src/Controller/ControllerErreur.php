@@ -17,6 +17,7 @@ class ControllerErreur{
     }
 
     public static function error(){
+        //Renvoye vers la fonction erreurCodeErreur avec le code erreur EC-1
         ControllerErreur::erreurCodeErreur('EC-1');
     }
 }
