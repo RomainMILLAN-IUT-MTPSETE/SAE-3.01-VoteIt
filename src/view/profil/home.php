@@ -1,55 +1,35 @@
 <?php
 namespace App\VoteIt\View\Profil;
-
 use App\VoteIt\Model\Repository\UtilisateurRepository;
 
 $idUser = $_GET['idUtilisateur'];
 $user = (new UtilisateurRepository())->select($idUser);
 
 if ($user == NULL) {
-    echo "l'utilisateur n'existe pas";
-
-    //<div id="image">
-    //    <img   id="icone" src="assets/icone/Shakespeare_(oval-cropped).png">
-    //</div>
+    echo "L'utilisateur n'existe pas";
 }
 
-// <img src="<?php echo($user->getIconeLink())
 ?>
-
 <link rel="stylesheet" href="css/Profil/profil-home.css">
 
-<div id="bouton">
-  <a href="frontController.php?controller=profil&action=modification" ><button>Modifier profile : <img id="modif" src="assets/logo/modif.png"></button></a>
-</div>
-
-<div id="colone">
-
-<div id="image">
-      <img   id="icone" src="assets/logo/logoSansOmbre.png">
+<a class="edit-button" href="frontController.php?controller=profil&action=modification" >Modifier profile : <img id="edit-img" src="assets/logo/modif.png"></a>
+<section class="profil-home--container">
+    <div id="info-user--container">
+        <img id="icone-user" src="assets/logo/logoSansOmbre.png">
+        <div class="identifiant-grade--container">
+            <h1 class="souligner">Identifiant :</h1>
+            <p class="info-user"><?php echo($user->getIdentifiant()) ?> </p>
+            <h2 class="souligner">Grade :</h2>
+            <p class="info-user"><?php echo($user->getGrade()) ?> </p>
+        </div>
     </div>
 
-<div id="idgrade">
-
-    <h1 ID="iden">Identifiant :</h1>
-    <p> <?php echo($user->getIdentifiant()) ?> </p>
-
-    <h2 ID="grade">Grade :</h2>
-    <p><?php echo($user->getGrade()) ?> </p>
-</div>
-
-</div>
-
-
-
-<h2 ID="souligner">E-mail :</h2>
-<p><?php echo($user->getIconeLink()) ?></p>
-
-<h2 ID="souligner">Nom :</h2>
-<p><?php echo($user->getNom()) ?></p>
-
-<h2 ID="souligner">Prenom :</h2>
-<p><?php echo($user->getPrenom()) ?> </p>
-
-<h2 ID="souligner">Date de naissance :</h2>
-<p><?php echo($user->getDateNaissance()) ?> </p>
+    <h2 class="souligner">E-mail :</h2>
+    <p class="info-user"><?php echo($user->getIconeLink()) ?></p>
+    <h2 class="souligner">Nom :</h2>
+    <p class="info-user"><?php echo($user->getNom()) ?></p>
+    <h2 class="souligner">Prenom :</h2>
+    <p class="info-user"><?php echo($user->getPrenom()) ?> </p>
+    <h2 class="souligner">Date de naissance :</h2>
+    <p class="info-user"><?php echo($user->getDateNaissance()) ?> </p>
+</section>

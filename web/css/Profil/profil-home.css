@@ -1,58 +1,60 @@
-#souligner{
-    text-decoration: underline;
-
-    padding-left: 45px;
-
-}
-#iden{
-    text-decoration: underline;
-}
-
-#grade{
-    text-decoration: underline;
-}
-
-p{
-
-    padding-left: 55px;
-    font-size: 20px;
-}
-
-#idgrade{
-    padding-left: 200px;
-
-
-}
-
-
-
-button{
-    font-size: 25px;
-    background-color: #F9F9F9;
-
-    margin-top: auto;
-    border: none;
+.edit-button{
     position: relative;
-
+    text-decoration: none;
+    color: black;
+    font-size: 17.5px;
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    justify-content: end;
+    margin-top: 10px;
+    margin-right: 20px;
 }
 
-#bouton{
-    margin-left: 60%;
-}
-#modif{
-    width: 20px;
-    height: 20px;
+#edit-img{
+    width: 17.5px;
+    height: 17.5px;
+    margin-left: 10px;
 }
 
 
 
-#icone{
+
+
+.profil-home--container {
+    margin-left: 150px;
+    margin-top: 75px;
+}
+
+.souligner {
+    text-decoration: underline;
+    font-size: 19px;
+    margin-bottom: 0px;
+}
+.info-user{
+    margin-left: 15px;
+    font-size: 25px;
+    margin-top: 0px;
+    font-family: "Poppins Light";
+}
+.identifiant-grade--container .souligner{
+    margin-left: 0px;
+}
+
+.info-user--container {
+    display: flex;
+    flex-direction: row;
+}
+
+.identifiant-grade--container{
+    padding-left: 200px;
+    align-items: start;
+}
+
+
+
+#icone-user{
     width: 120px;
     height: 120px;
     float: left;
-}
-
-#colone{
-    display: table;
-    clear: both;
 }

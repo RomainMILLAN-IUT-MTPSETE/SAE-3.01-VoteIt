@@ -25,10 +25,6 @@
     <div>
         <label for="dtnaissance">Date de Naissance</label>
         <input type="date" name="dtnaissance" id="dtnaissance" placeholder="01-01-2001"/>
-
-
-
+    </div>
     <input type="submit" value="Validé">
- 
-
-</form>
+ </form>
