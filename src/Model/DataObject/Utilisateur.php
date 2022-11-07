@@ -3,11 +3,12 @@ namespace App\VoteIt\Model\DataObject;
 
 class Utilisateur extends AbstractDataObject {
     private String $identifiant;
+    private String $motDePasse;
     private String $nom;
     private String $prenom;
     private String $dateNaissance;
-    private String $mail;
     private String $iconeLink;
+    private String $mail;
     private String $grade;
 
     /**
@@ -19,14 +20,15 @@ class Utilisateur extends AbstractDataObject {
      * @param String $iconeLink
      * @param String $grade
      */
-    public function __construct(string $identifiant, string $nom, string $prenom, string $dateNaissance, string $mail, string $iconeLink, string $grade)
+    public function __construct(string $identifiant, string $motdepasse, string $nom, string $prenom, string $dateNaissance, string $iconeLink, string $mail, string $grade)
     {
         $this->identifiant = $identifiant;
+        $this->motDePasse = $motdepasse;
         $this->nom = $nom;
         $this->prenom = $prenom;
         $this->dateNaissance = $dateNaissance;
-        $this->mail = $mail;
         $this->iconeLink = $iconeLink;
+        $this->mail = $mail;
         $this->grade = $grade;
     }
 
@@ -34,13 +36,14 @@ class Utilisateur extends AbstractDataObject {
     {
         {
             return array(
-                "identifiant" => $this->getIdentifiant(),
-                "nom" => $this->getNom(),
-                "prenom" => $this->getPrenom(),
-                "dateNaissance" => $this->getDateNaissance(),
-                "mail" => $this->getMail(),
+                "idUtilisateur" => $this->getIdentifiant(),
+                "motDePasseUtilisateur" => $this->getMotDePasse(),
+                "nomUtilisateur" => $this->getNom(),
+                "prenomUtilisateur" => $this->getPrenom(),
+                "dateNaissanceUtilisateur" => $this->getDateNaissance(),
                 "iconeLink" => $this->getIconeLink(),
-                "grade" => $this->getGrade(),
+                "mailUtilisateur" => $this->getMail(),
+                "gradeUtilisateur" => $this->getGrade(),
             );
         }
     }
@@ -156,6 +159,24 @@ class Utilisateur extends AbstractDataObject {
     {
         $this->grade = $grade;
     }
+
+    /**
+     * @return String
+     */
+    public function getMotDePasse(): string
+    {
+        return $this->motDePasse;
+    }
+
+    /**
+     * @param String $motDePasse
+     */
+    public function setMotDePasse(string $motDePasse): void
+    {
+        $this->motDePasse = $motDePasse;
+    }
+
+
 
 
     //GETTER & SETTER

@@ -1,5 +1,5 @@
 <link rel="stylesheet" href="css/Profil/profil-connexion.css">
-<form class="profil-connexion--container" action="frontController?controller=profil&action=connected" method="post">
+<form class="profil-connexion--container" action="frontController.php?controller=profil&action=connected" method="post">
     <h2>Connection</h2>
 
     <div>
@@ -8,7 +8,7 @@
     </div>
     <div>
         <label for="password">Mot de passe</label>
-        <input type="text" name="password" id="password" placeholder="********"/>
+        <input type="password" name="password" id="password" placeholder="********"/>
         <a href="#"><p id="passwordlosse">Mot de passe oublié ?</p></a>
     </div>
     <div id="checkbox-div">

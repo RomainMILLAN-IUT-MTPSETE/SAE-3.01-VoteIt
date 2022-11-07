@@ -11,7 +11,7 @@ class UtilisateurRepository extends AbstractRepository {
     }
 
     protected function construire(array $objetFormatTableau): Utilisateur{
-        return new Utilisateur($objetFormatTableau['idUtilisateur'], $objetFormatTableau['nomUtilisateur'], $objetFormatTableau['prenomUtilisateur'], $objetFormatTableau['dateNaissanceUtilisateur'], $objetFormatTableau['iconeLink'], $objetFormatTableau['mailUtilisateur'], $objetFormatTableau['gradeUtilisateur']);
+        return new Utilisateur($objetFormatTableau['idUtilisateur'], $objetFormatTableau['motDePasseUtilisateur'], $objetFormatTableau['nomUtilisateur'], $objetFormatTableau['prenomUtilisateur'], $objetFormatTableau['dateNaissanceUtilisateur'], $objetFormatTableau['iconeLink'], $objetFormatTableau['mailUtilisateur'], $objetFormatTableau['gradeUtilisateur']);
     }
 
     protected function getNomClePrimaire(): string
@@ -22,12 +22,13 @@ class UtilisateurRepository extends AbstractRepository {
     protected function getNomsColonnes(): array
     {
         return [ 0 => 'idUtilisateur',
-            1 => 'nomUtilisateur',
-            2 => 'prenomUtilisateur',
-            3 => 'dateNaissanceUtilisateur',
-            4 => 'iconeLink',
-            5 => 'mailUtilisateur',
-            6 => 'gradeUtilisateur'];
+            1 => 'motDePasseUtilisateur',
+            2 => 'nomUtilisateur',
+            3 => 'prenomUtilisateur',
+            4 => 'dateNaissanceUtilisateur',
+            5 => 'iconeLink',
+            6 => 'mailUtilisateur',
+            7 => 'gradeUtilisateur'];
     }
     
     public static function selectUserByIdUser($idUser){
@@ -57,5 +58,15 @@ class UtilisateurRepository extends AbstractRepository {
         }
 
         return $res;
+    }
+
+    public static function connectionCheckBD($identifiant, $password) : bool{
+        $user = (new UtilisateurRepository())->select($identifiant);
+
+        if(strcmp($password, $user->getMotDePasse()) == 0){
+            return true;
+        }else {
+            return false;
+        }
     }
 }
