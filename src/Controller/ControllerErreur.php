@@ -16,6 +16,10 @@ class ControllerErreur{
         self::afficheVue('view.php', ['pagetitle' => "Erreur", 'cheminVueBody' => 'erreur/home.php']);
     }
 
+    public static function seeCode(){
+        self::afficheVue('view.php', ['pagetitle' => "Tous les codes", 'cheminVueBody' => 'erreur/code.php']);
+    }
+
     public static function error(){
         //Renvoye vers la fonction erreurCodeErreur avec le code erreur EC-1
         ControllerErreur::erreurCodeErreur('EC-1');

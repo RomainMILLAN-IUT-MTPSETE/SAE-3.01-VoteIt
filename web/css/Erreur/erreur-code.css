@@ -1,0 +1,25 @@
+.title--container {
+    margin-top: 25px;
+    width: 25%;
+}
+
+.div--container{
+    margin-top: 45px;
+}
+
+.title--container h2 {
+    margin-bottom: 0px;
+    border-bottom: 1px solid #9BD2A7;
+    display: flex;
+    justify-content: right;
+}
+
+ul {
+    margin-top: 0px;
+    margin-left: 20%;
+}
+
+li {
+    font-size: 17.5px;
+}
+
