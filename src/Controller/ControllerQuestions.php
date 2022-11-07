@@ -12,16 +12,23 @@ class ControllerQuestions{
     }
 
     public static function home(){
+        //Recuperation de toutes les questions
         $questions = (new QuestionsRepository())->selectAll();
         self::afficheVue('view.php', ['pagetitle' => "VoteIt", 'cheminVueBody' => "questions/home.php", 'questions' => $questions]);
     }
 
     public static function see(){
+        //Si idQuestion existe
         if(isset($_GET['idQuestion'])){
             $idQuestion = $_GET['idQuestion'];
+            //Recuperation des infos de la BD
             $question = (new QuestionsRepository())->select($idQuestion);
+            //Recuperation des réponses de la questions dans la BD
             $reponses = (new ReponsesRepository())->selectAllReponeByQuestionId($idQuestion);
             self::afficheVue('view.php', ['pagetitle' => "VoteIt - Questions", 'cheminVueBody' => "questions/see.php", "question" => $question, "reponses" => $reponses]);
+        }else {
+            //Renvoye a la page d'erreur avec l'erreur QC-2
+            ControllerErreur::erreurCodeErreur('QC-2');
         }
     }
 
