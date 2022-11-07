@@ -4,7 +4,7 @@
     <p class="text">Une erreur est survenue</p>
     <?php
     if(isset($codeErreur)){
-        ?><p class="code-erreur">Code d'erreur: P-30</p><?php
+        ?><p class="code-erreur">Code d'erreur: <?php echo($codeErreur) ?></p><?php
     }
     ?>
 </section>

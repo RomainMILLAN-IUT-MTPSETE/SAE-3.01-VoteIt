@@ -39,6 +39,10 @@ class ControllerProfil{
         self:self::afficheVue('view.php',['pagetitle'=>"Modification",'cheminVueBody'=>"profil/modification.php", 'user' => $user]);
     }
 
+    public static function error(){
+        ControllerErreur::erreurCodeErreur('PC-1');
+    }
+
 
 
     //Function to not see

@@ -15,4 +15,8 @@ class ControllerErreur{
     public static function erreur(){
         self::afficheVue('view.php', ['pagetitle' => "Erreur", 'cheminVueBody' => 'erreur/home.php']);
     }
+
+    public static function error(){
+        ControllerErreur::erreurCodeErreur('EC-1');
+    }
 }

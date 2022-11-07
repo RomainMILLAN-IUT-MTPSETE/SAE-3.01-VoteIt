@@ -24,4 +24,8 @@ class ControllerQuestions{
             self::afficheVue('view.php', ['pagetitle' => "VoteIt - Questions", 'cheminVueBody' => "questions/see.php", "question" => $question, "reponses" => $reponses]);
         }
     }
+
+    public static function error(){
+        ControllerErreur::erreurCodeErreur('QC-1');
+    }
 }
