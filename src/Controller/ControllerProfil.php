@@ -12,13 +12,17 @@ class ControllerProfil{
     }
 
     public static function home(){
-        $idUser = $_GET['idUtilisateur'];
-        $user = (new UtilisateurRepository())->select($idUser);
+        if(isset($_GET['idUtilisateur'])){
+            $idUser = $_GET['idUtilisateur'];
+            $user = (new UtilisateurRepository())->select($idUser);
 
-        if ($user == NULL) {
-            echo "L'utilisateur n'existe pas";
+            if ($user == NULL) {
+                ControllerErreur::erreurCodeErreur('PC-3');
+            }
+            self::afficheVue('view.php', ['pagetitle' => "Affichage", 'cheminVueBody' => "profil/home.php", 'user' => $user]);
+        }else {
+            ControllerErreur::erreurCodeErreur('PC-2');
         }
-        self::afficheVue('view.php', ['pagetitle' => "Affichage", 'cheminVueBody' => "profil/home.php", 'user' => $user]);
     }
 
     public static function inscription(){
@@ -47,7 +51,7 @@ class ControllerProfil{
 
     //Function to not see
     public static function register(){
-        if(isset($_POST['identifiant']) AND isset($_POST['password']) AND isset($_POST['mail']) AND isset($_POST['password']) AND isset($_POST['prenom']) AND isset($_POST['nom']) AND isset($_POST['dtnaissance']) AND isset($_POST['conditionandcasuse'])){
+        if(isset($_POST['identifiant']) AND isset($_POST['mail']) AND isset($_POST['password']) AND isset($_POST['prenom']) AND isset($_POST['nom']) AND isset($_POST['dtnaissance']) AND isset($_POST['conditionandcasuse'])){
             $identifiant = $_POST['identifiant'];
             $password = $_POST['password'];
             $mail = $_POST['mail'];
@@ -76,7 +80,7 @@ class ControllerProfil{
             if((new UtilisateurRepository())->connectionCheckBD($identifiant, $password) == true){
                 self::home();
             }else {
-                echo("NON OK");
+                ControllerErreur::erreurCodeErreur('PC-4');
             }
         }
     }
@@ -96,7 +100,15 @@ class ControllerProfil{
 
             $userEdit = new Utilisateur($identifiant, $password, $prenom, $nom, $dtnaissance, $iconeLink, $mail, $grade);
             (new UtilisateurRepository())->update($userEdit);
-            self::home();
+            header("Location: frontController.php?controller=profil&action=home&idUtilisateur=".$identifiant);
+            exit();
+        }else {
+            if(isset($_POST['identifiant'])){
+                header("Location: frontController.php?controller=profil&action=modification&idUtilisateur=".$_POST['identifiant']);
+                exit();
+            }else{
+                ControllerErreur::erreurCodeErreur('PC-2');
+            }
         }
     }
 }
