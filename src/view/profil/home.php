@@ -12,7 +12,7 @@ if ($user == NULL) {
 ?>
 <link rel="stylesheet" href="css/Profil/profil-home.css">
 
-<a class="edit-button" href="frontController.php?controller=profil&action=modification" >Modifier profile : <img id="edit-img" src="assets/logo/modif.png"></a>
+<a class="edit-button" href="frontController.php?controller=profil&action=modification&idUtilisateur=<?php echo($_GET['idUtilisateur']); ?>" >Modifier profile : <img id="edit-img" src="assets/logo/modif.png"></a>
 <section class="profil-home--container">
     <div id="info-user--container">
         <img id="icone-user" src="assets/logo/logoSansOmbre.png">
@@ -25,7 +25,7 @@ if ($user == NULL) {
     </div>
 
     <h2 class="souligner">E-mail :</h2>
-    <p class="info-user"><?php echo($user->getIconeLink()) ?></p>
+    <p class="info-user"><?php echo($user->getMail()) ?></p>
     <h2 class="souligner">Nom :</h2>
     <p class="info-user"><?php echo($user->getNom()) ?></p>
     <h2 class="souligner">Prenom :</h2>

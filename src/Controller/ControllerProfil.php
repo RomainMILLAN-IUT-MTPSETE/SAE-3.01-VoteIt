@@ -24,7 +24,13 @@ class ControllerProfil{
     }
 
     public static function modification(){
-        self:self::afficheVue('view.php',['pagetitle'=>"Modification",'cheminVueBody'=>"profil/modification.php"]);
+        if(isset($_GET['idUtilisateur'])){
+            $idUtilisateur = $_GET['idUtilisateur'];
+            $user = (new UtilisateurRepository())->select($idUtilisateur);
+        }else {
+            $user = new Utilisateur('', '', '', '', '','', '','');
+        }
+        self:self::afficheVue('view.php',['pagetitle'=>"Modification",'cheminVueBody'=>"profil/modification.php", 'user' => $user]);
     }
 
 
@@ -62,6 +68,25 @@ class ControllerProfil{
             }else {
                 echo("NON OK");
             }
+        }
+    }
+    public static function edit(){
+        if(isset($_POST['identifiant']) AND isset($_POST['mail']) AND isset($_POST['password']) AND isset($_POST['prenom']) AND isset($_POST['nom']) AND isset($_POST['dtnaissance'])){
+            $identifiant = $_POST['identifiant'];
+            $mail = $_POST['mail'];
+            $password = $_POST['password'];
+            $prenom = $_POST['prenom'];
+            $nom = $_POST['prenom'];
+            $nom = $_POST['nom'];
+            $dtnaissance = $_POST['dtnaissance'];
+
+            $userBefore = (new UtilisateurRepository())->select($identifiant);
+            $iconeLink = $userBefore->getIconeLink();
+            $grade = $userBefore->getGrade();
+
+            $userEdit = new Utilisateur($identifiant, $password, $prenom, $nom, $dtnaissance, $iconeLink, $mail, $grade);
+            (new UtilisateurRepository())->update($userEdit);
+            self::home();
         }
     }
 }
