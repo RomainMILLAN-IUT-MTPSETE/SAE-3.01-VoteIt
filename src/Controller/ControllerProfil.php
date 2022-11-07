@@ -12,7 +12,13 @@ class ControllerProfil{
     }
 
     public static function home(){
-        self::afficheVue('view.php', ['pagetitle' => "Affichage", 'cheminVueBody' => "profil/home.php"]);
+        $idUser = $_GET['idUtilisateur'];
+        $user = (new UtilisateurRepository())->select($idUser);
+
+        if ($user == NULL) {
+            echo "L'utilisateur n'existe pas";
+        }
+        self::afficheVue('view.php', ['pagetitle' => "Affichage", 'cheminVueBody' => "profil/home.php", 'user' => $user]);
     }
 
     public static function inscription(){

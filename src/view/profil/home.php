@@ -1,15 +1,3 @@
-<?php
-namespace App\VoteIt\View\Profil;
-use App\VoteIt\Model\Repository\UtilisateurRepository;
-
-$idUser = $_GET['idUtilisateur'];
-$user = (new UtilisateurRepository())->select($idUser);
-
-if ($user == NULL) {
-    echo "L'utilisateur n'existe pas";
-}
-
-?>
 <link rel="stylesheet" href="css/Profil/profil-home.css">
 
 <a class="edit-button" href="frontController.php?controller=profil&action=modification&idUtilisateur=<?php echo($_GET['idUtilisateur']); ?>" >Modifier profile : <img id="edit-img" src="assets/logo/modif.png"></a>
