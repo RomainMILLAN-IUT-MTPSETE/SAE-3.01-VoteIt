@@ -1,0 +1,148 @@
+.question-see--container{
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+}
+
+.sect-see-question{
+    display: flex;
+    flex-direction: column;
+}
+
+.sub-see-question-container{
+    margin-top: 25px;
+}
+
+.sub-see-question-container h2{
+    margin-bottom: 0px;
+}
+
+.title-sub-see-question{
+    border-bottom: 2px solid #84B38F;
+    padding-left: 15px;
+    font-family: "Poppins";
+    font-size: 27.5px;
+}
+
+.sub-see-question-container p {
+    padding-left: 30px;
+    margin-top: 0px;
+}
+
+#sub-see-question-container-delais p {
+    line-height: 10px;
+}
+#sub-see-question-container-delais-pfirst{
+    margin-top: 10px;
+ }
+
+.reponse--container{
+    width: 45%;
+}
+
+.reponse-id--container{
+    background-color: white;
+    border-radius: 10px;
+    border: 1px solid black;
+    margin-top: 0px;
+    line-height: 0px;
+    width: 85%;
+    margin: auto;
+    margin-top: 15px;
+}
+
+.reponse-number{
+    margin-left: 5px;
+}
+
+.reponse-txt{
+    margin-top: 25px;
+    line-height: 20px;
+    margin-left: 15px;
+}
+
+.autheur-and-nb-vote--container{
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+    align-content: center;
+    line-height: 10px;
+    margin-bottom: 0px;
+    padding-bottom: 0px;
+}
+
+.nbVote-reponse{
+    margin-top: 10px;
+    margin-right: 5px;
+    font-size: 15px;
+    height: 15px;
+}
+
+.nbVote-reponse img{
+    height: 15px;
+    margin-right: 5px;
+}
+
+.autheur-reponse{
+    margin-left: 5px;
+    margin-bottom: 5px;
+}
+
+.inter-container-mobile {
+    display: none;
+}
+
+
+@media (max-width: 1000px){
+    .question-see--container{
+        display: flex;
+        flex-direction: column;
+    }
+
+    .sub-see-question-container:nth-child(1){
+        margin-top: 0px;
+    }
+
+    .sub-see-question-container h2{
+        font-size: 5px;
+    }
+
+    .inter-container-mobile{
+        display: block;
+        height: 1px;
+        margin-top: 100px;
+    }
+
+
+    .reponse--container{
+        width: 100%;
+    }
+
+    .reponse-number{
+        font-size: 10px;
+        margin-top: 20px;
+        margin-left: 15px;
+    }
+
+    .autheur-and-nb-vote--container{
+        font-size: 30px;
+        padding-top: 10px;
+    }
+
+    .nbVote-reponse{
+        margin-top: 20px;
+        font-size: 25px;
+        height: 30px;
+    }
+
+    .nbVote-reponse img {
+        height: 30px;
+    }
+
+    .autheur-reponse{
+        margin-bottom: 15px;
+    }
+
+
+}
+
