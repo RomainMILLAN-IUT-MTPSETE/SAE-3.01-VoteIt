@@ -3,7 +3,7 @@
     <a href="<?php echo('http://' . $_SERVER['HTTP_HOST']) . substr($_SERVER['REQUEST_URI'], 0, strlen($_SERVER['REQUEST_URI'])-8) ?>"><img id="close-img" src="assets/menu/close.png" alt="Icone close"/></a>
     <img id="menu-logosomb" src="assets/logo/logoSansOmbre.png" alt="Logo sans ombre"/>
     <h2>VoteIt<span class="colored">.</span></h2>
-    <input type="text" placeholder="Rechercher">
+    <form action="frontController.php" method="get"><input type="hidden" name="controller" value="questions"><input type="hidden" name="action" value="recherche"><input type="text" name="search" id="search" placeholder="Recherche"></form>
     <div class="menu">
         <?php
         if(isset($_GET['controller']) && isset($_GET['action'])){

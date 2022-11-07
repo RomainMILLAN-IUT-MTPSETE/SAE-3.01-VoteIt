@@ -2,6 +2,7 @@
 namespace App\VoteIt\Model\Repository;
 
 use App\VoteIt\Model\DataObject\Question;
+use App\VoteIt\Model\Repository\DatabaseConnection as Model;
 
 class QuestionsRepository extends AbstractRepository {
 
@@ -32,6 +33,21 @@ class QuestionsRepository extends AbstractRepository {
             7 => 'voteDateDebut',
             8 => 'voteDateFin',
             9 => 'categorieQuestion'];
+    }
+
+    public function recherche($search){
+        $pdo = Model::getPdo();
+        $query = "SELECT * FROM ".$this->getNomTable()." WHERE titreQuestion LIKE '%".$search."%';";
+        $pdoStatement = $pdo->query($query);
+
+        $tab = [];
+        foreach ($pdoStatement as $tableauSelecter) {
+
+            $tab[] = $this->construire($tableauSelecter);
+
+        }
+
+        return $tab;
     }
 
 }

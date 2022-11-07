@@ -32,6 +32,15 @@ class ControllerQuestions{
         }
     }
 
+    public static function recherche(){
+        if(isset($_GET['search'])){
+            $search = $_GET['search'];
+
+            $questions = (new QuestionsRepository())->recherche($search);
+            self::afficheVue('view.php', ['pagetitle' => "VoteIt", 'cheminVueBody' => "questions/home.php", 'questions' => $questions]);
+        }
+    }
+
     public static function error(){
         ControllerErreur::erreurCodeErreur('QC-1');
     }

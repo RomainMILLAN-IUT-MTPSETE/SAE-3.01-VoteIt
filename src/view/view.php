@@ -21,7 +21,7 @@
         <section class="header-desktop">
             <div>
                 <a href="frontController.php"><img src="assets/logo/logoSansOmbre.png" alt="Logo du site internet"></a>
-                <input type="text" name="search" id="search" placeholder="Recherche">
+                <form action="frontController.php" method="get"><input type="hidden" name="controller" value="questions"><input type="hidden" name="action" value="recherche"><input type="text" name="search" id="search" placeholder="Recherche"></form>
             </div>
             <div>
                 <nav>
