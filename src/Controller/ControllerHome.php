@@ -17,6 +17,7 @@ class ControllerHome{
     }
 
     public static function error(){
+        //Renvoye vers la page d'erreur avec le code HC-1
         ControllerErreur::erreurCodeErreur('HC-1');
     }
 }
