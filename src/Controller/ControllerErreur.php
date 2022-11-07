@@ -9,10 +9,10 @@ class ControllerErreur{
     }
 
     public static function erreurCodeErreur(String $codeErreur){
-        self::afficheVue('view.php', ['pageTitle' => "Erreur", 'cheminVueBody' => 'erreur/home.php', 'codeErreur' => $codeErreur]);
+        self::afficheVue('view.php', ['pagetitle' => "Erreur", 'cheminVueBody' => 'erreur/home.php', 'codeErreur' => $codeErreur]);
     }
 
     public static function erreur(){
-        self::afficheVue('view.php', ['pageTitle' => "Erreur", 'cheminVueBody' => 'erreur/home.php']);
+        self::afficheVue('view.php', ['pagetitle' => "Erreur", 'cheminVueBody' => 'erreur/home.php']);
     }
 }
