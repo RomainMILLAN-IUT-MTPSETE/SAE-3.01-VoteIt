@@ -1,13 +1,9 @@
-<?php
-//$question = new Question();
-?>
-
 <link rel="stylesheet" href="css/Questions/questions-see.css">
 <section class="question-see--container">
     <section class="sect-see-question">
         <div class="sub-see-question-container">
-            <h2><span class="title-sub-see-question"><?php echo($question->getTitreQuestion()) ?></span></h2>
-
+            <h2><span class="title-sub-see-question">Titre:</span></h2>
+            <p><?php echo($question->getTitreQuestion()) ?></p>
         </div>
         <div class="sub-see-question-container">
             <h2><span class="title-sub-see-question">Plan imposé:</span></h2>
