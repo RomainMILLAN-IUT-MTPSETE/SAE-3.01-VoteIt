@@ -48,6 +48,8 @@ class Utilisateur extends AbstractDataObject {
         }
     }
 
+
+    //GETTER & SETTER
     /**
      * @return String
      */
@@ -101,7 +103,7 @@ class Utilisateur extends AbstractDataObject {
      */
     public function getDateNaissance(): string
     {
-        return $this->dateNaissance;
+        return strftime('%d/%m/%Y',strtotime($this->dateNaissance));
     }
 
     /**
@@ -175,10 +177,4 @@ class Utilisateur extends AbstractDataObject {
     {
         $this->motDePasse = $motDePasse;
     }
-
-
-
-
-    //GETTER & SETTER
-
 }
