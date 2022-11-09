@@ -4,6 +4,7 @@ namespace App\VoteIt\Controller;
 use App\VoteIt\Model\DataObject\Question;
 use App\VoteIt\Model\Repository\QuestionsRepository;
 use App\VoteIt\Model\Repository\ReponsesRepository;
+use App\VoteIt\Model\Repository\SectionRepository;
 
 class ControllerQuestions{
     private static function afficheVue(string $cheminVue, array $parametres = []) : void {
@@ -25,7 +26,9 @@ class ControllerQuestions{
             $question = (new QuestionsRepository())->select($idQuestion);
             //Recuperation des réponses de la questions dans la BD
             $reponses = (new ReponsesRepository())->selectAllReponeByQuestionId($idQuestion);
-            self::afficheVue('view.php', ['pagetitle' => "VoteIt - Questions", 'cheminVueBody' => "questions/see.php", "question" => $question, "reponses" => $reponses]);
+            //Recuperation des sections de la questions dans la BD
+            $sections = (new SectionRepository())->selectAllByIdQuestion($idQuestion);
+            self::afficheVue('view.php', ['pagetitle' => "VoteIt - Questions", 'cheminVueBody' => "questions/see.php", "question" => $question, "reponses" => $reponses, "sections" => $sections]);
         }else {
             //Renvoye a la page d'erreur avec l'erreur QC-2
             ControllerErreur::erreurCodeErreur('QC-2');

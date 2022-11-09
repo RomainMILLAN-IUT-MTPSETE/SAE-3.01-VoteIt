@@ -7,11 +7,16 @@
     <section class="sect-see-question">
         <div class="sub-see-question-container">
             <h2><span class="title-sub-see-question"><?php echo($question->getTitreQuestion()) ?></span></h2>
-            <p><?php echo($question->getTexteQuestion()) ?></p>
+
         </div>
         <div class="sub-see-question-container">
             <h2><span class="title-sub-see-question">Plan imposé:</span></h2>
-            <p><?php echo($question->getPlanQuestion()) ?></p>
+            <?php
+            //$sections = (new SectionRepository())->selectAllByIdQuestion('1');
+            foreach ($sections as $section) {
+                ?><p><?php echo($section->getTitreSection()); ?></p><?php
+            }
+            ?>
         </div>
         <div class="sub-see-question-container" id="sub-see-question-container-delais">
             <h2><span class="title-sub-see-question">Délais:</span></h2>

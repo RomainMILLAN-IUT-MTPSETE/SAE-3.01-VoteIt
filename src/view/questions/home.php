@@ -25,12 +25,13 @@
                         echo $id->getTitreQuestion();
                         ?>
                     </div>
-                    <div id="texteQuestion" >
-                        <?php echo $id->getTexteQuestion(); ?>
-                    </div>
                     <div id="auteurEtCategorie">
                         <div id="auteur">
-                            <?php echo $id->getAutheur();?>
+                            <?php
+                            $idAutheur = $id->getAutheur();
+                            $autheur = (new \App\VoteIt\Model\Repository\UtilisateurRepository())->select($idAutheur);
+                            echo $autheur->getNom() . " " . $autheur->getPrenom()
+                            ?>
                         </div>
                         <div id="categorie">
                             <?php echo $id->getCategorieQuestion();?>
