@@ -55,11 +55,10 @@ class ControllerQuestions{
 
 
     public static function created(){
-        if(isset($_POST['autheur']) AND isset($_POST['titreQuestion']) AND isset($_POST['texteQuestion']) AND isset($_POST['planQuestion']) AND isset($_POST['categorieQuestion']) AND isset($_POST['ecritureDateDebut']) AND isset($_POST['ecritureDateFin']) AND isset($_POST['voteDateDebut']) AND isset($_POST['voteDateFin'])){
+        if(isset($_POST['autheur']) AND isset($_POST['titreQuestion']) AND isset($_POST['nbSection']) AND isset($_POST['categorieQuestion']) AND isset($_POST['ecritureDateDebut']) AND isset($_POST['ecritureDateFin']) AND isset($_POST['voteDateDebut']) AND isset($_POST['voteDateFin'])){
             $autheur = $_POST['autheur'];
             $titreQuestion = $_POST['titreQuestion'];
-            $texteQuestion = $_POST['texteQuestion'];
-            $planQuestion = $_POST['planQuestion'];
+            $nbSection = $_POST['nbSection'];
             $categorieQuestion = $_POST['categorieQuestion'];
             $ecritureDateDebut = $_POST['ecritureDateDebut'];
             $ecritureDateFin = $_POST['ecritureDateFin'];
@@ -67,8 +66,10 @@ class ControllerQuestions{
             $voteDateFin = $_POST['voteDateFin'];
             $idQuestion = ((new QuestionsRepository())->getIdQuestionMax())+1;
 
-            (new QuestionsRepository())->createQuestion($autheur, $titreQuestion, $texteQuestion, $planQuestion, $ecritureDateDebut, $ecritureDateFin, $voteDateDebut, $voteDateFin, $categorieQuestion);
-            self::home();
+            (new QuestionsRepository())->createQuestion($idQuestion, $autheur, $titreQuestion, $ecritureDateDebut, $ecritureDateFin, $voteDateDebut, $voteDateFin, $categorieQuestion);
+            //ControllerSections::createSectionForCreateQuestion($idQuestion, $nbSection);
+            header("Location: frontController.php?controller=sections&action=createSectionForCreateQuestion&idQuestion=".$idQuestion."&nbSections=".$nbSection);
+            exit();
         }else {
             ControllerErreur::erreurCodeErreur('QC-2');
         }

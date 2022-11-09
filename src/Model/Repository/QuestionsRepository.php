@@ -64,12 +64,11 @@ class QuestionsRepository extends AbstractRepository {
         return $resultat;
     }
 
-    public function createQuestion($autheur, $titre, $ecritureDebut, $ecritureFin, $voteDebut, $voteFin, $categorie){
+    public function createQuestion($idQuestion, $autheur, $titre, $ecritureDebut, $ecritureFin, $voteDebut, $voteFin, $categorie){
         $pdo = Model::getPdo();
-        $query = "INSERT INTO ".$this->getNomTable()."(idQuestion, autheur, titreQuestion, ecritureDateDebut, ecritureDateFin, voteDateDebut, voteDateFin, categorieQuestion) VALUES(:idQuestion, :autheur, :titreQuestion, :texteQuestion, :planQuestion, :ecritureDateDebut, :ecritureDateFin, :voteDateDebut, :voteDateFin, :categorieQuestion);";
+        $query = "INSERT INTO ".$this->getNomTable()."(idQuestion, autheur, titreQuestion, ecritureDateDebut, ecritureDateFin, voteDateDebut, voteDateFin, categorieQuestion) VALUES(:idQuestion, :autheur, :titreQuestion, :ecritureDateDebut, :ecritureDateFin, :voteDateDebut, :voteDateFin, :categorieQuestion);";
         $pdoStatement = $pdo->prepare($query);
 
-        $idQuestion = ($this->getIdQuestionMax())+1;
         $values = [
             'idQuestion' => $idQuestion,
             'autheur' => $autheur,

@@ -2,33 +2,36 @@
 <form class="questions-formulaire--container" action="frontController.php?controller=questions&action=created" method="post">
     <h2>Proposition de question</h2>
     <div>
-        <label for="identifiant">Auteur</label>
+        <label for="autheur">Auteur</label>
         <input type="text" name="autheur" id="autheur" placeholder="JohnDoe10"/>
     </div>
     <div>
-        <label for="mail">Titre</label>
+        <label for="titreQuestion">Titre</label>
         <input type="text" name="titreQuestion" id="titreQuestion" placeholder="TitreDeLaQuestion"/>
     </div>
     <div>
-        <label for="password">Description</label>
-        <input type="text" name="texteQuestion" id="texteQuestion" placeholder="TexteDeLaQuestion"/>
+        <label for="nbSection">Nombre de section</label>
+        <input type="number" name="nbSection" id="nbSection" placeholder="2" min="3" max="8"/>
     </div>
     <div>
-        <label for="prenom">Plan</label>
-        <input type="text" name="planQuestion" id="planQuestion" placeholder="PlanDeLaQuestion"/>
-    </div>
-    <div>
-        <label for="nom">Catégorie</label>
-        <input type="text" name="categorieQuestion" id="categorieQuestion" placeholder="CategorieDeLaQuestion"/>
+        <label for="categorieQuestion">Catégorie</label>
+        <select name="categorieQuestion" id="categorieQuestion">
+            <?php
+            $categories = (new \App\VoteIt\Model\Repository\CategorieRepository())->selectAll();
+            foreach ($categories as $categorie){
+                ?><option value="<?php echo($categorie->getNomCategorie()) ?>"><?php echo($categorie->getNomCategorie()) ?></option><?php
+            }
+            ?>
+        </select>
     </div>
     <div class="date--container">
         <div>
-            <label id="title-date" for="dtnaissance">Date d'écriture des réponses</label>
+            <label id="title-date" for="ecritureDateDebut">Date d'écriture des réponses</label>
             <span id="no-margin-top" class="flex-row"><p>Du </p><input id="date-input" type="date" name="ecritureDateDebut" id="ecritureDateDebut" placeholder="01-01-2001"/></span>
             <span class="flex-row"><p>Au </p> <input id="date-input" type="date" name="ecritureDateFin" id="ecritureDateFin" placeholder="01-01-2001"/></span>
         </div>
         <div>
-            <label id="title-date" for="dtnaissance">Date des votes</label>
+            <label id="title-date" for="voteDateDebut">Date des votes</label>
             <span id="no-margin-top" class="flex-row"><p>Du </p><input id="date-input" type="date" name="voteDateDebut" id="voteDateDebut" placeholder="01-01-2001"/></span>
             <span class="flex-row"><p>Au </p> <input id="date-input" type="date" name="voteDateFin" id="voteDateFin " placeholder="01-01-2001"/></span>
         </div>

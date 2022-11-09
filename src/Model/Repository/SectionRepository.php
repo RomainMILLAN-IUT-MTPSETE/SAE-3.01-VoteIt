@@ -32,4 +32,32 @@ class SectionRepository{
         return $tab;
     }
 
+    /**
+     * Retourne l'id de question maximum
+     * @return mixed
+     */
+    public function getIdQuestionMax(): int{
+        $pdo = Model::getPdo();
+        $query = "SELECT MAX(idSection) as idSection FROM ".$this->getNomTable().";";
+        $pdoStatement = $pdo->query($query);
+        $resultatSQL = $pdoStatement->fetch();
+
+        $resultat = $resultatSQL['idSection'];
+
+        return $resultat;
+    }
+
+    public function createSection($section){
+        $pdo = Model::getPdo();
+        $query = "INSERT INTO ".$this->getNomTable()."(idSection, idQuestion, titreSection) VALUES(:idSection, :idQuestion, :titreSection);";
+        $pdoStatement = $pdo->prepare($query);
+
+        $values = [
+            'idSection' => $section->getIdSection(),
+            'idQuestion' => $section->getIdQuestion(),
+            'titreSection' => $section->getTitreSection()];
+
+        $pdoStatement->execute($values);
+    }
+
 }
