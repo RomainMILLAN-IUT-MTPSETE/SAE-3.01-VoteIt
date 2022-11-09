@@ -14,7 +14,6 @@ class Question extends AbstractDataObject {
     /**
      * @param String $idQuestion
      * @param String $titreQuestion
-     * @param String $texteQuestion
      * @param String $dateEcritureDebut
      * @param String $dateEcritureFin
      * @param String $dateVoteDebut
