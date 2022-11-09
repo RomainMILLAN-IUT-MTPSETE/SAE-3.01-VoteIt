@@ -50,4 +50,41 @@ class QuestionsRepository extends AbstractRepository {
         return $tab;
     }
 
+
+    /**
+     * Retourne l'id de question maximum
+     * @return mixed
+     */
+    public function getIdQuestionMax(): int{
+        $pdo = Model::getPdo();
+        $query = "SELECT MAX(idQuestion) as idQuestion FROM ".$this->getNomTable().";";
+        $pdoStatement = $pdo->query($query);
+        $resultatSQL = $pdoStatement->fetch();
+
+        $resultat = $resultatSQL['idQuestion'];
+
+        return $resultat;
+    }
+
+    public function createQuestion($autheur, $titre, $texte, $plan, $ecritureDebut, $ecritureFin, $voteDebut, $voteFin, $categorie){
+        $pdo = Model::getPdo();
+        $query = "INSERT INTO ".$this->getNomTable()."(idQuestion, autheur, titreQuestion, texteQuestion, planQuestion, ecritureDateDebut, ecritureDateFin, voteDateDebut, voteDateFin, categorieQuestion) VALUES(:idQuestion, :autheur, :titreQuestion, :texteQuestion, :planQuestion, :ecritureDateDebut, :ecritureDateFin, :voteDateDebut, :voteDateFin, :categorieQuestion);";
+        $pdoStatement = $pdo->prepare($query);
+
+        $idQuestion = ($this->getIdQuestionMax())+1;
+        $values = [
+            'idQuestion' => $idQuestion,
+            'autheur' => $autheur,
+            'titreQuestion' => $titre,
+            'texteQuestion' => $texte,
+            'planQuestion' => $plan,
+            'ecritureDateDebut' => $ecritureDebut,
+            'ecritureDateFin' => $ecritureFin,
+            'voteDateDebut' => $voteDebut,
+            'voteDateFin' => $voteFin,
+            'categorieQuestion' => $categorie];
+
+        $pdoStatement->execute($values);
+    }
+
 }

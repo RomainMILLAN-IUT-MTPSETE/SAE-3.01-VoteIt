@@ -41,7 +41,33 @@ class ControllerQuestions{
         }
     }
 
+    public static function create(){
+        self::afficheVue('view.php', ['pagetitle' => "VoteIt - Crée une question", 'cheminVueBody' => "questions/create.php"]);
+    }
+
     public static function error(){
         ControllerErreur::erreurCodeErreur('QC-1');
+    }
+
+
+
+    public static function created(){
+        if(isset($_POST['autheur']) AND isset($_POST['titreQuestion']) AND isset($_POST['texteQuestion']) AND isset($_POST['planQuestion']) AND isset($_POST['categorieQuestion']) AND isset($_POST['ecritureDateDebut']) AND isset($_POST['ecritureDateFin']) AND isset($_POST['voteDateDebut']) AND isset($_POST['voteDateFin'])){
+            $autheur = $_POST['autheur'];
+            $titreQuestion = $_POST['titreQuestion'];
+            $texteQuestion = $_POST['texteQuestion'];
+            $planQuestion = $_POST['planQuestion'];
+            $categorieQuestion = $_POST['categorieQuestion'];
+            $ecritureDateDebut = $_POST['ecritureDateDebut'];
+            $ecritureDateFin = $_POST['ecritureDateFin'];
+            $voteDateDebut = $_POST['voteDateDebut'];
+            $voteDateFin = $_POST['voteDateFin'];
+            $idQuestion = ((new QuestionsRepository())->getIdQuestionMax())+1;
+
+            (new QuestionsRepository())->createQuestion($autheur, $titreQuestion, $texteQuestion, $planQuestion, $ecritureDateDebut, $ecritureDateFin, $voteDateDebut, $voteDateFin, $categorieQuestion);
+            self::home();
+        }else {
+            ControllerErreur::erreurCodeErreur('QC-2');
+        }
     }
 }
