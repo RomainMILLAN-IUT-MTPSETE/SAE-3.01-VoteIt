@@ -100,7 +100,8 @@ class Question extends AbstractDataObject {
      */
     public function getDateEcritureDebut(): string
     {
-        return $this->dateEcritureDebut;
+
+        return strftime('%d/%m/%Y',strtotime($this->dateEcritureDebut));
     }
 
     /**
@@ -116,7 +117,7 @@ class Question extends AbstractDataObject {
      */
     public function getDateEcritureFin(): string
     {
-        return $this->dateEcritureFin;
+        return strftime('%d/%m/%Y',strtotime($this->dateEcritureFin));
     }
 
     /**
@@ -132,7 +133,7 @@ class Question extends AbstractDataObject {
      */
     public function getDateVoteDebut(): string
     {
-        return $this->dateVoteDebut;
+        return strftime('%d/%m/%Y',strtotime($this->dateVoteDebut));
     }
 
     /**
@@ -148,7 +149,7 @@ class Question extends AbstractDataObject {
      */
     public function getDateVoteFin(): string
     {
-        return $this->dateVoteFin;
+        return strftime('%d/%m/%Y',strtotime($this->dateVoteFin));
     }
 
     /**
