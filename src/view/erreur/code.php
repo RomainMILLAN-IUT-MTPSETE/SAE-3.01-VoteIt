@@ -5,10 +5,10 @@
             <h2>Profil:</h2>
         </div>
         <ul>
-            <li>PC-1: Action non trouvé</li>
-            <li>PC-2: idUtilisateur non renseignée</li>
-            <li>PC-3: Utilisateur non reconnue dans la Base de Données</li>
-            <li>PC-4: Connection non autorisée</li>
+            <li>PC-1: Action non trouvée</li>
+            <li>PC-2: Id d'utilisateur non renseigné</li>
+            <li>PC-3: Utilisateur non reconnu dans la base de données</li>
+            <li>PC-4: Connexion non autorisée</li>
         </ul>
     </div>
     <div class="div--container">
@@ -16,8 +16,8 @@
             <h2>Question:</h2>
         </div>
         <ul>
-            <li>QC-1: Action non trouvé</li>
-            <li>QC-2: idQuestion non renseignée</li>
+            <li>QC-1: Action non trouvée</li>
+            <li>QC-2: Id question non renseigné</li>
         </ul>
     </div>
 </div>

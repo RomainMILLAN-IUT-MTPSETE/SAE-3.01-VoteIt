@@ -1,7 +1,6 @@
 <link rel="stylesheet" href="css/Profil/profil-connexion.css">
 <form class="profil-connexion--container" action="frontController.php?controller=profil&action=connected" method="post">
-    <h2>Connection</h2>
-
+    <h2>Connexion</h2>
     <div>
         <label for="identifiant">Identifiant</label>
         <input type="text" name="identifiant" id="identifiant" placeholder="JohnDoe10"/>
@@ -18,6 +17,6 @@
 
 
     <input type="submit" value="Se connecter">
-    <p id="lastp">Pas encore enregistrer ? <a href="frontController.php?controller=profil&action=inscription"><span class="colored">S'enregistrer</span></a></p>
+    <p id="lastp">Pas encore enregistré ? <a href="frontController.php?controller=profil&action=inscription"><span class="colored">S'enregistrer</span></a></p>
 
 </form>

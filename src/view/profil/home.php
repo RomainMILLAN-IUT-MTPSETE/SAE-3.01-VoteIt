@@ -11,7 +11,6 @@
             <p class="info-user"><?php echo($user->getGrade()) ?> </p>
         </div>
     </div>
-
     <h2 class="souligner">E-mail :</h2>
     <p class="info-user"><?php echo($user->getMail()) ?></p>
     <h2 class="souligner">Nom :</h2>

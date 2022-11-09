@@ -3,7 +3,18 @@
     <a href="frontController.php?controller=questions&action=create"><button id="proposerQuestionButton">Proposer une Question <img id="imgPropose" src="assets/questions/home/button-newquestion.png" alt="Icone de nouvelle question"></button></a>
 </section>
 <section class="listeQuestion">
-           <p id="question-title">Question <span class="colored">:</span></p>
+           <p id="question-title">
+               <?php
+               if(count($questions)<=1){
+                   echo 'Question';
+               }else{
+                   echo 'Questions';
+               }
+               ?> (<?php
+               echo count($questions)
+               ?>)
+               <span class="colored">:</span>
+           </p>
        <a href="#" id="filtre">Filtrer <img id="imgFiltre" src="assets/questions/home/filter.png" alt="Icone de filtre"></a>
 </section>
 <?php
@@ -19,11 +30,9 @@
                     </div>
                     <div id="auteurEtCategorie">
                         <div id="auteur">
-                            <div class="ball">
-                            </div>
                             <?php echo $id->getAutheur();?>
                         </div>
-                        <div id="categorie" >
+                        <div id="categorie">
                             <?php echo $id->getCategorieQuestion();?>
                         </div>
                     </div>
