@@ -12,7 +12,6 @@
         <div class="sub-see-question-container">
             <h2><span class="title-sub-see-question">Plan imposé:</span></h2>
             <?php
-            //$sections = (new SectionRepository())->selectAllByIdQuestion('1');
             foreach ($sections as $section) {
                 ?><p><?php echo($section->getTitreSection()); ?></p><?php
             }
