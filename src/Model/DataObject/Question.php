@@ -5,8 +5,6 @@ class Question extends AbstractDataObject {
     private String $idQuestion;
     private String $autheur;
     private String $titreQuestion;
-    private String $texteQuestion;
-    private String $planQuestion;
     private String $dateEcritureDebut;
     private String $dateEcritureFin;
     private String $dateVoteDebut;
@@ -22,13 +20,11 @@ class Question extends AbstractDataObject {
      * @param String $dateVoteDebut
      * @param String $dateVoteFin
      */
-    public function __construct(string $idQuestion, string $autheur, string $titreQuestion, string $texteQuestion, string $planQuestion, string $dateEcritureDebut, string $dateEcritureFin, string $dateVoteDebut, string $dateVoteFin, string $categorieQuestion)
+    public function __construct(string $idQuestion, string $autheur, string $titreQuestion, string $dateEcritureDebut, string $dateEcritureFin, string $dateVoteDebut, string $dateVoteFin, string $categorieQuestion)
     {
         $this->idQuestion = $idQuestion;
         $this->autheur = $autheur;
         $this->titreQuestion = $titreQuestion;
-        $this->texteQuestion = $texteQuestion;
-        $this->planQuestion = $planQuestion;
         $this->dateEcritureDebut = $dateEcritureDebut;
         $this->dateEcritureFin = $dateEcritureFin;
         $this->dateVoteDebut = $dateVoteDebut;
@@ -43,7 +39,6 @@ class Question extends AbstractDataObject {
             "idQuestion" => $this->getIdQuestion(),
             "autheur" => $this->getAutheur(),
             "titreQuestion" => $this->getTitreQuestion(),
-            "planQuestion" => $this->getPlanQuestion(),
             "dateEcritureDebut" => $this->getDateEcritureDebut(),
             "dateEcritureFin" => $this->getDateEcritureFin(),
             "dateVoteDebut" => $this->getDateVoteDebut(),
@@ -99,38 +94,6 @@ class Question extends AbstractDataObject {
     public function setTitreQuestion(string $titreQuestion): void
     {
         $this->titreQuestion = $titreQuestion;
-    }
-
-    /**
-     * @return String
-     */
-    public function getTexteQuestion(): string
-    {
-        return $this->texteQuestion;
-    }
-
-    /**
-     * @param String $texteQuestion
-     */
-    public function setTexteQuestion(string $texteQuestion): void
-    {
-        $this->texteQuestion = $texteQuestion;
-    }
-
-    /**
-     * @return String
-     */
-    public function getPlanQuestion(): string
-    {
-        return $this->planQuestion;
-    }
-
-    /**
-     * @param String $planQuestion
-     */
-    public function setPlanQuestion(string $planQuestion): void
-    {
-        $this->planQuestion = $planQuestion;
     }
 
     /**

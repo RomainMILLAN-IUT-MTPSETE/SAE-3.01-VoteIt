@@ -13,7 +13,7 @@ class QuestionsRepository extends AbstractRepository {
 
     protected function construire(array $objetFormatTableau)
     {
-        return new Question($objetFormatTableau['idQuestion'], $objetFormatTableau['autheur'], $objetFormatTableau['titreQuestion'], $objetFormatTableau['texteQuestion'], $objetFormatTableau['planQuestion'], $objetFormatTableau['ecritureDateDebut'], $objetFormatTableau['ecritureDateFin'], $objetFormatTableau['voteDateDebut'], $objetFormatTableau['voteDateFin'], $objetFormatTableau['categorieQuestion']);
+        return new Question($objetFormatTableau['idQuestion'], $objetFormatTableau['autheur'], $objetFormatTableau['titreQuestion'], $objetFormatTableau['ecritureDateDebut'], $objetFormatTableau['ecritureDateFin'], $objetFormatTableau['voteDateDebut'], $objetFormatTableau['voteDateFin'], $objetFormatTableau['categorieQuestion']);
     }
 
     protected function getNomClePrimaire(): string
@@ -26,13 +26,11 @@ class QuestionsRepository extends AbstractRepository {
         return [ 0 => 'idQuestion',
             1 => 'autheur',
             2 => 'titreQuestion',
-            3 => 'texteQuestion',
-            4 => 'planQuestion',
-            5 => 'ecritureDateDebut',
-            6 => 'ecritureDateFin',
-            7 => 'voteDateDebut',
-            8 => 'voteDateFin',
-            9 => 'categorieQuestion'];
+            3 => 'ecritureDateDebut',
+            4 => 'ecritureDateFin',
+            5 => 'voteDateDebut',
+            6 => 'voteDateFin',
+            7 => 'categorieQuestion'];
     }
 
     public function recherche($search){
@@ -66,9 +64,9 @@ class QuestionsRepository extends AbstractRepository {
         return $resultat;
     }
 
-    public function createQuestion($autheur, $titre, $texte, $plan, $ecritureDebut, $ecritureFin, $voteDebut, $voteFin, $categorie){
+    public function createQuestion($autheur, $titre, $ecritureDebut, $ecritureFin, $voteDebut, $voteFin, $categorie){
         $pdo = Model::getPdo();
-        $query = "INSERT INTO ".$this->getNomTable()."(idQuestion, autheur, titreQuestion, texteQuestion, planQuestion, ecritureDateDebut, ecritureDateFin, voteDateDebut, voteDateFin, categorieQuestion) VALUES(:idQuestion, :autheur, :titreQuestion, :texteQuestion, :planQuestion, :ecritureDateDebut, :ecritureDateFin, :voteDateDebut, :voteDateFin, :categorieQuestion);";
+        $query = "INSERT INTO ".$this->getNomTable()."(idQuestion, autheur, titreQuestion, ecritureDateDebut, ecritureDateFin, voteDateDebut, voteDateFin, categorieQuestion) VALUES(:idQuestion, :autheur, :titreQuestion, :texteQuestion, :planQuestion, :ecritureDateDebut, :ecritureDateFin, :voteDateDebut, :voteDateFin, :categorieQuestion);";
         $pdoStatement = $pdo->prepare($query);
 
         $idQuestion = ($this->getIdQuestionMax())+1;
@@ -76,8 +74,6 @@ class QuestionsRepository extends AbstractRepository {
             'idQuestion' => $idQuestion,
             'autheur' => $autheur,
             'titreQuestion' => $titre,
-            'texteQuestion' => $texte,
-            'planQuestion' => $plan,
             'ecritureDateDebut' => $ecritureDebut,
             'ecritureDateFin' => $ecritureFin,
             'voteDateDebut' => $voteDebut,
