@@ -1,6 +1,6 @@
 <?php
 require_once __DIR__ . '/../src/Lib/Psr4AutoloaderClass.php';
-use App\VoteIt\Controller\ControllerVoiture;
+use App\VoteIt\Controller\ControllerErreur;
 
 if (isset($_GET['action'])) {
     $action = $_GET['action']; // $_GET['action'] récupère l'action saisie dans l'URL
@@ -30,6 +30,6 @@ if(class_exists($controllerClassName)){
         $controllerClassName::error("Le controller n'existe pas");
     }
 }else {
-    ControllerVoiture::error("Classe non trouvée");
+    ControllerErreur::erreurCodeErreur('EC-1');
 }
 ?>
