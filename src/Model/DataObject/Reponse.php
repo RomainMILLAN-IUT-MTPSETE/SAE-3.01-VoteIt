@@ -25,8 +25,7 @@ class Reponse extends AbstractDataObject{
     }
 
 
-    public function formatTableau(): array
-    {
+    public function formatTableau(): array{
         return array(
             "idReponse" => $this->getIdReponse(),
             "idQuestion" => $this->getIdQuestion(),

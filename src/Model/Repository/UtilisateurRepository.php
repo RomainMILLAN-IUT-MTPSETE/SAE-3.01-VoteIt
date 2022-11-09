@@ -19,8 +19,7 @@ class UtilisateurRepository extends AbstractRepository {
         return "idUtilisateur";
     }
 
-    protected function getNomsColonnes(): array
-    {
+    protected function getNomsColonnes(): array{
         return [ 0 => 'idUtilisateur',
             1 => 'motDePasseUtilisateur',
             2 => 'nomUtilisateur',
