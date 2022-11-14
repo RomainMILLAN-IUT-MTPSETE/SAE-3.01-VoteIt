@@ -41,6 +41,7 @@
             <?php
         }
         ?>
+        <a href="frontController.php?controller=reponses&action=create"><button id="proposerReponse">Proposer une Réponse <img id="imgPropose" src="assets/questions/home/button-newquestion.png" alt="Icone de nouvelle question"></button></a>
 
     </section>
 </section>
