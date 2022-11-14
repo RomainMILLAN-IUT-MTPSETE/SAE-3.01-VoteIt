@@ -17,7 +17,6 @@
         <label for="categorieQuestion">Catégorie</label>
         <select name="categorieQuestion" id="categorieQuestion">
             <?php
-            $categories = (new \App\VoteIt\Model\Repository\CategorieRepository())->selectAll();
             foreach ($categories as $categorie){
                 ?><option value="<?php echo($categorie->getNomCategorie()) ?>"><?php echo($categorie->getNomCategorie()) ?></option><?php
             }

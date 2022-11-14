@@ -45,7 +45,8 @@ class ControllerQuestions{
     }
 
     public static function create(){
-        self::afficheVue('view.php', ['pagetitle' => "VoteIt - Crée une question", 'cheminVueBody' => "questions/create.php"]);
+        $categories = (new \App\VoteIt\Model\Repository\CategorieRepository())->selectAll();
+        self::afficheVue('view.php', ['pagetitle' => "VoteIt - Crée une question", 'cheminVueBody' => "questions/create.php", 'categories' => $categories]);
     }
 
     public static function error(){
