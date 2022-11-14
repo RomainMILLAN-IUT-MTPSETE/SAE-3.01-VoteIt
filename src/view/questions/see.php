@@ -8,6 +8,9 @@
         <div class="sub-see-question-container">
             <h2><span class="title-sub-see-question">Plan imposé:</span></h2>
             <?php
+            if($sections == null){
+                echo("<p>Aucun plan ajouté à la question</p>");
+            }
             foreach ($sections as $section) {
                 ?><p><?php echo($section->getTitreSection()); ?></p><?php
             }
