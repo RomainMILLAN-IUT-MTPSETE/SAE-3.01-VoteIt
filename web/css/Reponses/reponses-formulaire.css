@@ -14,35 +14,24 @@
         padding-left: 75px;
     }
 }
-.reponses-formulaire--container div {
+.reponses-formulaire--container .div-form-normal {
     margin: auto;
     display: flex;
     flex-direction: column;
 }
-.reponses-formulaire--container div label {
+.reponses-formulaire--container .div-form-normal label {
     font-size: 35px;
     margin-left: 25px;
     margin-top: 25px;
     margin-bottom: 0px;
 }
 @media (min-width: 1000px) {
-    .reponses-formulaire--container div label {
+    .reponses-formulaire--container .div-form-normal label {
         font-size: 15px;
         margin-left: 20px;
     }
 }
-.reponses-formulaire--container div input {
-    margin-top: -5px;
-    font-size: 45px;
-    height: 90px;
-    width: 700px;
-    border: none;
-    border-radius: 5px;
-    background-color: #F9F9F9;
-    border: 0.25px solid black;
-    padding-left: 15px;
-}
-.reponses-formulaire--container div select {
+.reponses-formulaire--container .div-form-normal input {
     margin-top: -5px;
     font-size: 45px;
     height: 90px;
@@ -54,18 +43,13 @@
     padding-left: 15px;
 }
 @media (min-width: 1000px) {
-    .reponses-formulaire--container div input {
+    .reponses-formulaire--container .div-form-normal input {
         height: 35px;
         width: 390px;
         font-size: 20px;
     }
-    .reponses-formulaire--container div select {
-        height: 35px;
-        width: 400px;
-        font-size: 20px;
-    }
 }
-.reponses-formulaire--container div a {
+.reponses-formulaire--container .div-form-normal a {
     text-decoration: none;
 }
 .reponses-formulaire--container input[type=submit] {
@@ -100,40 +84,51 @@
 }
 
 
-#no-margin-top{
-    margin-top: 0px;
-}
-#title-date {
-    margin-left: 0px;
-    margin-bottom: 0px;
-}
-.date--container label{
-    margin-left: 0px;
-}
-.flex-row{
-    display: flex;
-    flex-direction: row;
-    align-content: center;
-    margin-top: 10px;
-}
-.flex-row p {
-    margin: 0;
-    margin-top: 7.5px;
-    margin-right: 10px;
-}
-#date-input{
-    margin-top: 0px;
-    width: 365px;
-}
 
 hr{
     margin-top: 30px;
+    margin-bottom: 30px;
 }
 
-#section-text--container {
-    margin-top: 10px;
+.section-text--container{
+    margin: auto;
 }
 
-.title-section-container {
-    margin-left: 0px;
+.section-text--container label{
+    margin-bottom: 0px;
+}
+
+.section-text--container p{
+    margin-top: 0px;
+    margin-bottom: 0px;
+    font-size: 20px;
+    width: 400px;
+}
+
+.section-text--container textarea{
+    width: 400px;
+    height: 100px;
+    font-size: 15px;
+    border: none;
+    border-radius: 5px;
+    background-color: #F9F9F9;
+    border: 0.25px solid black;
+}
+
+@media (max-width: 1000px) {
+    .section-text--container {
+        width: 700px;
+    }
+    .section-text--container label {
+        font-size: 30px;
+    }
+    .section-text--container p {
+        font-size: 40px;
+        width: 700px;
+    }
+    .section-text--container textarea{
+        width: 700px;
+        height: 250px;
+        font-size: 25px;
+    }
 }

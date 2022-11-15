@@ -17,6 +17,11 @@ class ReponseSectionRepository{
         return new ReponseSection($objetFormatTableau['idQuestion'], $objetFormatTableau['idReponse'], $objetFormatTableau['idUtilisateur']);
     }
 
+    /**
+     * Selectionner toutes les sections au réponse par l'id de réponse;
+     * @param $idReponse
+     * @return array
+     */
     public function selectAllByIdReponse($idReponse){
         $pdo = Model::getPdo();
         $query = "SELECT * FROM ".$this->getNomTable()." WHERE idReponse=:idReponse;";
@@ -31,6 +36,24 @@ class ReponseSectionRepository{
         }
 
         return $tab;
+    }
+
+
+    /**
+     * Creation de Section à une réponse par un object ReponseSection;
+     * @param $ReponseSection
+     */
+    public function createReponseSection(ReponseSection $ReponseSection){
+        $pdo = Model::getPdo();
+        $query = "INSERT INTO ".$this->getNomTable()."(idSection, idReponse, texteSection) VALUES(:idSection, :idReponse, :texteSection);";
+        $pdoStatement = $pdo->prepare($query);
+
+        $values = [
+            'idSection' => $ReponseSection->getIdSection(),
+            'idReponse' => $ReponseSection->getIdReponse(),
+            'texteSection' => $ReponseSection->getTexteSection()];
+
+        $pdoStatement->execute($values);
 
     }
 }

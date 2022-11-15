@@ -2,10 +2,13 @@
 
 namespace App\VoteIt\Controller;
 
+use App\VoteIt\Model\DataObject\ReponseSection;
+use App\VoteIt\Model\DataObject\Reponse;
 use App\VoteIt\Model\Repository\QuestionsRepository;
+use App\VoteIt\Model\Repository\ReponseSectionRepository;
+use App\VoteIt\Model\Repository\ReponsesRepository;
 use App\VoteIt\Model\Repository\SectionRepository;
 use App\VoteIt\Controller\ControllerErreur;
-
 class ControllerReponses{
     private static function afficheVue(string $cheminVue, array $parametres = []) : void {
         extract($parametres); // Crée des variables à partir du tableau $parametres
@@ -23,6 +26,39 @@ class ControllerReponses{
 
     public static function error(){
         ControllerErreur::erreurCodeErreur('RC-1');
+    }
+
+
+    //NOT SEE
+    public static function created(){
+        if(isset($_POST['idQuestion']) and isset($_POST['autheur']) AND isset($_POST['idSection1']) AND isset($_POST['nbSection']) AND isset($_POST['texteSection1'])){
+            $idQuestion = $_POST['idQuestion'];
+            $autheur = $_POST['autheur'];
+            $nbSection = $_POST['nbSection'];
+
+            $idReponse = (new ReponsesRepository())->getIdReponseMax() + 1;
+
+            $reponse = new Reponse($idReponse, $idQuestion, $autheur, 0);
+
+            (new ReponsesRepository())->createReponse($reponse);
+            echo'Reponse Crée';
+
+            for($i=1; $i<$nbSection+1; $i++){
+                $texteSection = $_POST['texteSection' . $i];
+                $idSection = $_POST['idSection'.$i];
+
+                $ReponseSection = new ReponseSection($idSection, $idReponse, $texteSection);
+                (new ReponseSectionRepository())->createReponseSection($ReponseSection);
+
+
+            }
+
+            header("Location: frontController.php?controller=questions&action=see&idQuestion=".$idQuestion);
+            exit();
+            //header("Location: frontController.php?controller=reponses&idReponse=".$)
+        }else {
+            ControllerErreur::erreurCodeErreur(('RC-2'));
+        }
     }
 
 }

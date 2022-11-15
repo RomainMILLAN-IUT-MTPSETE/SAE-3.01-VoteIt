@@ -1,32 +1,31 @@
 <link rel="stylesheet" href="css/Reponses/reponses-formulaire.css">
 <form class="reponses-formulaire--container" action="frontController.php?controller=reponses&action=created" method="post">
     <h2>Crée une réponse</h2>
-    <div>
-        <label for="titreQuestion">Identifiant Question</label>
-        <input type="number" name="idQuestion" id="idQuestion" placeholder="11"/>
+    <div class="div-form-normal">
+        <label for="idQuestion">Identifiant Question</label>
+        <input type="number" name="idQuestion" id="idQuestion" placeholder="11" value="<?php echo($_GET['idQuestion']); ?>" readonly/>
     </div>
-    <div>
+    <div class="div-form-normal">
         <label for="autheur">Auteur</label>
         <input type="text" name="autheur" id="autheur" placeholder="JohnDoe10"/>
     </div>
-    <hr width="200">
     <div class="section-text--container">
         <?php
         $i=1;
         foreach($sections as $section){
             ?>
+            <hr width="200">
             <div class="section-container">
                 <label id="title-section-container" for="titreSection">Section n°<?php echo$i; ?></label>
-                <p><?php echo($section->getTitreSection()); ?></p>
-                <p><?php echo($section->getDescriptionSection()); ?></p>
-                <input type="text" name="texteSection<?php echo($section->getIdSection()); ?>" id="texteSection<?php echo($section->getIdSection()) ?>">
+                <p><?php echo($section->getTitreSection()); ?>: <?php echo($section->getDescriptionSection()) ?></p>
+                <input type="hidden" name="idSection<?php echo($i); ?>" value="<?php echo($section->getIdSection()); ?>">
+                <textarea name="texteSection<?php echo($i); ?>"></textarea>
             </div>
             <?php
             $i++;
         }
         ?>
     </div>
-    <input type="hidden" name="controller" value="questions">
-    <input type="hidden" name="action" value="created">
+    <input type="hidden" name="nbSection" value="<?php echo($i-1); ?>">
     <input type="submit" value="Poser la question">
 </form>
