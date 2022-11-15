@@ -24,6 +24,15 @@ class ControllerReponses{
         }
     }
 
+    public static function see(){
+        if(isset($_GET['idReponse'])){
+            $reponse = (new ReponsesRepository())->selectReponseByIdReponse($_GET['idReponse']);
+            self::afficheVue('view.php', ['pagetitle' => "VoteIt - Réponse", 'cheminVueBody' => "reponses/see.php", 'reponse' => $reponse]);
+        }else {
+            ControllerErreur::erreurCodeErreur('RC-2');
+        }
+    }
+
     public static function error(){
         ControllerErreur::erreurCodeErreur('RC-1');
     }

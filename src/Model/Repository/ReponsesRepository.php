@@ -54,6 +54,27 @@ class ReponsesRepository extends AbstractRepository{
     }
 
     /**
+     * Selectionner une reponse par l'idReponse
+     * @param String $idQuestion
+     * @return array
+     */
+    public function selectReponseByIdReponse(String $idReponse){
+        $pdo = Model::getPdo();
+        $query = "SELECT * FROM ".$this->getNomTable()." WHERE idReponse='".$idReponse."';";
+        $pdoStatement = $pdo->query($query);
+
+        $ressultatSQL = $pdoStatement->fetch();
+
+        if (!$ressultatSQL) {
+            $res = null;
+        } else {
+            $res = static::construire($ressultatSQL);
+        }
+
+        return $res;
+    }
+
+    /**
      * Retourne l'id de reponse maximum
      * @return mixed
      */
