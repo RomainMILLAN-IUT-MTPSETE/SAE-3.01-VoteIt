@@ -2,10 +2,10 @@
 <section class="question-see--container">
     <section class="sect-see-question">
         <div class="sub-see-question-container">
-            <h2><span class="title-sub-see-question">Titre:</span></h2>
-            <p><?php echo($question->getTitreQuestion()) ?></p>
+            <h2><span class="title-sub-see-question">Question n°<?php echo($question->getIdQuestion()) ?>:</span></h2>
+            <p class="title-question-p"><?php echo($question->getTitreQuestion()) ?></p>
         </div>
-        <div class="sub-see-question-container">
+        <div class="sub-see-question-plan-container">
             <h2><span class="title-sub-see-question">Plan imposé:</span></h2>
             <?php
             if($sections == null){
@@ -14,8 +14,8 @@
             foreach ($sections as $section) {
                 ?>
                 <div class="section-plan--container">
-                    <p class="section-p"><?php echo($section->getTitreSection()); ?></p>
-                    <p class="section-p">  - <?php echo($section->getDescriptionSection()); ?></p>
+                    <p class="section-p"><?php echo($section->getTitreSection()); ?>:</p>
+                    <p class="section-p">  • <?php echo($section->getDescriptionSection()); ?></p>
                 </div>
                 <?php
             }

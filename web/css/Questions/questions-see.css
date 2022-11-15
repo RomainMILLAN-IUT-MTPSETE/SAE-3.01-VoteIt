@@ -7,6 +7,10 @@ a {
 
 }
 
+.title-question-p{
+    font-size: 22.5px;
+}
+
 .question-see--container{
     display: flex;
     flex-direction: row;
@@ -40,10 +44,30 @@ a {
     margin-top: 0px;
 }
 
-.section-plan--container p {
-    margin-top: 0px;
+#PLAN
+.sub-see-question-plan-container{
+    margin-top: 25px;
+    width: 400px;
 }
 
+.sub-see-question-plan-container h2 {
+    margin-bottom: 5px;
+}
+
+.section-plan--container p {
+    margin-top: 0px;
+    margin-bottom: 0px;
+    padding-left: 30px;
+}
+.section-plan--container p:nth-child(2){
+    margin-left: 10px;
+}
+
+.section-plan--container{
+    margin-bottom: 10px;
+}
+
+#PLAN
 #sub-see-question-container-delais p {
     line-height: 10px;
 }
