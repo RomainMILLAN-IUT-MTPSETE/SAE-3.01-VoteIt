@@ -125,3 +125,15 @@
     margin-top: 0px;
     width: 365px;
 }
+
+hr{
+    margin-top: 30px;
+}
+
+#section-text--container {
+    margin-top: 10px;
+}
+
+.title-section-container {
+    margin-left: 0px;
+}

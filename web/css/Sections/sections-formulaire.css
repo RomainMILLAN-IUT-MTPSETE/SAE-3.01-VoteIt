@@ -1,38 +1,38 @@
-.sections-formulaire--container {
+.questions-formulaire--container {
     display: flex;
     flex-direction: column;
     width: 100vw;
 }
-.sections-formulaire--container h2 {
+.questions-formulaire--container h2 {
     font-size: 75px;
     padding-left: 25px;
     border-bottom: 1px solid #84B28F;
 }
 @media (min-width: 1000px) {
-    .sections-formulaire--container h2 {
+    .questions-formulaire--container h2 {
         font-size: 35px;
         padding-left: 75px;
     }
 }
-.sections-formulaire--container div {
+.questions-formulaire--container div {
     margin: auto;
     display: flex;
     flex-direction: column;
 }
-.sections-formulaire--container div label {
+.questions-formulaire--container div label {
     font-size: 35px;
     margin-left: 25px;
     margin-top: 25px;
     margin-bottom: 0px;
 }
 @media (min-width: 1000px) {
-    .sections-formulaire--container div label {
+    .questions-formulaire--container div label {
         font-size: 15px;
         margin-left: 20px;
     }
 }
-.sections-formulaire--container div input {
-    margin-top: -5px;
+.questions-formulaire--container div input {
+    margin-top: 5px;
     font-size: 45px;
     height: 90px;
     width: 700px;
@@ -42,8 +42,10 @@
     border: 0.25px solid black;
     padding-left: 15px;
 }
-.sections-formulaire--container div select {
+.questions-formulaire--container div input:nth-child(1){
     margin-top: -5px;
+}
+.questions-formulaire--container div select {
     font-size: 45px;
     height: 90px;
     width: 700px;
@@ -54,21 +56,21 @@
     padding-left: 15px;
 }
 @media (min-width: 1000px) {
-    .sections-formulaire--container div input {
+    .questions-formulaire--container div input {
         height: 35px;
         width: 390px;
         font-size: 20px;
     }
-    .sections-formulaire--container div select {
+    .questions-formulaire--container div select {
         height: 35px;
         width: 400px;
         font-size: 20px;
     }
 }
-.sections-formulaire--container div a {
+.questions-formulaire--container div a {
     text-decoration: none;
 }
-.sections-formulaire--container input[type=submit] {
+.questions-formulaire--container input[type=submit] {
     width: 750px;
     margin: auto;
     font-size: 35px;
@@ -80,22 +82,22 @@
     border: 0px;
 }
 @media (min-width: 1000px) {
-    .sections-formulaire--container input[type=submit] {
+    .questions-formulaire--container input[type=submit] {
         font-size: 15px;
         height: 35px;
         width: 400px;
     }
 }
-.sections-formulaire--container #lastp {
+.questions-formulaire--container #lastp {
     font-size: 25px;
     margin: auto;
 }
 @media (min-width: 1000px) {
-    .sections-formulaire--container #lastp {
+    .questions-formulaire--container #lastp {
         font-size: 10px;
     }
 }
-.sections-formulaire--container #lastp a {
+.questions-formulaire--container #lastp a {
     color: #9BD2A7;
 }
 

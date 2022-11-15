@@ -13,7 +13,7 @@ class SectionRepository{
 
     protected function construire(array $objetFormatTableau)
     {
-        return new Section($objetFormatTableau['idSection'], $objetFormatTableau['idQuestion'], $objetFormatTableau['titreSection']);
+        return new Section($objetFormatTableau['idSection'], $objetFormatTableau['idQuestion'], $objetFormatTableau['titreSection'], $objetFormatTableau['descriptionSection']);
     }
 
     public function selectAllByIdQuestion($idQuestion){
@@ -49,13 +49,14 @@ class SectionRepository{
 
     public function createSection($section){
         $pdo = Model::getPdo();
-        $query = "INSERT INTO ".$this->getNomTable()."(idSection, idQuestion, titreSection) VALUES(:idSection, :idQuestion, :titreSection);";
+        $query = "INSERT INTO ".$this->getNomTable()."(idSection, idQuestion, titreSection, descriptionSection) VALUES(:idSection, :idQuestion, :titreSection, :descriptionSection);";
         $pdoStatement = $pdo->prepare($query);
 
         $values = [
             'idSection' => $section->getIdSection(),
             'idQuestion' => $section->getIdQuestion(),
-            'titreSection' => $section->getTitreSection()];
+            'titreSection' => $section->getTitreSection(),
+            'descriptionSection' => $section->getDescriptionSection()];
 
         $pdoStatement->execute($values);
     }

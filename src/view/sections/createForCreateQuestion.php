@@ -1,12 +1,13 @@
-<link rel="stylesheet" href="css/Questions/questions-formulaire.css">
+<link rel="stylesheet" href="css/Sections/sections-formulaire.css">
 <form class="questions-formulaire--container" action="frontController.php?controller=sections&action=created" method="post">
-    <h2>Proposition de question</h2>
+    <h2>Crée les sections</h2>
     <?php
     for ($i=1; $i<$nbSections+1; $i++){
         ?>
         <div>
             <label for="autheur">Section n°<?php echo $i ?></label>
             <input type="text" name="section<?php echo $i ?>" id="section<?php echo $i ?>" placeholder="Titre de la section <?php echo $i ?>"/>
+            <input type="text" name="description<?php echo $i ?>" id="description<?php echo $i ?>" placeholder="Description de la section <?php echo $i ?>"/>
         </div>
         <?php
     }

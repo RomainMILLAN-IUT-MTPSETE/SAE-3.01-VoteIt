@@ -12,7 +12,12 @@
                 echo("<p>Aucun plan ajouté à la question</p>");
             }
             foreach ($sections as $section) {
-                ?><p><?php echo($section->getTitreSection()); ?></p><?php
+                ?>
+                <div class="section-plan--container">
+                    <p class="section-p"><?php echo($section->getTitreSection()); ?></p>
+                    <p class="section-p">  - <?php echo($section->getDescriptionSection()); ?></p>
+                </div>
+                <?php
             }
             ?>
         </div>
@@ -41,7 +46,7 @@
             <?php
         }
         ?>
-        <a href="frontController.php?controller=reponses&action=create"><button id="proposerReponse">Proposer une Réponse <img id="imgPropose" src="assets/questions/home/button-newquestion.png" alt="Icone de nouvelle question"></button></a>
+        <a href="frontController.php?controller=reponses&action=create&idQuestion=<?php echo($_GET['idQuestion']); ?>"><button id="proposerReponse">Proposer une Réponse <img id="imgPropose" src="assets/questions/home/button-newquestion.png" alt="Icone de nouvelle question"></button></a>
 
     </section>
 </section>

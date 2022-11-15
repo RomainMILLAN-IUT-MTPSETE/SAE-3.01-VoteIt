@@ -40,6 +40,10 @@ a {
     margin-top: 0px;
 }
 
+.section-plan--container p {
+    margin-top: 0px;
+}
+
 #sub-see-question-container-delais p {
     line-height: 10px;
 }

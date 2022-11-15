@@ -27,14 +27,16 @@ class ControllerSections{
 
 
     public static function created(){
-        if(isset($_POST['nbSections']) AND isset($_POST['idQuestion']) AND isset($_POST['section1'])){
+        if(isset($_POST['nbSections']) AND isset($_POST['idQuestion']) AND isset($_POST['section1']) and isset($_POST['description1'])){
             $nbSections = $_POST['nbSections'];
             for($i=1; $i<$nbSections+1; $i++){
                 $idSection = ((new SectionRepository())->getIdQuestionMax())+1;
                 $idQuestion = $_POST['idQuestion'];
                 $sectionName = 'section'.$i;
+                $descriptionName = 'description'.$i;
                 $section = $_POST[$sectionName];
-                $sectionTemp = new Section($idSection, $idQuestion, $section);
+                $description = $_POST[$descriptionName];
+                $sectionTemp = new Section($idSection, $idQuestion, $section, $description);
                 (new SectionRepository())->createSection($sectionTemp);
             }
             header("Location: frontController.php?controller=questions&action=home");
