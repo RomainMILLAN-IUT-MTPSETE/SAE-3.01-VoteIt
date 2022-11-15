@@ -11,8 +11,17 @@
     <hr WIDTH="400px">
     <div class="text-reponse--container">
         <?php
+        use \App\VoteIt\Model\Repository\SectionRepository;
         foreach ($sectionsReponse as $item) {
-            var_dump($item);
+            ?>
+            <div class="text-reponse">
+                <div class="title-text-reponse">
+                    <h2><?php echo((new SectionRepository())->selectFromIdSection($item->getIdSection())->getTitreSection()) ?></h2>
+                    <p><?php echo($item->getTexteSection()) ?></p>
+                </div>
+            </div>
+            <?php
+            //var_dump($item);
         }
         ?>
     </div>

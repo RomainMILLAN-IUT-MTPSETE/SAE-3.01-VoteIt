@@ -28,7 +28,7 @@ class ControllerReponses{
         if(isset($_GET['idReponse'])){
             $reponse = (new ReponsesRepository())->selectReponseByIdReponse($_GET['idReponse']);
             $sectionsReponse = (new ReponseSectionRepository())->selectAllByIdReponse($reponse->getIdReponse());
-            self::afficheVue('view.php', ['pagetitle' => "VoteIt - Réponse", 'cheminVueBody' => "reponses/see.php", 'reponse' => $reponse, 'sectionReponse' => $sectionsReponse]);
+            self::afficheVue('view.php', ['pagetitle' => "VoteIt - Réponse", 'cheminVueBody' => "reponses/see.php", 'reponse' => $reponse, 'sectionsReponse' => $sectionsReponse]);
         }else {
             ControllerErreur::erreurCodeErreur('RC-2');
         }

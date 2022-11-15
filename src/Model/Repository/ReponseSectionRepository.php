@@ -14,7 +14,7 @@ class ReponseSectionRepository{
 
     protected function construire(array $objetFormatTableau)
     {
-        return new ReponseSection($objetFormatTableau['idQuestion'], $objetFormatTableau['idReponse'], $objetFormatTableau['idUtilisateur']);
+        return new ReponseSection($objetFormatTableau['idSection'], $objetFormatTableau['idReponse'], $objetFormatTableau['texteSection']);
     }
 
     /**
@@ -23,12 +23,22 @@ class ReponseSectionRepository{
      * @return array
      */
     public function selectAllByIdReponse($idReponse){
-        $pdo = Model::getPdo();
-        $query = "SELECT * FROM ".$this->getNomTable()." WHERE idReponse=:idReponse;";
-        $pdoStatement = $pdo->query($query);
+        $sql = " SELECT * FROM " .  static::getNomTable() . " WHERE idReponse=:idReponse";
+        // Préparation de la requête
+        $pdoStatement = Model::getPdo()->prepare($sql);
+
+        $values = array(
+            "idReponse" => $idReponse,
+            //nomdutag => valeur, ...
+        );
+        // On donne les valeurs et on exécute la requête
+        $pdoStatement->execute($values);
+
+        // On récupère les résultats comme précédemment
+        // Note: fetch() renvoie false si pas de voiture correspondante
+        $ressultatSQL = $pdoStatement->fetch();
 
         $tab = [];
-
         foreach ($pdoStatement as $tableauSelecter) {
 
             $tab[] = $this->construire($tableauSelecter);
