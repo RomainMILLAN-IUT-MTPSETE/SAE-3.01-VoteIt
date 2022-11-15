@@ -1,0 +1,14 @@
+.title-reponse--container .title {
+    width: 250px;
+    border-bottom: 1px solid #84B38F;
+}
+
+.title-reponse--container .title h2 {
+    margin-bottom: 0px;
+    text-align: end;
+}
+
+.title-reponse--container .title-p {
+    margin-left: 125px;
+    font-size: 20px;
+}
