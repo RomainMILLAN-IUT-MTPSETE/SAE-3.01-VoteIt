@@ -31,14 +31,15 @@ class ControllerReponses{
 
     //NOT SEE
     public static function created(){
-        if(isset($_POST['idQuestion']) and isset($_POST['autheur']) AND isset($_POST['idSection1']) AND isset($_POST['nbSection']) AND isset($_POST['texteSection1'])){
+        if(isset($_POST['idQuestion']) and isset($_POST['autheur']) AND isset($_POST['titreReponse']) AND isset($_POST['idSection1']) AND isset($_POST['nbSection']) AND isset($_POST['texteSection1'])){
             $idQuestion = $_POST['idQuestion'];
             $autheur = $_POST['autheur'];
+            $titreReponse = $_POST['titreReponse'];
             $nbSection = $_POST['nbSection'];
 
             $idReponse = (new ReponsesRepository())->getIdReponseMax() + 1;
 
-            $reponse = new Reponse($idReponse, $idQuestion, $autheur, 0);
+            $reponse = new Reponse($idReponse, $idQuestion, $titreReponse, $autheur, 0);
 
             (new ReponsesRepository())->createReponse($reponse);
             echo'Reponse Crée';

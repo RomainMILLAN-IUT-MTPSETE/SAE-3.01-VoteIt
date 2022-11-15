@@ -34,7 +34,7 @@
             ?>
             <div class="reponse-id--container">
                 <p class="reponse-number">Réponse n°<?php echo($item->getIdReponse()); ?></p>
-
+                <p class="reponse-title"><?php echo($item->getTitreReponse()) ?></p>
                 <div class="autheur-and-nb-vote--container">
                     <?php
                     $autheur = (new \App\VoteIt\Model\Repository\UtilisateurRepository())->select($item->getAutheurId());

@@ -5,6 +5,7 @@ namespace App\VoteIt\Model\DataObject;
 class Reponse extends AbstractDataObject{
     private String $idReponse;
     private String $idQuestion;
+    private String $titreReponse;
     private String $autheurId;
     private String $nbVote;
 
@@ -13,10 +14,11 @@ class Reponse extends AbstractDataObject{
      * @param String $idQuestion
      * @param String $nbVote
      */
-    public function __construct(string $idReponse, string $idQuestion, string $autheurId, string $nbVote)
+    public function __construct(string $idReponse, string $idQuestion, string $titreReponse, string $autheurId, string $nbVote)
     {
         $this->idReponse = $idReponse;
         $this->idQuestion = $idQuestion;
+        $this->titreReponse = $titreReponse;
         $this->autheurId = $autheurId;
         $this->nbVote = $nbVote;
     }
@@ -26,6 +28,7 @@ class Reponse extends AbstractDataObject{
         return array(
             "idReponse" => $this->getIdReponse(),
             "idQuestion" => $this->getIdQuestion(),
+            "titreReponse" => $this->getTitreReponse(),
             "autheurId" => $this->getAutheurId(),
             "nbVote" => $this->getNbVote(),
         );
@@ -87,17 +90,17 @@ class Reponse extends AbstractDataObject{
     /**
      * @return String
      */
-    public function getTexteReponse(): string
+    public function getTitreReponse(): string
     {
-        return $this->texteReponse;
+        return $this->titreReponse;
     }
 
     /**
      * @param String $texteReponse
      */
-    public function setTexteReponse(string $texteReponse): void
+    public function setTitreReponse(string $titreReponse): void
     {
-        $this->texteReponse = $texteReponse;
+        $this->titreReponse = $titreReponse;
     }
 
     /**

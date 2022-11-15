@@ -9,6 +9,10 @@
         <label for="autheur">Auteur</label>
         <input type="text" name="autheur" id="autheur" placeholder="JohnDoe10"/>
     </div>
+    <div class="div-form-normal">
+        <label for="titreReponse">Titre de la réponse</label>
+        <input type="text" name="titreReponse" id="titreReponse" placeholder="Titre de la réponse">
+    </div>
     <div class="section-text--container">
         <?php
         $i=1;

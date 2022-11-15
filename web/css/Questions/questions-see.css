@@ -78,10 +78,19 @@ a {
     border-radius: 10px;
     border: 1px solid black;
     margin-top: 0px;
-    line-height: 0px;
     width: 85%;
     margin: auto;
     margin-top: 15px;
+}
+
+.reponse-id--container .reponse-number{
+    margin-top: 0px;
+    margin-bottom: 1px;
+}
+
+.reponse-id--container .reponse-title{
+    margin-left: 10px;
+    margin-top: 0px;
 }
 
 .reponse-number{
