@@ -16,13 +16,13 @@
     <div class="date--container">
         <div>
             <label id="title-date" for="dtnaissance">Date d'écriture des réponses</label>
-            <span id="no-margin-top" class="flex-row"><p>Du </p><input id="date-input" type="date" name="ecritureDateDebut" id="ecritureDateDebut" placeholder="01-01-2001"/></span>
-            <span class="flex-row"><p>Au </p> <input id="date-input" type="date" name="ecritureDateFin" id="ecritureDateFin" placeholder="01-01-2001"/></span>
+            <span id="no-margin-top" class="flex-row"><p>Du </p><input id="date-input" type="date" name="ecritureDateDebut" id="ecritureDateDebut" value="<?php echo htmlspecialchars($q->getDateEcritureDebut()) ?>" /></span>
+            <span class="flex-row"><p>Au </p> <input id="date-input" type="date" name="ecritureDateFin" id="ecritureDateFin" <?php echo htmlspecialchars($q->getDateEcritureFin()) ?> /></span>
         </div>
         <div>
             <label id="title-date" for="dtnaissance">Date des votes</label>
-            <span id="no-margin-top" class="flex-row"><p>Du </p><input id="date-input" type="date" name="voteDateDebut" id="voteDateDebut" placeholder="01-01-2001"/></span>
-            <span class="flex-row"><p>Au </p> <input id="date-input" type="date" name="voteDateFin" id="voteDateFin " placeholder="01-01-2001"/></span>
+            <span id="no-margin-top" class="flex-row"><p>Du </p><input id="date-input" type="date" name="voteDateDebut" id="voteDateDebut" value="<?php echo htmlspecialchars($q->getDateVoteDebut()) ?>"/></span>
+            <span class="flex-row"><p>Au </p> <input id="date-input" type="date" name="voteDateFin" id="voteDateFin " value="<?php echo htmlspecialchars($q->getDateVoteFin()) ?>" /></span>
         </div>
     </div>
 
