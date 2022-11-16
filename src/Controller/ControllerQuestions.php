@@ -49,6 +49,22 @@ class ControllerQuestions{
         self::afficheVue('view.php', ['pagetitle' => "VoteIt - Crée une question", 'cheminVueBody' => "questions/create.php", 'categories' => $categories]);
     }
 
+    public static function update() {
+        self::afficheVue('view.php', ['pagetitle' => "VoteIt - Modifier une question", 'cheminVueBody' => "questions/update.php"
+            , 'q' => (new QuestionsRepository())->select($_GET['idQuestion'])]);
+    }
+
+    public static function delete() {
+        if (isset($_GET['idQuestion'])) {
+            (new QuestionsRepository())->delete($_GET['idQuestion']);
+            $questions = (new QuestionsRepository())->selectAll();
+            self::afficheVue('view.php',['pagetitle' => "VoteIt - Supprimer une question", 'cheminVueBody' => "questions/deleted.php", 'questions' => $questions, 'idQuestion' => $_GET['idQuestion']]);
+        }
+        else {
+            echo 'l\'identifiant de la question non renseignée !';
+        }
+    }
+
     public static function error(){
         ControllerErreur::erreurCodeErreur('QC-1');
     }
@@ -74,5 +90,12 @@ class ControllerQuestions{
         }else {
             ControllerErreur::erreurCodeErreur('QC-2');
         }
+    }
+
+    public static function updated() {
+        $modelQuestion = new Question($_GET['auteur'],$_GET['titreQuestion'],$_GET['texteQuestion'],$_GET['planQuestion'],$_GET['ecritureDateDebut'],$_GET['ecritureDateFin'],$_GET['VoteDateDebut'],$_GET['VoteDateFin'],$_GET['categorieQuestion']);
+        (new QuestionsRepository())->update($modelQuestion);
+        $questions = (new QuestionsRepository())->selectAll();
+        self::afficheVue('view.php', ['pagetitle' => "VoteIt - Modifier une question", 'cheminVueBody' => "questions/updated.php", 'questions' => $questions]);
     }
 }
