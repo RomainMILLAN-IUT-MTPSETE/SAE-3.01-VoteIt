@@ -9,10 +9,6 @@
         <label for="titreQuestion">Titre</label>
         <input type="text" name="titreQuestion" id="titreQuestion" placeholder="TitreDeLaQuestion" value="<?php echo htmlspecialchars($q->getTitreQuestion()) ?>"  />
     </div>
-    <!--<div>
-        <label for="prenom">Plan</label>
-        <input type="text" name="planQuestion" id="planQuestion" placeholder="PlanDeLaQuestion" value="<?php //echo htmlspecialchars($q->getPlanQuestion()) ?>"/>
-    </div>-->
     <div>
         <label for="categorieQuestion">Catégorie</label>
         <input type="text" name="categorieQuestion" id="categorieQuestion" placeholder="CategorieDeLaQuestion" value="<?php echo htmlspecialchars($q->getCategorieQuestion()) ?>" readonly/>
@@ -29,6 +25,16 @@
             <span class="flex-row"><p>Au </p> <input id="date-input" type="date" name="voteDateFin" id="voteDateFin " placeholder="01-01-2001"/></span>
         </div>
     </div>
+
+    <hr WIDTH="200">
+
+    <!--<div>
+        <h3>Plan</h3>
+        <label for="prenom">Section n°1</label>
+        <input type="text" name="planQuestion" id="planQuestion" placeholder="PlanDeLaQuestion" value="<?php //echo htmlspecialchars($q->getPlanQuestion()) ?>"/>-->
+
+
+    </div>-->
     <input type="hidden" name="controller" value="questions">
     <input type="hidden" name="action" value="updated">
     <input type="submit" value="Modifier la question">
