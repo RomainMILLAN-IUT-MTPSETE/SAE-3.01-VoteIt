@@ -2,7 +2,9 @@
 <section class="question-see--container">
     <section class="sect-see-question">
         <div class="sub-see-question-container">
-            <h2><span class="title-sub-see-question">Question n°<?php echo($question->getIdQuestion()) ?>:</span></h2>
+            <h2><span class="title-sub-see-question">Question n°<?php echo($question->getIdQuestion()) ?>:</span><a href="frontController.php?controller=questions&action=update&idQuestion=<?php echo($_GET['idQuestion']) ?>"><img class="ml12px"
+                            src="assets/questions/see/edit.png" alt="nope"></a><a href="frontController.php?controller=questions&action=delete&idQuestion=<?php echo($_GET['idQuestion']) ?>"><img class="ml8px"
+                                                                                               src="assets/questions/see/delete.png" alt="nope"></a></h2>
             <p class="title-question-p"><?php echo($question->getTitreQuestion()) ?></p>
         </div>
         <div class="sub-see-question-plan-container">

@@ -56,9 +56,7 @@ class ControllerQuestions{
 
     public static function delete() {
         if (isset($_GET['idQuestion'])) {
-            (new QuestionsRepository())->delete($_GET['idQuestion']);
-            $questions = (new QuestionsRepository())->selectAll();
-            self::afficheVue('view.php',['pagetitle' => "VoteIt - Supprimer une question", 'cheminVueBody' => "questions/deleted.php", 'questions' => $questions, 'idQuestion' => $_GET['idQuestion']]);
+            self::afficheVue('view.php',['pagetitle' => "VoteIt - Supprimer une question", 'cheminVueBody' => "questions/delete.php"]);
         }
         else {
             echo 'l\'identifiant de la question non renseignée !';
@@ -96,6 +94,15 @@ class ControllerQuestions{
         $modelQuestion = new Question($_GET['auteur'],$_GET['titreQuestion'],$_GET['texteQuestion'],$_GET['planQuestion'],$_GET['ecritureDateDebut'],$_GET['ecritureDateFin'],$_GET['VoteDateDebut'],$_GET['VoteDateFin'],$_GET['categorieQuestion']);
         (new QuestionsRepository())->update($modelQuestion);
         $questions = (new QuestionsRepository())->selectAll();
-        self::afficheVue('view.php', ['pagetitle' => "VoteIt - Modifier une question", 'cheminVueBody' => "questions/updated.php", 'questions' => $questions]);
+        header("Location: frontController.php?controller=questions&action=home");
+        exit();
+    }
+
+    public static function deleted(){
+        (new QuestionsRepository())->delete($_GET['idQuestion']);
+        (new ReponsesRepository())->deleteReponseByIdQuestion($_GET['idQuestion']);
+        (new SectionRepository())->deleteSectionByIdQuestion($_GET['idQuestion']);
+        header("Location: frontController.php?controller=questions&action=home");
+        exit();
     }
 }

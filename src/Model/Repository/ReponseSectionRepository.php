@@ -66,4 +66,16 @@ class ReponseSectionRepository{
         $pdoStatement->execute($values);
 
     }
+
+    public function deleteReponseSectionByIdReponse($idreponse) {
+        $sql = " DELETE FROM " .  static::getNomTable() . " WHERE idReponse=:idReponse";
+        // Préparation de la requête
+        $pdoStatement = Model::getPdo()->prepare($sql);
+        $values = array(
+            "idReponse" => $idreponse,
+            //nomdutag => valeur, ...
+        );
+        // On donne les valeurs et on exécute la requête
+        $pdoStatement->execute($values);
+    }
 }

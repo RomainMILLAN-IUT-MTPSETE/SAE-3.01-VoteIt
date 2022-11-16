@@ -25,11 +25,24 @@ a {
 .sub-see-question-container{
     margin-top: 25px;
     width: 400px;
+
+}
+.sub-see-question-container h2 img {
+    width: 22px;
+    height: 22px;
+}
+.ml8px{
+    margin-left: 5px;
+}
+.ml12px{
+    margin-left: 12px;
 }
 
 .sub-see-question-container h2{
     margin-bottom: 0px;
     width: 400px;
+    display: flex;
+    flex-direction: row;
 }
 
 .title-sub-see-question{
@@ -42,7 +55,6 @@ a {
 .sub-see-question-container p {
     padding-left: 30px;
     margin-top: 2%;
-
 
 }
 
