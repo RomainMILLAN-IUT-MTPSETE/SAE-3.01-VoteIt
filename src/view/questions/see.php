@@ -25,8 +25,8 @@
         </div>
         <div class="sub-see-question-container" id="sub-see-question-container-delais">
             <h2><span class="title-sub-see-question">Délais:</span></h2>
-            <p id="sub-see-question-container-delais-pfirst">Réponses: Du <?php echo($question->getDateEcritureDebut()); ?> au <?php echo($question->getDateEcritureFin()); ?></p>
-            <p>Vote: Du <?php echo($question->getDateVoteDebut()) ?> au <?php echo($question->getDateVoteFin()) ?></p>
+            <p id="sub-see-question-container-delais-pfirst">Réponses: Du <?php echo($question->getDateEcritureDebutFR()); ?> au <?php echo($question->getDateEcritureFinFR()); ?></p>
+            <p>Vote: Du <?php echo($question->getDateVoteDebutFR()) ?> au <?php echo($question->getDateVoteFinFR()) ?></p>
         </div>
     </section>
     <hr class="inter-container-mobile" WIDTH="100px" COLOR="BLACK">

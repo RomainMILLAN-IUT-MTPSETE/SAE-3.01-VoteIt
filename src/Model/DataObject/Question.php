@@ -100,15 +100,7 @@ class Question extends AbstractDataObject {
      */
     public function getDateEcritureDebut(): string
     {
-        return date('d/m/Y', strtotime($this->dateEcritureDebut));
-    }
-
-    /**
-     * @param String $dateEcritureDebut
-     */
-    public function setDateEcritureDebut(string $dateEcritureDebut): void
-    {
-        $this->dateEcritureDebut = $dateEcritureDebut;
+        return $this->dateEcritureDebut;
     }
 
     /**
@@ -116,15 +108,7 @@ class Question extends AbstractDataObject {
      */
     public function getDateEcritureFin(): string
     {
-        return date('d/m/Y', strtotime($this->dateEcritureFin));
-    }
-
-    /**
-     * @param String $dateEcritureFin
-     */
-    public function setDateEcritureFin(string $dateEcritureFin): void
-    {
-        $this->dateEcritureFin = $dateEcritureFin;
+        return $this->dateEcritureFin;
     }
 
     /**
@@ -132,16 +116,7 @@ class Question extends AbstractDataObject {
      */
     public function getDateVoteDebut(): string
     {
-        return date('d/m/Y', strtotime($this->dateVoteDebut));
-
-    }
-
-    /**
-     * @param String $dateVoteDebut
-     */
-    public function setDateVoteDebut(string $dateVoteDebut): void
-    {
-        $this->dateVoteDebut = $dateVoteDebut;
+        return $this->dateVoteDebut;
     }
 
     /**
@@ -149,15 +124,7 @@ class Question extends AbstractDataObject {
      */
     public function getDateVoteFin(): string
     {
-        return date('d/m/Y', strtotime($this->dateVoteFin));
-    }
-
-    /**
-     * @param String $dateVoteFin
-     */
-    public function setDateVoteFin(string $dateVoteFin): void
-    {
-        $this->dateVoteFin = $dateVoteFin;
+        return $this->dateVoteFin;
     }
 
     /**
@@ -174,6 +141,19 @@ class Question extends AbstractDataObject {
     public function setCategorieQuestion(string $categorieQuestion): void
     {
         $this->categorieQuestion = $categorieQuestion;
+    }
+
+    public function getDateEcritureDebutFR(){
+        return date('d/m/Y', strtotime($this->dateEcritureDebut));
+    }
+    public function getDateEcritureFinFR(){
+        return date('d/m/Y', strtotime($this->dateEcritureFin));
+    }
+    public function getDateVoteDebutFR(){
+        return date('d/m/Y', strtotime($this->dateVoteDebut));
+    }
+    public function getDateVoteFinFR(){
+        return date('d/m/Y', strtotime($this->dateVoteFin));
     }
 
 
