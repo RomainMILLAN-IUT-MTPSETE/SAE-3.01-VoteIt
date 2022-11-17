@@ -61,7 +61,7 @@ class SectionRepository{
         $pdoStatement->execute($values);
     }
 
-    public function selectFromIdSection(string $idSection){
+    public function  selectFromIdSection($idSection){
 
         $sql = " SELECT * FROM " .  static::getNomTable() . " WHERE idSection=:idSection";
         // Préparation de la requête

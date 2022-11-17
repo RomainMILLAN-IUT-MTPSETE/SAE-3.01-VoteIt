@@ -50,8 +50,9 @@ class ControllerQuestions{
     }
 
     public static function update() {
+        $sectionId = (new SectionRepository())->selectAllByIdQuestion($_GET['idQuestion']);
         self::afficheVue('view.php', ['pagetitle' => "VoteIt - Modifier une question", 'cheminVueBody' => "questions/update.php"
-            , 'q' => (new QuestionsRepository())->select($_GET['idQuestion'])]);
+            , 'question' => (new QuestionsRepository())->select($_GET['idQuestion']), 'sectionIds' => $sectionId]);
     }
 
     public static function delete() {
