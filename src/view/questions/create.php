@@ -8,11 +8,11 @@
         </div>
         <div>
             <label for="titreQuestion">Titre</label>
-            <input type="text" name="titreQuestion" id="titreQuestion" placeholder="TitreDeLaQuestion"/>
+            <input type="text" name="titreQuestion" id="titreQuestion" placeholder="Titre de la question"/>
         </div>
         <div>
             <label for="nbSection">Nombre de section</label>
-            <input type="number" name="nbSection" id="nbSection" placeholder="2" min="3" max="8"/>
+            <input type="number" name="nbSection" id="nbSection" placeholder="3" min="3" max="8"/>
         </div>
         <div>
             <label for="categorieQuestion">Catégorie</label>
