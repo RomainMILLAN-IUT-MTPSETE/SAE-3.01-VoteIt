@@ -31,12 +31,9 @@ class ReponseSectionRepository{
             "idReponse" => $idReponse,
             //nomdutag => valeur, ...
         );
+
         // On donne les valeurs et on exécute la requête
         $pdoStatement->execute($values);
-
-        // On récupère les résultats comme précédemment
-        // Note: fetch() renvoie false si pas de voiture correspondante
-        $ressultatSQL = $pdoStatement->fetch();
 
         $tab = [];
         foreach ($pdoStatement as $tableauSelecter) {

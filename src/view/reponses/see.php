@@ -6,19 +6,20 @@
         <div class="title">
             <h2>Réponse n°<?php echo($reponse->getIdReponse()); ?>:</h2>
         </div>
-        <p class="title-p"><?php echo($reponse->getTitreReponse()); ?></p>
+        <p class="title-reponse-p"><?php echo($reponse->getTitreReponse()); ?></p>
     </div>
     <hr WIDTH="400px">
-    <div class="text-reponse--container">
+    <div class="sections-reponse--container">
         <?php
         use \App\VoteIt\Model\Repository\SectionRepository;
         foreach ($sectionsReponse as $item) {
             ?>
-            <div class="text-reponse">
-                <div class="title-text-reponse">
-                    <h2><?php echo((new SectionRepository())->selectFromIdSection($item->getIdSection())->getTitreSection()) ?></h2>
-                    <p><?php echo($item->getTexteSection()) ?></p>
+            <div class="section-container">
+                <div class="section-title">
+                    <h2><?php echo((new SectionRepository())->selectFromIdSection($item->getIdSection())->getTitreSection()) ?>:
+                        <a href="#"><img src="assets/reponses/see/edit.png" alt=""></a></h2>
                 </div>
+                <p><?php echo($item->getTexteSection()) ?></p>
             </div>
             <?php
             //var_dump($item);

@@ -34,6 +34,7 @@
         <?php
         foreach ($reponses as $item){
             ?>
+            <a href="frontController.php?controller=reponses&action=see&idReponse=<?php echo($item->getIdReponse()) ?>">
             <div class="reponse-id--container">
                 <p class="reponse-number">Réponse n°<?php echo($item->getIdReponse()); ?></p>
                 <p class="reponse-title"><?php echo($item->getTitreReponse()) ?></p>
@@ -45,6 +46,7 @@
                     <span class="nbVote-reponse"><img src="assets/questions/see/like.png" alt="Icone LikeVoteNombre"><?php echo($item->getNbVote()); ?></span>
                 </div>
             </div>
+            </a>
             <?php
         }
         ?>
