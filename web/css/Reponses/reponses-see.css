@@ -8,6 +8,10 @@
     text-align: end;
 }
 
+.title-reponse--container .title h2 img {
+    height: 20px;
+}
+
 .title-reponse--container .title-reponse-p {
     margin-left: 125px;
     font-size: 20px;
@@ -25,6 +29,9 @@
 .section-title h2 {
     text-align: right;
     margin-bottom: 0px;
+}
+.section-title h2 img {
+    height: 15px;
 }
 
 .sections-reponse--container p {

@@ -4,7 +4,7 @@
 
     <div class="title-reponse--container">
         <div class="title">
-            <h2>Réponse n°<?php echo($reponse->getIdReponse()); ?>:</h2>
+            <h2>Réponse n°<?php echo($reponse->getIdReponse()); ?>: <a href="#"><img src="assets/reponses/see/edit.png" alt=""></a><a href="#"><img src="assets/reponses/see/delete.png" alt=""></a></h2></h2>
         </div>
         <p class="title-reponse-p"><?php echo($reponse->getTitreReponse()); ?></p>
     </div>
