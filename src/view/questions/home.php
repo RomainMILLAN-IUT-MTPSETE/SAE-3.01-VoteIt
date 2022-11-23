@@ -12,7 +12,7 @@
                ?>)
                <span class="colored">:</span>
            </p>
-       <a href="#" id="filtre">Filtrer <img id="imgFiltre" src="assets/questions/home/filter.png" alt="Icone de filtre"></a>
+       <a href="#" id="filtre" style="display:none;">Filtrer <img id="imgFiltre" src="assets/questions/home/filter.png" alt="Icone de filtre"></a>
     </section>
     <?php
         foreach ($questions as $id) { ?>
