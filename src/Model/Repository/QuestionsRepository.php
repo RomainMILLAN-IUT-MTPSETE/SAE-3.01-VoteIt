@@ -35,7 +35,7 @@ class QuestionsRepository extends AbstractRepository {
 
     public function recherche($search){
         $pdo = Model::getPdo();
-        $query = "SELECT * FROM ".$this->getNomTable()." WHERE titreQuestion LIKE '%".$search."%';";
+        $query = "SELECT * FROM ".$this->getNomTable()." WHERE titreQuestion LIKE '%".$search."%' OR categorieQuestion LIKE '%".$search."%' OR autheur LIKE '%".$search."%';";
         $pdoStatement = $pdo->query($query);
 
         $tab = [];
