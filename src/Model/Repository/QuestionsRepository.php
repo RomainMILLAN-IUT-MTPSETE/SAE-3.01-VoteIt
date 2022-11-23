@@ -61,6 +61,10 @@ class QuestionsRepository extends AbstractRepository {
 
         $resultat = $resultatSQL['idQuestion'];
 
+        if($resultat == null){
+            $resultat = 1;
+        }
+
         return $resultat;
     }
 

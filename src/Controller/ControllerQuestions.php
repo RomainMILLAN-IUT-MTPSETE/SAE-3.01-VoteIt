@@ -1,6 +1,7 @@
 <?php
 namespace App\VoteIt\Controller;
 
+use App\VoteIt\Lib\MessageFlash;
 use App\VoteIt\Model\DataObject\Question;
 use App\VoteIt\Model\Repository\QuestionsRepository;
 use App\VoteIt\Model\Repository\ReponsesRepository;
@@ -15,7 +16,7 @@ class ControllerQuestions{
     public static function home(){
         //Recuperation de toutes les questions
         $questions = (new QuestionsRepository())->selectAll();
-        self::afficheVue('view.php', ['pagetitle' => "VoteIt", 'cheminVueBody' => "questions/home.php", 'questions' => $questions]);
+        self::afficheVue('view.php', ['pagetitle' => "VoteIt - Liste des Questions", 'cheminVueBody' => "questions/home.php", 'questions' => $questions]);
     }
 
     public static function see(){
@@ -28,7 +29,7 @@ class ControllerQuestions{
             $reponses = (new ReponsesRepository())->selectAllReponeByQuestionId($idQuestion);
             //Recuperation des sections de la questions dans la BD
             $sections = (new SectionRepository())->selectAllByIdQuestion($idQuestion);
-            self::afficheVue('view.php', ['pagetitle' => "VoteIt - Questions", 'cheminVueBody' => "questions/see.php", "question" => $question, "reponses" => $reponses, "sections" => $sections]);
+            self::afficheVue('view.php', ['pagetitle' => "VoteIt - Questions n°". $idQuestion, 'cheminVueBody' => "questions/see.php", "question" => $question, "reponses" => $reponses, "sections" => $sections]);
         }else {
             //Renvoye a la page d'erreur avec l'erreur QC-2
             ControllerErreur::erreurCodeErreur('QC-2');
@@ -40,13 +41,13 @@ class ControllerQuestions{
             $search = $_GET['search'];
 
             $questions = (new QuestionsRepository())->recherche($search);
-            self::afficheVue('view.php', ['pagetitle' => "VoteIt", 'cheminVueBody' => "questions/home.php", 'questions' => $questions]);
+            self::afficheVue('view.php', ['pagetitle' => "VoteIt - Recherche: " . $search, 'cheminVueBody' => "questions/home.php", 'questions' => $questions]);
         }
     }
 
     public static function create(){
         $categories = (new \App\VoteIt\Model\Repository\CategorieRepository())->selectAll();
-        self::afficheVue('view.php', ['pagetitle' => "VoteIt - Crée une question", 'cheminVueBody' => "questions/create.php", 'categories' => $categories]);
+        self::afficheVue('view.php', ['pagetitle' => "VoteIt - Creation d'une question", 'cheminVueBody' => "questions/create.php", 'categories' => $categories]);
     }
 
     public static function update() {
@@ -57,7 +58,7 @@ class ControllerQuestions{
 
     public static function delete() {
         if (isset($_GET['idQuestion'])) {
-            self::afficheVue('view.php',['pagetitle' => "VoteIt - Supprimer une question", 'cheminVueBody' => "questions/delete.php"]);
+            self::afficheVue('view.php',['pagetitle' => "VoteIt - Suppression de la question n°" . $_GET['idQuestion'], 'cheminVueBody' => "questions/delete.php"]);
         }
         else {
             echo 'l\'identifiant de la question non renseignée !';
@@ -72,24 +73,42 @@ class ControllerQuestions{
 
     public static function created(){
         if(isset($_POST['autheur']) AND isset($_POST['titreQuestion']) AND isset($_POST['nbSection']) AND isset($_POST['categorieQuestion']) AND isset($_POST['ecritureDateDebut']) AND isset($_POST['ecritureDateFin']) AND isset($_POST['voteDateDebut']) AND isset($_POST['voteDateFin'])){
-            $autheur = $_POST['autheur'];
-            $titreQuestion = $_POST['titreQuestion'];
-            $nbSection = $_POST['nbSection'];
-            $categorieQuestion = $_POST['categorieQuestion'];
-            $ecritureDateDebut = $_POST['ecritureDateDebut'];
-            $ecritureDateFin = $_POST['ecritureDateFin'];
-            $voteDateDebut = $_POST['voteDateDebut'];
-            $voteDateFin = $_POST['voteDateFin'];
-            $idQuestion = ((new QuestionsRepository())->getIdQuestionMax())+1;
+            if($_POST['ecritureDateDebut'] > $_POST['ecritureDateFin']){
+                MessageFlash::ajouter("danger", "La date d'écriture de début est supérieur à la date d'écriture de fin");
+                header("Location: frontController.php?controller=questions&action=create");
+                exit();
+            }else if($_POST['voteDateDebut'] > $_POST['voteDateFin']){
+                MessageFlash::ajouter("danger", "La date de vote de début est supérieur à la date de vote de fin");
+                header("Location: frontController.php?controller=questions&action=create");
+                exit();
+            }else if($_POST['ecritureDateFin'] > $_POST['voteDateDebut']){
+                MessageFlash::ajouter("danger", "Les dates de votes sont avant les dates d'écritures");
+                header("Location: frontController.php?controller=questions&action=create");
+                exit();
+            }else {
+                $autheur = $_POST['autheur'];
+                $titreQuestion = $_POST['titreQuestion'];
+                $nbSection = $_POST['nbSection'];
+                $categorieQuestion = $_POST['categorieQuestion'];
+                $ecritureDateDebut = $_POST['ecritureDateDebut'];
+                $ecritureDateFin = $_POST['ecritureDateFin'];
+                $voteDateDebut = $_POST['voteDateDebut'];
+                $voteDateFin = $_POST['voteDateFin'];
+                $idQuestion = ((new QuestionsRepository())->getIdQuestionMax())+1;
 
-            (new QuestionsRepository())->createQuestion($idQuestion, $autheur, $titreQuestion, $ecritureDateDebut, $ecritureDateFin, $voteDateDebut, $voteDateFin, $categorieQuestion);
-            //ControllerSections::createSectionForCreateQuestion($idQuestion, $nbSection);
-            header("Location: frontController.php?controller=sections&action=createSectionForCreateQuestion&idQuestion=".$idQuestion."&nbSections=".$nbSection);
-            exit();
+                (new QuestionsRepository())->createQuestion($idQuestion, $autheur, $titreQuestion, $ecritureDateDebut, $ecritureDateFin, $voteDateDebut, $voteDateFin, $categorieQuestion);
+
+                header("Location: frontController.php?controller=sections&action=createSectionForCreateQuestion&idQuestion=".$idQuestion."&nbSections=".$nbSection);
+                exit();
+            }
         }else {
             ControllerErreur::erreurCodeErreur('QC-2');
         }
     }
+
+    /*
+     *
+     * */
 
     public static function updated() {
         $modelQuestion = new Question($_GET['auteur'],$_GET['titreQuestion'],$_GET['texteQuestion'],$_GET['planQuestion'],$_GET['ecritureDateDebut'],$_GET['ecritureDateFin'],$_GET['VoteDateDebut'],$_GET['VoteDateFin'],$_GET['categorieQuestion']);

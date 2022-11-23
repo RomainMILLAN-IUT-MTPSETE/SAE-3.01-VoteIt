@@ -4,6 +4,8 @@ namespace App\VoteIt\Controller;
 use App\VoteIt\Controller\ControllerErreur;
 use App\VoteIt\Model\DataObject\Section;
 use App\VoteIt\Model\Repository\SectionRepository;
+use App\VoteIt\Lib\MessageFlash;
+use http\Message;
 
 class ControllerSections{
     private static function afficheVue(string $cheminVue, array $parametres = []) : void {
@@ -15,7 +17,7 @@ class ControllerSections{
         if(isset($_GET['nbSections']) AND isset($_GET['idQuestion'])){
             $nbSection = $_GET['nbSections'];
             $idQuestion = $_GET['idQuestion'];
-            self::afficheVue('view.php', ['pagetitle' => "VoteIt | Crée des sections", 'cheminVueBody' => "sections/createForCreateQuestion.php", 'nbSections' => $nbSection, 'idQuestion' => $idQuestion]);
+            self::afficheVue('view.php', ['pagetitle' => "VoteIt - Creation des sections", 'cheminVueBody' => "sections/createForCreateQuestion.php", 'nbSections' => $nbSection, 'idQuestion' => $idQuestion]);
         }else {
             ControllerErreur::erreurCodeErreur('SC-1');
         }
@@ -39,6 +41,8 @@ class ControllerSections{
                 $sectionTemp = new Section($idSection, $idQuestion, $section, $description);
                 (new SectionRepository())->createSection($sectionTemp);
             }
+
+            MessageFlash::ajouter("success", "Ajout de la question n°" . $_POST['idQuestion'] . " réussi !");
             header("Location: frontController.php?controller=questions&action=home");
             exit();
         }else {

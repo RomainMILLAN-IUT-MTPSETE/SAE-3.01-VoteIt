@@ -2,6 +2,7 @@
 
 namespace App\VoteIt\Controller;
 
+use App\VoteIt\Lib\MessageFlash;
 use App\VoteIt\Model\DataObject\ReponseSection;
 use App\VoteIt\Model\DataObject\Reponse;
 use App\VoteIt\Model\Repository\QuestionsRepository;
@@ -18,7 +19,7 @@ class ControllerReponses{
     public static function create(){
         if(isset($_GET['idQuestion'])){
             $sections = (new SectionRepository())->selectAllByIdQuestion($_GET['idQuestion']);
-            self::afficheVue('view.php', ['pagetitle' => "VoteIt - Creation de réponse", 'cheminVueBody' => "reponses/create.php", 'sections' => $sections]);
+            self::afficheVue('view.php', ['pagetitle' => "VoteIt - Creation d'une réponse", 'cheminVueBody' => "reponses/create.php", 'sections' => $sections]);
         }else {
             ControllerErreur::erreurCodeErreur('RC-2');
         }
@@ -28,7 +29,7 @@ class ControllerReponses{
         if(isset($_GET['idReponse'])){
             $reponse = (new ReponsesRepository())->selectReponseByIdReponse($_GET['idReponse']);
             $sectionsReponse = (new ReponseSectionRepository())->selectAllByIdReponse($reponse->getIdReponse());
-            self::afficheVue('view.php', ['pagetitle' => "VoteIt - Réponse", 'cheminVueBody' => "reponses/see.php", 'reponse' => $reponse, 'sectionsReponse' => $sectionsReponse]);
+            self::afficheVue('view.php', ['pagetitle' => "VoteIt - Réponse n°" . $reponse->getIdReponse(), 'cheminVueBody' => "reponses/see.php", 'reponse' => $reponse, 'sectionsReponse' => $sectionsReponse]);
         }else {
             ControllerErreur::erreurCodeErreur('RC-2');
         }
@@ -52,7 +53,6 @@ class ControllerReponses{
             $reponse = new Reponse($idReponse, $idQuestion, $titreReponse, $autheur, 0);
 
             (new ReponsesRepository())->createReponse($reponse);
-            echo'Reponse Crée';
 
             for($i=1; $i<$nbSection+1; $i++){
                 $texteSection = $_POST['texteSection' . $i];
@@ -60,10 +60,9 @@ class ControllerReponses{
 
                 $ReponseSection = new ReponseSection($idSection, $idReponse, $texteSection);
                 (new ReponseSectionRepository())->createReponseSection($ReponseSection);
-
-
             }
 
+            MessageFlash::ajouter("success", "Réponse n°". $idReponse ." crée !");
             header("Location: frontController.php?controller=questions&action=see&idQuestion=".$idQuestion);
             exit();
             //header("Location: frontController.php?controller=reponses&idReponse=".$)

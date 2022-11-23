@@ -5,6 +5,7 @@
     <title><?php echo $pagetitle; ?></title>
     <link rel="stylesheet" href="<?php echo('css/app.css') ?>"/>
     <link rel="stylesheet" href="<?php echo('css/layout.css') ?>"/>
+    <link rel="stylesheet" href="<?php echo('css/messagesFlash.css') ?>"/>
     <link rel="shortcut icon" href="assets/logo/logoSansOmbre.png" type="image/x-icon">
 </head>
 <body class="layout">
@@ -36,6 +37,19 @@
 
     <main>
         <?php
+        use \App\VoteIt\Lib\MessageFlash;
+        $array = MessageFlash::lireTousMessages();
+        while($element = current($array)) {
+            ?>
+            <div class="alert alert-<?php echo key($array)  ?>">
+                <p><?php echo($array[key($array)]); ?></p>
+            </div>
+            <?php
+            next($array);
+        }
+
+
+
         require __DIR__ . "/{$cheminVueBody}";
         ?>
     </main>

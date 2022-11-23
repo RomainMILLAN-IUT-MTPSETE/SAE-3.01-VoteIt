@@ -1,9 +1,14 @@
-<link rel="stylesheet" href="css/Questions/questions-formulaire.css">
+<link rel="stylesheet" href="css/formulaire.css">
 
-<form class="questions-formulaire--container" action="frontController.php?controller=questions&action=deleted&idQuestion=<?php echo($_GET['idQuestion']); ?>" method="post">
-    <h2>Suppression de question</h2>
-    <div>
-        <p for="idQuestion">êtes-vous sûr de vouloir supprimer cette question ?</p>
+<form class="formulaire--container" action="frontController.php?controller=questions&action=deleted&idQuestion=<?php echo($_GET['idQuestion']); ?>" method="post">
+    <div class="formulaire-template">
+        <h2 class="title">Suppression de question</h2>
+        <div>
+            <label for="idQuestion">Id de la Question</label>
+            <input type="number" name="idQuestion" id="idQuestion" value="<?php echo($_GET['idQuestion']); ?>" readonly required>
+        </div>
+        <div>
+            <input type="submit" value="Supprimer la question">
+        </div>
     </div>
-    <input type="submit" value="Supprimer la question">
 </form>

@@ -44,6 +44,10 @@ class SectionRepository{
 
         $resultat = $resultatSQL['idSection'];
 
+        if($resultat == null){
+            $resultat = 1;
+        }
+
         return $resultat;
     }
 

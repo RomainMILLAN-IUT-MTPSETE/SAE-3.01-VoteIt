@@ -7,9 +7,9 @@
         for ($i=1; $i<$nbSections+1; $i++){
             ?>
             <div class="section-create--container">
-                <label class="section-create-label" for="autheur">Section n°<?php echo $i ?></label>
-                <input class="section-create-input" type="text" name="section<?php echo $i ?>" id="section<?php echo $i ?>" placeholder="Titre de la section <?php echo $i ?>"/>
-                <input class="section-create-input" type="text" name="description<?php echo $i ?>" id="description<?php echo $i ?>" placeholder="Description de la section <?php echo $i ?>"/>
+                <label class="section-create-label" for="autheur" required>Section n°<?php echo $i ?></label>
+                <input class="section-create-input" type="text" name="section<?php echo $i ?>" id="section<?php echo $i ?>" placeholder="Titre de la section <?php echo $i ?>" required/>
+                <input class="section-create-input" type="text" name="description<?php echo $i ?>" id="description<?php echo $i ?>" placeholder="Description de la section <?php echo $i ?>" required/>
             </div>
             <?php
         }
