@@ -1,8 +1,5 @@
 <link rel="stylesheet" href="css/Questions/questions-home.css" type="text/css" >
-<section class="votes-home--container">
-    <a href="frontController.php?controller=questions&action=create"><button id="proposerQuestionButton">Proposer une Question <img id="imgPropose" src="assets/questions/home/button-newquestion.png" alt="Icone de nouvelle question"></button></a>
-</section>
-<section class="listeQuestion">
+    <section class="listeQuestion">
            <p id="question-title">
                <?php
                if(count($questions)<=1){
@@ -16,8 +13,8 @@
                <span class="colored">:</span>
            </p>
        <a href="#" id="filtre">Filtrer <img id="imgFiltre" src="assets/questions/home/filter.png" alt="Icone de filtre"></a>
-</section>
-<?php
+    </section>
+    <?php
         foreach ($questions as $id) { ?>
             <a href="frontController.php?controller=questions&action=see&idQuestion=<?php echo($id->getIdQuestion()); ?>"><div class="question-id--container">
                     <div id="titreQuestion" >
@@ -40,5 +37,8 @@
                 </div></a>
 
         <?php } ?>
+    <section class="votes-home--container">
+        <a href="frontController.php?controller=questions&action=create"><button id="proposerQuestionButton">Proposer une Question <img id="imgPropose" src="assets/questions/home/button-newquestion.png" alt="Icone de nouvelle question"></button></a>
+    </section>
 
 
