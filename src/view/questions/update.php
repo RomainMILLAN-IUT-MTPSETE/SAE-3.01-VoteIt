@@ -1,11 +1,11 @@
 <link rel="stylesheet" href="css/formulaire.css">
 <link rel="stylesheet" href="css/Questions/questions-formulaire.css">
-<form class="formulaire--container" action="frontController.php?controller=questions&action=created" method="post">
+<form class="formulaire--container" action="frontController.php?controller=questions&action=updated" method="post">
     <div class="formulaire-template">
         <h2 class="title">Modification de question</h2>
         <div>
             <label for="autheur">Auteur</label>
-            <input type="text" name="autheur" id="autheur" placeholder="JohnDoe10" value="<?php echo htmlspecialchars($question->getIdQuestion()) ?>" required/>
+            <input type="text" name="autheur" id="autheur" placeholder="JohnDoe10" value="<?php echo htmlspecialchars($question->getAutheur()) ?>" readonly required/>
         </div>
         <div>
             <label for="titreQuestion">Titre</label>
@@ -19,7 +19,7 @@
             <div>
                 <label id="title-date" for="dtnaissance">Date d'écriture des réponses</label>
                 <span id="no-margin-top" class="flex-row"><p>Du </p><input id="date-input" type="date" name="ecritureDateDebut" id="ecritureDateDebut" value="<?php echo htmlspecialchars($question->getDateEcritureDebut()) ?>" required /></span>
-                <span class="flex-row"><p>Au </p> <input id="date-input" type="date" name="ecritureDateFin" id="ecritureDateFin" <?php echo htmlspecialchars($question->getDateEcritureFin()) ?> required /></span>
+                <span class="flex-row"><p>Au </p> <input id="date-input" type="date" name="ecritureDateFin" id="ecritureDateFin" value="<?php echo htmlspecialchars($question->getDateEcritureFin()) ?>" required /></span>
             </div>
             <div>
                 <label id="title-date" for="dtnaissance">Date des votes</label>
@@ -48,6 +48,7 @@
 
 
         <div>
+            <input type="hidden" name="idQuestion" value="<?php echo($_GET['idQuestion']); ?>">
             <input type="hidden" name="controller" value="questions">
             <input type="hidden" name="action" value="updated">
             <input type="submit" value="Modifier la question">

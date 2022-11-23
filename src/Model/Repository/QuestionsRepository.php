@@ -86,4 +86,30 @@ class QuestionsRepository extends AbstractRepository {
         $pdoStatement->execute($values);
     }
 
+    public function updateQuestion(Question $question){
+        try {
+            $pdo = Model::getPdo();
+            $sql = "UPDATE " . $this->getNomTable() . " SET autheur=:autheur, titreQuestion=:titreQuestion, ecritureDateDebut=:ecritureDateDebut, ecritureDateFin=:ecritureDateFin, voteDateDebut=:voteDateDebut, voteDateFin=:voteDateFin, categorieQuestion=:categorieQuestion WHERE idQuestion=:idQuestion";
+
+            $pdoStatement = $pdo->prepare($sql);
+
+            $values = [
+                'idQuestion' => $question->getIdQuestion(),
+                'autheur' => $question->getAutheur(),
+                'titreQuestion' => $question->getTitreQuestion(),
+                'ecritureDateDebut' => $question->getDateEcritureDebut(),
+                'ecritureDateFin' => $question->getDateEcritureFin(),
+                'voteDateDebut' => $question->getDateVoteDebut(),
+                'voteDateFin' => $question->getDateVoteFin(),
+                'categorieQuestion' => $question->getCategorieQuestion()];
+
+            $pdoStatement->execute($values);
+
+            return true;
+        } catch (PDOException $exception) {
+            echo $exception->getMessage();
+            return false;
+        }
+    }
+
 }
