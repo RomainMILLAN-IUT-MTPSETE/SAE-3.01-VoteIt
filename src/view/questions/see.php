@@ -7,7 +7,7 @@
                                                                                                src="assets/questions/see/delete.png" alt="nope"></a></h2>
             <p class="title-question-p"><?php echo($question->getTitreQuestion()) ?></p>
         </div>
-        <div class="sub-see-question-plan-container">
+        <div class="sub-see-question-container">
             <h2><span class="title-sub-see-question">Plan imposé:</span></h2>
             <?php
             if($sections == null){

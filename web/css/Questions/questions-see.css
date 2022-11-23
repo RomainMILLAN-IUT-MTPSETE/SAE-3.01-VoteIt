@@ -43,6 +43,7 @@ a {
     width: 400px;
     display: flex;
     flex-direction: row;
+    text-align: right;
 }
 
 .title-sub-see-question{
@@ -50,6 +51,7 @@ a {
     padding-left: 15px;
     font-family: "Poppins";
     font-size: 27.5px;
+    width: 250px;
 }
 
 .sub-see-question-container p {

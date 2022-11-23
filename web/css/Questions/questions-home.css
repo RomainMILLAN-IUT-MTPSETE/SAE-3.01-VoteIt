@@ -42,6 +42,7 @@ a {
     flex-direction: row;
     justify-content: space-between;
     margin-top: 50px;
+    font-size: 22.5px;
 }
 
 a#filtre {
@@ -69,10 +70,10 @@ a#filtre {
 
 p#question-title {
     border-bottom : solid 2px #9BD2A7;
-    width: 350px;
     text-align: end;
     font-family: "Poppins Light";
     font-weight: bolder;
+    width: 250px;
 }
 
 .votes-home--container div#question-title--container {
