@@ -22,7 +22,6 @@
                 <p><?php echo($item->getTexteSection()) ?></p>
             </div>
             <?php
-            //var_dump($item);
         }
         ?>
     </div>
