@@ -112,7 +112,7 @@ class ControllerQuestions{
             $modelQuestion = new Question($_POST['idQuestion'],$_POST['autheur'],$_POST['titreQuestion'],$_POST['ecritureDateDebut'],$_POST['ecritureDateFin'],$_POST['voteDateDebut'],$_POST['voteDateFin'], $_POST['categorieQuestion']);
             (new QuestionsRepository())->updateQuestion($modelQuestion);
 
-            MessageFlash::ajouter("success","Question n°" . $_POST['idQuestion'] . " modifiée");
+            MessageFlash::ajouter("info","Question n°" . $_POST['idQuestion'] . " modifiée");
             header("Location: frontController.php?controller=questions&action=home");
             exit();
         }else {

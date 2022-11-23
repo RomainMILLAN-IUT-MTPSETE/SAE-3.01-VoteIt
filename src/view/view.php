@@ -42,6 +42,7 @@
         while($element = current($array)) {
             ?>
             <div class="alert alert-<?php echo key($array)  ?>">
+                <a href="<?php echo('http://' . $_SERVER['HTTP_HOST']) . $_SERVER['REQUEST_URI'] ?>"><img src="assets/messageFlash/croix.png" alt="Icone Croix"></a>
                 <p><?php echo($array[key($array)]); ?></p>
             </div>
             <?php
