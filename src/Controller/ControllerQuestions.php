@@ -6,6 +6,7 @@ use App\VoteIt\Model\DataObject\Question;
 use App\VoteIt\Model\Repository\QuestionsRepository;
 use App\VoteIt\Model\Repository\ReponsesRepository;
 use App\VoteIt\Model\Repository\SectionRepository;
+use http\Message;
 
 class ControllerQuestions{
     private static function afficheVue(string $cheminVue, array $parametres = []) : void {
@@ -114,6 +115,7 @@ class ControllerQuestions{
         $modelQuestion = new Question($_GET['auteur'],$_GET['titreQuestion'],$_GET['texteQuestion'],$_GET['planQuestion'],$_GET['ecritureDateDebut'],$_GET['ecritureDateFin'],$_GET['VoteDateDebut'],$_GET['VoteDateFin'],$_GET['categorieQuestion']);
         (new QuestionsRepository())->update($modelQuestion);
         $questions = (new QuestionsRepository())->selectAll();
+        MessageFlash::ajouter("success","Question n°" . $_GET['idQuestion'] . " modifiée");
         header("Location: frontController.php?controller=questions&action=home");
         exit();
     }
@@ -122,6 +124,7 @@ class ControllerQuestions{
         (new QuestionsRepository())->delete($_GET['idQuestion']);
         (new ReponsesRepository())->deleteReponseByIdQuestion($_GET['idQuestion']);
         (new SectionRepository())->deleteSectionByIdQuestion($_GET['idQuestion']);
+        MessageFlash::ajouter("danger","Question n°" . $_GET['idQuestion'] . " supprimée");
         header("Location: frontController.php?controller=questions&action=home");
         exit();
     }
