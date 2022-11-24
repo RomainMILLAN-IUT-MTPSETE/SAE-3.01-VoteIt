@@ -1,7 +1,6 @@
 <link rel="stylesheet" href="css/Reponses/reponses-see.css">
 
 <section class="reponse-see--container">
-    <?php //var_dump($reponse); ?>
 
     <div class="title-reponse--container">
         <div class="title">
@@ -18,8 +17,7 @@
             ?>
             <div class="section-container">
                 <div class="section-title">
-                    <h2><?php echo((new SectionRepository())->selectFromIdSection($item->getIdSection())->getTitreSection()) ?>:
-                        <a href="#"><img src="assets/reponses/see/edit.png" alt=""></a></h2>
+                    <h2><?php echo((new SectionRepository())->selectFromIdSection($item->getIdSection())->getTitreSection()) ?>:</h2>
                 </div>
                 <p><?php echo($item->getTexteSection()) ?></p>
             </div>
