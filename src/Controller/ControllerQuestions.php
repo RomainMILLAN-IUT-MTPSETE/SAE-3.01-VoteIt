@@ -3,6 +3,7 @@ namespace App\VoteIt\Controller;
 
 use App\VoteIt\Lib\MessageFlash;
 use App\VoteIt\Model\DataObject\Question;
+use App\VoteIt\Model\DataObject\Section;
 use App\VoteIt\Model\Repository\QuestionsRepository;
 use App\VoteIt\Model\Repository\ReponsesRepository;
 use App\VoteIt\Model\Repository\SectionRepository;
@@ -111,6 +112,18 @@ class ControllerQuestions{
         if(isset($_POST['idQuestion']) AND isset($_POST['autheur']) AND isset($_POST['titreQuestion']) AND isset($_POST['ecritureDateDebut']) AND isset($_POST['ecritureDateFin']) AND isset($_POST['voteDateDebut']) AND isset($_POST['voteDateFin']) AND isset($_POST['categorieQuestion'])){
             $modelQuestion = new Question($_POST['idQuestion'],$_POST['autheur'],$_POST['titreQuestion'],$_POST['ecritureDateDebut'],$_POST['ecritureDateFin'],$_POST['voteDateDebut'],$_POST['voteDateFin'], $_POST['categorieQuestion']);
             (new QuestionsRepository())->updateQuestion($modelQuestion);
+
+            $sectionId = (new SectionRepository())->selectAllByIdQuestion($_POST['idQuestion']);
+            foreach($sectionId as $section){
+                $idSection = $section->getIdSection();
+                $titreSection = $_POST["sectionTitle" . $section->getIdSection()];
+                $descriptionSection = $_POST["sectionDesc" . $section->getIdSection()];
+
+                $modelSection = new Section($idSection, $_POST['idQuestion'], $titreSection, $descriptionSection);
+                (new SectionRepository())->updateSectionByIdSection($modelSection);
+            }
+
+
             MessageFlash::ajouter("info","Question n°" . $_POST['idQuestion'] . " modifiée");
             header("Location: frontController.php?controller=questions&action=home");
             exit();

@@ -101,20 +101,39 @@ class SectionRepository{
     }
 
     public function updateSectionByIdQuestion(Section $section) {
-
         try {
-        $pdo = Model::getPdo();
-        $sql = "UPDATE" . static::getNomTable() . "SET idQuestion=:idQuestion, titreQuestion=:titreQuestion, descriptionSection=:descriptionSection WHERE idSection=:idSection";
-        $pdoStatement = $pdo->prepare($sql);
-        $values = [
-            'idSection' => $section->getIdSection(),
-            'idQuestion' => $section->getIdQuestion(),
-            'titreSection' => $section->getTitreSection(),
-            'descriptionSection' => $section->getDescriptionSection()];
+            $pdo = Model::getPdo();
+            $sql = "UPDATE " . static::getNomTable() . " SET idQuestion=:idQuestion, titreSection=:titreSection, descriptionSection=:descriptionSection WHERE idSection=:idSection";
+            $pdoStatement = $pdo->prepare($sql);
+            $values = [
+                'idSection' => $section->getIdSection(),
+                'idQuestion' => $section->getIdQuestion(),
+                'titreSection' => $section->getTitreSection(),
+                'descriptionSection' => $section->getDescriptionSection()];
 
-        $pdoStatement->execute($values);
+            $pdoStatement->execute($values);
 
-        return true;
+            return true;
+        }catch (PDOException $exception) {
+            echo $exception->getMessage();
+            return false;
+        }
+    }
+
+    public function updateSectionByIdSection(Section $section) {
+        try {
+            $pdo = Model::getPdo();
+            $sql = "UPDATE " . static::getNomTable() . " SET titreSection=:titreSection, descriptionSection=:descriptionSection WHERE idSection=:idSection";
+            $pdoStatement = $pdo->prepare($sql);
+
+            $values = [
+                'titreSection' => $section->getTitreSection(),
+                'descriptionSection' => $section->getDescriptionSection(),
+                'idSection' => $section->getIdSection()];
+
+            $pdoStatement->execute($values);
+
+            return true;
         }catch (PDOException $exception) {
             echo $exception->getMessage();
             return false;
