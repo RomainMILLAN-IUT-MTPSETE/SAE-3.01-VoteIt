@@ -37,10 +37,6 @@
             <a href="frontController.php?controller=reponses&action=see&idReponse=<?php echo($item->getIdReponse()) ?>">
                 <div class="reponse-id--container">
                 <p class="reponse-number">Réponse n°<?php echo($item->getIdReponse()); ?></p>
-                    <a href="frontController.php?controller=reponses&action=update&idReponse=<?php echo($item->getIdReponse()) ?>">
-                        <img style="height: 20px" src="assets/questions/see/edit.png" alt="nope"></a>
-                    <a href="frontController.php?controller=reponses&action=delete&idReponse=<?php echo($item->getIdReponse()) ?>">
-                        <img  style="height: 20px" src="assets/questions/see/delete.png" alt="nope"></a>
                 <p class="reponse-title"><?php echo($item->getTitreReponse()) ?></p>
                 <div class="autheur-and-nb-vote--container">
                     <?php
