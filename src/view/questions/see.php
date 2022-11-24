@@ -1,6 +1,14 @@
 <link rel="stylesheet" href="css/Questions/questions-see.css">
 <section class="button-top">
-    <a href="frontController.php?controller=reponses&action=create&idQuestion=<?php echo($_GET['idQuestion']); ?>"><button id="buttonTop">Proposer une Réponse <img id="imgButtonTop" src="assets/questions/home/button-newquestion.png" alt="Icone de nouvelle reponse"></button></a>
+    <?php
+    use \App\VoteIt\Model\Repository\VoteRepository;
+    $dateNow = date("Y-m-d");
+    if($question->getDateEcritureDebut() < $dateNow  && $dateNow < $question->getDateEcritureFin()){
+        ?>    <a href="frontController.php?controller=reponses&action=create&idQuestion=<?php echo($_GET['idQuestion']); ?>"><button id="buttonTop">Proposer une Réponse <img id="imgButtonTop" src="assets/questions/home/button-newquestion.png" alt="Icone de nouvelle reponse"></button></a><?php
+    }else {
+        ?>    <a href="frontController.php?controller=reponses&action=create&idQuestion=<?php echo($_GET['idQuestion']); ?>"><button id="buttonTop-disable">Réponse Indisponible<img id="imgButtonTop" src="assets/questions/home/button-newquestion.png" alt="Icone de nouvelle reponse"></button></a><?php
+    }
+    ?>
 </section>
 <section class="question-see--container">
 
