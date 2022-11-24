@@ -13,7 +13,15 @@
         </div>
         <div>
             <label for="categorieQuestion">Catégorie</label>
-            <input type="text" name="categorieQuestion" id="categorieQuestion" placeholder="CategorieDeLaQuestion" value="<?php echo htmlspecialchars($question->getCategorieQuestion()) ?>" readonly required/>
+            <select name="categorieQuestion" id="categorieQuestion" required>
+                <option value="<?php echo($question->getCategorieQuestion()) ?>" selected>Actuel - <?php echo($question->getCategorieQuestion()) ?></option>
+                <?php
+                $categories = (new \App\VoteIt\Model\Repository\CategorieRepository())->selectAll();
+                foreach ($categories as $categorie){
+                    ?><option value="<?php echo($categorie->getNomCategorie()) ?>"><?php echo($categorie->getNomCategorie()) ?></option><?php
+                }
+                ?>
+            </select>
         </div>
         <div class="date--container">
             <div>

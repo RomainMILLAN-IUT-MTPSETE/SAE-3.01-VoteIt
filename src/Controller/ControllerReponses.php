@@ -95,7 +95,7 @@ class ControllerReponses{
             $modelReponse = new Reponse($_POST['idReponse'], $_POST['idQuestion'], $_POST['titreReponse'], $_POST['autheur'], $_POST['nbVote']);
             (new ReponsesRepository())->update($modelReponse);
 
-            for($i=1; $i<$_POST['nbSection']; $i++){
+            for($i=1; $i<$_POST['nbSection']+1; $i++){
                 $modelSection = new ReponseSection($_POST['idSection'.$i], $_POST['idReponse'], $_POST['texteSection'.$i]);
                 (new ReponseSectionRepository())->updateReponseSection($modelSection);
             }

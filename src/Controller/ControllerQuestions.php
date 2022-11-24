@@ -125,7 +125,7 @@ class ControllerQuestions{
 
 
             MessageFlash::ajouter("info","Question n°" . $_POST['idQuestion'] . " modifiée");
-            header("Location: frontController.php?controller=questions&action=home");
+            header("Location: frontController.php?controller=questions&action=see&idQuestion=".$_POST['idQuestion']);
             exit();
         }else {
             header("Location: frontController.php?controller=questions&action=update&idQuestion=".$_POST['idQuestion']);
