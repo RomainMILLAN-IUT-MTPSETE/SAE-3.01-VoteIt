@@ -41,4 +41,23 @@ class VoteRepository{
 
         return $res;
     }
+
+    public function vote($reponse){
+        //USERCHANGE
+        if($this->stateVote($reponse->getIdQuestion(), "nadalc")){
+            $pdo = Model::getPdo();
+            $query = "INSERT INTO ".$this->getNomTable()."(idQuestion, idReponse, idUtilisateur) VALUES(:idQuestion, :idReponse, :idUtilisateur);";
+            $pdoStatement = $pdo->prepare($query);
+
+            //CHANGEUSER
+            $values = [
+                'idQuestion' => $reponse->getIdQuestion(),
+                'idReponse' => $reponse->getIdReponse(),
+                'idUtilisateur' => "nadalc"];
+
+            $pdoStatement->execute($values);
+
+            (new ReponsesRepository())->update(new Reponse($reponse->getIdReponse(), $reponse->getIdQuestion(), $reponse->getTitreReponse(), $reponse->getAutheurId(), $reponse->getNbVote()+1));
+        }
+    }
 }

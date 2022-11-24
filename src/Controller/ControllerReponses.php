@@ -10,6 +10,8 @@ use App\VoteIt\Model\Repository\ReponseSectionRepository;
 use App\VoteIt\Model\Repository\ReponsesRepository;
 use App\VoteIt\Model\Repository\SectionRepository;
 use App\VoteIt\Controller\ControllerErreur;
+use App\VoteIt\Model\Repository\VoteRepository;
+
 class ControllerReponses{
     private static function afficheVue(string $cheminVue, array $parametres = []) : void {
         extract($parametres); // Crée des variables à partir du tableau $parametres
@@ -50,6 +52,14 @@ class ControllerReponses{
     public static function delete() {
         if (isset($_GET['idReponse'])) {
             self::afficheVue('view.php',['pagetitle' => "VoteIt - Suppression de la réponse n°" . $_GET['idReponse'], 'cheminVueBody' => "reponses/delete.php"]);
+        }else {
+            ControllerErreur::erreurCodeErreur('RC-2');
+        }
+    }
+
+    public static function vote(){
+        if(isset($_GET['idReponse'])){
+            self::afficheVue('view.php', ['pagetitle' => 'VoteIt - Voter pour la réponse n°'.$_GET['idReponse'], 'cheminVueBody' => "reponses/voter.php"]);
         }else {
             ControllerErreur::erreurCodeErreur('RC-2');
         }
@@ -124,9 +134,13 @@ class ControllerReponses{
         }
     }
 
-    public static function vote(){
-        if(isset($_GET['idReponse'])){
+    public static function voted(){
+        if(isset($_POST['idReponse'])){
+            (new VoteRepository())->vote((new ReponsesRepository())->selectReponseByIdReponse($_POST['idReponse']));
 
+            MessageFlash::ajouter("success", "Vous venez de voter pour la réponse n°".$_POST['idReponse']);
+            header("Location: frontController.php?controller=reponses&action=see&idReponse=".$_POST['idReponse']);
+            exit();
         }else {
             ControllerErreur::erreurCodeErreur('RC-2');
         }

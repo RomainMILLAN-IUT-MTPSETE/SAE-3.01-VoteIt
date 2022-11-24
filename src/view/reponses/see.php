@@ -2,12 +2,13 @@
 <section class="button-top">
     <?php
     use \App\VoteIt\Model\Repository\VoteRepository;
+    //USERCHANGE
     $voteState = (new VoteRepository())->stateVote($reponse->getIdQuestion(), "nadalc");
     $dateNow = date("Y-m-d");
     if($voteState == true && $question->getDateVoteDebut() < $dateNow  && $dateNow < $question->getDateVoteFin()){
-        ?><a href="frontController.php?controller=reponses&action=vote&idReponse=<?php echo($_GET['idReponse']); ?>"><button id="buttonTop">Voter pour cette réponse <img id="imgButtonTop" src="assets/questions/home/button-newquestion.png" alt="Icone de nouvelle reponse"></button></a><?php
+        ?><a href="frontController.php?controller=reponses&action=vote&idReponse=<?php echo($_GET['idReponse']); ?>"><button id="buttonTop">Voter pour cette réponse <img id="imgButtonTop" src="assets/reponses/see/like.png" alt="Icone de nouvelle reponse"></button></a><?php
     }else {
-        ?><a href=""><button id="buttonTop-disable">Vote indisponible <img id="imgButtonTop" src="assets/questions/home/button-newquestion.png" alt="Icone de nouvelle reponse"></button></a><?php
+        ?><button id="buttonTop-disable">Vote indisponible <img id="imgButtonTop" src="assets/reponses/see/like.png" alt="Icone de nouvelle reponse"></button><?php
     }
     ?>
 </section>
