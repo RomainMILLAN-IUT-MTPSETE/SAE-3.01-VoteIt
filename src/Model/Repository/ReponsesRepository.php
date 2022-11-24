@@ -129,6 +129,20 @@ class ReponsesRepository extends AbstractRepository{
         $pdoStatement->execute($values);
     }
 
+    public function deleteReponseByIdReponse($idReponse) {
+        (new ReponseSectionRepository())->deleteReponseSectionByIdReponse($idReponse);
+
+        $sql = " DELETE FROM " .  static::getNomTable() . " WHERE idReponse=:idReponse";
+        // Préparation de la requête
+        $pdoStatement = Model::getPdo()->prepare($sql);
+        $values = array(
+            "idReponse" => $idReponse,
+            //nomdutag => valeur, ...
+        );
+        // On donne les valeurs et on exécute la requête
+        $pdoStatement->execute($values);
+    }
+
     public function updateQuestionById($reponse){
         try {
             $pdo = Model::getPdo();

@@ -81,7 +81,7 @@ class ControllerReponses{
                 (new ReponseSectionRepository())->createReponseSection($ReponseSection);
             }
 
-            MessageFlash::ajouter("success", "Réponse n°". $idReponse ." crée !");
+            MessageFlash::ajouter("success", "Réponse n°". $idReponse ." crée");
             header("Location: frontController.php?controller=questions&action=see&idQuestion=".$idQuestion);
             exit();
             //header("Location: frontController.php?controller=reponses&idReponse=".$)
@@ -100,7 +100,7 @@ class ControllerReponses{
                 (new ReponseSectionRepository())->updateReponseSection($modelSection);
             }
 
-            MessageFlash::ajouter("info","Réponse n°" . $_POST['idReponse'] . " mise à jour !");
+            MessageFlash::ajouter("info","Réponse n°" . $_POST['idReponse'] . " mise à jour");
             header("Location: frontController.php?controller=reponses&action=see&idReponse=".$_POST['idReponse']);
             exit();
         }else {
@@ -111,9 +111,15 @@ class ControllerReponses{
 
     public static function deleted(){
         if(isset($_POST['idReponse'])){
-
+            $idQuestion = (new ReponsesRepository())->selectReponseByIdReponse($_POST['idReponse'])->getIdQuestion();
+            (new ReponsesRepository())->deleteReponseByIdReponse($_POST['idReponse']);
+            
+            MessageFlash::ajouter("danger", "Réponse n°" . $_POST['idReponse'] . " supprimé");
+            header("Location: frontController.php?controller=questions&action=see&idQuestion=".$idQuestion);
+            exit();
         }else {
             header("Location: frontController.php?controller=questions&action=home");
+            exit();
         }
     }
 
