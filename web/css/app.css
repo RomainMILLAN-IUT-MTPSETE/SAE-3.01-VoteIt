@@ -62,3 +62,8 @@ body {
   font-family: "Poppins Light";
   font-weight: bold;
 }
+
+
+.bolder {
+  font-family: "Poppins Medium";
+}

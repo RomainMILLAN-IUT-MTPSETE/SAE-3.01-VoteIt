@@ -28,7 +28,7 @@
             foreach ($sections as $section) {
                 ?>
                 <div class="section-plan--container">
-                    <p class="section-p"><?php echo($section->getTitreSection()); ?>:</p>
+                    <p class="section-p"><span class="bolder"><?php echo($section->getTitreSection()); ?></span>:</p>
                     <p class="section-p">  • <?php echo($section->getDescriptionSection()); ?></p>
                 </div>
                 <?php
@@ -37,8 +37,8 @@
         </div>
         <div class="sub-see-question-container" id="sub-see-question-container-delais">
             <h2><span class="title-sub-see-question">Délais:</span></h2>
-            <p id="sub-see-question-container-delais-pfirst">Réponses: Du <?php echo($question->getDateEcritureDebutFR()); ?> au <?php echo($question->getDateEcritureFinFR()); ?></p>
-            <p>Vote: Du <?php echo($question->getDateVoteDebutFR()) ?> au <?php echo($question->getDateVoteFinFR()) ?></p>
+            <p id="sub-see-question-container-delais-pfirst"><span class="bolder">Réponses</span>: Du <?php echo($question->getDateEcritureDebutFR()); ?> au <?php echo($question->getDateEcritureFinFR()); ?></p>
+            <p><span class="bolder">Vote</span>: Du <?php echo($question->getDateVoteDebutFR()) ?> au <?php echo($question->getDateVoteFinFR()) ?></p>
         </div>
     </section>
     <hr class="inter-container-mobile" WIDTH="100px" COLOR="BLACK">
