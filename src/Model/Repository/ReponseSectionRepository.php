@@ -75,4 +75,26 @@ class ReponseSectionRepository{
         // On donne les valeurs et on exécute la requête
         $pdoStatement->execute($values);
     }
+
+    public function updateReponseSection(ReponseSection $reponseSection){
+        try {
+            $pdo = Model::getPdo();
+            $sql = "UPDATE " . $this->getNomTable() . " SET texteSection=:texteSection WHERE idReponse=:idReponse AND idSection=:idSection";
+
+            $pdoStatement = $pdo->prepare($sql);
+
+            $values = array(
+                "texteSection" => $reponseSection->getTexteSection(),
+                "idReponse" => $reponseSection->getIdReponse(),
+                "idSection" => $reponseSection->getIdSection()
+                //nomdutag => valeur, ...
+            );
+            $pdoStatement->execute($values);
+
+            return true;
+        } catch (PDOException $exception) {
+            echo $exception->getMessage();
+            return false;
+        }
+    }
 }
