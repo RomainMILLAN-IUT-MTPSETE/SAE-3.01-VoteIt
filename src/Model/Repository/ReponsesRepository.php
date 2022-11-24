@@ -165,4 +165,29 @@ class ReponsesRepository extends AbstractRepository{
             return false;
         }
     }
+
+    public function stateVote($idQuestion, $idReponse, $idUtilisateur): bool{
+        $pdo = Model::getPdo();
+        $sql = " SELECT COUNT(*) as nbVote FROM " .  static::getNomTable() . " WHERE idUtilisateur=:idUtilisateur";
+        // Préparation de la requête
+        $pdoStatement = $pdo->prepare($sql);
+
+
+        $values = array(
+            "idUtilisateur" => 'nadalc'
+        );
+
+        // On donne les valeurs et on exécute la requête
+        $pdoStatement->execute($values);
+        $resultatSQL = $pdoStatement->fetch();
+
+        $resultat = $resultatSQL['nbVote'];
+        $res = true;
+
+        if($resultat >= 1){
+            $res = false;
+        }
+
+        return $res;
+    }
 }

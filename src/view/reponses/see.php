@@ -1,5 +1,16 @@
 <link rel="stylesheet" href="css/Reponses/reponses-see.css">
+<section class="button-top">
+    <?php
+    use \App\VoteIt\Model\Repository\VoteRepository;
+    $voteState = (new VoteRepository())->stateVote($reponse->getIdQuestion(), "nadalc");
 
+    if($voteState == true){
+        ?><a href="frontController.php?controller=reponses&action=vote&idReponse=<?php echo($_GET['idReponse']); ?>"><button id="buttonTop">Voter pour cette réponse <img id="imgButtonTop" src="assets/questions/home/button-newquestion.png" alt="Icone de nouvelle reponse"></button></a><?php
+    }else {
+        ?><a href=""><button id="buttonTop-disable">Voter pour cette réponse <img id="imgButtonTop" src="assets/questions/home/button-newquestion.png" alt="Icone de nouvelle reponse"></button></a><?php
+    }
+    ?>
+</section>
 <section class="reponse-see--container">
 
     <div class="title-reponse--container">

@@ -48,3 +48,17 @@ body {
   width: 17px;
   height: 17px;
 }
+
+.button-top #buttonTop-disable{
+  display: block;
+  padding: 8px 12px;
+  background-color: #D6F1DC;
+  border : solid 1px black;
+  border-radius: 10px;
+  font-size: 14px;
+  margin: auto;
+  margin-top: 30px;
+  margin-bottom: 20px;
+  font-family: "Poppins Light";
+  font-weight: bold;
+}

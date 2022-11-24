@@ -123,6 +123,14 @@ class ControllerReponses{
         }
     }
 
+    public static function vote(){
+        if(isset($_GET['idReponse'])){
+
+        }else {
+            ControllerErreur::erreurCodeErreur('RC-2');
+        }
+    }
+
 
 
 }
