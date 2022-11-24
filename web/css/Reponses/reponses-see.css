@@ -17,6 +17,20 @@
     font-size: 20px;
     width: 700px;
 }
+.title-reponse--container .nbVote-span {
+    display: flex;
+    flex-direction: row;
+    align-content: center;
+    margin-left: 125px;
+}
+.title-reponse--container .nbVote-span img {
+    height: 20px;
+}
+.title-reponse--container .nbVote-span p{
+    font-size: 20px;
+    margin: 0;
+    margin-left: 10px;
+}
 
 /*SECTION*/
 .sections-reponse--container{

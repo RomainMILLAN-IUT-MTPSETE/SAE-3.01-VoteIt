@@ -3,11 +3,11 @@
     <?php
     use \App\VoteIt\Model\Repository\VoteRepository;
     $voteState = (new VoteRepository())->stateVote($reponse->getIdQuestion(), "nadalc");
-
-    if($voteState == true){
+    $dateNow = date("Y-m-d");
+    if($voteState == true && $question->getDateVoteDebut() < $dateNow  && $dateNow < $question->getDateVoteFin()){
         ?><a href="frontController.php?controller=reponses&action=vote&idReponse=<?php echo($_GET['idReponse']); ?>"><button id="buttonTop">Voter pour cette réponse <img id="imgButtonTop" src="assets/questions/home/button-newquestion.png" alt="Icone de nouvelle reponse"></button></a><?php
     }else {
-        ?><a href=""><button id="buttonTop-disable">Voter pour cette réponse <img id="imgButtonTop" src="assets/questions/home/button-newquestion.png" alt="Icone de nouvelle reponse"></button></a><?php
+        ?><a href=""><button id="buttonTop-disable">Vote indisponible <img id="imgButtonTop" src="assets/questions/home/button-newquestion.png" alt="Icone de nouvelle reponse"></button></a><?php
     }
     ?>
 </section>
@@ -18,6 +18,7 @@
             <h2>Réponse n°<?php echo($reponse->getIdReponse()); ?>: <a href="frontController.php?controller=reponses&action=update&idReponse=<?php echo($reponse->getIdReponse()) ?>"><img src="assets/reponses/see/edit.png" alt="Icone d edition de reponse"></a><a href="frontController.php?controller=reponses&action=delete&idReponse=<?php echo($reponse->getIdReponse()) ?>"><img src="assets/reponses/see/delete.png" alt=""></a></h2></h2>
         </div>
         <p class="title-reponse-p"><?php echo($reponse->getTitreReponse()); ?></p>
+        <span class="nbVote-span"><img src="assets/reponses/see/like.png" alt="Icone de vote"><p><?php echo($reponse->getNbVote()); ?></p></span>
     </div>
     <hr WIDTH="400px">
     <div class="sections-reponse--container">
