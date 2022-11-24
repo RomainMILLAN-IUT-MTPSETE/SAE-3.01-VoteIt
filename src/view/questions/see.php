@@ -1,5 +1,9 @@
 <link rel="stylesheet" href="css/Questions/questions-see.css">
+<section class="button-top">
+    <a href="frontController.php?controller=reponses&action=create&idQuestion=<?php echo($_GET['idQuestion']); ?>"><button id="buttonTop">Proposer une Réponse <img id="imgButtonTop" src="assets/questions/home/button-newquestion.png" alt="Icone de nouvelle reponse"></button></a>
+</section>
 <section class="question-see--container">
+
     <section class="sect-see-question">
         <div class="sub-see-question-container">
             <h2><span class="title-sub-see-question">Question n°<?php echo($question->getIdQuestion()) ?>:</span><a href="frontController.php?controller=questions&action=update&idQuestion=<?php echo($_GET['idQuestion']) ?>"><img class="ml12px"
@@ -50,7 +54,7 @@
             <?php
         }
         ?>
-        <a href="frontController.php?controller=reponses&action=create&idQuestion=<?php echo($_GET['idQuestion']); ?>"><button id="proposerReponse">Proposer une Réponse <img id="imgPropose" src="assets/questions/home/button-newquestion.png" alt="Icone de nouvelle question"></button></a>
+        <!--<a href="frontController.php?controller=reponses&action=create&idQuestion=<?php echo($_GET['idQuestion']); ?>"><button id="proposerReponse">Proposer une Réponse <img id="imgPropose" src="assets/questions/home/button-newquestion.png" alt="Icone de nouvelle question"></button></a>-->
 
     </section>
 </section>

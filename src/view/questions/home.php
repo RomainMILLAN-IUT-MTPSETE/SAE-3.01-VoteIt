@@ -1,4 +1,7 @@
 <link rel="stylesheet" href="css/Questions/questions-home.css" type="text/css" >
+    <section class="button-top">
+        <a href="frontController.php?controller=questions&action=create"><button id="buttonTop">Proposer une Question <img id="imgButtonTop" src="assets/questions/home/button-newquestion.png" alt="Icone de nouvelle question"></button></a>
+    </section>
     <section class="listeQuestion">
            <p id="question-title">
                <?php
@@ -37,8 +40,6 @@
                 </div></a>
 
         <?php } ?>
-    <section class="votes-home--container">
-        <a href="frontController.php?controller=questions&action=create"><button id="proposerQuestionButton">Proposer une Question <img id="imgPropose" src="assets/questions/home/button-newquestion.png" alt="Icone de nouvelle question"></button></a>
-    </section>
+
 
 

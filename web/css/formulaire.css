@@ -56,7 +56,7 @@ a {
 }
 @media (min-width: 1000px){
     .formulaire-template div {
-        width: 400px;
+        width: 700px;
     }
     .formulaire-template div label {
         font-size: 15px;
@@ -64,12 +64,12 @@ a {
     }
     .formulaire-template div input {
         height: 35px;
-        width: 390px;
+        width: 700px;
         font-size: 20px;
     }
     .formulaire-template div select {
         height: 35px;
-        width: 400px;
+        width: 700px;
         font-size: 20px;
     }
 }
@@ -100,6 +100,20 @@ a {
 
 
 
+/*TEXTAREA*/
+.formulaire-template div textarea{
+    margin-top: -5px;
+    font-size: 45px;
+    height: 150px;
+    width: 700px;
+    border: none;
+    border-radius: 5px;
+    background-color: #F9F9F9;
+    border: 0.25px solid black;
+    padding-left: 15px;
+}
+
+
 /*SUBMIT*/
 .formulaire-template div input[type=submit] {
     margin: auto;
@@ -110,6 +124,7 @@ a {
     color: white;
     border-radius: 100px;
     border: 0px;
+    margin-bottom: 50px;
 }
 @media (min-width: 1000px) {
     .formulaire-template div input[type=submit] {
