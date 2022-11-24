@@ -128,4 +128,27 @@ class ReponsesRepository extends AbstractRepository{
         // On donne les valeurs et on exécute la requête
         $pdoStatement->execute($values);
     }
+
+    public function updateQuestionById($reponse){
+        try {
+            $pdo = Model::getPdo();
+            $sql = "UPDATE " . $this->getNomTable() . " SET idReponse=:idReponse, titreReponse=:titreReponse, autheur=:autheur, nbVote=:nbVote WHERE idQuestion=:idQuestion";
+
+            $pdoStatement = $pdo->prepare($sql);
+
+            $values = [
+                'idQuestion' => $reponse->getIdQuestion(),
+                'titreQuestion' => $reponse->getTitreReponse(),
+                'autheur' => $reponse->getAutheurId(),
+                'nbVote' => $reponse->getNbVote(),
+                'idReponse' => $reponse->getAutheurId()];
+
+            $pdoStatement->execute($values);
+
+            return true;
+        } catch (PDOException $exception) {
+            echo $exception->getMessage();
+            return false;
+        }
+    }
 }

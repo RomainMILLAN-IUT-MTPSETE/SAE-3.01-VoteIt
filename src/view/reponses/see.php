@@ -1,4 +1,5 @@
 <link rel="stylesheet" href="css/Reponses/reponses-see.css">
+
 <section class="reponse-see--container">
     <?php //var_dump($reponse); ?>
 
@@ -12,6 +13,7 @@
     <div class="sections-reponse--container">
         <?php
         use \App\VoteIt\Model\Repository\SectionRepository;
+
         foreach ($sectionsReponse as $item) {
             ?>
             <div class="section-container">

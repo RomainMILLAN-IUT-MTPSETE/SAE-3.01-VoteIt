@@ -100,4 +100,25 @@ class SectionRepository{
         $pdoStatement->execute($values);
     }
 
+    public function updateSectionByIdQuestion(Section $section) {
+
+        try {
+        $pdo = Model::getPdo();
+        $sql = "UPDATE" . static::getNomTable() . "SET idQuestion=:idQuestion, titreQuestion=:titreQuestion, descriptionSection=:descriptionSection WHERE idSection=:idSection";
+        $pdoStatement = $pdo->prepare($sql);
+        $values = [
+            'idSection' => $section->getIdSection(),
+            'idQuestion' => $section->getIdQuestion(),
+            'titreSection' => $section->getTitreSection(),
+            'descriptionSection' => $section->getDescriptionSection()];
+
+        $pdoStatement->execute($values);
+
+        return true;
+        }catch (PDOException $exception) {
+            echo $exception->getMessage();
+            return false;
+        }
+    }
+
 }

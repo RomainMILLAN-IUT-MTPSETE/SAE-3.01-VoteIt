@@ -71,4 +71,32 @@ class ControllerReponses{
         }
     }
 
+    public static function update() {
+        $sectionId = (new SectionRepository())->selectAllByIdQuestion($_GET['idReponse']);
+        self::afficheVue('view.php', ['pagetitle' => "VoteIt - Modifier une réponse", 'cheminVueBody' => "reponses/update.php"
+            , 'reponse' => (new ReponsesRepository())->select($_GET['idReponse']), 'sectionIds' => $sectionId]);
+    }
+
+    public static function updated() {
+        if(isset($_POST['idReponse']) and isset($_POST['idQuestion']) AND isset($_POST['titreReponse']) AND isset($_POST['autheurId']) AND isset($_POST['nbVote'])){
+            $modelReponse = new Reponse($_POST['idReponse'], $_POST['idQuestion'], $_POST['titreReponse'], $_POST['autheurId'], $_POST['nbVote']);
+            (new ReponsesRepository())->update($modelReponse);
+            MessageFlash::ajouter("info","Réponse n°" . $_POST['idReponse'] . " mise à jour !");
+            header("Location: frontController.php?controller=reponses&action=home");
+            exit();
+        }else {
+            header("Location: frontController.php?controller=reponses&action=update&idReponse=".$_POST['idReponse']);
+            exit();
+        }
+    }
+
+    public static function delete() {
+        if (isset($_GET['idReponse'])) {
+            self::afficheVue('view.php',['pagetitle' => "VoteIt - Suppression de la réponse n°" . $_GET['idReponse'], 'cheminVueBody' => "reponses/delete.php"]);
+        }
+        else {
+            echo 'l\'identifiant de la réponse non renseignée !';
+        }
+    }
+
 }
