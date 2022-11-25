@@ -110,23 +110,37 @@ class ControllerQuestions{
 
     public static function updated() {
         if(isset($_POST['idQuestion']) AND isset($_POST['autheur']) AND isset($_POST['titreQuestion']) AND isset($_POST['ecritureDateDebut']) AND isset($_POST['ecritureDateFin']) AND isset($_POST['voteDateDebut']) AND isset($_POST['voteDateFin']) AND isset($_POST['categorieQuestion'])){
-            $modelQuestion = new Question($_POST['idQuestion'],$_POST['autheur'],$_POST['titreQuestion'],$_POST['ecritureDateDebut'],$_POST['ecritureDateFin'],$_POST['voteDateDebut'],$_POST['voteDateFin'], $_POST['categorieQuestion']);
-            (new QuestionsRepository())->updateQuestion($modelQuestion);
+            if($_POST['ecritureDateDebut'] > $_POST['ecritureDateFin']){
+                MessageFlash::ajouter("danger", "La date d'écriture de début est supérieur à la date d'écriture de fin");
+                header("Location: frontController.php?controller=questions&action=update&idQuestion=".$_POST['idQuestion']);
+                exit();
+            }else if($_POST['voteDateDebut'] > $_POST['voteDateFin']){
+                MessageFlash::ajouter("danger", "La date de vote de début est supérieur à la date de vote de fin");
+                header("Location: frontController.php?controller=questions&action=update&idQuestion=".$_POST['idQuestion']);
+                exit();
+            }else if($_POST['ecritureDateFin'] > $_POST['voteDateDebut']){
+                MessageFlash::ajouter("danger", "Les dates de votes sont avant les dates d'écritures");
+                header("Location: frontController.php?controller=questions&action=update&idQuestion=".$_POST['idQuestion']);
+                exit();
+            }else {
+                $modelQuestion = new Question($_POST['idQuestion'],$_POST['autheur'],$_POST['titreQuestion'],$_POST['ecritureDateDebut'],$_POST['ecritureDateFin'],$_POST['voteDateDebut'],$_POST['voteDateFin'], $_POST['categorieQuestion']);
+                (new QuestionsRepository())->updateQuestion($modelQuestion);
 
-            $sectionId = (new SectionRepository())->selectAllByIdQuestion($_POST['idQuestion']);
-            foreach($sectionId as $section){
-                $idSection = $section->getIdSection();
-                $titreSection = $_POST["sectionTitle" . $section->getIdSection()];
-                $descriptionSection = $_POST["sectionDesc" . $section->getIdSection()];
+                $sectionId = (new SectionRepository())->selectAllByIdQuestion($_POST['idQuestion']);
+                foreach($sectionId as $section){
+                    $idSection = $section->getIdSection();
+                    $titreSection = $_POST["sectionTitle" . $section->getIdSection()];
+                    $descriptionSection = $_POST["sectionDesc" . $section->getIdSection()];
 
-                $modelSection = new Section($idSection, $_POST['idQuestion'], $titreSection, $descriptionSection);
-                (new SectionRepository())->updateSectionByIdSection($modelSection);
+                    $modelSection = new Section($idSection, $_POST['idQuestion'], $titreSection, $descriptionSection);
+                    (new SectionRepository())->updateSectionByIdSection($modelSection);
+                }
+
+
+                MessageFlash::ajouter("info","Question n°" . $_POST['idQuestion'] . " modifiée");
+                header("Location: frontController.php?controller=questions&action=see&idQuestion=".$_POST['idQuestion']);
+                exit();
             }
-
-
-            MessageFlash::ajouter("info","Question n°" . $_POST['idQuestion'] . " modifiée");
-            header("Location: frontController.php?controller=questions&action=see&idQuestion=".$_POST['idQuestion']);
-            exit();
         }else {
             header("Location: frontController.php?controller=questions&action=update&idQuestion=".$_POST['idQuestion']);
             exit();
