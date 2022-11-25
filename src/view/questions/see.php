@@ -6,7 +6,7 @@
     if($question->getDateEcritureDebut() < $dateNow  && $dateNow < $question->getDateEcritureFin()){
         ?>    <a href="frontController.php?controller=reponses&action=create&idQuestion=<?php echo($_GET['idQuestion']); ?>"><button id="buttonTop">Proposer une Réponse <img id="imgButtonTop" src="assets/questions/home/button-newquestion.png" alt="Icone de nouvelle reponse"></button></a><?php
     }else {
-        ?>    <a href="frontController.php?controller=reponses&action=create&idQuestion=<?php echo($_GET['idQuestion']); ?>"><button id="buttonTop-disable">Réponse Indisponible<img id="imgButtonTop" src="assets/questions/home/button-newquestion.png" alt="Icone de nouvelle reponse"></button></a><?php
+        ?>    <button id="buttonTop-disable">Réponse Indisponible<img id="imgButtonTop" src="assets/questions/home/button-newquestion.png" alt="Icone de nouvelle reponse"></button><?php
     }
     ?>
 </section>
@@ -18,6 +18,9 @@
                             src="assets/questions/see/edit.png" alt="nope"></a><a href="frontController.php?controller=questions&action=delete&idQuestion=<?php echo($_GET['idQuestion']) ?>"><img class="ml8px"
                                                                                                src="assets/questions/see/delete.png" alt="nope"></a></h2>
             <p class="title-question-p"><?php echo($question->getTitreQuestion()) ?></p>
+            <p><span class="bolder">Auteur:</span> <?php
+                $autheur = (new \App\VoteIt\Model\Repository\UtilisateurRepository())->select($question->getAutheur());
+                echo($autheur->getNom() . " " . $autheur->getPrenom()) ?></p>
         </div>
         <div class="sub-see-question-container">
             <h2><span class="title-sub-see-question">Plan imposé:</span></h2>

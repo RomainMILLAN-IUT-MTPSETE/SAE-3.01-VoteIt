@@ -9,6 +9,7 @@ a {
 
 .title-question-p{
     font-size: 22.5px;
+    width: 500px;
 }
 
 .question-see--container{
@@ -57,9 +58,10 @@ a {
 }
 
 .sub-see-question-container p {
-    padding-left: 30px;
+    padding-left: 100px;
     margin-bottom: 0px;
     margin-top: 0px;
+    width: 500px;
 
 }
 
@@ -76,10 +78,11 @@ a {
 .section-plan--container p {
     margin-top: 0px;
     margin-bottom: 0px;
-    padding-left: 30px;
+    padding-left: 100px;
 }
 .section-plan--container p:nth-child(2){
-    margin-left: 10px;
+    margin-left: 25px;
+    margin-top: -5px;
 }
 
 .section-plan--container{
