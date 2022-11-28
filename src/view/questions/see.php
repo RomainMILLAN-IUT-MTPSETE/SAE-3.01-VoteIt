@@ -14,7 +14,7 @@
 
     <section class="sect-see-question">
         <div class="sub-see-question-container">
-            <h2><span class="title-sub-see-question">Question n°<?php echo($question->getIdQuestion()) ?>:</span><a href="frontController.php?controller=questions&action=update&idQuestion=<?php echo($_GET['idQuestion']) ?>"><img class="ml12px"
+            <h2><span class="title-sub-see-question">Question n°<?php echo($question->getIdQuestion()) ?>  <span class="colored">:</span> </span><a href="frontController.php?controller=questions&action=update&idQuestion=<?php echo($_GET['idQuestion']) ?>"><img class="ml12px"
                             src="assets/questions/see/edit.png" alt="nope"></a><a href="frontController.php?controller=questions&action=delete&idQuestion=<?php echo($_GET['idQuestion']) ?>"><img class="ml8px"
                                                                                                src="assets/questions/see/delete.png" alt="nope"></a></h2>
             <p class="title-question-p"><?php echo($question->getTitreQuestion()) ?></p>
@@ -23,7 +23,7 @@
                 echo($autheur->getNom() . " " . $autheur->getPrenom()) ?></p>
         </div>
         <div class="sub-see-question-container">
-            <h2><span class="title-sub-see-question">Plan imposé:</span></h2>
+            <h2><span class="title-sub-see-question">Plan imposé  <span class="colored">:</span></span></h2>
             <?php
             if($sections == null){
                 echo("<p>Aucun plan ajouté à la question</p>");
@@ -39,7 +39,7 @@
             ?>
         </div>
         <div class="sub-see-question-container" id="sub-see-question-container-delais">
-            <h2><span class="title-sub-see-question">Délais:</span></h2>
+            <h2><span class="title-sub-see-question">Délais  <span class="colored">:</span></span></h2>
             <p id="sub-see-question-container-delais-pfirst"><span class="bolder">Réponses</span>: Du <?php echo($question->getDateEcritureDebutFR()); ?> au <?php echo($question->getDateEcritureFinFR()); ?></p>
             <p><span class="bolder">Vote</span>: Du <?php echo($question->getDateVoteDebutFR()) ?> au <?php echo($question->getDateVoteFinFR()) ?></p>
         </div>
