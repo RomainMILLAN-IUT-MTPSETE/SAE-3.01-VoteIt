@@ -17,16 +17,21 @@
     font-size: 20px;
     width: 700px;
 }
-.title-reponse--container .nbVote-span {
+.title-reponse--container .info-container{
+    display: flex;
+    flex-direction: column;
+}
+.title-reponse--container .info-reponse-span {
     display: flex;
     flex-direction: row;
     align-content: center;
     margin-left: 125px;
 }
-.title-reponse--container .nbVote-span img {
+.title-reponse--container .info-reponse-span img {
     height: 20px;
+    margin-left: 5px;
 }
-.title-reponse--container .nbVote-span p{
+.title-reponse--container .info-reponse-span p{
     font-size: 20px;
     margin: 0;
     margin-left: 10px;

@@ -19,7 +19,10 @@
             <h2>Réponse n°<?php echo($reponse->getIdReponse()); ?>: <a href="frontController.php?controller=reponses&action=update&idReponse=<?php echo($reponse->getIdReponse()) ?>"><img src="assets/reponses/see/edit.png" alt="Icone d edition de reponse"></a><a href="frontController.php?controller=reponses&action=delete&idReponse=<?php echo($reponse->getIdReponse()) ?>"><img src="assets/reponses/see/delete.png" alt=""></a></h2></h2>
         </div>
         <p class="title-reponse-p"><?php echo($reponse->getTitreReponse()); ?></p>
-        <span class="nbVote-span"><p>Votes: <?php echo($reponse->getNbVote()); ?></p><img src="assets/reponses/see/like.png" alt="Icone de vote"></span>
+        <div class="info-container">
+            <div><span class="info-reponse-span"><p><span class="bolder">Auteur</span>: <?php echo($reponse->getAutheurId()) ?></span></div>
+            <div><span class="info-reponse-span"><p><span class="bolder">Votes</span>: <?php echo($reponse->getNbVote()); ?></p><img src="assets/reponses/see/like.png" alt="Icone de vote"></span></div>
+        </div>
     </div>
     <hr WIDTH="400px">
     <div class="sections-reponse--container">
