@@ -12,7 +12,7 @@
     </div>
     <div id="checkbox-div">
         <input type="checkbox" name="remember" id="remember">
-        <p>Se souvenir de moi ?</p>
+        <a href="frontController.php?controller=profil&action=mdpoublie"><p>Se souvenir de moi ?</p></a>
     </div>
 
 

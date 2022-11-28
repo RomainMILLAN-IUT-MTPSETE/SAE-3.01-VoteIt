@@ -1,4 +1,4 @@
-<link rel="stylesheet" href="css/Profil/profil-connexion.css">
+    <link rel="stylesheet" href="css/Profil/profil-connexion.css">
 <form class="profil-connexion--container" action="frontController.php?controller=profil&action=edit" method="POST">
     <h2>Modification de mon profil</h2>
 
