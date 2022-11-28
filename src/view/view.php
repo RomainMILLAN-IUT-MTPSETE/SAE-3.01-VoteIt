@@ -56,6 +56,48 @@
     </main>
 
     <footer>
+
+
+
+            <div class="contenue-footer">
+
+                <div class="blo footer-contact">
+                <span style="display: flex; align-items: center;gap: 10px"><img src="assets/logo/logoSansOmbre.png" class="logofooter">    <h2>VoteIt<span class="colored">.</span></h2>   </span>
+                    <p id="herault">34200, Hérault,Sète</p>
+                    <span style="display: flex; align-items: center;gap: 10px"> <h2>Contactez-nous!</h2> <button class="bout-email">Envoyer un email</button> </span>
+                    <p id="droitreserv">© 2022 VoteIt. Tous droits réservés. </p>
+
+                </div>
+
+
+                <div class="div blo footer-acceuil">
+                    <h3>Acceuil</h3>
+                    <p >Qui somme-nous? </p>
+                    <p href="#">Le projet </p>
+                </div>
+
+                <div class="div blo footer-question">
+                    <h3>Questions</h3>
+                    <p href="#">Consulter les questions</p>
+                    <p>Proposer une question </p>
+
+                </div>
+
+                <div class="div blo footer-profil">
+                    <h3>Profil</h3>
+                    <p>Consulter mon profil </p>
+                    <p>S'inscrire</p>
+                    <p>Se connecter</p>
+
+                </div>
+
+                <div class="div blo footer-legal">
+                    <h3>Légal</h3>
+                    <p>Condition générale d'utilisation </p>
+                </div>
+
+            </div>
+
     </footer>
 </body>
 </html>

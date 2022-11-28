@@ -77,3 +77,90 @@
         margin-left: 0px;
     }
 }
+
+
+
+
+ footer{
+ background-color: #C2C2C2;
+     flex-shrink: 0;
+     border-top: 1px  #000;
+
+     margin-top: 60px;
+     position: fixed;
+     bottom: 0;
+
+
+
+ }
+
+ .contenue-footer{
+   justify-content: center;
+     display: flex;
+     align-items: flex-start;
+     padding: 20px 0 20px;
+
+ }
+
+ .bloc{
+     width: 25%;
+     margin: 0 30px;
+ }
+ #herault{
+     font-size: 20px;
+ }
+ .footer-contact{
+ /**padding-left: 90px;**/
+     padding-left: 30px;
+     padding-right: 80px;
+     font-size: 17px;
+
+ }
+ .footer-legal{
+    /** padding-left: 90px; **/
+     padding-right: 80px;
+     font-size: 17px;
+
+ }
+ .footer-acceuil{
+    /** padding-left: 90px; **/
+     padding-right: 80px;
+     font-size: 17px;
+ }
+ .footer-profil{
+    /** padding-left: 90px; **/
+
+     padding-right: 80px;
+     font-size: 17px;
+ }
+ .footer-question{
+    /** padding-left: 90px; **/
+     padding-right: 80px;
+     font-size: 17px;
+ }
+
+
+ .logofooter{
+     width: 100px;
+ }
+
+ .bout-email{
+     background-color: #C0CEC4;
+     border-radius: 5px;
+     border-color: black;
+ }
+
+.colored{
+     color: #84B38F;
+ }
+
+#droitreserv{
+    font-size: 8px;
+}
+
+
+@media screen and (max-width: 1000px){
+
+    
+}
+

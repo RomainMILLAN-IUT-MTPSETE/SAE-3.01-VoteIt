@@ -1,7 +1,7 @@
 <link rel="stylesheet" href="css/formulaire.css">
 <form class="formulaire--container" action="frontController.php?controller=questions&action=created" method="post">
     <div class="formulaire-template">
-        <h2 class="title">Proposition de question</h2>
+        <h2 class="title">Création de la question</h2>
         <div>
             <label for="autheur">Auteur</label>
             <input type="text" name="autheur" id="autheur" placeholder="JohnDoe10" required/>
@@ -25,15 +25,20 @@
             </select>
         </div>
         <div class="date--container">
+            <H2>Dates</H2>
             <div>
                 <label id="title-date" for="ecritureDateDebut">Date d'écriture des réponses</label>
-                <span id="no-margin-top" class="flex-row"><p>Du </p><input id="date-input" type="date" name="ecritureDateDebut" id="ecritureDateDebut" placeholder="01-01-2001" required/></span>
-                <span class="flex-row"><p>Au </p> <input id="date-input" type="date" name="ecritureDateFin" id="ecritureDateFin" placeholder="01-01-2001" required/></span>
+                <input id="date-input" type="date" name="ecritureDateDebut" id="ecritureDateDebut" placeholder="01-01-2001" required/></span>
+                <label id="title-date" for="ecritureDateDebut">Fin d'écriture des réponses</label>
+                <input id="date-input" type="date" name="ecritureDateFin" id="ecritureDateFin" placeholder="01-01-2001" required/></span>
             </div>
+
+
             <div>
-                <label id="title-date" for="voteDateDebut">Date des votes</label>
-                <span id="no-margin-top" class="flex-row"><p>Du </p><input id="date-input" type="date" name="voteDateDebut" id="voteDateDebut" placeholder="01-01-2001" required/></span>
-                <span class="flex-row"><p>Au </p> <input id="date-input" type="date" name="voteDateFin" id="voteDateFin " placeholder="01-01-2001" required/></span>
+                <label id="title-date" for="voteDateDebut">Débuts des votes</label>
+                <input id="date-input" type="date" name="voteDateDebut" id="voteDateDebut" placeholder="01-01-2001" required/></span>
+                <label id="title-date" for="voteDateDebut">Fin des votes</label>
+                <input id="date-input" type="date" name="voteDateFin" id="voteDateFin " placeholder="01-01-2001" required/></span>
             </div>
         </div>
         <div>
