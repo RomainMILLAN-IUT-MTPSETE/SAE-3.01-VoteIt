@@ -62,7 +62,7 @@
             <div class="contenue-footer">
 
                 <div class="blo footer-contact">
-                <span style="display: flex; align-items: center;gap: 10px"><img src="assets/logo/logoSansOmbre.png" class="logofooter">    <h2>VoteIt<span class="colored">.</span></h2>   </span>
+                <span class="logo-and-title"><img src="assets/logo/logoSansOmbre.png" class="logofooter">    <h2>VoteIt<span class="colored">.</span></h2>   </span>
                     <p id="herault">34200, Hérault,Sète</p>
                     <span class="email-button"> <h2>Contactez-nous!</h2> <button class="bout-email">Envoyer un email</button> </span>
                     <p id="droitreserv">© 2022 VoteIt. Tous droits réservés. </p>
@@ -73,27 +73,27 @@
                 <div class="div blo footer-acceuil">
                     <h3>Acceuil</h3>
                     <p >Qui somme-nous? </p>
-                    <p href="#">Le projet </p>
+                    <a href="frontController.php?controller=home&action=home"><p>Le projet </p></a>
                 </div>
 
                 <div class="div blo footer-question">
                     <h3>Questions</h3>
-                    <p href="#">Consulter les questions</p>
-                    <p>Proposer une question </p>
+                    <a href="frontController.php?controller=questions&action=home"><p>Consulter les questions</p></a>
+                    <a href="frontController.php?controller=questions&action=create"><p>Proposer une question </p></a>
 
                 </div>
 
                 <div class="div blo footer-profil">
                     <h3>Profil</h3>
-                    <p>Consulter mon profil </p>
-                    <p>S'inscrire</p>
-                    <p>Se connecter</p>
+                    <a href="frontController.php?controller=profil&action=home"><p>Consulter mon profil </p></a>
+                    <a href="frontController.php?controller=profil&action=inscription"><p>S'inscrire</p></a>
+                    <a href="frontController.php?controller=profil&action=connection"><p>Se connecter</p></a>
 
                 </div>
 
                 <div class="div blo footer-legal">
                     <h3>Légal</h3>
-                    <p>Condition générale d'utilisation </p>
+                    <a href="#"><p>Condition générale d'utilisation </p></a>
                 </div>
 
             </div>

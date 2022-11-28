@@ -16,6 +16,10 @@ class ControllerHome{
         self::afficheVue('view.php', ['pagetitle' => "VoteIt", 'cheminVueBody' => "home/home.php"]);
     }
 
+    public static function cgu(){
+        self::afficheVue('view.php', ['pagetitle' => "VoteIt - Condition Générale d'Utilisation", 'cheminVueBody' => "home/cgu.php"]);
+    }
+
     public static function error(){
         //Renvoye vers la page d'erreur avec le code HC-1
         ControllerErreur::erreurCodeErreur('HC-1');

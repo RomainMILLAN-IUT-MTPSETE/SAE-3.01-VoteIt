@@ -1,0 +1,31 @@
+.gcu--container {
+    margin: auto;
+}
+
+.gcu--container h1 {
+    border-bottom : solid 2px #9BD2A7;
+    text-align: end;
+    font-family: "Poppins Light";
+    font-weight: bolder;
+    width: 550px;
+    margin-top: 85px;
+    margin-bottom: 50px;
+}
+
+.gcu-content--container{
+    width: 85%;
+    margin: auto;
+}
+
+.gcu-content--container h2 {
+    margin-bottom: 0px;
+}
+
+.gcu-content--container p {
+    margin-left: 15px;
+    margin-top: 0px;
+}
+
+.gcu-content--container ul {
+    margin-top: 0px;
+}
