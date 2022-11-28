@@ -64,7 +64,7 @@
                 <div class="blo footer-contact">
                 <span style="display: flex; align-items: center;gap: 10px"><img src="assets/logo/logoSansOmbre.png" class="logofooter">    <h2>VoteIt<span class="colored">.</span></h2>   </span>
                     <p id="herault">34200, Hérault,Sète</p>
-                    <span style="display: flex; align-items: center;gap: 10px"> <h2>Contactez-nous!</h2> <button class="bout-email">Envoyer un email</button> </span>
+                    <span class="email-button"> <h2>Contactez-nous!</h2> <button class="bout-email">Envoyer un email</button> </span>
                     <p id="droitreserv">© 2022 VoteIt. Tous droits réservés. </p>
 
                 </div>
