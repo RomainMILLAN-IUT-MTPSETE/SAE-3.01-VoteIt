@@ -1,7 +1,7 @@
 <link rel="stylesheet" href="css/Home/home.css">
 <section class="home--container">
     <div>
-        <div class="title">
+        <div class="title" id="quisommesnous">
             <h2>Qui sommes nous?</h2>
         </div>
         <div class="text">
@@ -22,7 +22,7 @@
         </div>
     </div>
     <div>
-        <div class="title">
+        <div class="title" id="leprojet">
             <h2>Le projet</h2>
         </div>
         <div class="text text-bottom">
