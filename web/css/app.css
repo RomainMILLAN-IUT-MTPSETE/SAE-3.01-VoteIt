@@ -23,6 +23,10 @@
   src: url("../assets/fonts/Poppins/Poppins-Italic.ttf");
 }
 
+*{
+  font-family: Poppins;
+}
+
 body {
   margin: 0;
   padding: 0;
