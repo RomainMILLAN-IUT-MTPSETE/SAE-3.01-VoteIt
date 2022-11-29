@@ -24,7 +24,7 @@ class ControllerProfil{
                 //Renvoye a la page d'erreur avec la code PC-3
                 ControllerErreur::erreurCodeErreur('PC-3');
             }
-            self::afficheVue('view.php', ['pagetitle' => "Affichage", 'cheminVueBody' => "profil/home.php", 'user' => $user]);
+            self::afficheVue('view.php', ['pagetitle' => "VoteIt - Profil", 'cheminVueBody' => "profil/home.php", 'user' => $user]);
         }else {
             //Renvoye a la page d'erreur avec la code PC-2
             ControllerErreur::erreurCodeErreur('PC-2');
@@ -32,24 +32,24 @@ class ControllerProfil{
     }
 
     public static function inscription(){
-        self::afficheVue('view.php', ['pagetitle' => "Inscription", 'cheminVueBody' => "profil/inscription.php"]);
+        self::afficheVue('view.php', ['pagetitle' => "VoteIt - Profil/Inscription", 'cheminVueBody' => "profil/inscription.php"]);
     }
 
     public static function connection(){
-        self::afficheVue('view.php', ['pagetitle' => "Connection", 'cheminVueBody' => "profil/connection.php"]);
+        self::afficheVue('view.php', ['pagetitle' => "VoteIt - Profil/Connection", 'cheminVueBody' => "profil/connection.php"]);
     }
 
     public static function modification(){
         //Si idUtilisateur existe
-        if(isset($_GET['idUtilisateur'])){
-            $idUtilisateur = $_GET['idUtilisateur'];
+        if(Session::getInstance()->contient("identifiant")){
+            $idUtilisateur = Session::getInstance()->lire("identifiant");
             //Recuperation des infos de l'utilisateur dans la BD
             $user = (new UtilisateurRepository())->select($idUtilisateur);
         }else {
             //Sinon crée un utilisateur vide
             $user = new Utilisateur('', '', '', '', '','', '','');
         }
-        self::afficheVue('view.php',['pagetitle'=>"Modification",'cheminVueBody'=>"profil/modification.php", 'user' => $user]);
+        self::afficheVue('view.php',['pagetitle'=>"VoteIt - Profil/Modification",'cheminVueBody'=>"profil/modification.php", 'user' => $user]);
     }
 
     public static function error(){
