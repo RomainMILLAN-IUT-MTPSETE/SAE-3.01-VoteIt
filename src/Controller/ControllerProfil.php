@@ -2,6 +2,7 @@
 namespace App\VoteIt\Controller;
 
 use App\VoteIt\Model\DataObject\Utilisateur;
+use App\VoteIt\Model\HTTP\Session;
 use App\VoteIt\Model\Repository\UtilisateurRepository;
 
 class ControllerProfil{
@@ -13,8 +14,8 @@ class ControllerProfil{
 
     public static function home(){
         //Si idUtilisateur existe
-        if(isset($_GET['idUtilisateur'])){
-            $idUser = $_GET['idUtilisateur'];
+        if(Session::getInstance()->contient("identifiant")){
+            $idUser = Session::getInstance()->lire("identifiant");
             //Recuperation de l'Utilisateur dans la BD
             $user = (new UtilisateurRepository())->select($idUser);
 
@@ -63,7 +64,6 @@ class ControllerProfil{
         //Si toutes les informations du formulaires ont était inscrite
         if(isset($_POST['identifiant']) AND isset($_POST['mail']) AND isset($_POST['password']) AND isset($_POST['prenom']) AND isset($_POST['nom']) AND isset($_POST['dtnaissance']) AND isset($_POST['conditionandcasuse'])){
             $identifiant = $_POST['identifiant'];
-            $password = $_POST['password'];
             $mail = $_POST['mail'];
             $password = $_POST['password'];
             $prenom = $_POST['prenom'];
@@ -73,8 +73,8 @@ class ControllerProfil{
 
             //Si la condition à était check
             if($condition == true){
-                //Création de l'utilisateut
-                $user = new Utilisateur($identifiant, $password, $nom, $prenom, $dtnaissance, $mail, '1', 'user');
+                //Création de l'utilisateur
+                $user = new Utilisateur($identifiant, $password, $nom, $prenom, $dtnaissance, '1', $mail, 'user');
                 //Import des infos dans la BD
                 (new UtilisateurRepository())->create($user);
                 self::home();
@@ -95,6 +95,7 @@ class ControllerProfil{
 
             //Si les informations de la BD correspondent
             if((new UtilisateurRepository())->connectionCheckBD($identifiant, $password) == true){
+                Session::getInstance()->enregistrer("identifiant", $identifiant);
                 self::home();
             }else {
                 //Renvoye a la page d'erreur avec le code PC-4
@@ -109,7 +110,6 @@ class ControllerProfil{
             $mail = $_POST['mail'];
             $password = $_POST['password'];
             $prenom = $_POST['prenom'];
-            $nom = $_POST['prenom'];
             $nom = $_POST['nom'];
             $dtnaissance = $_POST['dtnaissance'];
 

@@ -1,0 +1,67 @@
+.formulaire-template #checkbox-div {
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    justify-content: start;
+    margin: auto;
+    width: 700px;
+}
+@media (min-width: 1000px) {
+    .formulaire-template #checkbox-div {
+        width: 700px;
+        align-items: center;
+    }
+}
+.formulaire-template #checkbox-div input[type=checkbox] {
+    height: 45px;
+    width: 45px;
+    margin-left: 0px;
+    padding-left: 0px;
+    margin-left: 10px;
+}
+
+@media (min-width: 1000px) {
+    .formulaire-template #checkbox-div input[type=checkbox] {
+        height: 15px;
+        width: 15px;
+    }
+}
+.formulaire-template #checkbox-div p {
+    font-size: 25px;
+    margin-left: 20px;
+}
+@media (min-width: 1000px) {
+    .formulaire-template #checkbox-div p {
+        font-size: 10px;
+        margin-left: 10px;
+    }
+}
+
+.formulaire-template #lastp {
+    font-size: 25px;
+    margin: auto;
+    margin-top: -50px;
+}
+@media (min-width: 1000px) {
+    .formulaire-template #lastp {
+        font-size: 10px;
+    }
+}
+.formulaire-template #lastp a {
+    color: #9BD2A7;
+}
+
+.formulaire-template div #passwordlosse {
+    color: #84B38F;
+    text-align: right;
+    font-family: "Poppins SemiBold";
+    font-size: 25px;
+    margin-top: 0px;
+}
+@media (min-width: 1000px) {
+    .formulaire-template div #passwordlosse {
+        font-size: 10px;
+        margin-right: 5px;
+        margin-top: 0px;
+    }
+}
