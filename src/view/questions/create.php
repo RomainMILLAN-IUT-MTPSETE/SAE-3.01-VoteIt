@@ -11,7 +11,7 @@
             <input type="text" name="titreQuestion" id="titreQuestion" placeholder="Titre de la question" required/>
         </div>
         <div>
-            <label for="nbSection">Nombre de section</label>
+            <label for="nbSection">Nombre de sections</label>
             <input type="number" name="nbSection" id="nbSection" placeholder="3" min="3" max="8" required/>
         </div>
         <div>

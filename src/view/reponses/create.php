@@ -1,7 +1,7 @@
 <link rel="stylesheet" href="css/formulaire.css">
 <form class="formulaire--container" action="frontController.php?controller=reponses&action=created" method="post">
     <div class="formulaire-template">
-        <h2 class="title">Crée une réponse</h2>
+        <h2 class="title">Créer une réponse</h2>
         <div class="div-form-normal">
             <label for="idQuestion">Identifiant Question</label>
             <input type="number" name="idQuestion" id="idQuestion" placeholder="11" value="<?php echo(htmlspecialchars($_GET['idQuestion'])); ?>" readonly required/>

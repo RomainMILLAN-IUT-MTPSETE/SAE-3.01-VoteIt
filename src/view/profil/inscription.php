@@ -30,12 +30,12 @@
         </div>
         <div id="checkbox-div">
             <input type="checkbox" name="conditionandcasuse" id="conditionandcasuse">
-            <p>J'ai lu et j'accepte les conditions générales d’utilisation.</p>
+            <p>J'ai lu et j'accepte les <a href="frontController.php?controller=home&action=cgu"><span class="colored">conditions générales d’utilisation</span></a>.</p>
         </div>
 
         <div>
             <input type="submit" value="S'inscrire">
-            <p id="lastp">Déjà enregistré ? <a href="frontController.php?controller=profil&action=connection"><span class="colored">Se connecter</span></a></p>
+            <p id="lastp">Déjà enregistré ? <a href="frontController.php?controller=profil&action=connection"><span class="colored">Se connecter</span></a>.</p>
 
         </div>
 

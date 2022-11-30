@@ -73,7 +73,7 @@
 
                 <div class="div blo footer-acceuil">
                     <h3>Acceuil</h3>
-                    <a href="frontController.php?controller=home&action=home#quisommesnous"><p>Qui somme-nous? </p></a>
+                    <a href="frontController.php?controller=home&action=home#quisommesnous"><p>Qui sommes-nous? </p></a>
                     <a href="frontController.php?controller=home&action=home#leprojet"><p>Le projet </p></a>
                 </div>
                 <div class="div blo footer-question">
@@ -91,7 +91,7 @@
                 </div>
                 <div class="div blo footer-legal">
                     <h3>Légal</h3>
-                    <a href="frontController.php?controller=home&action=cgu"><p>Condition générale d'utilisation </p></a>
+                    <a href="frontController.php?controller=home&action=cgu"><p>Conditions générales d'utilisation </p></a>
                 </div>
             </div>
     </footer>

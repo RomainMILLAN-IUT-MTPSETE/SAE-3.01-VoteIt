@@ -17,7 +17,7 @@
             <h2><span class="title-sub-see-question">Question n°<?php echo(htmlspecialchars($question->getIdQuestion())) ?>  <span class="colored">:</span> </span><a href="frontController.php?controller=questions&action=update&idQuestion=<?php echo(rawurlencode($_GET['idQuestion'])) ?>"><img class="ml12px"
                             src="assets/questions/see/edit.png" alt="nope"></a><a href="frontController.php?controller=questions&action=delete&idQuestion=<?php echo(rawurlencode($_GET['idQuestion'])) ?>"><img class="ml8px"
                                                                                                src="assets/questions/see/delete.png" alt="nope"></a></h2>
-            <p class="title-question-p"><?php echo(htmlspecialchars($question->getTitreQuestion())) ?></p>
+            <p class="title-question-p"><span class="bolder">Titre:</span> <?php echo(htmlspecialchars($question->getTitreQuestion())) ?></p>
             <p><span class="bolder">Auteur:</span> <?php
                 $autheur = (new \App\VoteIt\Model\Repository\UtilisateurRepository())->select($question->getAutheur());
                 echo(htmlspecialchars($autheur->getNom()) . " " . htmlspecialchars($autheur->getPrenom())) ?></p>
@@ -57,7 +57,7 @@
                     <?php
                     $autheur = (new \App\VoteIt\Model\Repository\UtilisateurRepository())->select($item->getAutheurId());
                     ?>
-                    <p class="autheur-reponse">Autheur: <?php echo(htmlspecialchars($autheur->getNom()) . " " . htmlspecialchars($autheur->getPrenom())) ?></p>
+                    <p class="autheur-reponse">Auteur: <?php echo(htmlspecialchars($autheur->getNom()) . " " . htmlspecialchars($autheur->getPrenom())) ?></p>
                     <span class="nbVote-reponse"><img src="assets/questions/see/like.png" alt="Icone LikeVoteNombre"><?php echo(htmlspecialchars($item->getNbVote())); ?></span>
                 </div>
             </div>
