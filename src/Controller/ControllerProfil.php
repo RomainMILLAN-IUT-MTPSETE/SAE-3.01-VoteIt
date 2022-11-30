@@ -91,7 +91,7 @@ class ControllerProfil{
 
                 VerificationEmail::envoiEmailValidation($user);
 
-                header("Location: frontController.php?controller=utilisateur&action=home");
+                header("Location: frontController.php?controller=profil&action=home");
                 exit();
             }else {
                 //Retourne vers la page d'inscription
