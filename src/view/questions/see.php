@@ -1,13 +1,21 @@
 <link rel="stylesheet" href="css/Questions/questions-see.css">
 <section class="button-top">
     <?php
+    use \App\VoteIt\Lib\ConnexionUtilisateur;
     use \App\VoteIt\Model\Repository\VoteRepository;
-    $dateNow = date("Y-m-d");
-    if($question->getDateEcritureDebut() <= $dateNow  && $dateNow <= $question->getDateEcritureFin()){
-        ?>    <a href="frontController.php?controller=reponses&action=create&idQuestion=<?php echo(rawurlencode($_GET['idQuestion'])); ?>"><button id="buttonTop">Proposer une Réponse <img id="imgButtonTop" src="assets/questions/home/button-newquestion.png" alt="Icone de nouvelle reponse"></button></a><?php
-    }else {
-        ?>    <button id="buttonTop-disable">Réponse Indisponible<img id="imgButtonTop" src="assets/questions/home/button-newquestion.png" alt="Icone de nouvelle reponse"></button><?php
+    if(ConnexionUtilisateur::estConnecte()){
+        $user = (new \App\VoteIt\Model\Repository\UtilisateurRepository())->select(ConnexionUtilisateur::getLoginUtilisateurConnecte());
+
+        if((strcmp($user->getGrade(), "Organisateur") == 0) OR (strcmp($user->getGrade(), "Administrateur") == 0)){
+            $dateNow = date("Y-m-d");
+            if($question->getDateEcritureDebut() <= $dateNow  && $dateNow <= $question->getDateEcritureFin()){
+                ?>    <a href="frontController.php?controller=reponses&action=create&idQuestion=<?php echo(rawurlencode($_GET['idQuestion'])); ?>"><button id="buttonTop">Proposer une Réponse <img id="imgButtonTop" src="assets/questions/home/button-newquestion.png" alt="Icone de nouvelle reponse"></button></a><?php
+            }else {
+                ?>    <button id="buttonTop-disable">Réponse Indisponible<img id="imgButtonTop" src="assets/questions/home/button-newquestion.png" alt="Icone de nouvelle reponse"></button><?php
+            }
+        }
     }
+
     ?>
 </section>
 <section class="question-see--container">

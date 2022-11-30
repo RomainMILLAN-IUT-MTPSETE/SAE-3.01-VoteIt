@@ -1,20 +1,25 @@
 <link rel="stylesheet" href="css/Reponses/reponses-see.css">
 <section class="button-top">
     <?php
+    use \App\VoteIt\Lib\ConnexionUtilisateur;
     use \App\VoteIt\Model\Repository\VoteRepository;
     use \App\VoteIt\Model\HTTP\Session;
     //USERCHANGE
-    use \App\VoteIt\Lib\ConnexionUtilisateur;
     $voteState = false;
     if(ConnexionUtilisateur::estConnecte()){
-        $voteState = (new VoteRepository())->stateVote($reponse->getIdQuestion(), ConnexionUtilisateur::getLoginUtilisateurConnecte());
+        $user = (new \App\VoteIt\Model\Repository\UtilisateurRepository())->select(ConnexionUtilisateur::getLoginUtilisateurConnecte());
+
+        if((strcmp($user->getGrade(), "Organisateur") == 0) OR (strcmp($user->getGrade(), "Administrateur") == 0) OR (strcmp($user->getGrade(), "Votant") == 0)){
+            $voteState = (new VoteRepository())->stateVote($reponse->getIdQuestion(), $user->getIdentifiant());
+            $dateNow = date("Y-m-d");
+            if($voteState == true && $question->getDateVoteDebut() < $dateNow  && $dateNow < $question->getDateVoteFin()){
+                ?><a href="frontController.php?controller=reponses&action=vote&idReponse=<?php echo(rawurlencode($_GET['idReponse'])); ?>"><button id="buttonTop">Voter pour cette réponse <img id="imgButtonTop" src="assets/reponses/see/like.png" alt="Icone de nouvelle reponse"></button></a><?php
+            }else {
+                ?><button id="buttonTop-disable">Vote indisponible <img id="imgButtonTop" src="assets/reponses/see/like.png" alt="Icone de nouvelle reponse"></button><?php
+            }
+        }
     }
-    $dateNow = date("Y-m-d");
-    if($voteState == true && $question->getDateVoteDebut() < $dateNow  && $dateNow < $question->getDateVoteFin()){
-        ?><a href="frontController.php?controller=reponses&action=vote&idReponse=<?php echo(rawurlencode($_GET['idReponse'])); ?>"><button id="buttonTop">Voter pour cette réponse <img id="imgButtonTop" src="assets/reponses/see/like.png" alt="Icone de nouvelle reponse"></button></a><?php
-    }else {
-        ?><button id="buttonTop-disable">Vote indisponible <img id="imgButtonTop" src="assets/reponses/see/like.png" alt="Icone de nouvelle reponse"></button><?php
-    }
+
     ?>
 </section>
 <section class="reponse-see--container">

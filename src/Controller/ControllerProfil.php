@@ -116,7 +116,7 @@ class ControllerProfil{
                 ConnexionUtilisateur::connecter($identifiant);
                 
                 MessageFlash::ajouter("success", "Connection réussi à votre profil");
-                header("Location: frontController.php?controller=questions&action=home");
+                header("Location: frontController.php?controller=profil&action=home");
                 exit();
             }else {
                 ControllerErreur::erreurCodeErreur('PC-4');
