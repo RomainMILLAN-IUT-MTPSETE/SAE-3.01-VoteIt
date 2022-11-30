@@ -12,7 +12,7 @@ class UtilisateurRepository extends AbstractRepository {
     }
 
     protected function construire(array $objetFormatTableau): Utilisateur{
-        return new Utilisateur($objetFormatTableau['idUtilisateur'], $objetFormatTableau['motDePasseUtilisateur'], $objetFormatTableau['nomUtilisateur'], $objetFormatTableau['prenomUtilisateur'], $objetFormatTableau['dateNaissanceUtilisateur'], $objetFormatTableau['iconeLink'], $objetFormatTableau['mailUtilisateur'], $objetFormatTableau['gradeUtilisateur']);
+        return new Utilisateur($objetFormatTableau['idUtilisateur'], $objetFormatTableau['motDePasseUtilisateur'], $objetFormatTableau['nomUtilisateur'], $objetFormatTableau['prenomUtilisateur'], $objetFormatTableau['dateNaissanceUtilisateur'], $objetFormatTableau['iconeLink'], $objetFormatTableau['mailUtilisateur'], $objetFormatTableau['mailAValider'], $objetFormatTableau['nonce'], $objetFormatTableau['gradeUtilisateur']);
     }
 
     protected function getNomClePrimaire(): string
@@ -28,7 +28,9 @@ class UtilisateurRepository extends AbstractRepository {
             4 => 'dateNaissanceUtilisateur',
             5 => 'iconeLink',
             6 => 'mailUtilisateur',
-            7 => 'gradeUtilisateur'];
+            7 => 'mailAValider',
+            8 => 'nonce',
+            9 => 'gradeUtilisateur'];
     }
     
     public static function selectUserByIdUser($idUser){

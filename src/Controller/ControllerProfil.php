@@ -5,6 +5,7 @@ use App\VoteIt\Lib\ConnexionUtilisateur;
 use App\VoteIt\Lib\MessageFlash;
 use App\VoteIt\Lib\MessageFlash as LibMessageFlash;
 use App\VoteIt\Lib\MotDePasse;
+use App\VoteIt\Lib\VerificationEmail;
 use App\VoteIt\Model\DataObject\Utilisateur;
 use App\VoteIt\Model\HTTP\Session;
 use App\VoteIt\Model\Repository\UtilisateurRepository;
@@ -83,10 +84,15 @@ class ControllerProfil{
             if($condition == true){
                 //Création de l'utilisateur
                 $password = MotDePasse::hacher($password);
-                $user = new Utilisateur($identifiant, $password, $nom, $prenom, $dtnaissance, '1', $mail, 'user');
+                $nonce = MotDePasse::genererChaineAleatoire();
+                $user = new Utilisateur($identifiant, $password, $nom, $prenom, $dtnaissance, '1', '', $mail, $nonce, 'user');
                 //Import des infos dans la BD
                 (new UtilisateurRepository())->create($user);
-                self::home();
+
+                VerificationEmail::envoiEmailValidation($user);
+
+                header("Location: frontController.php?controller=utilisateur&action=home");
+                exit();
             }else {
                 //Retourne vers la page d'inscription
                 MessageFlash::ajouter("warning", "Vous devez accepter les conditions d'utilisation");
@@ -132,15 +138,24 @@ class ControllerProfil{
 
             //Récuperation de l'utilisateur actuelle dans la BD
             $userBefore = (new UtilisateurRepository())->select($identifiant);
+            $mailAValider = "";
+            $nonce = "";
+            if(strcmp($mail, $userBefore->getMail()) != 0){
+                $mailAValider = $mail;
+                $mail = "";
+                $nonce = MotDePasse::genererChaineAleatoire();
+            }
             $iconeLink = $userBefore->getIconeLink();
             $grade = $userBefore->getGrade();
 
             //Création d'un nouvelle utilisateur avec les nouvelles informations
-            $userEdit = new Utilisateur($identifiant, $password, $nom, $prenom, $dtnaissance, $iconeLink, $mail, $grade);
+            $userEdit = new Utilisateur($identifiant, $password, $nom, $prenom, $dtnaissance, $iconeLink, $mail, $mailAValider, $nonce, $grade);
             //Mise à jour de l'utilisateur
             (new UtilisateurRepository())->update($userEdit);
+
+            VerificationEmail::envoiEmailValidation($userEdit);
             //Redirection vers la page d'accueil
-            header("Location: frontController.php?controller=profil&action=home&idUtilisateur=".$identifiant);
+            header("Location: frontController.php?controller=profil&action=home");
             exit();
         }else {
             //Si il y a au moins l'identifiant
@@ -161,6 +176,23 @@ class ControllerProfil{
             exit();
         }else {
             LibMessageFlash::ajouter("warning", "Vous devez être connecté pour pouvoir faire ceci");
+            header("Location: frontController.php");
+            exit();
+        }
+    }
+
+    public static function validerEmail(){
+        if(isset($_REQUEST['login']) AND isset($_REQUEST['nonce'])){
+            if(VerificationEmail::traiterEmailValidation($_REQUEST['login'], $_REQUEST['nonce']) == true){
+                MessageFlash::ajouter("success", "Validation de l'email");
+                header("Location: frontController.php?controller=profil&action=home");
+            }else {
+                MessageFlash::ajouter("warning", "Login ou Nonce invalide");
+                header("Location: frontController.php?controller=profil&action=home");
+            }
+
+        }else {
+            MessageFlash::ajouter("warning", "Ajouter un login et un nonce");
             header("Location: frontController.php");
             exit();
         }

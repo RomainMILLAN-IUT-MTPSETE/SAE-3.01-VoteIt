@@ -9,6 +9,8 @@ class Utilisateur extends AbstractDataObject {
     private String $dateNaissance;
     private String $iconeLink;
     private String $mail;
+    private String $mailAValider;
+    private String $nonce;
     private String $grade;
 
     /**
@@ -20,7 +22,7 @@ class Utilisateur extends AbstractDataObject {
      * @param String $iconeLink
      * @param String $grade
      */
-    public function __construct(string $identifiant, string $motdepasse, string $nom, string $prenom, string $dateNaissance, string $iconeLink, string $mail, string $grade)
+    public function __construct(string $identifiant, string $motdepasse, string $nom, string $prenom, string $dateNaissance, string $iconeLink, string $mail, string $mailAValider, string $nonce, string $grade)
     {
         $this->identifiant = $identifiant;
         $this->motDePasse = $motdepasse;
@@ -29,6 +31,8 @@ class Utilisateur extends AbstractDataObject {
         $this->dateNaissance = $dateNaissance;
         $this->iconeLink = $iconeLink;
         $this->mail = $mail;
+        $this->mailAValider = $mailAValider;
+        $this->nonce = $nonce;
         $this->grade = $grade;
     }
 
@@ -43,6 +47,8 @@ class Utilisateur extends AbstractDataObject {
                 "dateNaissanceUtilisateur" => $this->getDateNaissance(),
                 "iconeLink" => $this->getIconeLink(),
                 "mailUtilisateur" => $this->getMail(),
+                "mailAValider" => $this->getMailAValider(),
+                "nonce" => $this->getNonce(),
                 "gradeUtilisateur" => $this->getGrade(),
             );
         }
@@ -185,4 +191,38 @@ class Utilisateur extends AbstractDataObject {
     {
         $this->motDePasse = $motDePasse;
     }
+
+    /**
+     * @return String
+     */
+    public function getMailAValider(): string
+    {
+        return $this->mailAValider;
+    }
+
+    /**
+     * @param String $mailAValider
+     */
+    public function setMailAValider(string $mailAValider): void
+    {
+        $this->mailAValider = $mailAValider;
+    }
+
+    /**
+     * @return String
+     */
+    public function getNonce(): string
+    {
+        return $this->nonce;
+    }
+
+    /**
+     * @param String $nonce
+     */
+    public function setNonce(string $nonce): void
+    {
+        $this->nonce = $nonce;
+    }
+
+
 }
