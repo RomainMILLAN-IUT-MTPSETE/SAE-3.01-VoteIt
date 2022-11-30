@@ -14,11 +14,11 @@
         <div>
             <label for="categorieQuestion">Catégorie</label>
             <select name="categorieQuestion" id="categorieQuestion" required>
-                <option value="<?php echo($question->getCategorieQuestion()) ?>" selected>Actuel - <?php echo($question->getCategorieQuestion()) ?></option>
+                <option value="<?php echo($question->getCategorieQuestion()) ?>" selected>Actuel - <?php echo(htmlspecialchars($question->getCategorieQuestion())) ?></option>
                 <?php
                 $categories = (new \App\VoteIt\Model\Repository\CategorieRepository())->selectAll();
                 foreach ($categories as $categorie){
-                    ?><option value="<?php echo($categorie->getNomCategorie()) ?>"><?php echo($categorie->getNomCategorie()) ?></option><?php
+                    ?><option value="<?php echo(htmlspecialchars($categorie->getNomCategorie())) ?>"><?php echo(htmlspecialchars($categorie->getNomCategorie())) ?></option><?php
                 }
                 ?>
             </select>
@@ -43,9 +43,9 @@
             foreach($sectionIds as $section){
                 ?>
                 <div class="section-plan">
-                    <label class="section-plan-label" for="section<?php echo($section->getIdSection()) ?>">Section n°<?php echo($section->getIdQuestion()); ?></label>
-                    <input class="section-plan-input" type="text" name="sectionTitle<?php echo($section->getIdSection()) ?>" value="<?php echo($section->getTitreSection()) ?>">
-                    <input class="section-plan-input" type="text" name="sectionDesc<?php echo($section->getIdSection()) ?>" value="<?php echo($section->getDescriptionSection()) ?>">
+                    <label class="section-plan-label" for="section<?php echo(htmlspecialchars($section->getIdSection())) ?>">Section n°<?php echo(htmlspecialchars($section->getIdQuestion())); ?></label>
+                    <input class="section-plan-input" type="text" name="sectionTitle<?php echo(htmlspecialchars($section->getIdSection())) ?>" value="<?php echo(htmlspecialchars($section->getTitreSection())) ?>">
+                    <input class="section-plan-input" type="text" name="sectionDesc<?php echo(htmlspecialchars($section->getIdSection())) ?>" value="<?php echo(htmlspecialchars($section->getDescriptionSection())) ?>">
                 </div>
 
                 <?php
@@ -56,7 +56,7 @@
 
 
         <div>
-            <input type="hidden" name="idQuestion" value="<?php echo($_GET['idQuestion']); ?>">
+            <input type="hidden" name="idQuestion" value="<?php echo(htmlspecialchars($_GET['idQuestion'])); ?>">
             <input type="hidden" name="controller" value="questions">
             <input type="hidden" name="action" value="updated">
             <input type="submit" value="Modifier la question">

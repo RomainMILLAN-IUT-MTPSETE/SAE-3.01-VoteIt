@@ -4,7 +4,7 @@
         <h2 class="title">Crée une réponse</h2>
         <div class="div-form-normal">
             <label for="idQuestion">Identifiant Question</label>
-            <input type="number" name="idQuestion" id="idQuestion" placeholder="11" value="<?php echo($_GET['idQuestion']); ?>" readonly required/>
+            <input type="number" name="idQuestion" id="idQuestion" placeholder="11" value="<?php echo(htmlspecialchars($_GET['idQuestion'])); ?>" readonly required/>
         </div>
         <div class="div-form-normal">
             <label for="autheur">Auteur</label>
@@ -21,10 +21,10 @@
                 ?>
                 <hr width="200">
                 <div class="section-container">
-                    <label id="title-section-container" for="titreSection">Section n°<?php echo$i; ?></label>
-                    <p><?php echo($section->getTitreSection()); ?>: <?php echo($section->getDescriptionSection()) ?></p>
-                    <input type="hidden" name="idSection<?php echo($i); ?>" value="<?php echo($section->getIdSection()); ?>" required>
-                    <textarea name="texteSection<?php echo($i); ?>" required></textarea>
+                    <label id="title-section-container" for="titreSection">Section n°<?php echo(htmlspecialchars($i)); ?></label>
+                    <p><?php echo(htmlspecialchars($section->getTitreSection())); ?>: <?php echo(htmlspecialchars($section->getDescriptionSection())) ?></p>
+                    <input type="hidden" name="idSection<?php echo(htmlspecialchars($i)); ?>" value="<?php echo(htmlspecialchars($section->getIdSection())); ?>" required>
+                    <textarea name="texteSection<?php echo(htmlspecialchars($i)); ?>" required></textarea>
                 </div>
                 <?php
                 $i++;
@@ -32,7 +32,7 @@
             ?>
         </div>
         <div>
-            <input type="hidden" name="nbSection" value="<?php echo($i-1); ?>">
+            <input type="hidden" name="nbSection" value="<?php echo(htmlspecialchars($i-1)); ?>">
             <input type="submit" value="Poser la question">
         </div>
     </div>

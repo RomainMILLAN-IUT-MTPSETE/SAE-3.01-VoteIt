@@ -19,7 +19,7 @@
             <select name="categorieQuestion" id="categorieQuestion" required>
                 <?php
                 foreach ($categories as $categorie){
-                    ?><option value="<?php echo($categorie->getNomCategorie()) ?>"><?php echo($categorie->getNomCategorie()) ?></option><?php
+                    ?><option value="<?php echo(htmlspecialchars($categorie->getNomCategorie())) ?>"><?php echo(htmlspecialchars($categorie->getNomCategorie())) ?></option><?php
                 }
                 ?>
             </select>

@@ -19,10 +19,10 @@
     </section>
     <?php
         foreach ($questions as $id) { ?>
-            <a href="frontController.php?controller=questions&action=see&idQuestion=<?php echo($id->getIdQuestion()); ?>"><div class="question-id--container">
+            <a href="frontController.php?controller=questions&action=see&idQuestion=<?php echo(rawurlencode($id->getIdQuestion())); ?>"><div class="question-id--container">
                     <div id="titreQuestion" >
                         <?php
-                        echo $id->getTitreQuestion();
+                        echo htmlspecialchars($id->getTitreQuestion());
                         ?>
                     </div>
                     <div id="auteurEtCategorie">
@@ -30,11 +30,11 @@
                             <?php
                             $idAutheur = $id->getAutheur();
                             $autheur = (new \App\VoteIt\Model\Repository\UtilisateurRepository())->select($idAutheur);
-                            echo $autheur->getNom() . " " . $autheur->getPrenom()
+                            echo htmlspecialchars($autheur->getNom()) . " " . htmlspecialchars($autheur->getPrenom())
                             ?>
                         </div>
                         <div id="categorie">
-                            <?php echo $id->getCategorieQuestion();?>
+                            <?php echo htmlspecialchars($id->getCategorieQuestion());?>
                         </div>
                     </div>
                 </div></a>

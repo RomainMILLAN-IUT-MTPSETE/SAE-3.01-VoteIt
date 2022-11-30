@@ -1,4 +1,4 @@
-<link rel="stylesheet" href="<?php echo('css/menu.css') ?>"/>
+<link rel="stylesheet" href="<?php echo(htmlspecialchars('css/menu.css')) ?>"/>
 <section class="menu--container">
     <a href="<?php echo('http://' . $_SERVER['HTTP_HOST']) . substr($_SERVER['REQUEST_URI'], 0, strlen($_SERVER['REQUEST_URI'])-8) ?>"><img id="close-img" src="assets/menu/close.png" alt="Icone close"/></a>
     <img id="menu-logosomb" src="assets/logo/logoSansOmbre.png" alt="Logo sans ombre"/>
