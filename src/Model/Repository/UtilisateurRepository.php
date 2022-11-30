@@ -2,6 +2,7 @@
 namespace App\VoteIt\Model\Repository;
 
 use App\VoteIt\Model\DataObject\Utilisateur;
+use App\VoteIt\Model\Repository\DatabaseConnection as Model;
 
 class UtilisateurRepository extends AbstractRepository {
 
@@ -31,12 +32,12 @@ class UtilisateurRepository extends AbstractRepository {
     }
     
     public static function selectUserByIdUser($idUser){
-        $sql = " SELECT * FROM vit_Utilisateurs WHERE idUtilisateur=:valuePrimaire";
+        $sql = " SELECT * FROM vit_Utilisateurs WHERE idUtilisateur=:idUser";
         // Préparation de la requête
         $pdoStatement = Model::getPdo()->prepare($sql);
 
         $values = array(
-            "valuePrimaire" => $valuePrimaire,
+            "idUser" => $idUser,
             //nomdutag => valeur, ...
         );
         // On donne les valeurs et on exécute la requête
@@ -47,25 +48,11 @@ class UtilisateurRepository extends AbstractRepository {
         $ressultatSQL = $pdoStatement->fetch();
 
         if (!$ressultatSQL) {
-
             $res = null;
-
         } else {
-
             $res = static::construire($ressultatSQL);
-
         }
 
         return $res;
-    }
-
-    public static function connectionCheckBD($identifiant, $password) : bool{
-        $user = (new UtilisateurRepository())->select($identifiant);
-
-        if(strcmp($password, $user->getMotDePasse()) == 0){
-            return true;
-        }else {
-            return false;
-        }
     }
 }

@@ -7,20 +7,18 @@ class Reponse extends AbstractDataObject{
     private String $idQuestion;
     private String $titreReponse;
     private String $autheurId;
-    private String $nbVote;
 
     /**
      * @param String $idReponse
      * @param String $idQuestion
      * @param String $nbVote
      */
-    public function __construct(string $idReponse, string $idQuestion, string $titreReponse, string $autheurId, string $nbVote)
+    public function __construct(string $idReponse, string $idQuestion, string $titreReponse, string $autheurId)
     {
         $this->idReponse = $idReponse;
         $this->idQuestion = $idQuestion;
         $this->titreReponse = $titreReponse;
         $this->autheurId = $autheurId;
-        $this->nbVote = $nbVote;
     }
 
 
@@ -30,7 +28,6 @@ class Reponse extends AbstractDataObject{
             "idQuestion" => $this->getIdQuestion(),
             "titreReponse" => $this->getTitreReponse(),
             "autheurId" => $this->getAutheurId(),
-            "nbVote" => $this->getNbVote(),
         );
     }
 
@@ -101,22 +98,6 @@ class Reponse extends AbstractDataObject{
     public function setTitreReponse(string $titreReponse): void
     {
         $this->titreReponse = $titreReponse;
-    }
-
-    /**
-     * @return String
-     */
-    public function getNbVote(): string
-    {
-        return $this->nbVote;
-    }
-
-    /**
-     * @param String $nbVote
-     */
-    public function setNbVote(string $nbVote): void
-    {
-        $this->nbVote = $nbVote;
     }
 
 

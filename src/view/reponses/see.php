@@ -2,8 +2,13 @@
 <section class="button-top">
     <?php
     use \App\VoteIt\Model\Repository\VoteRepository;
+    use \App\VoteIt\Model\HTTP\Session;
     //USERCHANGE
-    $voteState = (new VoteRepository())->stateVote($reponse->getIdQuestion(), "nadalc");
+    use \App\VoteIt\Lib\ConnexionUtilisateur;
+    $voteState = false;
+    if(ConnexionUtilisateur::estConnecte()){
+        $voteState = (new VoteRepository())->stateVote($reponse->getIdQuestion(), ConnexionUtilisateur::getLoginUtilisateurConnecte());
+    }
     $dateNow = date("Y-m-d");
     if($voteState == true && $question->getDateVoteDebut() < $dateNow  && $dateNow < $question->getDateVoteFin()){
         ?><a href="frontController.php?controller=reponses&action=vote&idReponse=<?php echo(rawurlencode($_GET['idReponse'])); ?>"><button id="buttonTop">Voter pour cette réponse <img id="imgButtonTop" src="assets/reponses/see/like.png" alt="Icone de nouvelle reponse"></button></a><?php
@@ -21,7 +26,7 @@
         <p class="title-reponse-p"><?php echo(htmlspecialchars($reponse->getTitreReponse())); ?></p>
         <div class="info-container">
             <div><span class="info-reponse-span"><p><span class="bolder">Auteur</span>: <?php echo(htmlspecialchars($reponse->getAutheurId())) ?></span></div>
-            <div><span class="info-reponse-span"><p><span class="bolder">Votes</span>: <?php echo(htmlspecialchars($reponse->getNbVote())); ?></p><img src="assets/reponses/see/like.png" alt="Icone de vote"></span></div>
+            <div><span class="info-reponse-span"><p><span class="bolder">Votes</span>: <?php echo(htmlspecialchars(VoteRepository::getNbVoteForReponse($reponse->getIdReponse()))); ?></p><img src="assets/reponses/see/like.png" alt="Icone de vote"></span></div>
         </div>
     </div>
     <hr WIDTH="400px">

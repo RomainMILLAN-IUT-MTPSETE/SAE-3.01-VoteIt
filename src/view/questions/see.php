@@ -58,7 +58,7 @@
                     $autheur = (new \App\VoteIt\Model\Repository\UtilisateurRepository())->select($item->getAutheurId());
                     ?>
                     <p class="autheur-reponse">Auteur: <?php echo(htmlspecialchars($autheur->getNom()) . " " . htmlspecialchars($autheur->getPrenom())) ?></p>
-                    <span class="nbVote-reponse"><img src="assets/questions/see/like.png" alt="Icone LikeVoteNombre"><?php echo(htmlspecialchars($item->getNbVote())); ?></span>
+                    <span class="nbVote-reponse"><img src="assets/questions/see/like.png" alt="Icone LikeVoteNombre"><?php echo(htmlspecialchars((VoteRepository::getNbVoteForReponse($item->getIdReponse())))); ?></span>
                 </div>
             </div>
             </a>

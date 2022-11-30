@@ -1,6 +1,7 @@
 <link rel="stylesheet" href="css/Profil/profil-home.css">
 
 <a class="edit-button" href="frontController.php?controller=profil&action=modification&idUtilisateur=<?php echo(rawurlencode($user->getIdentifiant())); ?>" >Modifier profil : <img id="edit-img" src="assets/logo/modif.png"></a>
+<a class="edit-button" href="frontController.php?controller=profil&action=deconnection" >Déconnection<img id="edit-img" src="assets/logo/modif.png"></a>
 <section class="profil-home--container">
     <div id="info-user--container">
         <img id="icone-user" src="assets/logo/logoSansOmbre.png">

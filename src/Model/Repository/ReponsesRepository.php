@@ -13,7 +13,7 @@ class ReponsesRepository extends AbstractRepository{
 
     protected function construire(array $objetFormatTableau)
     {
-        return new Reponse($objetFormatTableau['idReponse'], $objetFormatTableau['idQuestion'], $objetFormatTableau['titreReponse'], $objetFormatTableau['autheurId'], $objetFormatTableau['nbVote']);
+        return new Reponse($objetFormatTableau['idReponse'], $objetFormatTableau['idQuestion'], $objetFormatTableau['titreReponse'], $objetFormatTableau['autheurId']);
     }
 
     protected function getNomClePrimaire(): string
@@ -26,8 +26,7 @@ class ReponsesRepository extends AbstractRepository{
         return [ 0 => 'idReponse',
             1 => 'idQuestion',
             2 => 'titreReponse',
-            3 => 'autheurId',
-            4 => 'nbVote'];
+            3 => 'autheurId'];
     }
 
 
@@ -99,15 +98,14 @@ class ReponsesRepository extends AbstractRepository{
      */
     public function createReponse(Reponse $reponse){
         $pdo = Model::getPdo();
-        $query = "INSERT INTO ".$this->getNomTable()."(idReponse, idQuestion, titreReponse, autheurId, nbVote) VALUES(:idReponse, :idQuestion, :titreReponse, :autheurId, :nbVote);";
+        $query = "INSERT INTO ".$this->getNomTable()."(idReponse, idQuestion, titreReponse, autheurId) VALUES(:idReponse, :idQuestion, :titreReponse, :autheurId);";
         $pdoStatement = $pdo->prepare($query);
 
         $values = [
             'idReponse' => $reponse->getIdReponse(),
             'idQuestion' => $reponse->getIdQuestion(),
             'titreReponse' => $reponse->getTitreReponse(),
-            'autheurId' => $reponse->getAutheurId(),
-            'nbVote' => $reponse->getNbVote()];
+            'autheurId' => $reponse->getAutheurId()];
 
         $pdoStatement->execute($values);
     }
@@ -146,7 +144,7 @@ class ReponsesRepository extends AbstractRepository{
     public function updateQuestionById($reponse){
         try {
             $pdo = Model::getPdo();
-            $sql = "UPDATE " . $this->getNomTable() . " SET idReponse=:idReponse, titreReponse=:titreReponse, autheur=:autheur, nbVote=:nbVote WHERE idQuestion=:idQuestion";
+            $sql = "UPDATE " . $this->getNomTable() . " SET idReponse=:idReponse, titreReponse=:titreReponse, autheur=:autheur WHERE idQuestion=:idQuestion";
 
             $pdoStatement = $pdo->prepare($sql);
 
@@ -154,7 +152,6 @@ class ReponsesRepository extends AbstractRepository{
                 'idQuestion' => $reponse->getIdQuestion(),
                 'titreQuestion' => $reponse->getTitreReponse(),
                 'autheur' => $reponse->getAutheurId(),
-                'nbVote' => $reponse->getNbVote(),
                 'idReponse' => $reponse->getAutheurId()];
 
             $pdoStatement->execute($values);

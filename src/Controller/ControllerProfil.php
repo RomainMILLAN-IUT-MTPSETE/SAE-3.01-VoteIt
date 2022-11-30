@@ -1,6 +1,10 @@
 <?php
 namespace App\VoteIt\Controller;
 
+use App\VoteIt\Lib\ConnexionUtilisateur;
+use App\VoteIt\Lib\MessageFlash;
+use App\VoteIt\Lib\MessageFlash as LibMessageFlash;
+use App\VoteIt\Lib\MotDePasse;
 use App\VoteIt\Model\DataObject\Utilisateur;
 use App\VoteIt\Model\HTTP\Session;
 use App\VoteIt\Model\Repository\UtilisateurRepository;
@@ -14,8 +18,8 @@ class ControllerProfil{
 
     public static function home(){
         //Si idUtilisateur existe
-        if(Session::getInstance()->contient("identifiant")){
-            $idUser = Session::getInstance()->lire("identifiant");
+        if(ConnexionUtilisateur::estConnecte() == true){
+            $idUser = ConnexionUtilisateur::getLoginUtilisateurConnecte();
             //Recuperation de l'Utilisateur dans la BD
             $user = (new UtilisateurRepository())->select($idUser);
 
@@ -27,7 +31,11 @@ class ControllerProfil{
             self::afficheVue('view.php', ['pagetitle' => "VoteIt - Profil", 'cheminVueBody' => "profil/home.php", 'user' => $user]);
         }else {
             //Renvoye a la page d'erreur avec la code PC-2
-            ControllerErreur::erreurCodeErreur('PC-2');
+            //ControllerErreur::erreurCodeErreur('PC-2');
+
+            //Renvoye vers le formulaire de connexion
+            header("Location: frontController.php?controller=profil&action=connection");
+            exit();
         }
     }
 
@@ -41,8 +49,8 @@ class ControllerProfil{
 
     public static function modification(){
         //Si idUtilisateur existe
-        if(Session::getInstance()->contient("identifiant")){
-            $idUtilisateur = Session::getInstance()->lire("identifiant");
+        if(ConnexionUtilisateur::estConnecte()){
+            $idUtilisateur = ConnexionUtilisateur::getLoginUtilisateurConnecte();
             //Recuperation des infos de l'utilisateur dans la BD
             $user = (new UtilisateurRepository())->select($idUtilisateur);
         }else {
@@ -62,56 +70,65 @@ class ControllerProfil{
     //Function to not see
     public static function register(){
         //Si toutes les informations du formulaires ont était inscrite
-        if(isset($_POST['identifiant']) AND isset($_POST['mail']) AND isset($_POST['password']) AND isset($_POST['prenom']) AND isset($_POST['nom']) AND isset($_POST['dtnaissance']) AND isset($_POST['conditionandcasuse'])){
-            $identifiant = $_POST['identifiant'];
-            $mail = $_POST['mail'];
-            $password = $_POST['password'];
-            $prenom = $_POST['prenom'];
-            $nom = $_POST['nom'];
-            $dtnaissance = $_POST['dtnaissance'];
-            $condition = $_POST['conditionandcasuse'];
+        if(isset($_REQUEST['identifiant']) AND isset($_REQUEST['mail']) AND isset($_REQUEST['password']) AND isset($_REQUEST['prenom']) AND isset($_REQUEST['nom']) AND isset($_REQUEST['dtnaissance']) AND isset($_REQUEST['conditionandcasuse'])){
+            $identifiant = $_REQUEST['identifiant'];
+            $mail = $_REQUEST['mail'];
+            $password = $_REQUEST['password'];
+            $prenom = $_REQUEST['prenom'];
+            $nom = $_REQUEST['nom'];
+            $dtnaissance = $_REQUEST['dtnaissance'];
+            $condition = $_REQUEST['conditionandcasuse'];
 
             //Si la condition à était check
             if($condition == true){
                 //Création de l'utilisateur
+                $password = MotDePasse::hacher($password);
                 $user = new Utilisateur($identifiant, $password, $nom, $prenom, $dtnaissance, '1', $mail, 'user');
                 //Import des infos dans la BD
                 (new UtilisateurRepository())->create($user);
                 self::home();
             }else {
                 //Retourne vers la page d'inscription
+                MessageFlash::ajouter("warning", "Vous devez accepter les conditions d'utilisation");
                 ControllerProfil::inscription();
             }
         }else {
             //Retourne vers la page d'inscription
+            MessageFlash::ajouter("warning", "Tous les champs n'ont pas était remplies");
             ControllerProfil::inscription();
         }
     }
     public static function connected(){
         //Si les informations du formulaire sont remplies
-        if(isset($_POST['identifiant']) AND isset($_POST['password'])){
-            $identifiant = $_POST['identifiant'];
-            $password = $_POST['password'];
+        if(isset($_REQUEST['identifiant']) AND isset($_REQUEST['password'])){
+            $identifiant = $_REQUEST['identifiant'];
+            $password = $_REQUEST['password'];
 
             //Si les informations de la BD correspondent
-            if((new UtilisateurRepository())->connectionCheckBD($identifiant, $password) == true){
-                Session::getInstance()->enregistrer("identifiant", $identifiant);
-                self::home();
+            $user = (new UtilisateurRepository())->select($identifiant);
+            if(MotDePasse::verifier($password, $user->getMotDePasse())){
+                ConnexionUtilisateur::connecter($identifiant);
+                
+                MessageFlash::ajouter("success", "Connection réussi à votre profil");
+                header("Location: frontController.php?controller=questions&action=home");
+                exit();
             }else {
-                //Renvoye a la page d'erreur avec le code PC-4
                 ControllerErreur::erreurCodeErreur('PC-4');
             }
+        }else {
+            ControllerErreur::erreurCodeErreur('PC-2');
         }
     }
     public static function edit(){
         //Si toutes les informations du formulaires sont remplies
-        if(isset($_POST['identifiant']) AND isset($_POST['mail']) AND isset($_POST['password']) AND isset($_POST['prenom']) AND isset($_POST['nom']) AND isset($_POST['dtnaissance'])){
-            $identifiant = $_POST['identifiant'];
-            $mail = $_POST['mail'];
-            $password = $_POST['password'];
-            $prenom = $_POST['prenom'];
-            $nom = $_POST['nom'];
-            $dtnaissance = $_POST['dtnaissance'];
+        if(isset($_REQUEST['identifiant']) AND isset($_REQUEST['mail']) AND isset($_REQUEST['password']) AND isset($_REQUEST['prenom']) AND isset($_REQUEST['nom']) AND isset($_REQUEST['dtnaissance'])){
+            $identifiant = $_REQUEST['identifiant'];
+            $mail = $_REQUEST['mail'];
+            $password = $_REQUEST['password'];
+            $prenom = $_REQUEST['prenom'];
+            $nom = $_REQUEST['nom'];
+            $dtnaissance = $_REQUEST['dtnaissance'];
+
 
             //Récuperation de l'utilisateur actuelle dans la BD
             $userBefore = (new UtilisateurRepository())->select($identifiant);
@@ -119,7 +136,7 @@ class ControllerProfil{
             $grade = $userBefore->getGrade();
 
             //Création d'un nouvelle utilisateur avec les nouvelles informations
-            $userEdit = new Utilisateur($identifiant, $password, $prenom, $nom, $dtnaissance, $iconeLink, $mail, $grade);
+            $userEdit = new Utilisateur($identifiant, $password, $nom, $prenom, $dtnaissance, $iconeLink, $mail, $grade);
             //Mise à jour de l'utilisateur
             (new UtilisateurRepository())->update($userEdit);
             //Redirection vers la page d'accueil
@@ -127,14 +144,25 @@ class ControllerProfil{
             exit();
         }else {
             //Si il y a au moins l'identifiant
-            if(isset($_POST['identifiant'])){
+            if(isset($_REQUEST['identifiant'])){
                 //Redirection vers la page de modification
-                header("Location: frontController.php?controller=profil&action=modification&idUtilisateur=".$_POST['identifiant']);
+                header("Location: frontController.php?controller=profil&action=modification&idUtilisateur=".$_REQUEST['identifiant']);
                 exit();
             }else{
                 //Renvoye vers la page d'erreur avec le code PC-2
                 ControllerErreur::erreurCodeErreur('PC-2');
             }
+        }
+    }
+    public static function deconnection(){
+        if(ConnexionUtilisateur::estConnecte() == true){
+            ConnexionUtilisateur::deconnecter();
+            header("Location: frontController.php");
+            exit();
+        }else {
+            LibMessageFlash::ajouter("warning", "Vous devez être connecté pour pouvoir faire ceci");
+            header("Location: frontController.php");
+            exit();
         }
     }
 }
