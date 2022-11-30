@@ -8,7 +8,7 @@
         </div>
         <div class="div-form-normal">
             <label for="autheur">Auteur</label>
-            <input type="text" name="autheur" id="autheur" placeholder="JohnDoe10" required/>
+            <input type="text" name="autheur" id="autheur" value="<?php echo(\App\VoteIt\Lib\ConnexionUtilisateur::getLoginUtilisateurConnecte()) ?>" placeholder="JohnDoe10" required/>
         </div>
         <div class="div-form-normal">
             <label for="titreReponse">Titre de la réponse</label>

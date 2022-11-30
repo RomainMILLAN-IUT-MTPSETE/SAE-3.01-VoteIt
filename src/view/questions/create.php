@@ -4,7 +4,7 @@
         <h2 class="title">Création de la question</h2>
         <div>
             <label for="autheur">Auteur</label>
-            <input type="text" name="autheur" id="autheur" placeholder="JohnDoe10" required/>
+            <input type="text" name="autheur" id="autheur" placeholder="JohnDoe10" value="<?php echo(\App\VoteIt\Lib\ConnexionUtilisateur::getLoginUtilisateurConnecte()) ?>" required/>
         </div>
         <div>
             <label for="titreQuestion">Titre</label>
