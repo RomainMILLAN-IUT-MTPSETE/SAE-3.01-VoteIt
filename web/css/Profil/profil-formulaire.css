@@ -30,6 +30,12 @@
     font-size: 25px;
     margin-left: 20px;
 }
+.formulaire-template #checkbox-div a{
+    color: black;
+}
+.formulaire-template #checkbox-div a p{
+    font-size: 15px;
+}
 @media (min-width: 1000px) {
     .formulaire-template #checkbox-div p {
         font-size: 10px;
