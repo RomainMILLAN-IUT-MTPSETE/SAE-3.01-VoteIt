@@ -13,7 +13,7 @@
         if((strcmp($user->getGrade(), "Organisateur") == 0) OR (strcmp($user->getGrade(), "Administrateur") == 0) OR (strcmp($user->getGrade(), "Votant") == 0)){
             $voteState = (new VoteRepository())->stateVote($reponse->getIdQuestion(), $user->getIdentifiant());
             $dateNow = date("Y-m-d");
-            if($voteState == true && $question->getDateVoteDebut() < $dateNow  && $dateNow < $question->getDateVoteFin()){
+            if($voteState == true && $question->getDateVoteDebut() <= $dateNow  && $dateNow <= $question->getDateVoteFin()){
                 ?><a href="frontController.php?controller=reponses&action=vote&idReponse=<?php echo(rawurlencode($_GET['idReponse'])); ?>"><button id="buttonTop">Voter pour cette réponse <img id="imgButtonTop" src="assets/reponses/see/like.png" alt="Icone de nouvelle reponse"></button></a><?php
             }else {
                 ?><button id="buttonTop-disable">Vote indisponible <img id="imgButtonTop" src="assets/reponses/see/like.png" alt="Icone de nouvelle reponse"></button><?php
