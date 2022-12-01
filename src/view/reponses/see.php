@@ -6,6 +6,7 @@
     use \App\VoteIt\Model\HTTP\Session;
     //USERCHANGE
     $voteState = false;
+    $canModifAndDelete = false;
     if(ConnexionUtilisateur::estConnecte()){
         $user = (new \App\VoteIt\Model\Repository\UtilisateurRepository())->select(ConnexionUtilisateur::getLoginUtilisateurConnecte());
 
@@ -18,6 +19,10 @@
                 ?><button id="buttonTop-disable">Vote indisponible <img id="imgButtonTop" src="assets/reponses/see/like.png" alt="Icone de nouvelle reponse"></button><?php
             }
         }
+
+        if((strcmp($user->getGrade(), "Organisateur") == 0) OR (strcmp($user->getGrade(), "Administrateur") == 0)){
+            $canModifAndDelete = true;
+        }
     }
 
     ?>
@@ -26,7 +31,7 @@
 
     <div class="title-reponse--container">
         <div class="title">
-            <h2>Réponse n°<?php echo(htmlspecialchars($reponse->getIdReponse())); ?> <span class="colored">:</span> <a href="frontController.php?controller=reponses&action=update&idReponse=<?php echo(rawurlencode($reponse->getIdReponse())) ?>"><img src="assets/reponses/see/edit.png" alt="Icone d edition de reponse"></a><a href="frontController.php?controller=reponses&action=delete&idReponse=<?php echo(rawurlencode($reponse->getIdReponse())) ?>"><img src="assets/reponses/see/delete.png" alt=""></a></h2></h2>
+            <h2>Réponse n°<?php echo(htmlspecialchars($reponse->getIdReponse())); ?> <span class="colored">:</span> <?php if($canModifAndDelete == true){ ?><a href="frontController.php?controller=reponses&action=update&idReponse=<?php echo(rawurlencode($reponse->getIdReponse())) ?>"><img src="assets/reponses/see/edit.png" alt="Icone d edition de reponse"></a><a href="frontController.php?controller=reponses&action=delete&idReponse=<?php echo(rawurlencode($reponse->getIdReponse())) ?>"><img src="assets/reponses/see/delete.png" alt=""></a><?php } ?></h2></h2>
         </div>
         <p class="title-reponse-p"><?php echo(htmlspecialchars($reponse->getTitreReponse())); ?></p>
         <div class="info-container">
