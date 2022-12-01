@@ -27,7 +27,7 @@
         <div class="date--container">
             <H2>Dates</H2>
             <div>
-                <label id="title-date" for="ecritureDateDebut">Date d'écriture des réponses</label>
+                <label id="title-date" for="ecritureDateDebut">Début d'écriture des réponses</label>
                 <input id="date-input" type="date" name="ecritureDateDebut" id="ecritureDateDebut" placeholder="01-01-2001" required/></span>
                 <label id="title-date" for="ecritureDateDebut">Fin d'écriture des réponses</label>
                 <input id="date-input" type="date" name="ecritureDateFin" id="ecritureDateFin" placeholder="01-01-2001" required/></span>
@@ -35,7 +35,7 @@
 
 
             <div>
-                <label id="title-date" for="voteDateDebut">Débuts des votes</label>
+                <label id="title-date" for="voteDateDebut">Début des votes</label>
                 <input id="date-input" type="date" name="voteDateDebut" id="voteDateDebut" placeholder="01-01-2001" required/></span>
                 <label id="title-date" for="voteDateDebut">Fin des votes</label>
                 <input id="date-input" type="date" name="voteDateFin" id="voteDateFin " placeholder="01-01-2001" required/></span>
