@@ -4,7 +4,7 @@
         <h2 class="title">Créer une réponse</h2>
         <div class="div-form-normal">
             <label for="idQuestion">Identifiant Question</label>
-            <input type="number" name="idQuestion" id="idQuestion" placeholder="11" value="<?php echo(htmlspecialchars($_GET['idQuestion'])); ?>" readonly required/>
+            <input type="number" name="idQuestion" id="idQuestion" placeholder="11" value="<?php echo(htmlspecialchars($_GET['idQuestion'])); ?>" readonly/>
         </div>
         <div class="div-form-normal">
             <label for="autheur">Auteur</label>
