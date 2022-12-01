@@ -25,7 +25,7 @@
             <input type="text" name="nom" id="nom" placeholder="DOE" value="<?php echo(htmlspecialchars($user->getNom())) ?>"/>
         </div>
         <div>
-            <label for="dtnaissance">Date de Naissance</label>
+            <label for="dtnaissance">Date de naissance</label>
             <input type="date" name="dtnaissance" id="dtnaissance" placeholder="01-01-2001" value="<?php echo(htmlspecialchars($user->getDateNaissance())) ?>"/>
         </div>
         <div>

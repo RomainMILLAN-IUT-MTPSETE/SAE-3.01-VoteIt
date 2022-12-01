@@ -26,7 +26,7 @@
 
     <section class="sect-see-question">
         <div class="sub-see-question-container">
-            <h2><span class="title-sub-see-question">Question n°<?php echo (htmlspecialchars($question->getIdQuestion())) ?> <span class="colored">:</span> </span><?php if($canModifOrDelete == true) { ?><a href="frontController.php?controller=questions&action=update&idQuestion=<?php echo (rawurlencode($_GET['idQuestion'])) ?>"><img class="ml12px" src="assets/questions/see/edit.png" alt="nope"></a><a href="frontController.php?controller=questions&action=delete&idQuestion=<?php echo (rawurlencode($_GET['idQuestion'])) ?>"><img class="ml8px" src="assets/questions/see/delete.png" alt="nope"></a><?php } ?></h2>
+            <h2><span class="title-sub-see-question">Détail de la question<span class="colored">:</span> </span><?php if($canModifOrDelete == true) { ?><a href="frontController.php?controller=questions&action=update&idQuestion=<?php echo (rawurlencode($_GET['idQuestion'])) ?>"><img class="ml12px" src="assets/questions/see/edit.png" alt="nope"></a><a href="frontController.php?controller=questions&action=delete&idQuestion=<?php echo (rawurlencode($_GET['idQuestion'])) ?>"><img class="ml8px" src="assets/questions/see/delete.png" alt="nope"></a><?php } ?></h2>
             <p class="title-question-p"><span class="bolder">Titre:</span> <?php echo (htmlspecialchars($question->getTitreQuestion())) ?></p>
             <p><span class="bolder">Auteur:</span> <?php
                                                     $autheur = (new \App\VoteIt\Model\Repository\UtilisateurRepository())->select($question->getAutheur());
@@ -56,6 +56,17 @@
     </section>
     <hr class="inter-container-mobile" WIDTH="100px" COLOR="BLACK">
     <section class="reponse--container">
+        <div class="sub-see-reponse-container">
+            <h2 class="title-sub-see-reponse"><?php
+                if(count($reponses)<=1){
+                    echo 'Réponse';
+                }else{
+                    echo 'Réponses';
+                }
+                ?> (<?php
+                echo count($reponses)
+                ?>)<span class="colored">:</span></h2>
+        </div>
         <?php
         foreach ($reponses as $item) {
         ?>

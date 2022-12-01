@@ -179,6 +179,19 @@ a {
     display: none;
 }
 
+.sub-see-reponse-container{
+    margin-top: 25px;
+    width: 400px;
+    margin-left: 405px;
+}
+
+.title-sub-see-reponse{
+    border-bottom: 2px solid #84B38F;
+    font-family: "Poppins";
+    font-size: 27.5px;
+    width: 250px;
+}
+
 
 @media (max-width: 1000px){
     .question-see--container{
@@ -229,6 +242,6 @@ a {
         margin-bottom: 15px;
     }
 
-
 }
+
 
