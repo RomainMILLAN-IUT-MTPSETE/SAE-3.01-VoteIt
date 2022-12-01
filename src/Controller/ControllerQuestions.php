@@ -63,7 +63,7 @@ class ControllerQuestions{
             self::afficheVue('view.php',['pagetitle' => "VoteIt - Suppression de la question n°" . $_GET['idQuestion'], 'cheminVueBody' => "questions/delete.php"]);
         }
         else {
-            echo 'l\'identifiant de la question non renseignée !';
+            echo 'Identifiant de la question non renseignée !';
         }
     }
 
@@ -71,20 +71,18 @@ class ControllerQuestions{
         ControllerErreur::erreurCodeErreur('QC-1');
     }
 
-
-
     public static function created(){
         if(isset($_POST['autheur']) AND isset($_POST['titreQuestion']) AND isset($_POST['nbSection']) AND isset($_POST['categorieQuestion']) AND isset($_POST['ecritureDateDebut']) AND isset($_POST['ecritureDateFin']) AND isset($_POST['voteDateDebut']) AND isset($_POST['voteDateFin'])){
             if($_POST['ecritureDateDebut'] > $_POST['ecritureDateFin']){
-                MessageFlash::ajouter("danger", "La date d'écriture de début est supérieur à la date d'écriture de fin");
+                MessageFlash::ajouter("danger", "La date de début d'écriture est supérieure à la date de fin d'écriture.");
                 header("Location: frontController.php?controller=questions&action=create");
                 exit();
             }else if($_POST['voteDateDebut'] > $_POST['voteDateFin']){
-                MessageFlash::ajouter("danger", "La date de vote de début est supérieur à la date de vote de fin");
+                MessageFlash::ajouter("danger", "La date de début de vote est supérieure à la date de fin de vote.");
                 header("Location: frontController.php?controller=questions&action=create");
                 exit();
             }else if($_POST['ecritureDateFin'] > $_POST['voteDateDebut']){
-                MessageFlash::ajouter("danger", "Les dates de votes sont avant les dates d'écritures");
+                MessageFlash::ajouter("danger", "Les dates de vote sont avant les dates d'écriture.");
                 header("Location: frontController.php?controller=questions&action=create");
                 exit();
             }else {
@@ -111,15 +109,15 @@ class ControllerQuestions{
     public static function updated() {
         if(isset($_POST['idQuestion']) AND isset($_POST['autheur']) AND isset($_POST['titreQuestion']) AND isset($_POST['ecritureDateDebut']) AND isset($_POST['ecritureDateFin']) AND isset($_POST['voteDateDebut']) AND isset($_POST['voteDateFin']) AND isset($_POST['categorieQuestion'])){
             if($_POST['ecritureDateDebut'] > $_POST['ecritureDateFin']){
-                MessageFlash::ajouter("danger", "La date d'écriture de début est supérieur à la date d'écriture de fin");
+                MessageFlash::ajouter("danger", "La date de début d'écriture est supérieure à la date de fin d'écriture.");
                 header("Location: frontController.php?controller=questions&action=update&idQuestion=".$_POST['idQuestion']);
                 exit();
             }else if($_POST['voteDateDebut'] > $_POST['voteDateFin']){
-                MessageFlash::ajouter("danger", "La date de vote de début est supérieur à la date de vote de fin");
+                MessageFlash::ajouter("danger", "La date de début de vote est supérieure à la date de fin de vote.");
                 header("Location: frontController.php?controller=questions&action=update&idQuestion=".$_POST['idQuestion']);
                 exit();
             }else if($_POST['ecritureDateFin'] > $_POST['voteDateDebut']){
-                MessageFlash::ajouter("danger", "Les dates de votes sont avant les dates d'écritures");
+                MessageFlash::ajouter("danger", "Les dates de vote sont avant les dates d'écriture.");
                 header("Location: frontController.php?controller=questions&action=update&idQuestion=".$_POST['idQuestion']);
                 exit();
             }else {

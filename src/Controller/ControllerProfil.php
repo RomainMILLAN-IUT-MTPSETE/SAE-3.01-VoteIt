@@ -66,8 +66,6 @@ class ControllerProfil{
         ControllerErreur::erreurCodeErreur('PC-1');
     }
 
-
-
     //Function to not see
     public static function register(){
         //Si toutes les informations du formulaires ont était inscrite
@@ -100,7 +98,7 @@ class ControllerProfil{
             }
         }else {
             //Retourne vers la page d'inscription
-            MessageFlash::ajouter("warning", "Tous les champs n'ont pas était remplies");
+            MessageFlash::ajouter("warning", "Tous les champs n'ont pas été remplis");
             ControllerProfil::inscription();
         }
     }
@@ -115,7 +113,7 @@ class ControllerProfil{
             if(MotDePasse::verifier($password, $user->getMotDePasse())){
                 ConnexionUtilisateur::connecter($identifiant);
                 
-                MessageFlash::ajouter("success", "Connection réussi à votre profil");
+                MessageFlash::ajouter("success", "Connexion réussie à votre profil");
                 header("Location: frontController.php?controller=profil&action=home");
                 exit();
             }else {
@@ -125,6 +123,7 @@ class ControllerProfil{
             ControllerErreur::erreurCodeErreur('PC-2');
         }
     }
+
     public static function edit(){
         //Si toutes les informations du formulaires sont remplies
         if(isset($_REQUEST['identifiant']) AND isset($_REQUEST['mail']) AND isset($_REQUEST['password']) AND isset($_REQUEST['prenom']) AND isset($_REQUEST['nom']) AND isset($_REQUEST['dtnaissance'])){
@@ -184,15 +183,14 @@ class ControllerProfil{
     public static function validerEmail(){
         if(isset($_REQUEST['login']) AND isset($_REQUEST['nonce'])){
             if(VerificationEmail::traiterEmailValidation($_REQUEST['login'], $_REQUEST['nonce']) == true){
-                MessageFlash::ajouter("success", "Validation de l'email");
+                MessageFlash::ajouter("success", "Validation de l'email.");
                 header("Location: frontController.php?controller=profil&action=home");
             }else {
                 MessageFlash::ajouter("warning", "Login ou Nonce invalide");
                 header("Location: frontController.php?controller=profil&action=home");
             }
-
         }else {
-            MessageFlash::ajouter("warning", "Ajouter un login et un nonce");
+            MessageFlash::ajouter("warning", "Ajoutez un login et un nonce.");
             header("Location: frontController.php");
             exit();
         }

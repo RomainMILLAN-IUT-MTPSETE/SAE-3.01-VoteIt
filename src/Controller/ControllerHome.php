@@ -17,7 +17,7 @@ class ControllerHome{
     }
 
     public static function cgu(){
-        self::afficheVue('view.php', ['pagetitle' => "VoteIt - Condition Générale d'Utilisation", 'cheminVueBody' => "home/cgu.php"]);
+        self::afficheVue('view.php', ['pagetitle' => "VoteIt - Conditions Générales d'Utilisation", 'cheminVueBody' => "home/cgu.php"]);
     }
 
     public static function error(){

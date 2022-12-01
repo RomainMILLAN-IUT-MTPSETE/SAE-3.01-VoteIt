@@ -2,7 +2,7 @@
 <section class="home--container">
     <div>
         <div class="title" id="quisommesnous">
-            <h2>Qui sommes nous?</h2>
+            <h2>Qui sommes-nous?<span class="colored">:</span></h2>
         </div>
         <div class="text">
             <div class="student--container">
@@ -23,7 +23,7 @@
     </div>
     <div>
         <div class="title" id="leprojet">
-            <h2>Le projet</h2>
+            <h2>Le projet<span class="colored">:</span></h2>
         </div>
         <div class="text text-bottom">
             <p>

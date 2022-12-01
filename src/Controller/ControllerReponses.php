@@ -21,7 +21,7 @@ class ControllerReponses{
     public static function create(){
         if(isset($_GET['idQuestion'])){
             $sections = (new SectionRepository())->selectAllByIdQuestion($_GET['idQuestion']);
-            self::afficheVue('view.php', ['pagetitle' => "VoteIt - Creation d'une réponse", 'cheminVueBody' => "reponses/create.php", 'sections' => $sections]);
+            self::afficheVue('view.php', ['pagetitle' => "VoteIt - Création d'une réponse", 'cheminVueBody' => "reponses/create.php", 'sections' => $sections]);
         }else {
             ControllerErreur::erreurCodeErreur('RC-2');
         }
@@ -69,7 +69,6 @@ class ControllerReponses{
         ControllerErreur::erreurCodeErreur('RC-1');
     }
 
-
     //NOT SEE
     public static function created(){
         if(isset($_POST['idQuestion']) and isset($_POST['autheur']) AND isset($_POST['titreReponse']) AND isset($_POST['idSection1']) AND isset($_POST['nbSection']) AND isset($_POST['texteSection1'])){
@@ -92,7 +91,7 @@ class ControllerReponses{
                 (new ReponseSectionRepository())->createReponseSection($ReponseSection);
             }
 
-            MessageFlash::ajouter("success", "Réponse n°". $idReponse ." crée");
+            MessageFlash::ajouter("success", "Réponse n°". $idReponse ." créée.");
             header("Location: frontController.php?controller=questions&action=see&idQuestion=".$idQuestion);
             exit();
             //header("Location: frontController.php?controller=reponses&idReponse=".$)
@@ -111,7 +110,7 @@ class ControllerReponses{
                 (new ReponseSectionRepository())->updateReponseSection($modelSection);
             }
 
-            MessageFlash::ajouter("info","Réponse n°" . $_POST['idReponse'] . " mise à jour");
+            MessageFlash::ajouter("info","Réponse n°" . $_POST['idReponse'] . " mise à jour.");
             header("Location: frontController.php?controller=reponses&action=see&idReponse=".$_POST['idReponse']);
             exit();
         }else {
@@ -125,7 +124,7 @@ class ControllerReponses{
             $idQuestion = (new ReponsesRepository())->selectReponseByIdReponse($_POST['idReponse'])->getIdQuestion();
             (new ReponsesRepository())->deleteReponseByIdReponse($_POST['idReponse']);
             
-            MessageFlash::ajouter("danger", "Réponse n°" . $_POST['idReponse'] . " supprimé");
+            MessageFlash::ajouter("danger", "Réponse n°" . $_POST['idReponse'] . " supprimée.");
             header("Location: frontController.php?controller=questions&action=see&idQuestion=".$idQuestion);
             exit();
         }else {
@@ -138,8 +137,8 @@ class ControllerReponses{
         if(isset($_POST['idReponse'])){
             (new VoteRepository())->vote((new ReponsesRepository())->selectReponseByIdReponse($_POST['idReponse']));
 
-            MessageFlash::ajouter("success", "Vous venez de voter pour la réponse n°".$_POST['idReponse']);
-            header("Location: frontController.php?controller=reponses&action=see&idReponse=".$_POST['idReponse']);
+            MessageFlash::ajouter("success", "Vous venez de voter pour la réponse n°".$_POST['idReponse'].".");
+            header("Location: frontController.php?controller=reponses&action=see&idReponse=".$_POST['idReponse'].".");
             exit();
         }else {
             ControllerErreur::erreurCodeErreur('RC-2');

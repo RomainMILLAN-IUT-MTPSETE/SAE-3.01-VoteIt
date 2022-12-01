@@ -17,7 +17,7 @@ class ControllerSections{
         if(isset($_GET['nbSections']) AND isset($_GET['idQuestion'])){
             $nbSection = $_GET['nbSections'];
             $idQuestion = $_GET['idQuestion'];
-            self::afficheVue('view.php', ['pagetitle' => "VoteIt - Creation des sections", 'cheminVueBody' => "sections/createForCreateQuestion.php", 'nbSections' => $nbSection, 'idQuestion' => $idQuestion]);
+            self::afficheVue('view.php', ['pagetitle' => "VoteIt - Création des sections", 'cheminVueBody' => "sections/createForCreateQuestion.php", 'nbSections' => $nbSection, 'idQuestion' => $idQuestion]);
         }else {
             ControllerErreur::erreurCodeErreur('SC-1');
         }
@@ -42,7 +42,7 @@ class ControllerSections{
                 (new SectionRepository())->createSection($sectionTemp);
             }
 
-            MessageFlash::ajouter("success", "Ajout de la question n°" . $_POST['idQuestion'] . " réussi !");
+            MessageFlash::ajouter("success", "Ajout de la question n°" . $_POST['idQuestion'] . " réussi!");
             header("Location: frontController.php?controller=questions&action=home");
             exit();
         }else {
