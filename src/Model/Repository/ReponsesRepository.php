@@ -162,4 +162,25 @@ class ReponsesRepository extends AbstractRepository{
             return false;
         }
     }
+    public function allIdReponse(): ?array
+    {
+        try {
+            $pdo = Model::getPdo();
+            $sql = "SELECT " . $this->getNomClePrimaire() . " FROM " . $this->getNomTable();
+
+            $pdoStatement = $pdo->query($sql);
+
+            $tab = [];
+
+            foreach ($pdoStatement as $tableauSelecter) {
+                $tab[] = $tableauSelecter[0];
+            }
+
+            return $tab;
+
+        }catch (PDOException $exception) {
+            echo $exception->getMessage();
+            return null;
+        }
+    }
 }

@@ -21,6 +21,19 @@
                                                                                                                                                                                                                                                                                                         }
 
                                                                                                                                                                                             ?>
+    <?php
+    use \App\VoteIt\Model\Repository\QuestionsRepository;
+
+    $tab = (new QuestionsRepository())->allIdQuestion();
+
+    if ($_GET['idQuestion'] != $tab[0]) {
+        echo '<a href="frontController.php?controller=questions&action=see&idQuestion=' . $tab[array_search($_GET['idQuestion'], $tab) - 1] . '">←</a>';
+    }
+
+    if ($_GET['idQuestion'] != $tab[count($tab) - 1]) {
+        echo  '<a href="frontController.php?controller=questions&action=see&idQuestion=' . $tab[array_search($_GET['idQuestion'], $tab) + 1] . '">→</a>';
+    }
+    ?>
 </section>
 <section class="question-see--container">
 

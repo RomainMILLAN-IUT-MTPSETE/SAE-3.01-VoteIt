@@ -27,6 +27,19 @@
 
     ?>
 </section>
+    <?php
+    use \App\VoteIt\Model\Repository\ReponsesRepository;
+
+    $tab = (new ReponsesRepository())->allIdReponse();
+
+    if ($_GET['idReponse'] != $tab[0]) {
+        echo '<a href="frontController.php?controller=reponses&action=see&idReponse=' . $tab[array_search($_GET['idReponse'], $tab) - 1] . '">←</a>';
+    }
+
+    if ($_GET['idReponse'] != $tab[count($tab) - 1]) {
+        echo  '<a href="frontController.php?controller=reponses&action=see&idReponse=' . $tab[array_search($_GET['idReponse'], $tab) + 1] . '">→</a>';
+    }
+    ?>
 <section class="reponse-see--container">
 
     <div class="title-reponse--container">
