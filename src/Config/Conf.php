@@ -18,7 +18,8 @@ class Conf {
         'login' => 'pierreg',
         // A l'IUT, c'est votre mdp (INE par defaut)
         // Sur votre machine personelle, vous avez creez ce mdp a l'installation
-        'password' => 'Fortnite34'
+        'password' => 'Fortnite34',
+        'absoluteURL' => 'http://localhost:8888/Perso/VoteIt/web/frontController.php'
     );
 
     static public function getLogin() : string {
@@ -34,6 +35,9 @@ class Conf {
     }
     static public function getPassword() : string {
         return self::$databases['password'];
+    }
+    static public function getAbsoluteURL() : string {
+        return self::$databases['absoluteURL'];
     }
 
 }

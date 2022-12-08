@@ -1,0 +1,142 @@
+.formulaire--container{
+    display: block;
+    width: 100vw;
+    margin: auto;
+}
+a {
+    text-decoration: none;
+}
+
+.formulaire--container .title{
+    font-size: 75px;
+    padding-left: 25px;
+    border-bottom: 1px solid #84B28F;
+}
+@media (min-width: 1000px) {
+    .formulaire--container .title {
+        font-size: 35px;
+        padding-left: 75px;
+    }
+}
+
+/*TEMPLATE*/
+.formulaire-template div {
+    margin: auto;
+    display: flex;
+    flex-direction: column;
+    width: 700px;
+}
+.formulaire-template div label {
+    font-size: 35px;
+    margin-left: 25px;
+    margin-top: 25px;
+    margin-bottom: 0px;
+}
+.formulaire-template div input {
+    margin-top: -5px;
+    font-size: 45px;
+    height: 90px;
+    width: 700px;
+    border: none;
+    border-radius: 5px;
+    background-color: #F9F9F9;
+    border: 0.25px solid black;
+    padding-left: 15px;
+}
+.formulaire-template div select {
+    margin-top: -5px;
+    font-size: 45px;
+    height: 90px;
+    width: 700px;
+    border: none;
+    border-radius: 5px;
+    background-color: #F9F9F9;
+    border: 0.25px solid black;
+    padding-left: 15px;
+}
+@media (min-width: 1000px){
+    .formulaire-template div {
+        width: 700px;
+    }
+    .formulaire-template div label {
+        font-size: 15px;
+        margin-left: 20px;
+    }
+    .formulaire-template div input {
+        height: 35px;
+        width: 700px;
+        font-size: 20px;
+    }
+    .formulaire-template div select {
+        height: 35px;
+        width: 700px;
+        font-size: 20px;
+    }
+}
+
+/*DATE*/
+.date--container div{
+    width: 100%;
+}
+.date--container div span{
+    display: flex;
+    flex-direction: row;
+    align-content: center;
+    margin-top: 10px;
+}
+.date--container div span p {
+    font-size: 35px;
+    margin: 0;
+    margin-right: 5px;
+}
+.date--container div span input{
+    width: 100%;
+}
+@media (min-width: 1000px) {
+    .date--container div span p {
+        font-size: 15px;
+    }
+}
+
+
+
+/*TEXTAREA*/
+.formulaire-template div textarea{
+    margin-top: -5px;
+    height: 150px;
+    width: 700px;
+    border: none;
+    border-radius: 5px;
+    background-color: #F9F9F9;
+    border: 0.25px solid black;
+    padding-left: 15px;
+}
+
+
+/*SUBMIT*/
+.formulaire-template div input[type=submit] {
+    margin: auto;
+    font-size: 35px;
+    height: 65px;
+    margin-top: 85px;
+    background-color: #9BD2A8;
+    color: white;
+    border-radius: 100px;
+    border: 0px;
+    margin-bottom: 50px;
+}
+@media (min-width: 1000px) {
+    .formulaire-template div input[type=submit] {
+        font-size: 15px;
+        height: 35px;
+        width: 400px;
+    }
+}
+
+
+hr{
+    margin-top: 25px;
+}
+.titre
+
+

@@ -2,6 +2,7 @@
 namespace App\VoteIt\Model\Repository;
 
 use App\VoteIt\Model\DataObject\Utilisateur;
+use App\VoteIt\Model\Repository\DatabaseConnection as Model;
 
 class UtilisateurRepository extends AbstractRepository {
 
@@ -11,7 +12,7 @@ class UtilisateurRepository extends AbstractRepository {
     }
 
     protected function construire(array $objetFormatTableau): Utilisateur{
-        return new Utilisateur($objetFormatTableau['idUtilisateur'], $objetFormatTableau['motDePasseUtilisateur'], $objetFormatTableau['nomUtilisateur'], $objetFormatTableau['prenomUtilisateur'], $objetFormatTableau['dateNaissanceUtilisateur'], $objetFormatTableau['iconeLink'], $objetFormatTableau['mailUtilisateur'], $objetFormatTableau['gradeUtilisateur']);
+        return new Utilisateur($objetFormatTableau['idUtilisateur'], $objetFormatTableau['motDePasseUtilisateur'], $objetFormatTableau['nomUtilisateur'], $objetFormatTableau['prenomUtilisateur'], $objetFormatTableau['dateNaissanceUtilisateur'], $objetFormatTableau['iconeLink'], $objetFormatTableau['mailUtilisateur'], $objetFormatTableau['mailAValider'], $objetFormatTableau['nonce'], $objetFormatTableau['gradeUtilisateur']);
     }
 
     protected function getNomClePrimaire(): string
@@ -27,16 +28,18 @@ class UtilisateurRepository extends AbstractRepository {
             4 => 'dateNaissanceUtilisateur',
             5 => 'iconeLink',
             6 => 'mailUtilisateur',
-            7 => 'gradeUtilisateur'];
+            7 => 'mailAValider',
+            8 => 'nonce',
+            9 => 'gradeUtilisateur'];
     }
     
     public static function selectUserByIdUser($idUser){
-        $sql = " SELECT * FROM vit_Utilisateurs WHERE idUtilisateur=:valuePrimaire";
+        $sql = " SELECT * FROM vit_Utilisateurs WHERE idUtilisateur=:idUser";
         // Préparation de la requête
         $pdoStatement = Model::getPdo()->prepare($sql);
 
         $values = array(
-            "valuePrimaire" => $valuePrimaire,
+            "idUser" => $idUser,
             //nomdutag => valeur, ...
         );
         // On donne les valeurs et on exécute la requête
@@ -47,25 +50,11 @@ class UtilisateurRepository extends AbstractRepository {
         $ressultatSQL = $pdoStatement->fetch();
 
         if (!$ressultatSQL) {
-
             $res = null;
-
         } else {
-
             $res = static::construire($ressultatSQL);
-
         }
 
         return $res;
-    }
-
-    public static function connectionCheckBD($identifiant, $password) : bool{
-        $user = (new UtilisateurRepository())->select($identifiant);
-
-        if(strcmp($password, $user->getMotDePasse()) == 0){
-            return true;
-        }else {
-            return false;
-        }
     }
 }

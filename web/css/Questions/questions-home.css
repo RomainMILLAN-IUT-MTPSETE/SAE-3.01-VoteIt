@@ -4,25 +4,6 @@
     src: url("../../assets/fonts/Poppins/Poppins-Light.ttf");
 }
 
-.votes-home--container #proposerQuestionButton {
-    display: block;
-    padding: 8px 12px;
-    background-color: #84B38F;
-    border : solid 1px black;
-    border-radius: 10px;
-    font-size: 14px;
-    margin: auto;
-    margin-top: 30px;
-    margin-bottom: 20px;
-    font-family: "Poppins Light";
-    font-weight: bold;
-}
-
-.votes-home--container #imgPropose {
-    width: 17px;
-    height: 17px;
-}
-
 .votes-home--container #question-title--container {
     display: flex;
     flex-direction: row;
@@ -41,6 +22,8 @@ a {
     display: flex;
     flex-direction: row;
     justify-content: space-between;
+    padding-top: 0px;
+    font-size: 22.5px;
 }
 
 a#filtre {
@@ -68,10 +51,10 @@ a#filtre {
 
 p#question-title {
     border-bottom : solid 2px #9BD2A7;
-    width: 350px;
     text-align: end;
     font-family: "Poppins Light";
     font-weight: bolder;
+    width: 250px;
 }
 
 .votes-home--container div#question-title--container {
@@ -157,6 +140,7 @@ div#question-title--container {
     align-items: baseline;
     padding-top: 20px;
     padding-bottom: 5px;
+    padding-left:  5px;
 }
 
 #categorie {

@@ -5,23 +5,20 @@ namespace App\VoteIt\Model\DataObject;
 class Reponse extends AbstractDataObject{
     private String $idReponse;
     private String $idQuestion;
+    private String $titreReponse;
     private String $autheurId;
-    private String $texteReponse;
-    private String $nbVote;
 
     /**
      * @param String $idReponse
      * @param String $idQuestion
-     * @param String $texteReponse
      * @param String $nbVote
      */
-    public function __construct(string $idReponse, string $idQuestion, string $autheurId, string $texteReponse, string $nbVote)
+    public function __construct(string $idReponse, string $idQuestion, string $titreReponse, string $autheurId)
     {
         $this->idReponse = $idReponse;
         $this->idQuestion = $idQuestion;
+        $this->titreReponse = $titreReponse;
         $this->autheurId = $autheurId;
-        $this->texteReponse = $texteReponse;
-        $this->nbVote = $nbVote;
     }
 
 
@@ -29,9 +26,8 @@ class Reponse extends AbstractDataObject{
         return array(
             "idReponse" => $this->getIdReponse(),
             "idQuestion" => $this->getIdQuestion(),
+            "titreReponse" => $this->getTitreReponse(),
             "autheurId" => $this->getAutheurId(),
-            "texteReponse" => $this->getTexteReponse(),
-            "nbVote" => $this->getNbVote(),
         );
     }
 
@@ -91,34 +87,20 @@ class Reponse extends AbstractDataObject{
     /**
      * @return String
      */
-    public function getTexteReponse(): string
+    public function getTitreReponse(): string
     {
-        return $this->texteReponse;
+        return $this->titreReponse;
     }
 
     /**
      * @param String $texteReponse
      */
-    public function setTexteReponse(string $texteReponse): void
+    public function setTitreReponse(string $titreReponse): void
     {
-        $this->texteReponse = $texteReponse;
+        $this->titreReponse = $titreReponse;
     }
 
-    /**
-     * @return String
-     */
-    public function getNbVote(): string
-    {
-        return $this->nbVote;
-    }
 
-    /**
-     * @param String $nbVote
-     */
-    public function setNbVote(string $nbVote): void
-    {
-        $this->nbVote = $nbVote;
-    }
 
 
 

@@ -13,15 +13,10 @@ abstract class AbstractRepository{
         $pdo = Model::getPdo();
         $query = "SELECT * FROM ".$this->getNomTable().";";
         $pdoStatement = $pdo->query($query);
-
         $tab = [];
-
         foreach ($pdoStatement as $tableauSelecter) {
-
             $tab[] = $this->construire($tableauSelecter);
-
         }
-
         return $tab;
 
     }

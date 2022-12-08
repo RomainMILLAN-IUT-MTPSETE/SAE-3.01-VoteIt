@@ -35,7 +35,7 @@ class QuestionsRepository extends AbstractRepository {
 
     public function recherche($search){
         $pdo = Model::getPdo();
-        $query = "SELECT * FROM ".$this->getNomTable()." WHERE titreQuestion LIKE '%".$search."%';";
+        $query = "SELECT * FROM ".$this->getNomTable()." WHERE titreQuestion LIKE '%".$search."%' OR categorieQuestion LIKE '%".$search."%' OR autheur LIKE '%".$search."%';";
         $pdoStatement = $pdo->query($query);
 
         $tab = [];
@@ -61,15 +61,18 @@ class QuestionsRepository extends AbstractRepository {
 
         $resultat = $resultatSQL['idQuestion'];
 
+        if($resultat == null){
+            $resultat = 1;
+        }
+
         return $resultat;
     }
 
-    public function createQuestion($autheur, $titre, $ecritureDebut, $ecritureFin, $voteDebut, $voteFin, $categorie){
+    public function createQuestion($idQuestion, $autheur, $titre, $ecritureDebut, $ecritureFin, $voteDebut, $voteFin, $categorie){
         $pdo = Model::getPdo();
-        $query = "INSERT INTO ".$this->getNomTable()."(idQuestion, autheur, titreQuestion, ecritureDateDebut, ecritureDateFin, voteDateDebut, voteDateFin, categorieQuestion) VALUES(:idQuestion, :autheur, :titreQuestion, :texteQuestion, :planQuestion, :ecritureDateDebut, :ecritureDateFin, :voteDateDebut, :voteDateFin, :categorieQuestion);";
+        $query = "INSERT INTO ".$this->getNomTable()."(idQuestion, autheur, titreQuestion, ecritureDateDebut, ecritureDateFin, voteDateDebut, voteDateFin, categorieQuestion) VALUES(:idQuestion, :autheur, :titreQuestion, :ecritureDateDebut, :ecritureDateFin, :voteDateDebut, :voteDateFin, :categorieQuestion);";
         $pdoStatement = $pdo->prepare($query);
 
-        $idQuestion = ($this->getIdQuestionMax())+1;
         $values = [
             'idQuestion' => $idQuestion,
             'autheur' => $autheur,
@@ -81,6 +84,32 @@ class QuestionsRepository extends AbstractRepository {
             'categorieQuestion' => $categorie];
 
         $pdoStatement->execute($values);
+    }
+
+    public function updateQuestion(Question $question){
+        try {
+            $pdo = Model::getPdo();
+            $sql = "UPDATE " . $this->getNomTable() . " SET autheur=:autheur, titreQuestion=:titreQuestion, ecritureDateDebut=:ecritureDateDebut, ecritureDateFin=:ecritureDateFin, voteDateDebut=:voteDateDebut, voteDateFin=:voteDateFin, categorieQuestion=:categorieQuestion WHERE idQuestion=:idQuestion";
+
+            $pdoStatement = $pdo->prepare($sql);
+
+            $values = [
+                'idQuestion' => $question->getIdQuestion(),
+                'autheur' => $question->getAutheur(),
+                'titreQuestion' => $question->getTitreQuestion(),
+                'ecritureDateDebut' => $question->getDateEcritureDebut(),
+                'ecritureDateFin' => $question->getDateEcritureFin(),
+                'voteDateDebut' => $question->getDateVoteDebut(),
+                'voteDateFin' => $question->getDateVoteFin(),
+                'categorieQuestion' => $question->getCategorieQuestion()];
+
+            $pdoStatement->execute($values);
+
+            return true;
+        } catch (PDOException $exception) {
+            echo $exception->getMessage();
+            return false;
+        }
     }
 
 }

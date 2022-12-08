@@ -1,3 +1,7 @@
+.edit-div{
+    position: absolute;
+    right: 0;
+}
 .edit-button{
     position: relative;
     text-decoration: none;
@@ -5,7 +9,7 @@
     font-size: 17.5px;
     display: flex;
     flex-direction: row;
-    align-items: center;
+    align-items: right;
     justify-content: end;
     margin-top: 10px;
     margin-right: 20px;

@@ -8,17 +8,19 @@ class Section extends AbstractDataObject {
     private String $idSection;
     private String $idQuestion;
     private String $titreSection;
+    private String $descriptionSection;
 
     /**
      * @param String $idSection
      * @param String $idQuestion
      * @param String $titreSection
      */
-    public function __construct(string $idSection, string $idQuestion, string $titreSection)
+    public function __construct(string $idSection, string $idQuestion, string $titreSection, string $descriptionSection)
     {
         $this->idSection = $idSection;
         $this->idQuestion = $idQuestion;
         $this->titreSection = $titreSection;
+        $this->descriptionSection = $descriptionSection;
     }
 
     public function formatTableau(): array{
@@ -26,6 +28,7 @@ class Section extends AbstractDataObject {
             "idSection" => $this->getIdSection(),
             "idQuestion" => $this->getIdQuestion(),
             "titreSection" => $this->getTitreSection(),
+            "descriptionSection" => $this->getDescriptionSection(),
         );
     }
 
@@ -79,6 +82,16 @@ class Section extends AbstractDataObject {
     {
         $this->titreSection = $titreSection;
     }
+
+    /**
+     * @return String
+     */
+    public function getDescriptionSection(): string
+    {
+        return $this->descriptionSection;
+    }
+
+
 
 
 

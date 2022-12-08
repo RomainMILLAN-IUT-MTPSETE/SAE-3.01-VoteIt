@@ -1,0 +1,65 @@
+.title-reponse--container .title {
+    width: 250px;
+    border-bottom: 1px solid #84B38F;
+}
+
+.title-reponse--container .title h2 {
+    margin-bottom: 0px;
+    text-align: end;
+}
+
+.title-reponse--container .title h2 img {
+    height: 20px;
+}
+
+.title-reponse--container .title-reponse-p {
+    margin-left: 125px;
+    font-size: 20px;
+    width: 700px;
+}
+.title-reponse--container .info-container{
+    display: flex;
+    flex-direction: column;
+}
+.title-reponse--container .info-reponse-span {
+    display: flex;
+    flex-direction: row;
+    align-content: center;
+    margin-left: 125px;
+}
+.title-reponse--container .info-reponse-span img {
+    height: 20px;
+    margin-left: 5px;
+}
+.title-reponse--container .info-reponse-span p{
+    font-size: 20px;
+    margin: 0;
+    margin-left: 10px;
+}
+
+/*SECTION*/
+.sections-reponse--container{
+}
+
+.section-title{
+    width: 20%;
+    border-bottom: 2px solid #9BD2A7;
+}
+.section-title h2 {
+    text-align: right;
+    margin-bottom: 0px;
+}
+.section-title h2 img {
+    height: 15px;
+}
+
+.sections-reponse--container p {
+    width: 90%;
+    margin: auto;
+    margin-left: 5%;
+    margin-top: 10px;
+    margin-bottom: 0px;
+}
+
+
+

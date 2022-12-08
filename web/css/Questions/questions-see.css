@@ -1,3 +1,17 @@
+a {
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    text-decoration: none;
+    color: black;
+
+}
+
+.title-question-p{
+    font-size: 22.5px;
+    width: 500px;
+}
+
 .question-see--container{
     display: flex;
     flex-direction: row;
@@ -11,10 +25,28 @@
 
 .sub-see-question-container{
     margin-top: 25px;
+    width: 400px;
+}
+.sub-see-question-container:nth-child(1){
+    margin-top: 0px;
+}
+.sub-see-question-container h2 img {
+    width: 22px;
+    height: 22px;
+}
+.ml8px{
+    margin-left: 5px;
+}
+.ml12px{
+    margin-left: 12px;
 }
 
 .sub-see-question-container h2{
     margin-bottom: 0px;
+    width: 400px;
+    display: flex;
+    flex-direction: row;
+    text-align: right;
 }
 
 .title-sub-see-question{
@@ -22,13 +54,42 @@
     padding-left: 15px;
     font-family: "Poppins";
     font-size: 27.5px;
+    width: 250px;
 }
 
 .sub-see-question-container p {
-    padding-left: 30px;
+    padding-left: 100px;
+    margin-bottom: 0px;
     margin-top: 0px;
+    width: 500px;
+
 }
 
+#PLAN
+.sub-see-question-plan-container{
+    margin-top: 25px;
+    width: 400px;
+}
+
+.sub-see-question-plan-container h2 {
+    margin-bottom: 5px;
+}
+
+.section-plan--container p {
+    margin-top: 0px;
+    margin-bottom: 0px;
+    padding-left: 100px;
+}
+.section-plan--container p:nth-child(2){
+    margin-left: 25px;
+    margin-top: -5px;
+}
+
+.section-plan--container{
+    margin-bottom: 10px;
+}
+
+#PLAN
 #sub-see-question-container-delais p {
     line-height: 10px;
 }
@@ -40,15 +101,42 @@
     width: 45%;
 }
 
+#proposerReponse{
+    display: block;
+    padding: 8px 12px;
+    background-color: #84B38F;
+    border : solid 1px black;
+    border-radius: 10px;
+    font-size: 14px;
+    margin: auto;
+    margin-top: 30px;
+    margin-bottom: 20px;
+    font-family: "Poppins Light";
+    font-weight: bold;
+}
+#imgPropose {
+    width: 17px;
+    height: 17px;
+}
+
 .reponse-id--container{
     background-color: white;
     border-radius: 10px;
     border: 1px solid black;
     margin-top: 0px;
-    line-height: 0px;
     width: 85%;
     margin: auto;
     margin-top: 15px;
+}
+
+.reponse-id--container .reponse-number{
+    margin-top: 0px;
+    margin-bottom: 1px;
+}
+
+.reponse-id--container .reponse-title{
+    margin-left: 10px;
+    margin-top: 0px;
 }
 
 .reponse-number{
@@ -87,9 +175,21 @@
     margin-left: 5px;
     margin-bottom: 5px;
 }
-
 .inter-container-mobile {
     display: none;
+}
+
+.sub-see-reponse-container{
+    margin-top: 25px;
+    width: 400px;
+    margin-left: 405px;
+}
+
+.title-sub-see-reponse{
+    border-bottom: 2px solid #84B38F;
+    font-family: "Poppins";
+    font-size: 27.5px;
+    width: 250px;
 }
 
 
@@ -112,7 +212,6 @@
         height: 1px;
         margin-top: 100px;
     }
-
 
     .reponse--container{
         width: 100%;
@@ -143,6 +242,6 @@
         margin-bottom: 15px;
     }
 
-
 }
+
 
