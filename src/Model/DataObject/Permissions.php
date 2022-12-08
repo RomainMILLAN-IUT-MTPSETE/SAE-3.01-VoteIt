@@ -3,29 +3,37 @@
 namespace App\VoteIt\Model\DataObject;
 
 class Permissions extends AbstractDataObject{
+    private String $idPermission;
+    private String $idUtilisateur;
     private String $idQuestion;
     private String $idReponse;
-    private String $idUtilisateur;
+    private String $permission;
 
     /**
+     * @param String $idPermission
+     * @param String $idUtilisateur
      * @param String $idQuestion
      * @param String $idReponse
-     * @param String $idUtilisateur
+     * @param String $permission
      */
-    public function __construct(string $idQuestion, string $idReponse, string $idUtilisateur)
+    public function __construct(string $idPermission, string $idUtilisateur, string $idQuestion, string $idReponse, string $permission)
     {
+        $this->idPermission = $idPermission;
+        $this->idUtilisateur = $idUtilisateur;
         $this->idQuestion = $idQuestion;
         $this->idReponse = $idReponse;
-        $this->idUtilisateur = $idUtilisateur;
+        $this->permission = $permission;
     }
 
 
     public function formatTableau(): array
     {
         return array(
-          "idQuestion" => $this->getIdQuestion(),
-          "idReponse" => $this->getIdReponse(),
-          "idUtilisateur" => $this->getIdUtilisateur(),
+            "idPermission" => $this->getIdPermission(),
+            "idUtilisateur" => $this->getIdUtilisateur(),
+            "idQuestion" => $this->getIdQuestion(),
+            "idReponse" => $this->getIdReponse(),
+            "permission" => $this->getPermission()
         );
     }
 
@@ -76,6 +84,40 @@ class Permissions extends AbstractDataObject{
     {
         $this->idUtilisateur = $idUtilisateur;
     }
+
+    /**
+     * @return String
+     */
+    public function getIdPermission(): string
+    {
+        return $this->idPermission;
+    }
+
+    /**
+     * @param String $idPermission
+     */
+    public function setIdPermission(string $idPermission): void
+    {
+        $this->idPermission = $idPermission;
+    }
+
+    /**
+     * @return String
+     */
+    public function getPermission(): string
+    {
+        return $this->permission;
+    }
+
+    /**
+     * @param String $permission
+     */
+    public function setPermission(string $permission): void
+    {
+        $this->permission = $permission;
+    }
+
+
 
 
 
