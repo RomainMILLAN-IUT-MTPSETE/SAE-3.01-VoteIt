@@ -12,9 +12,6 @@
 </head>
 <body class="layout">
     <?php
-    $allPerms = (new \App\VoteIt\Model\Repository\PermissionsRepository())->selectAllPermissionsByIdUtilisateur("millanr");
-    var_dump($allPerms);
-
     if(isset($_GET['menu']) AND $_GET['menu']=="on"){
         //If $_GET['menu'] is "on" open the mobile menu
         require_once 'menu.php';
