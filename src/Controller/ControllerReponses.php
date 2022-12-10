@@ -32,7 +32,7 @@ class ControllerReponses{
             $reponse = (new ReponsesRepository())->selectReponseByIdReponse($_GET['idReponse']);
             $question = (new QuestionsRepository())->select($reponse->getIdQuestion());
             $sectionsReponse = (new ReponseSectionRepository())->selectAllByIdReponse($reponse->getIdReponse());
-            self::afficheVue('view.php', ['pagetitle' => "VoteIt - Réponse n°" . $reponse->getIdReponse(), 'cheminVueBody' => "reponses/see.php", 'reponse' => $reponse, 'sectionsReponse' => $sectionsReponse, 'question' => $question]);
+            self::afficheVue('view.php', ['pagetitle' => "VoteIt - Réponse", 'cheminVueBody' => "reponses/see.php", 'reponse' => $reponse, 'sectionsReponse' => $sectionsReponse, 'question' => $question]);
         }else {
             ControllerErreur::erreurCodeErreur('RC-2');
         }
@@ -51,7 +51,7 @@ class ControllerReponses{
 
     public static function delete() {
         if (isset($_GET['idReponse'])) {
-            self::afficheVue('view.php',['pagetitle' => "VoteIt - Suppression de la réponse n°" . $_GET['idReponse'], 'cheminVueBody' => "reponses/delete.php"]);
+            self::afficheVue('view.php',['pagetitle' => "VoteIt - Suppression de la réponse", 'cheminVueBody' => "reponses/delete.php"]);
         }else {
             ControllerErreur::erreurCodeErreur('RC-2');
         }
@@ -59,7 +59,7 @@ class ControllerReponses{
 
     public static function vote(){
         if(isset($_GET['idReponse'])){
-            self::afficheVue('view.php', ['pagetitle' => 'VoteIt - Voter pour la réponse n°'.$_GET['idReponse'], 'cheminVueBody' => "reponses/voter.php"]);
+            self::afficheVue('view.php', ['pagetitle' => 'VoteIt - Voter pour une réponse', 'cheminVueBody' => "reponses/voter.php"]);
         }else {
             ControllerErreur::erreurCodeErreur('RC-2');
         }

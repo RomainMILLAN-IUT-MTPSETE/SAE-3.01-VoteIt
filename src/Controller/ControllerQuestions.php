@@ -31,7 +31,7 @@ class ControllerQuestions{
             $reponses = (new ReponsesRepository())->selectAllReponeByQuestionId($idQuestion);
             //Recuperation des sections de la questions dans la BD
             $sections = (new SectionRepository())->selectAllByIdQuestion($idQuestion);
-            self::afficheVue('view.php', ['pagetitle' => "VoteIt - Questions n°". $idQuestion, 'cheminVueBody' => "questions/see.php", "question" => $question, "reponses" => $reponses, "sections" => $sections]);
+            self::afficheVue('view.php', ['pagetitle' => "VoteIt - Questions", 'cheminVueBody' => "questions/see.php", "question" => $question, "reponses" => $reponses, "sections" => $sections]);
         }else {
             //Renvoye a la page d'erreur avec l'erreur QC-2
             ControllerErreur::erreurCodeErreur('QC-2');
@@ -60,7 +60,7 @@ class ControllerQuestions{
 
     public static function delete() {
         if (isset($_GET['idQuestion'])) {
-            self::afficheVue('view.php',['pagetitle' => "VoteIt - Suppression de la question n°" . $_GET['idQuestion'], 'cheminVueBody' => "questions/delete.php"]);
+            self::afficheVue('view.php',['pagetitle' => "VoteIt - Suppression d'une question", 'cheminVueBody' => "questions/delete.php"]);
         }
         else {
             echo 'Identifiant de la question non renseignée !';

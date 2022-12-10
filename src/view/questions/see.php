@@ -1,5 +1,27 @@
 <link rel="stylesheet" href="css/Questions/questions-see.css">
 <link rel="stylesheet" href="css/switch-top.css">
+<?php
+
+
+//SWITCH QUESTIONS
+use \App\VoteIt\Model\Repository\QuestionsRepository;
+$tab = (new QuestionsRepository())->allIdQuestion();
+?>
+<div class="switch-top">
+    <?php
+    if ($_GET['idQuestion'] != $tab[0]) {
+        echo '<a class="switch-top-left fullleft" href="frontController.php?controller=questions&action=see&idQuestion=' . $tab[array_search($_GET['idQuestion'], $tab) - 1] . '">← Question précédante</a>';
+    }
+    if ($_GET['idQuestion'] != $tab[count($tab) - 1]) {
+        if($_GET['idQuestion'] == $tab[0]){
+            echo '<a class="switch-top-right fullright" href="frontController.php?controller=questions&action=see&idQuestion=' . $tab[array_search($_GET['idQuestion'], $tab) + 1] . '">Question suivante →</a>';
+        }else {
+            echo '<a class="switch-top-right" href="frontController.php?controller=questions&action=see&idQuestion=' . $tab[array_search($_GET['idQuestion'], $tab) + 1] . '">Question suivante →</a>';
+
+        }
+    }
+    ?>
+</div>
 <section class="button-top">
     <?php
 
@@ -30,28 +52,7 @@
     }
 
     ?>
-    <?php
 
-
-    //SWITCH QUESTIONS
-    use \App\VoteIt\Model\Repository\QuestionsRepository;
-    $tab = (new QuestionsRepository())->allIdQuestion();
-    ?>
-    <div class="switch-top">
-        <?php
-        if ($_GET['idQuestion'] != $tab[0]) {
-            echo '<a class="switch-top-left fullleft" href="frontController.php?controller=questions&action=see&idQuestion=' . $tab[array_search($_GET['idQuestion'], $tab) - 1] . '">← Question précédante</a>';
-        }
-        if ($_GET['idQuestion'] != $tab[count($tab) - 1]) {
-            if($_GET['idQuestion'] == $tab[0]){
-                echo '<a class="switch-top-right fullright" href="frontController.php?controller=questions&action=see&idQuestion=' . $tab[array_search($_GET['idQuestion'], $tab) + 1] . '">Question suivante →</a>';
-            }else {
-                echo '<a class="switch-top-right" href="frontController.php?controller=questions&action=see&idQuestion=' . $tab[array_search($_GET['idQuestion'], $tab) + 1] . '">Question suivante →</a>';
-
-            }
-        }
-        ?>
-    </div>
 
 </section>
 <section class="question-see--container">
@@ -110,11 +111,12 @@
                 ?>)<span class="colored">:</span></h2>
         </div>
         <?php
+        $i = 1;
         foreach ($reponses as $item) {
             ?>
-            <a href="frontController.php?controller=reponses&action=see&idReponse=<?php echo(rawurlencode($item->getIdReponse())) ?>">
+            <a href="frontController.php?controller=reponses&action=see&idReponse=<?php echo(rawurlencode($item->getIdReponse())) ?>&seeId=<?php echo($i); ?>">
                 <div class="reponse-id--container">
-                    <p class="reponse-number">Réponse n°<?php echo(htmlspecialchars($item->getIdReponse())); ?></p>
+                    <p class="reponse-number">Réponse n°<?php echo(htmlspecialchars($i)); ?></p>
                     <p class="reponse-title"><?php echo(htmlspecialchars($item->getTitreReponse())) ?></p>
                     <div class="autheur-and-nb-vote--container">
                         <?php
@@ -128,6 +130,7 @@
                 </div>
             </a>
             <?php
+            $i++;
         }
         ?>
     </section>

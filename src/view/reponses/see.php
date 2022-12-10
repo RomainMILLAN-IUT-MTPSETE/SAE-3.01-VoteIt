@@ -1,5 +1,26 @@
 <link rel="stylesheet" href="css/Reponses/reponses-see.css">
 <link rel="stylesheet" href="css/switch-top.css">
+<?php
+use \App\VoteIt\Model\Repository\ReponsesRepository;
+
+$tab = (new ReponsesRepository())->allIdReponseByIdQuestion($reponse->getIdQuestion());
+
+?>
+<div class="switch-top">
+    <?php
+    if ($_GET['idReponse'] != $tab[0]) {
+        echo '<a class="switch-top-left fullleft" href="frontController.php?controller=reponses&action=see&idReponse=' . $tab[array_search($_GET['idReponse'], $tab) - 1] . '">← Question précédante</a>';
+    }
+    if ($_GET['idReponse'] != $tab[count($tab) - 1]) {
+        if($_GET['idReponse'] == $tab[0]){
+            echo '<a class="switch-top-right fullright" href="frontController.php?controller=reponses&action=see&idReponse=' . $tab[array_search($_GET['idReponse'], $tab) + 1] . '">Question suivante →</a>';
+        }else {
+            echo '<a class="switch-top-right" href="frontController.php?controller=reponses&action=see&idReponse=' . $tab[array_search($_GET['idReponse'], $tab) + 1] . '">Question suivante →</a>';
+
+        }
+    }
+    ?>
+</div>
 <section class="button-top">
     <?php
     use \App\VoteIt\Lib\ConnexionUtilisateur;
@@ -28,32 +49,11 @@
 
     ?>
 </section>
-    <?php
-    use \App\VoteIt\Model\Repository\ReponsesRepository;
-
-    $tab = (new ReponsesRepository())->allIdReponseByIdQuestion($reponse->getIdQuestion());
-
-    ?>
-    <div class="switch-top">
-        <?php
-        if ($_GET['idReponse'] != $tab[0]) {
-            echo '<a class="switch-top-left fullleft" href="frontController.php?controller=reponses&action=see&idReponse=' . $tab[array_search($_GET['idReponse'], $tab) - 1] . '">← Question précédante</a>';
-        }
-        if ($_GET['idReponse'] != $tab[count($tab) - 1]) {
-            if($_GET['idReponse'] == $tab[0]){
-                echo '<a class="switch-top-right fullright" href="frontController.php?controller=reponses&action=see&idReponse=' . $tab[array_search($_GET['idReponse'], $tab) + 1] . '">Question suivante →</a>';
-            }else {
-                echo '<a class="switch-top-right" href="frontController.php?controller=reponses&action=see&idReponse=' . $tab[array_search($_GET['idReponse'], $tab) + 1] . '">Question suivante →</a>';
-
-            }
-        }
-        ?>
-    </div>
 <section class="reponse-see--container">
 
     <div class="title-reponse--container">
         <div class="title">
-            <h2>Réponse n°<?php echo(htmlspecialchars($reponse->getIdReponse())); ?> <span class="colored">:</span> <?php if($canModifAndDelete == true){ ?><a href="frontController.php?controller=reponses&action=update&idReponse=<?php echo(rawurlencode($reponse->getIdReponse())) ?>"><img src="assets/reponses/see/edit.png" alt="Icone d edition de reponse"></a><a href="frontController.php?controller=reponses&action=delete&idReponse=<?php echo(rawurlencode($reponse->getIdReponse())) ?>"><img src="assets/reponses/see/delete.png" alt=""></a><?php } ?></h2></h2>
+            <h2>Réponse n°<?php echo(htmlspecialchars($_GET['seeId'])); ?> <span class="colored">:</span> <?php if($canModifAndDelete == true){ ?><a href="frontController.php?controller=reponses&action=update&idReponse=<?php echo(rawurlencode($reponse->getIdReponse())) ?>"><img src="assets/reponses/see/edit.png" alt="Icone d edition de reponse"></a><a href="frontController.php?controller=reponses&action=delete&idReponse=<?php echo(rawurlencode($reponse->getIdReponse())) ?>"><img src="assets/reponses/see/delete.png" alt=""></a><?php } ?></h2></h2>
         </div>
         <p class="title-reponse-p"><?php echo(htmlspecialchars($reponse->getTitreReponse())); ?></p>
         <div class="info-container">
