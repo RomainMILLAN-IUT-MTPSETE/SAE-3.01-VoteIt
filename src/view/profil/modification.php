@@ -5,16 +5,16 @@
         <h2 class="title">Modification de mon profil</h2>
 
         <div>
-            <label for="identifiant">Identifiant</label>
-            <input type="text" name="identifiant" id="identifiant" placeholder="JohnDoe10" value="<?php echo(htmlspecialchars($user->getIdentifiant())) ?>" readonly/>
-        </div>
-        <div>
             <label for="mail">E-Mail</label>
             <input type="text" name="mail" id="mail" placeholder="johndoe@gmail.com" value="<?php echo(htmlspecialchars($user->getMail())) ?>"/>
         </div>
         <div>
-            <label for="password">Mot de passe</label>
-            <input type="password" name="password" id="password" placeholder="********" value="<?php echo(htmlspecialchars($user->getMotDePasse())) ?>"/>
+            <label for="password">Mot de passe acutel</label>
+            <input type="password" name="password" id="password" placeholder="********"/>
+        </div>
+        <div>
+            <label for="password">Nouveau Mot de passe (laisser vide si vous ne voulez pas le changer)</label>
+            <input type="password" name="newpassword" id="newpassword" placeholder="********"/>
         </div>
         <div>
             <label for="prenom">Prénom</label>
@@ -29,6 +29,7 @@
             <input type="date" name="dtnaissance" id="dtnaissance" placeholder="01-01-2001" value="<?php echo(htmlspecialchars($user->getDateNaissance())) ?>"/>
         </div>
         <div>
+            <input type="hidden" name="identifiant" id="identifiant" placeholder="JohnDoe10" value="<?php echo(htmlspecialchars($user->getIdentifiant())) ?>" readonly/>
             <input type="submit" value="Validé">
         </div>
     </div>

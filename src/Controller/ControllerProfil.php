@@ -133,10 +133,11 @@ class ControllerProfil{
 
     public static function edit(){
         //Si toutes les informations du formulaires sont remplies
-        if(isset($_REQUEST['identifiant']) AND isset($_REQUEST['mail']) AND isset($_REQUEST['password']) AND isset($_REQUEST['prenom']) AND isset($_REQUEST['nom']) AND isset($_REQUEST['dtnaissance'])){
+        if(isset($_REQUEST['identifiant']) AND isset($_REQUEST['mail']) AND isset($_REQUEST['password']) AND isset($_REQUEST['newpassword']) AND isset($_REQUEST['prenom']) AND isset($_REQUEST['nom']) AND isset($_REQUEST['dtnaissance'])){
             $identifiant = $_REQUEST['identifiant'];
             $mail = $_REQUEST['mail'];
             $password = $_REQUEST['password'];
+            $newpassword = $_REQUEST['newpassword'];
             $prenom = $_REQUEST['prenom'];
             $nom = $_REQUEST['nom'];
             $dtnaissance = $_REQUEST['dtnaissance'];
@@ -144,35 +145,47 @@ class ControllerProfil{
 
             //Récuperation de l'utilisateur actuelle dans la BD
             $userBefore = (new UtilisateurRepository())->select($identifiant);
+            //MAIL
             $mailAValider = "";
             $nonce = "";
+            $emailModifier = false;
             if(strcmp($mail, $userBefore->getMail()) != 0){
                 $mailAValider = $mail;
                 $mail = "";
                 $nonce = MotDePasse::genererChaineAleatoire();
+                $emailModifier = true;
             }
+            //PASSWORD
+            if(strlen($newpassword) > 0){
+                if(strcmp($password, $newpassword) != 0){
+                    $password = $newpassword;
+                }else {
+                    MessageFlash::ajouter("warning", "Nouveau mot de passe identique à l'actuelle");
+                    header("Location: frontController.php?controller=profil&action=modification");
+                    exit();
+                }
+            }
+            //ICONE+GRADE
             $iconeLink = $userBefore->getIconeLink();
             $grade = $userBefore->getGrade();
 
+            //Hash du mdp
+            $password = MotDePasse::hacher($password);
             //Création d'un nouvelle utilisateur avec les nouvelles informations
             $userEdit = new Utilisateur($identifiant, $password, $nom, $prenom, $dtnaissance, $iconeLink, $mail, $mailAValider, $nonce, $grade);
             //Mise à jour de l'utilisateur
             (new UtilisateurRepository())->update($userEdit);
 
-            VerificationEmail::envoiEmailValidation($userEdit);
+            if($emailModifier){
+                VerificationEmail::envoiEmailValidation($userEdit);
+            }
             //Redirection vers la page d'accueil
+            MessageFlash::ajouter("success", "Modification du profil réussi");
             header("Location: frontController.php?controller=profil&action=home");
             exit();
         }else {
-            //Si il y a au moins l'identifiant
-            if(isset($_REQUEST['identifiant'])){
-                //Redirection vers la page de modification
-                header("Location: frontController.php?controller=profil&action=modification&idUtilisateur=".$_REQUEST['identifiant']);
-                exit();
-            }else{
-                //Renvoye vers la page d'erreur avec le code PC-2
-                ControllerErreur::erreurCodeErreur('PC-2');
-            }
+            header("Location: frontController.php?controller=profil&action=modification");
+            exit();
         }
     }
     public static function deconnection(){
