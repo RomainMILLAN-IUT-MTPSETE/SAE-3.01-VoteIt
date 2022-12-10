@@ -8,16 +8,6 @@
     <img id="icone-user" src="assets/logo/logoSansOmbre.png">
     <div class="info-user-row">
         <div>
-            <h2 class="souligner">Grade :</h2>
-            <p class="info-user"><?php echo($user->getGrade()) ?> </p>
-        </div>
-        <div>
-            <h2 class="souligner">E-mail :</h2>
-            <p class="info-user"><?php echo(htmlspecialchars($user->getMail())) ?></p>
-        </div>
-    </div>
-    <div class="info-user-row">
-        <div>
             <h2 class="souligner">Nom :</h2>
             <p class="info-user"><?php echo(htmlspecialchars($user->getNom())) ?></p>
         </div>
@@ -26,6 +16,16 @@
             <p class="info-user"><?php echo(htmlspecialchars($user->getPrenom())) ?> </p>
         </div>
     </div>
-    <h2 class="souligner">Date de naissance :</h2>
-    <p class="info-user"><?php echo(htmlspecialchars($user->getDateNaissanceFR())) ?> </p>
+    <div class="info-user-row">
+        <div>
+            <h2 class="souligner">Date de naissance :</h2>
+            <p class="info-user"><?php echo(htmlspecialchars($user->getDateNaissanceFR())) ?> </p>
+        </div>
+        <div>
+            <h2 class="souligner">Grade :</h2>
+            <p class="info-user"><?php echo($user->getGrade()) ?> </p>
+        </div>
+    </div>
+    <h2 class="souligner">E-mail :</h2>
+    <p class="info-user"><?php echo(htmlspecialchars($user->getMail())) ?></p>
 </section>
