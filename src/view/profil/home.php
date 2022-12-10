@@ -5,7 +5,7 @@
 <a class="edit-button" href="frontController.php?controller=profil&action=deconnection" >Déconnection<img id="edit-img" src="assets/profil/logout.png"></a>
 </div>
 <section class="profil-home--container">
-    <img id="icone-user" src="assets/logo/logoSansOmbre.png">
+    <img id="icone-user" src="assets/logo/logoAvecOmbre.png">
     <div class="info-user-row">
         <div>
             <h2 class="souligner">Nom :</h2>
