@@ -33,13 +33,13 @@ class UtilisateurRepository extends AbstractRepository {
             9 => 'gradeUtilisateur'];
     }
     
-    public static function selectUserByIdUser($idUser){
-        $sql = " SELECT * FROM vit_Utilisateurs WHERE idUtilisateur=:idUser";
+    public function selectUserByMail($mail){
+        $sql = " SELECT * FROM vit_Utilisateurs WHERE mailUtilisateur=:mailUtilisateur";
         // Préparation de la requête
         $pdoStatement = Model::getPdo()->prepare($sql);
 
         $values = array(
-            "idUser" => $idUser,
+            "mailUtilisateur" => $mail,
             //nomdutag => valeur, ...
         );
         // On donne les valeurs et on exécute la requête

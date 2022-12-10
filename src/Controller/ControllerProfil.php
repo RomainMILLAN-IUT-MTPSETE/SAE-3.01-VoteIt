@@ -104,20 +104,27 @@ class ControllerProfil{
     }
     public static function connected(){
         //Si les informations du formulaire sont remplies
-        if(isset($_REQUEST['identifiant']) AND isset($_REQUEST['password'])){
-            $identifiant = $_REQUEST['identifiant'];
+        if(isset($_REQUEST['mail']) AND isset($_REQUEST['password'])){
+            $mail = $_REQUEST['mail'];
             $password = $_REQUEST['password'];
 
             //Si les informations de la BD correspondent
-            $user = (new UtilisateurRepository())->select($identifiant);
+            $user = (new UtilisateurRepository())->selectUserByMail($mail);
+            if($user == null){
+                MessageFlash::ajouter("warning", "Adresse mail inexistante");
+                header("Location: frontController.php?controller=profil&action=connection");
+                exit();
+            }
             if(MotDePasse::verifier($password, $user->getMotDePasse())){
-                ConnexionUtilisateur::connecter($identifiant);
+                ConnexionUtilisateur::connecter($user->getIdentifiant());
                 
                 MessageFlash::ajouter("success", "Connexion réussie à votre profil");
                 header("Location: frontController.php?controller=profil&action=home");
                 exit();
             }else {
-                ControllerErreur::erreurCodeErreur('PC-4');
+                MessageFlash::ajouter("warning", "Mot de passe incorrect");
+                header("Location: frontController.php?controller=profil&action=connection");
+                exit();
             }
         }else {
             ControllerErreur::erreurCodeErreur('PC-2');

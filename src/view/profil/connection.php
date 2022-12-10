@@ -5,12 +5,12 @@
         <h2 class="title">Connexion</h2>
 
         <div>
-            <label for="identifiant">Identifiant</label>
-            <input type="text" name="identifiant" id="identifiant" placeholder="JohnDoe10"/>
+            <label for="mail">E-Mail</label>
+            <input type="email" name="mail" id="mail" placeholder="johndoe10@gmail.com" required/>
         </div>
         <div>
             <label for="password">Mot de passe</label>
-            <input type="password" name="password" id="password" placeholder="********"/>
+            <input type="password" name="password" id="password" placeholder="********" required/>
             <a href="#"><p id="passwordlosse">Mot de passe oublié ?</p></a>
         </div>
         <div id="checkbox-div">
