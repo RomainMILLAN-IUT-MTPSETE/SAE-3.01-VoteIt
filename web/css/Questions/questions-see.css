@@ -54,7 +54,7 @@ a {
     padding-left: 15px;
     font-family: "Poppins";
     font-size: 27.5px;
-    width: 250px;
+    min-width: 250px;
 }
 
 .sub-see-question-container p {

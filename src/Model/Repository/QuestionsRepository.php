@@ -112,11 +112,10 @@ class QuestionsRepository extends AbstractRepository {
             return false;
         }
     }
-    public function allIdQuestion(): ?array
-    {
+    public function allIdQuestion(): ?array{
         try {
             $pdo = Model::getPdo();
-            $sql = "SELECT " . $this->getNomClePrimaire() . " FROM " . $this->getNomTable();
+            $sql = "SELECT " . $this->getNomClePrimaire() . " FROM " . $this->getNomTable() . " ORDER BY " . $this->getNomClePrimaire();
 
             $pdoStatement = $pdo->query($sql);
 

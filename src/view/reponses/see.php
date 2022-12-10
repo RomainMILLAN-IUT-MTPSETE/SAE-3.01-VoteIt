@@ -1,4 +1,5 @@
 <link rel="stylesheet" href="css/Reponses/reponses-see.css">
+<link rel="stylesheet" href="css/switch-top.css">
 <section class="button-top">
     <?php
     use \App\VoteIt\Lib\ConnexionUtilisateur;
@@ -30,16 +31,24 @@
     <?php
     use \App\VoteIt\Model\Repository\ReponsesRepository;
 
-    $tab = (new ReponsesRepository())->allIdReponse();
+    $tab = (new ReponsesRepository())->allIdReponseByIdQuestion($reponse->getIdQuestion());
 
-    if ($_GET['idReponse'] != $tab[0]) {
-        echo '<a href="frontController.php?controller=reponses&action=see&idReponse=' . $tab[array_search($_GET['idReponse'], $tab) - 1] . '">←</a>';
-    }
-
-    if ($_GET['idReponse'] != $tab[count($tab) - 1]) {
-        echo  '<a href="frontController.php?controller=reponses&action=see&idReponse=' . $tab[array_search($_GET['idReponse'], $tab) + 1] . '">→</a>';
-    }
     ?>
+    <div class="switch-top">
+        <?php
+        if ($_GET['idReponse'] != $tab[0]) {
+            echo '<a class="switch-top-left fullleft" href="frontController.php?controller=reponses&action=see&idReponse=' . $tab[array_search($_GET['idReponse'], $tab) - 1] . '">← Question précédante</a>';
+        }
+        if ($_GET['idReponse'] != $tab[count($tab) - 1]) {
+            if($_GET['idReponse'] == $tab[0]){
+                echo '<a class="switch-top-right fullright" href="frontController.php?controller=reponses&action=see&idReponse=' . $tab[array_search($_GET['idReponse'], $tab) + 1] . '">Question suivante →</a>';
+            }else {
+                echo '<a class="switch-top-right" href="frontController.php?controller=reponses&action=see&idReponse=' . $tab[array_search($_GET['idReponse'], $tab) + 1] . '">Question suivante →</a>';
+
+            }
+        }
+        ?>
+    </div>
 <section class="reponse-see--container">
 
     <div class="title-reponse--container">
