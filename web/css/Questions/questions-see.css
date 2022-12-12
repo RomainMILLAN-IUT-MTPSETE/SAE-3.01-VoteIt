@@ -119,8 +119,12 @@ a {
     height: 17px;
 }
 
+.reponse-gagnante {
+    background-color: #9BD2A7;
+    margin-bottom: 105px;
+}
+
 .reponse-id--container{
-    background-color: white;
     border-radius: 10px;
     border: 1px solid black;
     margin-top: 0px;

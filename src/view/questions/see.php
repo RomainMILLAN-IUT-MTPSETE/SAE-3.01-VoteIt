@@ -112,25 +112,51 @@ $tab = (new QuestionsRepository())->allIdQuestion();
         </div>
         <?php
         $i = 1;
-        foreach ($reponses as $item) {
-            ?>
-            <a href="frontController.php?controller=reponses&action=see&idReponse=<?php echo(rawurlencode($item->getIdReponse())) ?>&seeId=<?php echo($i); ?>">
-                <div class="reponse-id--container">
-                    <p class="reponse-number">Réponse n°<?php echo(htmlspecialchars($i)); ?></p>
-                    <p class="reponse-title"><?php echo(htmlspecialchars($item->getTitreReponse())) ?></p>
-                    <div class="autheur-and-nb-vote--container">
-                        <?php
-                        $autheur = (new \App\VoteIt\Model\Repository\UtilisateurRepository())->select($item->getAutheurId());
-                        ?>
-                        <p class="autheur-reponse">
-                            Auteur: <?php echo(htmlspecialchars($autheur->getNom()) . " " . htmlspecialchars($autheur->getPrenom())) ?></p>
-                        <span class="nbVote-reponse"><img src="assets/questions/see/like.png"
-                                                          alt="Icone LikeVoteNombre"><?php echo(htmlspecialchars((VoteRepository::getNbVoteForReponse($item->getIdReponse())))); ?></span>
+        $dateNow = date("Y-m-d");
+        if ($dateNow > $question->getDateVoteFin()) {
+            $idMaxVote = (new \App\VoteIt\Model\Repository\ReponsesRepository())->getIdReponseMaxVoteParIdQuestion($question->getIdQuestion());
+            foreach ($reponses as $item) {
+                if($item->getIdReponse() == $idMaxVote){
+                    ?>
+                    <a href="frontController.php?controller=reponses&action=see&idReponse=<?php echo(rawurlencode($item->getIdReponse())) ?>&seeId=<?php echo($i); ?>">
+                        <div class="reponse-id--container">
+                            <p class="reponse-number">Réponse <span class="colored">Gagnante</span></p>
+                            <p class="reponse-title"><?php echo(htmlspecialchars($item->getTitreReponse())) ?></p>
+                            <div class="autheur-and-nb-vote--container">
+                                <?php
+                                $autheur = (new \App\VoteIt\Model\Repository\UtilisateurRepository())->select($item->getAutheurId());
+                                ?>
+                                <p class="autheur-reponse">
+                                    Auteur: <?php echo(htmlspecialchars($autheur->getNom()) . " " . htmlspecialchars($autheur->getPrenom())) ?></p>
+                                <span class="nbVote-reponse"><img src="assets/questions/see/like.png"
+                                                                  alt="Icone LikeVoteNombre"><?php echo(htmlspecialchars((VoteRepository::getNbVoteForReponse($item->getIdReponse())))); ?></span>
+                            </div>
+                        </div>
+                    </a>
+                    <?php
+                }
+            }
+        }else {
+            foreach ($reponses as $item) {
+                ?>
+                <a href="frontController.php?controller=reponses&action=see&idReponse=<?php echo(rawurlencode($item->getIdReponse())) ?>&seeId=<?php echo($i); ?>">
+                    <div class="reponse-id--container">
+                        <p class="reponse-number">Réponse n°<?php echo(htmlspecialchars($i)); ?></p>
+                        <p class="reponse-title"><?php echo(htmlspecialchars($item->getTitreReponse())) ?></p>
+                        <div class="autheur-and-nb-vote--container">
+                            <?php
+                            $autheur = (new \App\VoteIt\Model\Repository\UtilisateurRepository())->select($item->getAutheurId());
+                            ?>
+                            <p class="autheur-reponse">
+                                Auteur: <?php echo(htmlspecialchars($autheur->getNom()) . " " . htmlspecialchars($autheur->getPrenom())) ?></p>
+                            <span class="nbVote-reponse"><img src="assets/questions/see/like.png"
+                                                              alt="Icone LikeVoteNombre"><?php echo(htmlspecialchars((VoteRepository::getNbVoteForReponse($item->getIdReponse())))); ?></span>
+                        </div>
                     </div>
-                </div>
-            </a>
-            <?php
-            $i++;
+                </a>
+                <?php
+                $i++;
+            }
         }
         ?>
     </section>

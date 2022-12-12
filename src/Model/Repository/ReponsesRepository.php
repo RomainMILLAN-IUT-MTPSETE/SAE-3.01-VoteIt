@@ -183,4 +183,40 @@ class ReponsesRepository extends AbstractRepository{
             return null;
         }
     }
+
+    public function getNbVoteParIdQuestion($idQuestion){
+        $pdo = Model::getPdo();
+        $sql = "SELECT idReponse, COUNT(idReponse) as nbVote FROM vit_Vote WHERE idQuestion=:idQuestion GROUP BY idReponse";
+
+        $pdoStatement = $pdo->prepare($sql);
+
+        $values = [
+            'idQuestion' => $idQuestion];
+
+        $pdoStatement->execute($values);
+
+
+
+        $res = [];
+        foreach ($pdoStatement as $tableauSelecter) {
+            $res[] = array($tableauSelecter[0], $tableauSelecter[1]);
+        }
+        return $res;
+    }
+
+    public function getIdReponseMaxVoteParIdQuestion($idQuestion){
+        $nbVote = $this->getNbVoteParIdQuestion($idQuestion);
+
+        $nbVoteMax = -1;
+        $idReponseVoteMax = -1;
+
+        foreach ($nbVote as $item){
+            if($item[1] > $nbVoteMax){
+                $nbVoteMax = $item[1];
+                $idReponseVoteMax = $item[0];
+            }
+        }
+
+        return $idReponseVoteMax;
+    }
 }
