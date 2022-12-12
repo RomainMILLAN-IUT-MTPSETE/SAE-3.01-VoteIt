@@ -99,7 +99,7 @@ $tab = (new QuestionsRepository())->allIdQuestion();
     </section>
     <hr class="inter-container-mobile" WIDTH="100px" COLOR="BLACK">
     <section class="reponse--container">
-        <div class="sub-see-reponse-container">
+        <div class="title-reponse-container">
             <h2 class="title-sub-see-reponse"><?php
                 if (count($reponses) <= 1) {
                     echo 'Réponse';

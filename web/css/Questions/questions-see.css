@@ -189,11 +189,19 @@ a {
     margin-left: 405px;
 }
 
+.title-reponse-container{
+    width: 400px;
+    margin-top : 25px;
+    padding-left: 0px;
+    margin-right: 0;
+    margin-left: auto;
+}
+
 .title-sub-see-reponse{
+    width: 100%;
     border-bottom: 2px solid #84B38F;
     font-family: "Poppins";
     font-size: 27.5px;
-    width: 250px;
 }
 
 
