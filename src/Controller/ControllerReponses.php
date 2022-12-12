@@ -136,9 +136,10 @@ class ControllerReponses{
     public static function voted(){
         if(isset($_POST['idReponse'])){
             (new VoteRepository())->vote((new ReponsesRepository())->selectReponseByIdReponse($_POST['idReponse']));
+            $reponse = (new ReponsesRepository())->selectReponseByIdReponse($_POST['idReponse']);
 
             MessageFlash::ajouter("success", "Vous venez de voter pour la réponse n°".$_POST['idReponse'].".");
-            header("Location: frontController.php?controller=reponses&action=see&idReponse=".$_POST['idReponse'].".");
+            header("Location: frontController.php?controller=questions&action=see&idQuestion=".$reponse->getIdQuestion());
             exit();
         }else {
             ControllerErreur::erreurCodeErreur('RC-2');
