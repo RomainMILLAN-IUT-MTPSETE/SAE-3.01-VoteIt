@@ -3,16 +3,20 @@
     <div class="formulaire-template">
         <h2 class="title">Création de la question</h2>
         <div>
-            <label for="autheur">Auteur</label>
-            <input type="text" name="autheur" id="autheur" placeholder="JohnDoe10" value="<?php echo(\App\VoteIt\Lib\ConnexionUtilisateur::getLoginUtilisateurConnecte())?>" readonly/>
-        </div>
-        <div>
             <label for="titreQuestion">Titre</label>
             <input type="text" name="titreQuestion" id="titreQuestion" placeholder="Titre de la question" required/>
         </div>
         <div>
             <label for="nbSection">Nombre de sections</label>
             <input type="number" name="nbSection" id="nbSection" placeholder="3" min="3" max="8" required/>
+        </div>
+        <div>
+            <label for="responsableReponse">Responsable de réponse</label>
+            <input type="text" name="respReponse" id="respReponse" placeholder="johndoe10@gmail.com, xxx@xxx.fr"">
+        </div>
+        <div>
+            <label for="votant">Utilisateur votant</label>
+            <input type="text" name="userVotant" id="userVotant" placeholder="johndoe10@gmail.com, xxx@xxx.fr"">
         </div>
         <div>
             <label for="categorieQuestion">Catégorie</label>
@@ -44,6 +48,7 @@
         <div>
             <input type="hidden" name="controller" value="questions">
             <input type="hidden" name="action" value="created">
+            <input type="text" name="autheur" id="autheur" placeholder="JohnDoe10" value="<?php echo(\App\VoteIt\Lib\ConnexionUtilisateur::getLoginUtilisateurConnecte())?>" hidden readonly/>
             <input type="submit" value="Poser la question">
         </div>
     </div>

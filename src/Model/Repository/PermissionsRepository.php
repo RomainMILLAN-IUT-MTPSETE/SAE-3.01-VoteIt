@@ -71,6 +71,9 @@ class PermissionsRepository extends AbstractRepository {
     }
 
 
+    /*
+     * ADD
+     */
 	public function addQuestionPermission(string $idUtilisateur, int $idQuestion, string $permission): void{
         try {
             $pdo = Model::getPdo();
@@ -90,7 +93,6 @@ class PermissionsRepository extends AbstractRepository {
             echo $exception->getMessage();
         }
     }
-
 	public function addReponsePermission(string $idUtilisateur, int $idReponse, string $permission): void{
 	        try {
 	            $pdo = Model::getPdo();
@@ -112,9 +114,12 @@ class PermissionsRepository extends AbstractRepository {
 	        }
 	}
 
-	public function getPermissionQuestionParIdUtilisateur($idQuestion, $idUtilisateur): string{
+    /*
+     * GET PERMISSION
+     */
+	public function getPermissionVotantParIdUtilisateurEtIdQuestion($idQuestion, $idUtilisateur): bool{
         $pdo = Model::getPdo();
-        $query = "SELECT permission FROM ".$this->getNomTable()." WHERE idQuestion=:idQuestion AND idUtilisateur=:idUtilisateur AND idReponse='-1';";
+        $query = "SELECT permission FROM ".$this->getNomTable()." WHERE idQuestion=:idQuestion AND idUtilisateur=:idUtilisateur AND idReponse=-1 AND permission='Votant';";
         $pdoStatement = $pdo->prepare($query);
 
         $values = array(
@@ -124,41 +129,56 @@ class PermissionsRepository extends AbstractRepository {
         $pdoStatement->execute($values);
 
         if($pdoStatement->rowCount() > 0){
-            $resultatSQL = $pdoStatement->fetch();
-
-            $resultat = $resultatSQL[0];
+            return true;
         }else {
-            $resultat = "null";
+            return false;
         }
-
-		return $resultat;
     }
-
-	public function getPermissionReponseParIdUtilisateur($idReponse, $idUtilisateur): string{
+    public function getPermissionReponsableDePropositionParIdUtilisateurEtIdQuestion($idQuestion, $idUtilisateur): bool{
         $pdo = Model::getPdo();
-        $query = "SELECT permission FROM ".$this->getNomTable()." WHERE idReponse=:idReponse AND idUtilisateur=:idUtilisateur;";
+        $query = "SELECT permission FROM ".$this->getNomTable()." WHERE idQuestion=:idQuestion AND idUtilisateur=:idUtilisateur AND idReponse=-1 AND permission='ResponsableDeProposition';";
         $pdoStatement = $pdo->prepare($query);
 
         $values = array(
-                "idReponse" => $idReponse,
-				"idUtilisateur" => $idUtilisateur);
+            "idQuestion" => $idQuestion,
+            "idUtilisateur" => $idUtilisateur);
 
         $pdoStatement->execute($values);
 
         if($pdoStatement->rowCount() > 0){
-            $resultatSQL = $pdoStatement->fetch();
-
-            $resultat = $resultatSQL['permission'];
+            return true;
         }else {
-            $resultat="null";
+            return false;
         }
+    }
+    public function getPermissionCoAuteurParIdUtilisateurEtIdReponse($idReponse, $idUtilisateur): bool{
+        $pdo = Model::getPdo();
+        $query = "SELECT permission FROM ".$this->getNomTable()." WHERE idReponse=:idReponse AND idUtilisateur=:idUtilisateur AND idQuestion=-1 AND permission='CoAuteur';";
+        $pdoStatement = $pdo->prepare($query);
 
-		return $resultat;
+        $values = array(
+            "idReponse" => $idReponse,
+            "idUtilisateur" => $idUtilisateur);
+
+        $pdoStatement->execute($values);
+
+        if($pdoStatement->rowCount() > 0){
+            return true;
+        }else {
+            return false;
+        }
     }
 
-    public function getListePermissionParQuestion($idQuestion){
+
+
+
+
+    /*
+     * LISTE
+     */
+    public function getListePermissionResponsableParQuestion($idQuestion){
         $pdo = Model::getPdo();
-        $query = "SELECT * FROM ".$this->getNomTable()." WHERE idQuestion=:idQuestion;";
+        $query = "SELECT * FROM ".$this->getNomTable()." WHERE idQuestion=:idQuestion AND permission='ResponsableDeProposition';";
         $pdoStatement = $pdo->prepare($query);
 
         $values = array(
@@ -173,7 +193,45 @@ class PermissionsRepository extends AbstractRepository {
 
         return $res;
     }
+    public function getListePermissionVotantParQuestion($idQuestion){
+        $pdo = Model::getPdo();
+        $query = "SELECT * FROM ".$this->getNomTable()." WHERE idQuestion=:idQuestion AND permission='Votant';";
+        $pdoStatement = $pdo->prepare($query);
 
+        $values = array(
+            "idQuestion" => $idQuestion);
+
+        $pdoStatement->execute($values);
+
+        $res = [];
+        foreach ($pdoStatement as $item){
+            $res[] = $this->construire($item);
+        }
+
+        return $res;
+    }
+    public function getListePermissionCoAuteurParReponse($idReponse){
+        $pdo = Model::getPdo();
+        $query = "SELECT * FROM ".$this->getNomTable()." WHERE idReponse=:idReponse AND permission='CoAuteur';";
+        $pdoStatement = $pdo->prepare($query);
+
+        $values = array(
+            "idReponse" => $idReponse);
+
+        $pdoStatement->execute($values);
+
+        $res = [];
+        foreach ($pdoStatement as $item){
+            $res[] = $this->construire($item);
+        }
+
+        return $res;
+    }
+
+
+    /*
+     * DELETE
+     */
     public function deleteAllPermissionForIdQuestion($idQuestion): void{
         $pdo = Model::getPdo();
         $query = "DELETE FROM ".$this->getNomTable()." WHERE idQuestion=:idQuestion;";
@@ -181,6 +239,16 @@ class PermissionsRepository extends AbstractRepository {
 
         $values = array(
             "idQuestion" => $idQuestion);
+
+        $pdoStatement->execute($values);
+    }
+    public function deleteAllPermissionForIdReponse($idReponse): void{
+        $pdo = Model::getPdo();
+        $query = "DELETE FROM ".$this->getNomTable()." WHERE idReponse=:idReponse;";
+        $pdoStatement = $pdo->prepare($query);
+
+        $values = array(
+            "idReponse" => $idReponse);
 
         $pdoStatement->execute($values);
     }

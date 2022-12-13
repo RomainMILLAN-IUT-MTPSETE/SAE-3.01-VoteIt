@@ -5,6 +5,9 @@
 
 //SWITCH QUESTIONS
 use \App\VoteIt\Model\Repository\QuestionsRepository;
+use \App\VoteIt\Model\Repository\PermissionsRepository;
+use \App\VoteIt\Model\Repository\VoteRepository;
+use \App\VoteIt\Lib\ConnexionUtilisateur;
 $tab = (new QuestionsRepository())->allIdQuestion();
 ?>
 <div class="switch-top">
@@ -20,26 +23,27 @@ $tab = (new QuestionsRepository())->allIdQuestion();
 
         }
     }
-
-    use \App\VoteIt\Model\Repository\PermissionsRepository;
-    use \App\VoteIt\Lib\ConnexionUtilisateur;
-    $permission = (new PermissionsRepository())->getPermissionQuestionParIdUtilisateur($_GET['idQuestion'], ConnexionUtilisateur::getLoginUtilisateurConnecte());
     ?>
 </div>
 <section class="button-top">
     <?php
-    use \App\VoteIt\Model\Repository\VoteRepository;
-
     $canModifOrDelete = false;
+    $estResponsable = (new PermissionsRepository())->getPermissionReponsableDePropositionParIdUtilisateurEtIdQuestion($question->getIdQuestion(), ConnexionUtilisateur::getLoginUtilisateurConnecte());
 
+    //SI L'UTILISATEUR EST CONNECTE
     if (ConnexionUtilisateur::estConnecte()) {
+        //GET UTILISATEUR
         $user = (new \App\VoteIt\Model\Repository\UtilisateurRepository())->select(ConnexionUtilisateur::getLoginUtilisateurConnecte());
 
-        if((strcmp($question->getAutheur(), $user->getIdentifiant()) == 0) or (strcmp($user->getGrade(), "Organisateur") == 0) or (strcmp($user->getGrade(), "Administrateur") == 0)){
+        //SI IL EST LE CREATEUR DE LA QUESTION OU ADMINISTRATEUR
+        if((strcmp($question->getAutheur(), $user->getIdentifiant()) == 0) or (strcmp($user->getGrade(), "Administrateur") == 0)){
             $canModifOrDelete = true;
         }
-        if ($canModifOrDelete or (strcmp($permission, "responsable de proposition") == 0)) {
+        //SI IL PEUT MODIFIEROUSUPPRIMER OU IL EST RESPONSABLE DE REPONSE
+        if ($canModifOrDelete or ($estResponsable == true)) {
+            //JE GET LA DATE ACTUELLE
             $dateNow = date("Y-m-d");
+            //SI LA DATE ACTUELLE EST ENTRE LE DEBUT ET LA FIN DES DATE D'ECRITURE
             if ($question->getDateEcritureDebut() <= $dateNow && $dateNow <= $question->getDateEcritureFin()) {
                 ?> <a
                     href="frontController.php?controller=reponses&action=create&idQuestion=<?php echo(rawurlencode($_GET['idQuestion'])); ?>">
@@ -60,7 +64,6 @@ $tab = (new QuestionsRepository())->allIdQuestion();
 
 </section>
 <section class="question-see--container">
-
     <section class="sect-see-question">
         <div class="sub-see-question-container">
             <h2><span class="title-sub-see-question">Détail de la question<span

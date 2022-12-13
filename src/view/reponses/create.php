@@ -6,6 +6,10 @@
             <label for="titreReponse">Titre de la réponse</label>
             <input type="text" name="titreReponse" id="titreReponse" placeholder="Titre de la réponse" required>
         </div>
+        <div>
+            <label for="votant">Utilisateur Co-Auteur</label>
+            <input type="text" name="userCoAuteur" id="userCoAuteur" placeholder="johndoe10@gmail.com, xxx@xxx.fr"">
+        </div>
         <div class="section-text--container">
             <?php
             $i=1;

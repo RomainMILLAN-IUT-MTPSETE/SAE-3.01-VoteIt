@@ -5,11 +5,13 @@ namespace App\VoteIt\Controller;
 use App\VoteIt\Lib\MessageFlash;
 use App\VoteIt\Model\DataObject\ReponseSection;
 use App\VoteIt\Model\DataObject\Reponse;
+use App\VoteIt\Model\Repository\PermissionsRepository;
 use App\VoteIt\Model\Repository\QuestionsRepository;
 use App\VoteIt\Model\Repository\ReponseSectionRepository;
 use App\VoteIt\Model\Repository\ReponsesRepository;
 use App\VoteIt\Model\Repository\SectionRepository;
 use App\VoteIt\Controller\ControllerErreur;
+use App\VoteIt\Model\Repository\UtilisateurRepository;
 use App\VoteIt\Model\Repository\VoteRepository;
 
 class ControllerReponses{
@@ -42,8 +44,14 @@ class ControllerReponses{
         if(isset($_GET['idReponse'])){
             $reponse = (new ReponsesRepository())->select($_GET['idReponse']);
             $reponseSection = (new ReponseSectionRepository())->selectAllByIdReponse($reponse->getIdReponse());
-            //$sections = (new SectionRepository())->selectAllByIdQuestion($reponse->getIdReponse());
-            self::afficheVue('view.php', ['pagetitle' => "VoteIt - Modifier une réponse", 'cheminVueBody' => "reponses/update.php", 'reponse' => $reponse, 'reponseSection' => $reponseSection]);
+            //Liste des utilisateur qui sont des co-auteur
+            $coauteur = (new PermissionsRepository())->getListePermissionCoAuteurParReponse($reponse->getIdReponse());
+            $coauteurStr = '';
+            foreach ($coauteur as $item){
+                $coauteurStr = $coauteurStr . ", " . (new UtilisateurRepository())->select($item->getIdUtilisateur())->getMail();
+            }
+            $coauteurStr = substr($coauteurStr, 2);
+            self::afficheVue('view.php', ['pagetitle' => "VoteIt - Modifier une réponse", 'cheminVueBody' => "reponses/update.php", 'reponse' => $reponse, 'reponseSection' => $reponseSection, 'coauteurStr' => $coauteurStr]);
         }else {
             ControllerErreur::erreurCodeErreur('RC-2');
         }
@@ -91,6 +99,21 @@ class ControllerReponses{
                 (new ReponseSectionRepository())->createReponseSection($ReponseSection);
             }
 
+            //SUPPRESION DES PERMISSION EXISTANTE
+            (new PermissionsRepository())->deleteAllPermissionForIdReponse($idReponse);
+
+            //RECUPERATION DE LA LISTE DES UTILISATEUR CO-AUTEUR
+            $coauteurInput = $_POST['userCoAuteur'];
+            if(strlen($coauteurInput) > 0){
+                //SEPARATION EN ARGUMENT
+                $coauteurInputArgs = explode(", ", $coauteurInput);
+                //POUR TOUS LES UTILISATEUR
+                foreach ($coauteurInputArgs as $item){
+                    //J'ENTRE LEUR NOUVELLE PERMISSION
+                    (new PermissionsRepository())->addReponsePermission((new UtilisateurRepository())->selectUserByMail($item)->getIdentifiant(), $idReponse, "CoAuteur");
+                }
+            }
+
             MessageFlash::ajouter("success", "Réponse n°". $idReponse ." créée.");
             header("Location: frontController.php?controller=questions&action=see&idQuestion=".$idQuestion);
             exit();
@@ -101,8 +124,8 @@ class ControllerReponses{
     }
 
     public static function updated() {
-        if(isset($_POST['idReponse']) and isset($_POST['autheur']) AND isset($_POST['titreReponse']) AND isset($_POST['nbSection']) AND isset($_POST['idQuestion']) AND isset($_POST['nbVote'])){
-            $modelReponse = new Reponse($_POST['idReponse'], $_POST['idQuestion'], $_POST['titreReponse'], $_POST['autheur'], $_POST['nbVote']);
+        if(isset($_POST['idReponse']) and isset($_POST['autheur']) AND isset($_POST['titreReponse']) AND isset($_POST['nbSection']) AND isset($_POST['idQuestion'])){
+            $modelReponse = new Reponse($_POST['idReponse'], $_POST['idQuestion'], $_POST['titreReponse'], $_POST['autheur']);
             (new ReponsesRepository())->update($modelReponse);
 
             for($i=1; $i<$_POST['nbSection']+1; $i++){
@@ -110,11 +133,26 @@ class ControllerReponses{
                 (new ReponseSectionRepository())->updateReponseSection($modelSection);
             }
 
-            MessageFlash::ajouter("info","Réponse n°" . $_POST['idReponse'] . " mise à jour.");
-            header("Location: frontController.php?controller=reponses&action=see&idReponse=".$_POST['idReponse']);
+            //SUPPRESION DES PERMISSION EXISTANTE
+            (new PermissionsRepository())->deleteAllPermissionForIdReponse($_POST['idReponse']);
+
+            //RECUPERATION DE LA LISTE DES UTILISATEUR CO-AUTEUR
+            $coauteurInput = $_POST['userCoAuteur'];
+            if(strlen($coauteurInput) > 0){
+                //SEPARATION EN ARGUMENT
+                $coauteurInputArgs = explode(", ", $coauteurInput);
+                //POUR TOUS LES UTILISATEUR
+                foreach ($coauteurInputArgs as $item){
+                    //J'ENTRE LEUR NOUVELLE PERMISSION
+                    (new PermissionsRepository())->addReponsePermission((new UtilisateurRepository())->selectUserByMail($item)->getIdentifiant(), $_POST['idReponse'], "CoAuteur");
+                }
+            }
+
+            MessageFlash::ajouter("info","Réponse mise à jour.");
+            header("Location: frontController.php?controller=questions&action=see&idQuestion=".$_POST['idQuestion']);
             exit();
         }else {
-            header("Location: frontController.php?controller=reponses&action=update&idReponse=".$_POST['idReponse']);
+            header("Location: frontController.php?controller=questions&action=update&idQuestion=".$_POST['idQuestion']);
             exit();
         }
     }

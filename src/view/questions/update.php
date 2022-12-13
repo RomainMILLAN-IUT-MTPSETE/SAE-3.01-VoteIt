@@ -20,8 +20,12 @@
             </select>
         </div>
         <div>
-            <label for="responsableReponse">Responsabel de réponse</label>
-            <input type="text" name="respReponse" id="respReponse" placeholder="johndoe10@gmail.com, xxx@xxx.fr" value="<?php echo(htmlspecialchars($permissions)) ?>">
+            <label for="responsableReponse">Responsable de réponse</label>
+            <input type="text" name="respReponse" id="respReponse" placeholder="johndoe10@gmail.com, xxx@xxx.fr" value="<?php echo(htmlspecialchars($responsable)) ?>">
+        </div>
+        <div>
+            <label for="votant">Utilisateur votant</label>
+            <input type="text" name="userVotant" id="userVotant" placeholder="johndoe10@gmail.com, xxx@xxx.fr" value="<?php echo(htmlspecialchars($userVotant)) ?>">
         </div>
         <div class="date--container">
             <div>
