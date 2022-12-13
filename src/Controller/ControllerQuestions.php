@@ -84,7 +84,8 @@ class ControllerQuestions{
 
     public static function delete() {
         if (isset($_GET['idQuestion'])) {
-            self::afficheVue('view.php',['pagetitle' => "VoteIt - Suppression d'une question", 'cheminVueBody' => "questions/delete.php"]);
+            $question = (new QuestionsRepository())->select($_GET['idQuestion']);
+            self::afficheVue('view.php',['pagetitle' => "VoteIt - Suppression d'une question", 'cheminVueBody' => "questions/delete.php", 'question' => $question]);
         }
         else {
             echo 'Identifiant de la question non renseignée !';
