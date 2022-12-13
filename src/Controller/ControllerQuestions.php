@@ -20,7 +20,7 @@ class ControllerQuestions{
 
     public static function home(){
         //Recuperation de toutes les questions
-        $questions = (new QuestionsRepository())->selectAll();
+        $questions = (new QuestionsRepository())->selectAllQuestionVisible();
         self::afficheVue('view.php', ['pagetitle' => "VoteIt - Liste des Questions", 'cheminVueBody' => "questions/home.php", 'questions' => $questions]);
     }
 
@@ -114,7 +114,7 @@ class ControllerQuestions{
                 $voteDateFin = $_POST['voteDateFin'];
                 $idQuestion = ((new QuestionsRepository())->getIdQuestionMax())+1;
 
-                (new QuestionsRepository())->createQuestion($idQuestion, $autheur, $titreQuestion, $ecritureDateDebut, $ecritureDateFin, $voteDateDebut, $voteDateFin, $categorieQuestion);
+                (new QuestionsRepository())->createQuestion($idQuestion, $autheur, $titreQuestion, $ecritureDateDebut, $ecritureDateFin, $voteDateDebut, $voteDateFin, $categorieQuestion, true);
 
 
 
@@ -225,11 +225,8 @@ class ControllerQuestions{
     }
 
     public static function deleted(){
-        (new QuestionsRepository())->delete($_GET['idQuestion']);
-        (new ReponsesRepository())->deleteReponseByIdQuestion($_GET['idQuestion']);
-        (new SectionRepository())->deleteSectionByIdQuestion($_GET['idQuestion']);
-        (new PermissionsRepository())->deleteAllPermissionForIdQuestion($_GET['idQuestion']);
-        MessageFlash::ajouter("danger","Question n°" . $_GET['idQuestion'] . " supprimée");
+        (new QuestionsRepository())->setNonVisibleByIdQuestion($_GET['idQuestion']);
+        MessageFlash::ajouter("danger","Question supprimée");
         header("Location: frontController.php?controller=questions&action=home");
         exit();
     }

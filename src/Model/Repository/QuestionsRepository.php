@@ -14,7 +14,11 @@ class QuestionsRepository extends AbstractRepository {
 
     protected function construire(array $objetFormatTableau)
     {
-        return new Question($objetFormatTableau['idQuestion'], $objetFormatTableau['autheur'], $objetFormatTableau['titreQuestion'], $objetFormatTableau['ecritureDateDebut'], $objetFormatTableau['ecritureDateFin'], $objetFormatTableau['voteDateDebut'], $objetFormatTableau['voteDateFin'], $objetFormatTableau['categorieQuestion']);
+        if($objetFormatTableau['estVisible'] == 1){
+            return new Question($objetFormatTableau['idQuestion'], $objetFormatTableau['autheur'], $objetFormatTableau['titreQuestion'], $objetFormatTableau['ecritureDateDebut'], $objetFormatTableau['ecritureDateFin'], $objetFormatTableau['voteDateDebut'], $objetFormatTableau['voteDateFin'], $objetFormatTableau['categorieQuestion'], true);
+        }else {
+            return new Question($objetFormatTableau['idQuestion'], $objetFormatTableau['autheur'], $objetFormatTableau['titreQuestion'], $objetFormatTableau['ecritureDateDebut'], $objetFormatTableau['ecritureDateFin'], $objetFormatTableau['voteDateDebut'], $objetFormatTableau['voteDateFin'], $objetFormatTableau['categorieQuestion'], false);
+        }
     }
 
     protected function getNomClePrimaire(): string
@@ -31,7 +35,8 @@ class QuestionsRepository extends AbstractRepository {
             4 => 'ecritureDateFin',
             5 => 'voteDateDebut',
             6 => 'voteDateFin',
-            7 => 'categorieQuestion'];
+            7 => 'categorieQuestion',
+            10 => 'estVisible'];
     }
 
     public function recherche($search){
@@ -69,10 +74,16 @@ class QuestionsRepository extends AbstractRepository {
         return $resultat;
     }
 
-    public function createQuestion($idQuestion, $autheur, $titre, $ecritureDebut, $ecritureFin, $voteDebut, $voteFin, $categorie){
+    public function createQuestion($idQuestion, $autheur, $titre, $ecritureDebut, $ecritureFin, $voteDebut, $voteFin, $categorie, $estVisible){
         $pdo = Model::getPdo();
-        $query = "INSERT INTO ".$this->getNomTable()."(idQuestion, autheur, titreQuestion, ecritureDateDebut, ecritureDateFin, voteDateDebut, voteDateFin, categorieQuestion) VALUES(:idQuestion, :autheur, :titreQuestion, :ecritureDateDebut, :ecritureDateFin, :voteDateDebut, :voteDateFin, :categorieQuestion);";
+        $query = "INSERT INTO ".$this->getNomTable()."(idQuestion, autheur, titreQuestion, ecritureDateDebut, ecritureDateFin, voteDateDebut, voteDateFin, categorieQuestion, estVisible) VALUES(:idQuestion, :autheur, :titreQuestion, :ecritureDateDebut, :ecritureDateFin, :voteDateDebut, :voteDateFin, :categorieQuestion, :estVisible);";
         $pdoStatement = $pdo->prepare($query);
+
+        if($estVisible == true){
+            $estVisible = 1;
+        }else {
+            $estVisible = 0;
+        }
 
         $values = [
             'idQuestion' => $idQuestion,
@@ -82,7 +93,8 @@ class QuestionsRepository extends AbstractRepository {
             'ecritureDateFin' => $ecritureFin,
             'voteDateDebut' => $voteDebut,
             'voteDateFin' => $voteFin,
-            'categorieQuestion' => $categorie];
+            'categorieQuestion' => $categorie,
+            'estVisible' => $estVisible];
 
         $pdoStatement->execute($values);
     }
@@ -90,9 +102,15 @@ class QuestionsRepository extends AbstractRepository {
     public function updateQuestion(Question $question){
         try {
             $pdo = Model::getPdo();
-            $sql = "UPDATE " . $this->getNomTable() . " SET autheur=:autheur, titreQuestion=:titreQuestion, ecritureDateDebut=:ecritureDateDebut, ecritureDateFin=:ecritureDateFin, voteDateDebut=:voteDateDebut, voteDateFin=:voteDateFin, categorieQuestion=:categorieQuestion WHERE idQuestion=:idQuestion";
+            $sql = "UPDATE " . $this->getNomTable() . " SET autheur=:autheur, titreQuestion=:titreQuestion, ecritureDateDebut=:ecritureDateDebut, ecritureDateFin=:ecritureDateFin, voteDateDebut=:voteDateDebut, voteDateFin=:voteDateFin, categorieQuestion=:categorieQuestion, estVisible=:estVisible WHERE idQuestion=:idQuestion";
 
             $pdoStatement = $pdo->prepare($sql);
+
+            if($question->isEstVisible() == true){
+                $estVisible = 1;
+            }else {
+                $estVisible = 0;
+            }
 
             $values = [
                 'idQuestion' => $question->getIdQuestion(),
@@ -102,7 +120,8 @@ class QuestionsRepository extends AbstractRepository {
                 'ecritureDateFin' => $question->getDateEcritureFin(),
                 'voteDateDebut' => $question->getDateVoteDebut(),
                 'voteDateFin' => $question->getDateVoteFin(),
-                'categorieQuestion' => $question->getCategorieQuestion()];
+                'categorieQuestion' => $question->getCategorieQuestion(),
+                'estVisible' => $estVisible];
 
             $pdoStatement->execute($values);
 
@@ -130,6 +149,25 @@ class QuestionsRepository extends AbstractRepository {
         }catch (PDOException $exception) {
             echo $exception->getMessage();
             return null;
+        }
+    }
+
+    public function setNonVisibleByIdQuestion($idQuestion){
+        try {
+            $pdo = Model::getPdo();
+            $sql = "UPDATE " . $this->getNomTable() . " SET estVisible=0 WHERE idQuestion=:idQuestion";
+
+            $pdoStatement = $pdo->prepare($sql);
+
+            $values = [
+                'idQuestion' => $idQuestion];
+
+            $pdoStatement->execute($values);
+
+            return true;
+        } catch (PDOException $exception) {
+            echo $exception->getMessage();
+            return false;
         }
     }
 

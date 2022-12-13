@@ -10,16 +10,20 @@ class Question extends AbstractDataObject {
     private String $dateVoteDebut;
     private String $dateVoteFin;
     private String $categorieQuestion;
+    private bool $estVisible;
 
     /**
      * @param String $idQuestion
+     * @param String $autheur
      * @param String $titreQuestion
      * @param String $dateEcritureDebut
      * @param String $dateEcritureFin
      * @param String $dateVoteDebut
      * @param String $dateVoteFin
+     * @param String $categorieQuestion
+     * @param String $estVisible
      */
-    public function __construct(string $idQuestion, string $autheur, string $titreQuestion, string $dateEcritureDebut, string $dateEcritureFin, string $dateVoteDebut, string $dateVoteFin, string $categorieQuestion)
+    public function __construct(string $idQuestion, string $autheur, string $titreQuestion, string $dateEcritureDebut, string $dateEcritureFin, string $dateVoteDebut, string $dateVoteFin, string $categorieQuestion, string $estVisible)
     {
         $this->idQuestion = $idQuestion;
         $this->autheur = $autheur;
@@ -29,6 +33,7 @@ class Question extends AbstractDataObject {
         $this->dateVoteDebut = $dateVoteDebut;
         $this->dateVoteFin = $dateVoteFin;
         $this->categorieQuestion = $categorieQuestion;
+        $this->estVisible = $estVisible;
     }
 
 
@@ -43,6 +48,7 @@ class Question extends AbstractDataObject {
             "dateVoteDebut" => $this->getDateVoteDebut(),
             "dateVoteFin" => $this->getDateVoteFin(),
             "categorieQuestion" => $this->getCategorieQuestion(),
+            "estVisible" => $this->isEstVisible(),
         );
     }
 
@@ -142,6 +148,26 @@ class Question extends AbstractDataObject {
     {
         $this->categorieQuestion = $categorieQuestion;
     }
+
+    /**
+     * @return bool
+     */
+    public function isEstVisible(): bool
+    {
+        return $this->estVisible;
+    }
+
+    /**
+     * @param bool $estVisible
+     */
+    public function setEstVisible(bool $estVisible): void
+    {
+        $this->estVisible = $estVisible;
+    }
+
+
+
+
 
     public function getDateEcritureDebutFR(){
         return date('d/m/Y', strtotime($this->dateEcritureDebut));
