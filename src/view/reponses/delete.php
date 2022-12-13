@@ -4,10 +4,11 @@
     <div class="formulaire-template">
         <h2 class="title">Suppression de réponse</h2>
         <div>
-            <label for="idReponse">Id de la Réponse</label>
-            <input type="number" name="idReponse" id="idReponse" value="<?php echo(htmlspecialchars($_GET['idReponse'])); ?>" readonly required/>
+            <label for="idReponse">Titre de la Réponse</label>
+            <input type="text" name="titleReponse" id="titleReponse" value="<?php echo(htmlspecialchars($reponse->getTitreReponse())); ?>" readonly required/>
         </div>
         <div>
+            <input type="number" name="idReponse" id="idReponse" value="<?php echo(htmlspecialchars($reponse->getIdReponse())); ?>" readonly hidden required/>
             <input type="submit" value="Supprimer la réponse">
         </div>
     </div>

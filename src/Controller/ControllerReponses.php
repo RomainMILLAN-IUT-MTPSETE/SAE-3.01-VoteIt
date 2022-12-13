@@ -59,7 +59,8 @@ class ControllerReponses{
 
     public static function delete() {
         if (isset($_GET['idReponse'])) {
-            self::afficheVue('view.php',['pagetitle' => "VoteIt - Suppression de la réponse", 'cheminVueBody' => "reponses/delete.php"]);
+            $reponse = (new ReponsesRepository())->select($_GET['idReponse']);
+            self::afficheVue('view.php',['pagetitle' => "VoteIt - Suppression de la réponse", 'cheminVueBody' => "reponses/delete.php", 'reponse' => $reponse]);
         }else {
             ControllerErreur::erreurCodeErreur('RC-2');
         }
