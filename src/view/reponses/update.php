@@ -1,13 +1,13 @@
 <link rel="stylesheet" href="css/formulaire.css">
 <form class="formulaire--container" action="frontController.php?controller=reponses&action=updated" method="post">
     <div class="formulaire-template">
-        <h2 class="title">Modifier une réponse</h2>
+        <h2 class="title">Modification de la réponse</h2>
         <div class="div-form-normal">
             <label for="titreReponse">Titre de la réponse</label>
             <input type="text" name="titreReponse" id="titreReponse" placeholder="Titre de la réponse" value="<?php echo(htmlspecialchars($reponse->getTitreReponse())) ?>" required>
         </div>
         <div>
-            <label for="votant">Utilisateur Co-Auteur</label>
+            <label for="votant">Utilisateur(s) Co-Auteur(s)</label>
             <input type="text" name="userCoAuteur" id="userCoAuteur" placeholder="johndoe10@gmail.com, xxx@xxx.fr" value="<?php echo(htmlspecialchars($coauteurStr)) ?>">
         </div>
         <div class="section-text--container">

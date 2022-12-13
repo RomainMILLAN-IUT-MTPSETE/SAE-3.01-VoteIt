@@ -6,7 +6,7 @@
 
     <section class="dashboard-content">
         <div class="user--container">
-            <h2>Permission utilisateur<span class="colored">:</span></h2>
+            <h2>Permissions utilisateur<span class="colored">:</span></h2>
             <form action="frontController.php?controller=dashboard&action=editPermission" method="post">
                 <?php
                 foreach ($usersList as $item) {
@@ -49,11 +49,25 @@
         <div class="number--container">
             <div class="number">
                 <h2><?php echo((new \App\VoteIt\Model\Repository\QuestionsRepository())->countNbQuestionActive()) ?></h2>
-                <p>Question active</p>
+                <?php
+                use App\VoteIt\Model\Repository\QuestionsRepository;
+                if((new QuestionsRepository())->countNbQuestionActive()>0){
+                    echo '<p>Questions actives</p>';
+                }else{
+                    echo '<p>Question active</p>';
+                }
+                ?>
             </div>
             <div class="number">
                 <h2><?php echo((new \App\VoteIt\Model\Repository\UtilisateurRepository())->countNbAccount()); ?></h2>
-                <p>Réponse active</p>
+                <?php 
+                use App\VoteIt\Model\Repository\UtilisateurRepository;
+                if((new UtilisateurRepository())->countNbAccount()>0){
+                    echo '<p>Réponses actives</p>';
+                }else{
+                    echo '<p>Réponse active</p>';
+                }
+                ?>
             </div>
         </div>
     </section>

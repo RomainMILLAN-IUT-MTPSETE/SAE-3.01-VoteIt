@@ -1,7 +1,7 @@
 <link rel="stylesheet" href="css/formulaire.css">
 <form class="formulaire--container" action="frontController.php?controller=reponses&action=updatedcoauteur" method="post">
     <div class="formulaire-template">
-        <h2 class="title">Modifier une réponse</h2>
+        <h2 class="title">Modification de la réponse</h2>
         <div class="section-text--container">
             <?php
             $i=1;

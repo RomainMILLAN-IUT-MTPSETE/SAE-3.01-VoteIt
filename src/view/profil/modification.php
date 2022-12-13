@@ -2,7 +2,7 @@
 <link rel="stylesheet" href="css/formulaire.css">
 <form class="formulaire--container" action="frontController.php?controller=profil&action=edit" method="POST">
     <div class="formulaire-template">
-        <h2 class="title">Modification de mon profil</h2>
+        <h2 class="title">Modification du profil</h2>
 
         <div>
             <label for="mail">E-Mail</label>
@@ -13,11 +13,11 @@
             <input type="password" name="password" id="password" placeholder="********"/>
         </div>
         <div>
-            <label for="password">Nouveau Mot de passe (laisser vide si vous ne voulez pas le changer)</label>
+            <label for="password">Nouveau Mot de passe (laissez vide si vous ne voulez pas le changer)</label>
             <input type="password" name="newpassword" id="newpassword" placeholder="********"/>
         </div>
         <div>
-            <label for="password">Confirmation nouveau Mot de passe (laisser vide si vous ne voulez pas le changer)</label>
+            <label for="password">Confirmation nouveau Mot de passe (laissez vide si vous ne voulez pas le changer)</label>
             <input type="password" name="confirmnewpassword" id="confirmnewpassword" placeholder="********"/>
         </div>
         <div>

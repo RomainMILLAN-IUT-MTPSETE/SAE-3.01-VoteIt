@@ -15,7 +15,7 @@
             <input type="text" name="respReponse" id="respReponse" placeholder="johndoe10@gmail.com, xxx@xxx.fr"">
         </div>
         <div>
-            <label for="votant">Utilisateur votant</label>
+            <label for="votant">Utilisateur(s) votant(s)</label>
             <input type="text" name="userVotant" id="userVotant" placeholder="johndoe10@gmail.com, xxx@xxx.fr"">
         </div>
         <div>

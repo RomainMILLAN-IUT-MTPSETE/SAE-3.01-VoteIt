@@ -11,7 +11,7 @@ $tab = (new ReponsesRepository())->allIdReponseByIdQuestion($reponse->getIdQuest
     <?php
     if ($_GET['idReponse'] != $tab[0]) {
         $seeId = $_GET['seeId'] - 1;
-        echo '<a class="switch-top-left fullleft" href="frontController.php?controller=reponses&action=see&idReponse=' . $tab[array_search($_GET['idReponse'], $tab) - 1] . '&seeId=' . $seeId . '">← Réponse précédante</a>';
+        echo '<a class="switch-top-left fullleft" href="frontController.php?controller=reponses&action=see&idReponse=' . $tab[array_search($_GET['idReponse'], $tab) - 1] . '&seeId=' . $seeId . '">← Réponse précédente</a>';
     }
     if ($_GET['idReponse'] != $tab[count($tab) - 1]) {
         $seeId = $_GET['seeId'] + 1;

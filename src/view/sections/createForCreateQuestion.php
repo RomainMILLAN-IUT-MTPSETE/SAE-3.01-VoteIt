@@ -2,7 +2,7 @@
 <link rel="stylesheet" href="css/Sections/sections-formulaire.css">
 <form class="formulaire--container" action="frontController.php?controller=sections&action=created" method="post">
     <div class="formulaire-template">
-        <h2 class="title">Crée les sections</h2>
+        <h2 class="title">Création des sections</h2>
         <?php
         for ($i=1; $i<$nbSections+1; $i++){
             ?>

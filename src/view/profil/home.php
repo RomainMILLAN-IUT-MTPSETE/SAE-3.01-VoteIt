@@ -12,7 +12,7 @@
             <p class="info-user"><?php echo(htmlspecialchars($user->getNom())) ?></p>
         </div>
         <div>
-            <h2 class="souligner">Prenom :</h2>
+            <h2 class="souligner">Prénom :</h2>
             <p class="info-user"><?php echo(htmlspecialchars($user->getPrenom())) ?> </p>
         </div>
     </div>

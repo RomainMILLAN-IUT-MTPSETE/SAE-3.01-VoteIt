@@ -2,7 +2,7 @@
 <link rel="stylesheet" href="css/Questions/questions-formulaire.css">
 <form class="formulaire--container" action="frontController.php?controller=questions&action=updated" method="post">
     <div class="formulaire-template">
-        <h2 class="title">Modification de question</h2>
+        <h2 class="title">Modification de la question</h2>
         <div>
             <label for="titreQuestion">Titre</label>
             <input type="text" name="titreQuestion" id="titreQuestion" placeholder="TitreDeLaQuestion" value="<?php echo htmlspecialchars($question->getTitreQuestion()) ?>"   required/>

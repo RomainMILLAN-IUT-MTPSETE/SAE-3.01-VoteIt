@@ -2,7 +2,7 @@
 <link rel="stylesheet" href="css/Profil/profil-formulaire.css">
 <form class="formulaire--container" action="frontController.php?controller=profil&action=connected" method="post">
     <div class="formulaire-template">
-        <h2 class="title">Connexion</h2>
+        <h2 class="title">Connection</h2>
 
         <div>
             <label for="mail">E-Mail</label>

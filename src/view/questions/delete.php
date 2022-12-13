@@ -2,7 +2,7 @@
 
 <form class="formulaire--container" action="frontController.php?controller=questions&action=deleted&idQuestion=<?php echo(rawurlencode($_GET['idQuestion'])); ?>" method="post">
     <div class="formulaire-template">
-        <h2 class="title">Suppression de question</h2>
+        <h2 class="title">Suppression de la question</h2>
         <div>
             <label for="idQuestion">Nom de la question</label>
             <input type="text" name="titleQuestion" id="titleQuestion" value="<?php echo(htmlspecialchars($question->getTitreQuestion())); ?>" readonly required>
