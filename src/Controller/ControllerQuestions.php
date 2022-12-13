@@ -170,7 +170,7 @@ class ControllerQuestions{
                 header("Location: frontController.php?controller=questions&action=update&idQuestion=".$_POST['idQuestion']);
                 exit();
             }else {
-                $modelQuestion = new Question($_POST['idQuestion'],$_POST['autheur'],$_POST['titreQuestion'],$_POST['ecritureDateDebut'],$_POST['ecritureDateFin'],$_POST['voteDateDebut'],$_POST['voteDateFin'], $_POST['categorieQuestion']);
+                $modelQuestion = new Question($_POST['idQuestion'],$_POST['autheur'],$_POST['titreQuestion'],$_POST['ecritureDateDebut'],$_POST['ecritureDateFin'],$_POST['voteDateDebut'],$_POST['voteDateFin'], $_POST['categorieQuestion'], true);
                 (new QuestionsRepository())->updateQuestion($modelQuestion);
 
                 $sectionId = (new SectionRepository())->selectAllByIdQuestion($_POST['idQuestion']);
