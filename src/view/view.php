@@ -41,7 +41,7 @@ use App\VoteIt\Model\Repository\UtilisateurRepository;
                     <a href="frontController.php?controller=profil&action=home"><p>Profil</p></a>
                     <?php if(ConnexionUtilisateur::estConnecte()){ if(strcmp((new UtilisateurRepository())->select(ConnexionUtilisateur::getLoginUtilisateurConnecte())->getGrade(), "Administrateur") == 0) { ?> <a href="frontController.php?controller=dashboard&action=dashboard"><p>Dashboard</p></a> <?php } } ?>
                 </nav>
-                <a href="#"><img src="assets/logo/logoAvecOmbre.png" alt="Icone du profile de la personne"></a>
+                <a href="frontController.php?controller=profil&action=home"><img src="assets/logo/logoAvecOmbre.png" alt="Icone du profile de la personne"></a>
             </div>
         </section>
     </header>
