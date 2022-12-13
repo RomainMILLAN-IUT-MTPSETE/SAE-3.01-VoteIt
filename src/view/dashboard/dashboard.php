@@ -53,7 +53,7 @@
             </div>
             <div class="number">
                 <h2><?php echo((new \App\VoteIt\Model\Repository\UtilisateurRepository())->countNbAccount()); ?></h2>
-                <p>Question active</p>
+                <p>Réponse active</p>
             </div>
         </div>
     </section>
