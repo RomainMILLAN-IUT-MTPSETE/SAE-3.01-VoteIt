@@ -2,6 +2,7 @@
 
 namespace App\VoteIt\Controller;
 
+use App\VoteIt\Controller\ControllerErreur;
 use App\VoteIt\Lib\MessageFlash;
 use App\VoteIt\Model\DataObject\ReponseSection;
 use App\VoteIt\Model\DataObject\Reponse;
@@ -10,7 +11,6 @@ use App\VoteIt\Model\Repository\QuestionsRepository;
 use App\VoteIt\Model\Repository\ReponseSectionRepository;
 use App\VoteIt\Model\Repository\ReponsesRepository;
 use App\VoteIt\Model\Repository\SectionRepository;
-use App\VoteIt\Controller\ControllerErreur;
 use App\VoteIt\Model\Repository\UtilisateurRepository;
 use App\VoteIt\Model\Repository\VoteRepository;
 
@@ -114,10 +114,9 @@ class ControllerReponses{
                 }
             }
 
-            MessageFlash::ajouter("success", "Réponse n°". $idReponse ." créée.");
+            MessageFlash::ajouter("success", "Réponse créée.");
             header("Location: frontController.php?controller=questions&action=see&idQuestion=".$idQuestion);
             exit();
-            //header("Location: frontController.php?controller=reponses&idReponse=".$)
         }else {
             ControllerErreur::erreurCodeErreur(('RC-2'));
         }
@@ -162,7 +161,7 @@ class ControllerReponses{
             $idQuestion = (new ReponsesRepository())->selectReponseByIdReponse($_POST['idReponse'])->getIdQuestion();
             (new ReponsesRepository())->deleteReponseByIdReponse($_POST['idReponse']);
             
-            MessageFlash::ajouter("danger", "Réponse n°" . $_POST['idReponse'] . " supprimée.");
+            MessageFlash::ajouter("danger", "Réponse supprimée.");
             header("Location: frontController.php?controller=questions&action=see&idQuestion=".$idQuestion);
             exit();
         }else {
@@ -176,11 +175,51 @@ class ControllerReponses{
             (new VoteRepository())->vote((new ReponsesRepository())->selectReponseByIdReponse($_POST['idReponse']));
             $reponse = (new ReponsesRepository())->selectReponseByIdReponse($_POST['idReponse']);
 
-            MessageFlash::ajouter("success", "Vous venez de voter pour la réponse n°".$_POST['idReponse'].".");
+            MessageFlash::ajouter("success", "Vous venez de voter pour la réponse.");
             header("Location: frontController.php?controller=questions&action=see&idQuestion=".$reponse->getIdQuestion());
             exit();
         }else {
             ControllerErreur::erreurCodeErreur('RC-2');
+        }
+    }
+
+
+
+
+
+    /*
+     * CO AUTEUR
+     */
+    public static function updatecoauteur() {
+        if(isset($_GET['idReponse'])){
+            $reponse = (new ReponsesRepository())->select($_GET['idReponse']);
+            $reponseSection = (new ReponseSectionRepository())->selectAllByIdReponse($reponse->getIdReponse());
+            //Liste des utilisateur qui sont des co-auteur
+            $coauteur = (new PermissionsRepository())->getListePermissionCoAuteurParReponse($reponse->getIdReponse());
+            $coauteurStr = '';
+            foreach ($coauteur as $item){
+                $coauteurStr = $coauteurStr . ", " . (new UtilisateurRepository())->select($item->getIdUtilisateur())->getMail();
+            }
+            $coauteurStr = substr($coauteurStr, 2);
+            self::afficheVue('view.php', ['pagetitle' => "VoteIt - Modifier une réponse", 'cheminVueBody' => "reponses/coauteur-update.php", 'reponse' => $reponse, 'reponseSection' => $reponseSection]);
+        }else {
+            ControllerErreur::erreurCodeErreur('RC-2');
+        }
+    }
+    public static function updatedcoauteur() {
+        if(isset($_POST['idReponse']) AND isset($_POST['nbSection']) AND isset($_POST['idQuestion'])){
+
+            for($i=1; $i<$_POST['nbSection']+1; $i++){
+                $modelSection = new ReponseSection($_POST['idSection'.$i], $_POST['idReponse'], $_POST['texteSection'.$i]);
+                (new ReponseSectionRepository())->updateReponseSection($modelSection);
+            }
+
+            MessageFlash::ajouter("info","Réponse mise à jour.");
+            header("Location: frontController.php?controller=questions&action=see&idQuestion=".$_POST['idQuestion']);
+            exit();
+        }else {
+            header("Location: frontController.php?controller=questions&action=update&idQuestion=".$_POST['idQuestion']);
+            exit();
         }
     }
 

@@ -73,11 +73,13 @@ $tab = (new ReponsesRepository())->allIdReponseByIdQuestion($reponse->getIdQuest
     <div class="title-reponse--container">
         <div class="title">
             <h2>Réponse n°<?php echo(htmlspecialchars($_GET['seeId'])); ?> <span
-                        class="colored">:</span> <?php if ($canModif == true) { ?><a
+                        class="colored">:</span> <?php if ($canModif == true && $canDelete == true) { ?><a
                     href="frontController.php?controller=reponses&action=update&idReponse=<?php echo(rawurlencode($reponse->getIdReponse())) ?>">
-                        <img src="assets/reponses/see/edit.png" alt="Icone d edition de reponse"></a><?php } ?><?php if($canDelete == true){ ?><a
+                        <img src="assets/reponses/see/edit.png" alt="Icone d edition de reponse"></a><a
                         href="frontController.php?controller=reponses&action=delete&idReponse=<?php echo(rawurlencode($reponse->getIdReponse())) ?>">
-                        <img src="assets/reponses/see/delete.png" alt=""></a><?php } ?></h2></h2>
+                        <img src="assets/reponses/see/delete.png" alt=""></a><?php } ?><?php if($canModif == true && $canDelete == false) {?><a
+                    href="frontController.php?controller=reponses&action=updatecoauteur&idReponse=<?php echo(rawurlencode($reponse->getIdReponse())) ?>">
+                        <img src="assets/reponses/see/edit.png" alt="Icone d edition de reponse"></a><?php } ?></h2></h2>
         </div>
         <p class="title-reponse-p"><?php echo(htmlspecialchars($reponse->getTitreReponse())); ?></p>
         <div class="info-container">
