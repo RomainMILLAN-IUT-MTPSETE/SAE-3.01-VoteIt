@@ -133,11 +133,12 @@ class ControllerProfil{
 
     public static function edit(){
         //Si toutes les informations du formulaires sont remplies
-        if(isset($_REQUEST['identifiant']) AND isset($_REQUEST['mail']) AND isset($_REQUEST['password']) AND isset($_REQUEST['newpassword']) AND isset($_REQUEST['prenom']) AND isset($_REQUEST['nom']) AND isset($_REQUEST['dtnaissance'])){
+        if(isset($_REQUEST['identifiant']) AND isset($_REQUEST['mail']) AND isset($_REQUEST['password']) AND isset($_REQUEST['prenom']) AND isset($_REQUEST['nom']) AND isset($_REQUEST['dtnaissance'])){
             $identifiant = $_REQUEST['identifiant'];
             $mail = $_REQUEST['mail'];
             $password = $_REQUEST['password'];
             $newpassword = $_REQUEST['newpassword'];
+            $confirmnewpassword = $_REQUEST['confirmnewpassword'];
             $prenom = $_REQUEST['prenom'];
             $nom = $_REQUEST['nom'];
             $dtnaissance = $_REQUEST['dtnaissance'];
@@ -158,7 +159,13 @@ class ControllerProfil{
             //PASSWORD
             if(strlen($newpassword) > 0){
                 if(strcmp($password, $newpassword) != 0){
-                    $password = $newpassword;
+                    if(strcmp($newpassword, $confirmnewpassword) == 0){
+                        $password = $newpassword;
+                    }else {
+                        MessageFlash::ajouter("warning", "Nouveau mot de passe et confirmation non indentique");
+                        header("Location: frontController.php?controller=profil&action=modification");
+                        exit();
+                    }
                 }else {
                     MessageFlash::ajouter("warning", "Nouveau mot de passe identique à l'actuelle");
                     header("Location: frontController.php?controller=profil&action=modification");

@@ -17,6 +17,10 @@
             <input type="password" name="newpassword" id="newpassword" placeholder="********"/>
         </div>
         <div>
+            <label for="password">Confirmation nouveau Mot de passe (laisser vide si vous ne voulez pas le changer)</label>
+            <input type="password" name="confirmnewpassword" id="confirmnewpassword" placeholder="********"/>
+        </div>
+        <div>
             <label for="prenom">Prénom</label>
             <input type="text" name="prenom" id="prenom" placeholder="John" value="<?php echo(htmlspecialchars($user->getPrenom())) ?>"/>
         </div>
