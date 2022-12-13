@@ -8,6 +8,9 @@ use \App\VoteIt\Model\Repository\QuestionsRepository;
 use \App\VoteIt\Model\Repository\PermissionsRepository;
 use \App\VoteIt\Model\Repository\VoteRepository;
 use \App\VoteIt\Lib\ConnexionUtilisateur;
+use \App\VoteIt\Model\Repository\UtilisateurRepository;
+use \App\VoteIt\Model\Repository\ReponsesRepository;
+
 $tab = (new QuestionsRepository())->allIdQuestion();
 ?>
 <div class="switch-top">
@@ -30,10 +33,28 @@ $tab = (new QuestionsRepository())->allIdQuestion();
     $canModifOrDelete = false;
     $estResponsable = (new PermissionsRepository())->getPermissionReponsableDePropositionParIdUtilisateurEtIdQuestion($question->getIdQuestion(), ConnexionUtilisateur::getLoginUtilisateurConnecte());
 
+    $periodeReponsePasse = false;
+    $periodeVotePasse = false;
+    $periodeReponse =  false;
+    $periodeVote = false;
+
+    //JE GET LA DATE ACTUELLE
+    $dateNow = date("Y-m-d");
+    if ($question->getDateEcritureDebut() <= $dateNow && $dateNow <= $question->getDateEcritureFin()){
+        $periodeReponse = true;
+        $periodeReponsePasse = false;
+        $periodeVote = false;
+        $periodeVotePasse = false;
+    }else if($question->getDateEcritureFin() <= $dateNow && $question->getDateVoteDebut() <= $dateNow && $dateNow <= $question->getDateVoteFin()){
+        $periodeReponse = false;
+        $periodeReponsePasse = true;
+        $periodeVote = true;
+        $periodeVotePasse = false;
+    }
     //SI L'UTILISATEUR EST CONNECTE
     if (ConnexionUtilisateur::estConnecte()) {
         //GET UTILISATEUR
-        $user = (new \App\VoteIt\Model\Repository\UtilisateurRepository())->select(ConnexionUtilisateur::getLoginUtilisateurConnecte());
+        $user = (new UtilisateurRepository())->select(ConnexionUtilisateur::getLoginUtilisateurConnecte());
 
         //SI IL EST LE CREATEUR DE LA QUESTION OU ADMINISTRATEUR
         if((strcmp($question->getAutheur(), $user->getIdentifiant()) == 0) or (strcmp($user->getGrade(), "Administrateur") == 0)){
@@ -41,10 +62,9 @@ $tab = (new QuestionsRepository())->allIdQuestion();
         }
         //SI IL PEUT MODIFIEROUSUPPRIMER OU IL EST RESPONSABLE DE REPONSE
         if ($canModifOrDelete or ($estResponsable == true)) {
-            //JE GET LA DATE ACTUELLE
-            $dateNow = date("Y-m-d");
+
             //SI LA DATE ACTUELLE EST ENTRE LE DEBUT ET LA FIN DES DATE D'ECRITURE
-            if ($question->getDateEcritureDebut() <= $dateNow && $dateNow <= $question->getDateEcritureFin()) {
+            if ($periodeReponse) {
                 ?> <a
                     href="frontController.php?controller=reponses&action=create&idQuestion=<?php echo(rawurlencode($_GET['idQuestion'])); ?>">
                     <button id="buttonTop">Proposer une Réponse <img id="imgButtonTop"
@@ -99,9 +119,9 @@ $tab = (new QuestionsRepository())->allIdQuestion();
             <h2><span class="title-sub-see-question">Délais <span class="colored">:</span></span></h2>
             <p id="sub-see-question-container-delais-pfirst"><span class="bolder">Réponses</span>:
                 Du <?php echo(htmlspecialchars($question->getDateEcritureDebutFR())); ?>
-                au <?php echo(htmlspecialchars($question->getDateEcritureFinFR())); ?></p>
+                au <?php echo(htmlspecialchars($question->getDateEcritureFinFR())); ?> <?php if($periodeReponse) { ?> <span style="color: #3c763d;" class="green">✔</span> <?php }else { ?> <span style="color: #a94442;" class="red">✖</span> <?php } ?></p>
             <p><span class="bolder">Vote</span>: Du <?php echo(htmlspecialchars($question->getDateVoteDebutFR())) ?>
-                au <?php echo(htmlspecialchars($question->getDateVoteFinFR())) ?></p>
+                au <?php echo(htmlspecialchars($question->getDateVoteFinFR())) ?> <?php if($periodeVote) { ?> <span style="color: #3c763d;" class="green">✔</span> <?php }else { ?> <span style="color: #a94442;" class="red">✖</span> <?php } ?></p>
         </div>
     </section>
     <hr class="inter-container-mobile" WIDTH="100px" COLOR="BLACK">
@@ -121,7 +141,7 @@ $tab = (new QuestionsRepository())->allIdQuestion();
         $i = 1;
         $dateNow = date("Y-m-d");
         if ($dateNow > $question->getDateVoteFin()) {
-            $idMaxVote = (new \App\VoteIt\Model\Repository\ReponsesRepository())->getIdReponseMaxVoteParIdQuestion($question->getIdQuestion());
+            $idMaxVote = (new ReponsesRepository())->getIdReponseMaxVoteParIdQuestion($question->getIdQuestion());
             foreach ($reponses as $item) {
                 if($item->getIdReponse() == $idMaxVote){
                     ?>
@@ -152,7 +172,7 @@ $tab = (new QuestionsRepository())->allIdQuestion();
                         <p class="reponse-title"><?php echo(htmlspecialchars($item->getTitreReponse())) ?></p>
                         <div class="autheur-and-nb-vote--container">
                             <?php
-                            $autheur = (new \App\VoteIt\Model\Repository\UtilisateurRepository())->select($item->getAutheurId());
+                            $autheur = (new UtilisateurRepository())->select($item->getAutheurId());
                             ?>
                             <p class="autheur-reponse">
                                 Auteur: <?php echo(htmlspecialchars($autheur->getNom()) . " " . htmlspecialchars($autheur->getPrenom())) ?></p>
