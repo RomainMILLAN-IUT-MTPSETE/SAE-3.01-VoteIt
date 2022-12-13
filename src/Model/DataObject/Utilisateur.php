@@ -117,7 +117,7 @@ class Utilisateur extends AbstractDataObject {
      */
     public function getDateNaissanceFR(): string
     {
-        return strftime('%d/%m/%Y',strtotime($this->dateNaissance));
+        return date_format(date_create($this->dateNaissance), 'd/m/Y');
     }
 
     /**

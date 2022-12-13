@@ -170,16 +170,16 @@ class Question extends AbstractDataObject {
 
 
     public function getDateEcritureDebutFR(){
-        return date('d/m/Y', strtotime($this->dateEcritureDebut));
+        return date_format(date_create($this->dateEcritureDebut), 'd/m/Y');
     }
     public function getDateEcritureFinFR(){
-        return date('d/m/Y', strtotime($this->dateEcritureFin));
+        return date_format(date_create($this->dateEcritureFin), 'd/m/Y');
     }
     public function getDateVoteDebutFR(){
-        return date('d/m/Y', strtotime($this->dateVoteDebut));
+        return date_format(date_create($this->dateVoteDebut), 'd/m/Y');
     }
     public function getDateVoteFinFR(){
-        return date('d/m/Y', strtotime($this->dateVoteFin));
+        return date_format(date_create($this->dateVoteFin), 'd/m/Y');
     }
 
 
