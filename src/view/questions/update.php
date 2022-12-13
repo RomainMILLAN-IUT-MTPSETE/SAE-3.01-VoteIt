@@ -48,8 +48,8 @@
                 ?>
                 <div class="section-plan">
                     <label class="section-plan-label" for="section<?php echo(htmlspecialchars($section->getIdSection())) ?>">Section n°<?php echo(htmlspecialchars($section->getIdQuestion())); ?></label>
-                    <input class="section-plan-input" type="text" name="sectionTitle<?php echo(htmlspecialchars($section->getIdSection())) ?>" value="<?php echo(htmlspecialchars($section->getTitreSection())) ?>">
-                    <input class="section-plan-input" type="text" name="sectionDesc<?php echo(htmlspecialchars($section->getIdSection())) ?>" value="<?php echo(htmlspecialchars($section->getDescriptionSection())) ?>">
+                    <input class="section-plan-input" type="text" name="sectionTitle<?php echo(htmlspecialchars($section->getIdSection())) ?>" value="<?php echo(htmlspecialchars($section->getTitreSection())) ?>" <?php if($sectionPeutEtreModifier == false){ ?>readonly<?php } ?>>
+                    <input class="section-plan-input" type="text" name="sectionDesc<?php echo(htmlspecialchars($section->getIdSection())) ?>" value="<?php echo(htmlspecialchars($section->getDescriptionSection())) ?>" <?php if($sectionPeutEtreModifier == false){ ?>readonly<?php } ?>>
                 </div>
 
                 <?php

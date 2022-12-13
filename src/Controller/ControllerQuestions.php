@@ -72,8 +72,14 @@ class ControllerQuestions{
             $userVotantStr = $userVotantStr . ", " . (new UtilisateurRepository())->select($item->getIdUtilisateur())->getMail();
         }
         $userVotantStr = substr($userVotantStr, 2);
+
+        $sectionPeutEtreModifier = false;
+        $dateNow = date("Y-m-d");
+        if ($question->getDateEcritureDebut() > $dateNow) {
+            $sectionPeutEtreModifier = true;
+        }
         self::afficheVue('view.php', ['pagetitle' => "VoteIt - Modifier une question", 'cheminVueBody' => "questions/update.php"
-            , 'question' => $question, 'sectionIds' => $sectionId, 'responsable' => $respStr, 'userVotant' => $userVotantStr]);
+            , 'question' => $question, 'sectionIds' => $sectionId, 'responsable' => $respStr, 'userVotant' => $userVotantStr, "sectionPeutEtreModifier" => $sectionPeutEtreModifier]);
     }
 
     public static function delete() {
