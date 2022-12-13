@@ -171,4 +171,28 @@ class QuestionsRepository extends AbstractRepository {
         }
     }
 
+
+
+
+
+
+
+    /*
+     * DASHBOARD
+     */
+    public function countNbQuestionActive(): int{
+        $pdo = Model::getPdo();
+        $query = "SELECT COUNT(idQuestion) as nbQuestion FROM ".$this->getNomTable()." WHERE estVisible=1;";
+        $pdoStatement = $pdo->query($query);
+        $resultatSQL = $pdoStatement->fetch();
+
+        $resultat = $resultatSQL['nbQuestion'];
+
+        if($resultat == null){
+            $resultat = 0;
+        }
+
+        return $resultat;
+    }
+
 }

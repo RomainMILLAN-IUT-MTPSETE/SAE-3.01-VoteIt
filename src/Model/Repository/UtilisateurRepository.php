@@ -57,4 +57,28 @@ class UtilisateurRepository extends AbstractRepository {
 
         return $res;
     }
+
+
+
+
+
+
+
+    /*
+     * DASHBOARD
+     */
+    public function countNbAccount(): int{
+        $pdo = Model::getPdo();
+        $query = "SELECT COUNT(idUtilisateur) as nbAccount FROM ".$this->getNomTable().";";
+        $pdoStatement = $pdo->query($query);
+        $resultatSQL = $pdoStatement->fetch();
+
+        $resultat = $resultatSQL['nbAccount'];
+
+        if($resultat == null){
+            $resultat = 0;
+        }
+
+        return $resultat;
+    }
 }
