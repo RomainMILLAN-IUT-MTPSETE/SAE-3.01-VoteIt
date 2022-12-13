@@ -184,7 +184,7 @@ class ReponsesRepository extends AbstractRepository{
         }
     }
 
-    public function getNbVoteParIdQuestion($idQuestion){
+    public function getNbVoteMax($idQuestion){
         $pdo = Model::getPdo();
         $sql = "SELECT idReponse, COUNT(idReponse) as nbVote FROM vit_Vote WHERE idQuestion=:idQuestion GROUP BY idReponse";
 
@@ -197,26 +197,46 @@ class ReponsesRepository extends AbstractRepository{
 
 
 
-        $res = [];
+        $nbVote = [];
         foreach ($pdoStatement as $tableauSelecter) {
-            $res[] = array($tableauSelecter[0], $tableauSelecter[1]);
+            $nbVote[] = array($tableauSelecter[0], $tableauSelecter[1]);
         }
-        return $res;
-    }
-
-    public function getIdReponseMaxVoteParIdQuestion($idQuestion){
-        $nbVote = $this->getNbVoteParIdQuestion($idQuestion);
 
         $nbVoteMax = -1;
-        $idReponseVoteMax = -1;
-
         foreach ($nbVote as $item){
             if($item[1] > $nbVoteMax){
                 $nbVoteMax = $item[1];
-                $idReponseVoteMax = $item[0];
             }
         }
 
-        return $idReponseVoteMax;
+        return $nbVoteMax;
+    }
+
+    public function getIdReponseWithVoteMaxParIdQuestion($idQuestion){
+        $pdo = Model::getPdo();
+        $sql = "SELECT idReponse, COUNT(idReponse) as nbVote FROM vit_Vote WHERE idQuestion=:idQuestion GROUP BY idReponse";
+        $pdoStatement = $pdo->prepare($sql);
+        $values = [
+            'idQuestion' => $idQuestion];
+        $pdoStatement->execute($values);
+
+
+
+        $idReponseEtNbVote = [];
+        foreach ($pdoStatement as $tableauSelecter) {
+            $idReponseEtNbVote[] = array($tableauSelecter[0], $tableauSelecter[1]);
+        }
+
+        $nbVoteMax = $this->getNbVoteMax($idQuestion);
+
+        $res = [];
+        foreach ($idReponseEtNbVote as $item){
+            if($item[1] == $nbVoteMax){
+                $res[] = $item[0];
+            }
+        }
+
+
+        return $res;
     }
 }
