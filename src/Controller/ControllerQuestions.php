@@ -4,9 +4,12 @@ namespace App\VoteIt\Controller;
 use App\VoteIt\Lib\MessageFlash;
 use App\VoteIt\Model\DataObject\Question;
 use App\VoteIt\Model\DataObject\Section;
+use App\VoteIt\Model\DataObject\Utilisateur;
+use App\VoteIt\Model\Repository\PermissionsRepository;
 use App\VoteIt\Model\Repository\QuestionsRepository;
 use App\VoteIt\Model\Repository\ReponsesRepository;
 use App\VoteIt\Model\Repository\SectionRepository;
+use App\VoteIt\Model\Repository\UtilisateurRepository;
 use http\Message;
 
 class ControllerQuestions{
@@ -54,8 +57,15 @@ class ControllerQuestions{
 
     public static function update() {
         $sectionId = (new SectionRepository())->selectAllByIdQuestion($_GET['idQuestion']);
+        $question = (new QuestionsRepository())->select($_GET['idQuestion']);
+        $permission = (new PermissionsRepository())->getListePermissionParQuestion($_GET['idQuestion']);
+        $permissionStr = '';
+        foreach ($permission as $item){
+            $permissionStr = $permissionStr . ", " . (new UtilisateurRepository())->select($item->getIdUtilisateur())->getMail();
+        }
+        $permissionStr = substr($permissionStr, 2);
         self::afficheVue('view.php', ['pagetitle' => "VoteIt - Modifier une question", 'cheminVueBody' => "questions/update.php"
-            , 'question' => (new QuestionsRepository())->select($_GET['idQuestion']), 'sectionIds' => $sectionId]);
+            , 'question' => $question, 'sectionIds' => $sectionId, 'permissions' => $permissionStr]);
     }
 
     public static function delete() {
@@ -107,7 +117,7 @@ class ControllerQuestions{
     }
 
     public static function updated() {
-        if(isset($_POST['idQuestion']) AND isset($_POST['autheur']) AND isset($_POST['titreQuestion']) AND isset($_POST['ecritureDateDebut']) AND isset($_POST['ecritureDateFin']) AND isset($_POST['voteDateDebut']) AND isset($_POST['voteDateFin']) AND isset($_POST['categorieQuestion'])){
+        if(isset($_POST['idQuestion']) AND isset($_POST['autheur']) AND isset($_POST['titreQuestion']) AND isset($_POST['respReponse']) AND isset($_POST['ecritureDateDebut']) AND isset($_POST['ecritureDateFin']) AND isset($_POST['voteDateDebut']) AND isset($_POST['voteDateFin']) AND isset($_POST['categorieQuestion'])){
             if($_POST['ecritureDateDebut'] > $_POST['ecritureDateFin']){
                 MessageFlash::ajouter("danger", "La date de début d'écriture est supérieure à la date de fin d'écriture.");
                 header("Location: frontController.php?controller=questions&action=update&idQuestion=".$_POST['idQuestion']);
@@ -134,8 +144,25 @@ class ControllerQuestions{
                     (new SectionRepository())->updateSectionByIdSection($modelSection);
                 }
 
+                //SUPPRESION DES PERMISSION EXISTANTE
+                (new PermissionsRepository())->deleteAllPermissionForIdQuestion($_POST['idQuestion']);
 
-                MessageFlash::ajouter("info","Question n°" . $_POST['idQuestion'] . " modifiée");
+                //RECUPERATION DE LA LISTE DES UTILISATEUR
+                $responsableReponse = $_POST['respReponse'];
+
+                if(strlen($responsableReponse) > 0){
+                    //SEPARATION EN ARGUMENT
+                    $responsableReponseArgs = explode(", ", $responsableReponse);
+                    //POUR TOUS LES UTILISATEUR
+                    foreach ($responsableReponseArgs as $item){
+                        //J'ENTRE LEUR NOUVELLE PERMISSION
+                        (new PermissionsRepository())->addQuestionPermission((new UtilisateurRepository())->selectUserByMail($item)->getIdentifiant(), $_POST['idQuestion'], "responsable de proposition");
+                    }
+                }
+
+
+
+                MessageFlash::ajouter("info","Question modifiée");
                 header("Location: frontController.php?controller=questions&action=see&idQuestion=".$_POST['idQuestion']);
                 exit();
             }

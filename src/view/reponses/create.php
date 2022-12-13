@@ -3,14 +3,6 @@
     <div class="formulaire-template">
         <h2 class="title">Créer une réponse</h2>
         <div class="div-form-normal">
-            <label for="idQuestion">Identifiant Question</label>
-            <input type="number" name="idQuestion" id="idQuestion" placeholder="11" value="<?php echo(htmlspecialchars($_GET['idQuestion'])); ?>" readonly/>
-        </div>
-        <div class="div-form-normal">
-            <label for="autheur">Auteur</label>
-            <input type="text" name="autheur" id="autheur" value="<?php echo(\App\VoteIt\Lib\ConnexionUtilisateur::getLoginUtilisateurConnecte()) ?>" placeholder="JohnDoe10" required/>
-        </div>
-        <div class="div-form-normal">
             <label for="titreReponse">Titre de la réponse</label>
             <input type="text" name="titreReponse" id="titreReponse" placeholder="Titre de la réponse" required>
         </div>
@@ -33,6 +25,8 @@
         </div>
         <div>
             <input type="hidden" name="nbSection" value="<?php echo(htmlspecialchars($i-1)); ?>">
+            <input type="number" name="idQuestion" id="idQuestion" placeholder="11" value="<?php echo(htmlspecialchars($_GET['idQuestion'])); ?>" hidden readonly/>
+            <input type="text" name="autheur" id="autheur" value="<?php echo(\App\VoteIt\Lib\ConnexionUtilisateur::getLoginUtilisateurConnecte()) ?>" placeholder="JohnDoe10" hidden required/>
             <input type="submit" value="Poser la question">
         </div>
     </div>

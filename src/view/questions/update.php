@@ -4,10 +4,6 @@
     <div class="formulaire-template">
         <h2 class="title">Modification de question</h2>
         <div>
-            <label for="autheur">Auteur</label>
-            <input type="text" name="autheur" id="autheur" placeholder="JohnDoe10" value="<?php echo htmlspecialchars($question->getAutheur()) ?>" readonly required/>
-        </div>
-        <div>
             <label for="titreQuestion">Titre</label>
             <input type="text" name="titreQuestion" id="titreQuestion" placeholder="TitreDeLaQuestion" value="<?php echo htmlspecialchars($question->getTitreQuestion()) ?>"   required/>
         </div>
@@ -22,6 +18,10 @@
                 }
                 ?>
             </select>
+        </div>
+        <div>
+            <label for="responsableReponse">Responsabel de réponse</label>
+            <input type="text" name="respReponse" id="respReponse" placeholder="johndoe10@gmail.com, xxx@xxx.fr" value="<?php echo(htmlspecialchars($permissions)) ?>">
         </div>
         <div class="date--container">
             <div>
@@ -59,6 +59,7 @@
             <input type="hidden" name="idQuestion" value="<?php echo(htmlspecialchars($_GET['idQuestion'])); ?>">
             <input type="hidden" name="controller" value="questions">
             <input type="hidden" name="action" value="updated">
+            <input type="text" name="autheur" id="autheur" placeholder="JohnDoe10" value="<?php echo (htmlspecialchars($question->getAutheur()))  ?>" readonly hidden required/>
             <input type="submit" value="Modifier la question">
         </div>
     </div>

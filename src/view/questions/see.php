@@ -20,12 +20,14 @@ $tab = (new QuestionsRepository())->allIdQuestion();
 
         }
     }
+
+    use \App\VoteIt\Model\Repository\PermissionsRepository;
+    use \App\VoteIt\Lib\ConnexionUtilisateur;
+    $permission = (new PermissionsRepository())->getPermissionQuestionParIdUtilisateur($_GET['idQuestion'], ConnexionUtilisateur::getLoginUtilisateurConnecte());
     ?>
 </div>
 <section class="button-top">
     <?php
-
-    use \App\VoteIt\Lib\ConnexionUtilisateur;
     use \App\VoteIt\Model\Repository\VoteRepository;
 
     $canModifOrDelete = false;
@@ -33,8 +35,10 @@ $tab = (new QuestionsRepository())->allIdQuestion();
     if (ConnexionUtilisateur::estConnecte()) {
         $user = (new \App\VoteIt\Model\Repository\UtilisateurRepository())->select(ConnexionUtilisateur::getLoginUtilisateurConnecte());
 
-        if ((strcmp($user->getGrade(), "Organisateur") == 0) or (strcmp($user->getGrade(), "Administrateur") == 0)) {
+        if((strcmp($question->getAutheur(), $user->getIdentifiant()) == 0) or (strcmp($user->getGrade(), "Organisateur") == 0) or (strcmp($user->getGrade(), "Administrateur") == 0)){
             $canModifOrDelete = true;
+        }
+        if ($canModifOrDelete or (strcmp($permission, "responsable de proposition") == 0)) {
             $dateNow = date("Y-m-d");
             if ($question->getDateEcritureDebut() <= $dateNow && $dateNow <= $question->getDateEcritureFin()) {
                 ?> <a

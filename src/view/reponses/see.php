@@ -9,13 +9,15 @@ $tab = (new ReponsesRepository())->allIdReponseByIdQuestion($reponse->getIdQuest
 <div class="switch-top">
     <?php
     if ($_GET['idReponse'] != $tab[0]) {
-        echo '<a class="switch-top-left fullleft" href="frontController.php?controller=reponses&action=see&idReponse=' . $tab[array_search($_GET['idReponse'], $tab) - 1] . '">← Question précédante</a>';
+        $seeId = $_GET['seeId'] - 1;
+        echo '<a class="switch-top-left fullleft" href="frontController.php?controller=reponses&action=see&idReponse=' . $tab[array_search($_GET['idReponse'], $tab) - 1] . '&seeId='.$seeId.'">← Réponse précédante</a>';
     }
     if ($_GET['idReponse'] != $tab[count($tab) - 1]) {
+        $seeId = $_GET['seeId'] + 1;
         if($_GET['idReponse'] == $tab[0]){
-            echo '<a class="switch-top-right fullright" href="frontController.php?controller=reponses&action=see&idReponse=' . $tab[array_search($_GET['idReponse'], $tab) + 1] . '">Question suivante →</a>';
+            echo '<a class="switch-top-right fullright" href="frontController.php?controller=reponses&action=see&idReponse=' . $tab[array_search($_GET['idReponse'], $tab) + 1] . '&seeId='.$seeId.'">Réponse suivante →</a>';
         }else {
-            echo '<a class="switch-top-right" href="frontController.php?controller=reponses&action=see&idReponse=' . $tab[array_search($_GET['idReponse'], $tab) + 1] . '">Question suivante →</a>';
+            echo '<a class="switch-top-right" href="frontController.php?controller=reponses&action=see&idReponse=' . $tab[array_search($_GET['idReponse'], $tab) + 1] . '&seeId='.$seeId.'">Réponse suivante →</a>';
 
         }
     }
