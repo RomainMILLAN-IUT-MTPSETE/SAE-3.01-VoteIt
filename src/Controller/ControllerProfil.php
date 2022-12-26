@@ -26,14 +26,12 @@ class ControllerProfil{
 
             //Si l'utilisateur est null
             if ($user == NULL) {
-                //Renvoye a la page d'erreur avec la code PC-3
-                ControllerErreur::erreurCodeErreur('PC-3');
+                MessageFlash::ajouter('warning', "L'utilisateur n'existe pas");
+                header("Location: frontController.php?controller=home&action=home");
+                exit();
             }
             self::afficheVue('view.php', ['pagetitle' => "VoteIt - Profil", 'cheminVueBody' => "profil/home.php", 'user' => $user]);
         }else {
-            //Renvoye a la page d'erreur avec la code PC-2
-            //ControllerErreur::erreurCodeErreur('PC-2');
-
             //Renvoye vers le formulaire de connexion
             header("Location: frontController.php?controller=profil&action=connection");
             exit();
@@ -62,8 +60,9 @@ class ControllerProfil{
     }
 
     public static function error(){
-        //Renvoye a la page d'erreur avec le code PC-1
-        ControllerErreur::erreurCodeErreur('PC-1');
+        MessageFlash::ajouter('warning', "Erreur sur la page de profil");
+        header("Location: frontController.php?controller=home&action=home");
+        exit();
     }
 
     //Function to not see
@@ -127,7 +126,9 @@ class ControllerProfil{
                 exit();
             }
         }else {
-            ControllerErreur::erreurCodeErreur('PC-2');
+            MessageFlash::ajouter('warning', "Mail ou Mot de passe manquant");
+            header("Location: frontController.php?controller=profil&action=connection");
+            exit();
         }
     }
 

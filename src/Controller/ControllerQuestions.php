@@ -36,8 +36,9 @@ class ControllerQuestions{
             $sections = (new SectionRepository())->selectAllByIdQuestion($idQuestion);
             self::afficheVue('view.php', ['pagetitle' => "VoteIt - Questions", 'cheminVueBody' => "questions/see.php", "question" => $question, "reponses" => $reponses, "sections" => $sections]);
         }else {
-            //Renvoye a la page d'erreur avec l'erreur QC-2
-            ControllerErreur::erreurCodeErreur('QC-2');
+            MessageFlash::ajouter('warning', "Identifiant question manquant");
+            header("Location: frontController.php?controller=questions&action=home");
+            exit();
         }
     }
 
@@ -93,7 +94,9 @@ class ControllerQuestions{
     }
 
     public static function error(){
-        ControllerErreur::erreurCodeErreur('QC-1');
+        MessageFlash::ajouter("warning", "Erreur sur la page de question");
+        header("Location: frontController.php?controller=home&action=home");
+        exit();
     }
 
     public static function created(){
@@ -158,7 +161,9 @@ class ControllerQuestions{
                 exit();
             }
         }else {
-            ControllerErreur::erreurCodeErreur('QC-2');
+            MessageFlash::ajouter('warning', "Information manquante");
+            header("Location: frontController.php?controller=questions&action=create");
+            exit();
         }
     }
 
@@ -225,6 +230,7 @@ class ControllerQuestions{
                 exit();
             }
         }else {
+            MessageFlash::ajouter("warning", "Il manque des informations");
             header("Location: frontController.php?controller=questions&action=update&idQuestion=".$_POST['idQuestion']);
             exit();
         }

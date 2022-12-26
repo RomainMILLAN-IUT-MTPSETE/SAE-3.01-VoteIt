@@ -19,12 +19,16 @@ class ControllerSections{
             $idQuestion = $_GET['idQuestion'];
             self::afficheVue('view.php', ['pagetitle' => "VoteIt - Création des sections", 'cheminVueBody' => "sections/createForCreateQuestion.php", 'nbSections' => $nbSection, 'idQuestion' => $idQuestion]);
         }else {
-            ControllerErreur::erreurCodeErreur('SC-1');
+            MessageFlash::ajouter("warning", "Nombre de section et identifiant questions non données");
+            header("Location: frontController.php?controller=questions&action=home");
+            exit();
         }
     }
 
     public static function error(){
-        ControllerErreur::erreurCodeErreur('SC-1');
+        MessageFlash::ajouter("warning", "Erreur sur la page Sections");
+        header("Location: frontController.php?controller=questions&action=home");
+        exit();
     }
 
 
@@ -46,7 +50,9 @@ class ControllerSections{
             header("Location: frontController.php?controller=questions&action=home");
             exit();
         }else {
-            ControllerErreur::erreurCodeErreur('SC-1');
+            MessageFlash::ajouter("warning", "Nombre de section ou identifiant question manquant");
+            header("Location: frontController.php?controller=questions&action=home");
+            exit();
         }
     }
 

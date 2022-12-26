@@ -25,7 +25,9 @@ class ControllerReponses{
             $sections = (new SectionRepository())->selectAllByIdQuestion($_GET['idQuestion']);
             self::afficheVue('view.php', ['pagetitle' => "VoteIt - Création d'une réponse", 'cheminVueBody' => "reponses/create.php", 'sections' => $sections]);
         }else {
-            ControllerErreur::erreurCodeErreur('RC-2');
+            MessageFlash::ajouter("warning", "Identifiant Question manquant");
+            header("Location: frontController.php?controller=question&action=home");
+            exit();
         }
     }
 
@@ -36,7 +38,9 @@ class ControllerReponses{
             $sectionsReponse = (new ReponseSectionRepository())->selectAllByIdReponse($reponse->getIdReponse());
             self::afficheVue('view.php', ['pagetitle' => "VoteIt - Réponse", 'cheminVueBody' => "reponses/see.php", 'reponse' => $reponse, 'sectionsReponse' => $sectionsReponse, 'question' => $question]);
         }else {
-            ControllerErreur::erreurCodeErreur('RC-2');
+            MessageFlash::ajouter("warning", "Identifiant Reponse manquant");
+            header("Location: frontController.php?controller=question&action=home");
+            exit();
         }
     }
 
@@ -53,7 +57,9 @@ class ControllerReponses{
             $coauteurStr = substr($coauteurStr, 2);
             self::afficheVue('view.php', ['pagetitle' => "VoteIt - Modifier une réponse", 'cheminVueBody' => "reponses/update.php", 'reponse' => $reponse, 'reponseSection' => $reponseSection, 'coauteurStr' => $coauteurStr]);
         }else {
-            ControllerErreur::erreurCodeErreur('RC-2');
+            MessageFlash::ajouter("warning", "Identifiant Reponse manquant");
+            header("Location: frontController.php?controller=question&action=home");
+            exit();
         }
     }
 
@@ -62,7 +68,9 @@ class ControllerReponses{
             $reponse = (new ReponsesRepository())->select($_GET['idReponse']);
             self::afficheVue('view.php',['pagetitle' => "VoteIt - Suppression de la réponse", 'cheminVueBody' => "reponses/delete.php", 'reponse' => $reponse]);
         }else {
-            ControllerErreur::erreurCodeErreur('RC-2');
+            MessageFlash::ajouter("warning", "Identifiant Reponse manquant");
+            header("Location: frontController.php?controller=question&action=home");
+            exit();
         }
     }
 
@@ -70,7 +78,9 @@ class ControllerReponses{
         if(isset($_GET['idReponse'])){
             self::afficheVue('view.php', ['pagetitle' => 'VoteIt - Voter pour une réponse', 'cheminVueBody' => "reponses/voter.php"]);
         }else {
-            ControllerErreur::erreurCodeErreur('RC-2');
+            MessageFlash::ajouter("warning", "Identifiant Reponse manquant");
+            header("Location: frontController.php?controller=question&action=home");
+            exit();
         }
     }
 
@@ -119,7 +129,9 @@ class ControllerReponses{
             header("Location: frontController.php?controller=questions&action=see&idQuestion=".$idQuestion);
             exit();
         }else {
-            ControllerErreur::erreurCodeErreur(('RC-2'));
+            MessageFlash::ajouter("warning", "Informations manquant");
+            header("Location: frontController.php?controller=reponses&action=create&idQuestion=".$_POST['idQuestion']);
+            exit();
         }
     }
 
@@ -180,7 +192,8 @@ class ControllerReponses{
             header("Location: frontController.php?controller=questions&action=see&idQuestion=".$reponse->getIdQuestion());
             exit();
         }else {
-            ControllerErreur::erreurCodeErreur('RC-2');
+            MessageFlash::ajouter('warning', "Identifiant Reponse manquant");
+            header("Location: frontController.php?controller=question&action=home");
         }
     }
 
