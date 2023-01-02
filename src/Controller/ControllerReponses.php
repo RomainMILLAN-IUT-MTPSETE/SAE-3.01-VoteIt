@@ -3,6 +3,7 @@
 namespace App\VoteIt\Controller;
 
 use App\VoteIt\Controller\ControllerErreur;
+use App\VoteIt\Lib\ConnexionUtilisateur;
 use App\VoteIt\Lib\MessageFlash;
 use App\VoteIt\Model\DataObject\ReponseSection;
 use App\VoteIt\Model\DataObject\Reponse;
@@ -36,7 +37,34 @@ class ControllerReponses{
             $reponse = (new ReponsesRepository())->selectReponseByIdReponse($_GET['idReponse']);
             $question = (new QuestionsRepository())->select($reponse->getIdQuestion());
             $sectionsReponse = (new ReponseSectionRepository())->selectAllByIdReponse($reponse->getIdReponse());
-            self::afficheVue('view.php', ['pagetitle' => "VoteIt - Réponse", 'cheminVueBody' => "reponses/see.php", 'reponse' => $reponse, 'sectionsReponse' => $sectionsReponse, 'question' => $question]);
+            $allIdReponses = (new ReponsesRepository())->allIdReponseByIdQuestion($reponse->getIdQuestion());
+
+            $estCoAuteur = (new PermissionsRepository())->getPermissionCoAuteurParIdUtilisateurEtIdReponse($reponse->getIdReponse(), ConnexionUtilisateur::getLoginUtilisateurConnecte());
+            $estVotant = (new PermissionsRepository())->getPermissionVotantParIdUtilisateurEtIdQuestion($reponse->getIdQuestion(), ConnexionUtilisateur::getLoginUtilisateurConnecte());
+            $user = null;
+
+            $voteState = false;
+            $canDelete = false;
+            $canModif = false;
+
+
+            if (ConnexionUtilisateur::estConnecte()) {
+                $user =  (new UtilisateurRepository())->select(ConnexionUtilisateur::getLoginUtilisateurConnecte());
+                if ((strcmp($reponse->getAutheurId(), $user->getIdentifiant()) == 0) or (strcmp($user->getGrade(), "Administrateur") == 0)) {
+                    $canDelete = true;
+                    $canModif = true;
+                    $estVotant = true;
+                }
+                if($estCoAuteur){
+                    $canModif = true;
+                    $estVotant = true;
+                }
+                if ($estVotant) {
+                    $voteState = (new VoteRepository())->stateVote($reponse->getIdQuestion(), $user->getIdentifiant());
+                }
+            }
+
+            self::afficheVue('view.php', ['pagetitle' => "VoteIt - Réponse", 'cheminVueBody' => "reponses/see.php", 'reponse' => $reponse, 'sectionsReponse' => $sectionsReponse, 'question' => $question, 'allIdReponses' => $allIdReponses, 'estCoAuteur' => $estCoAuteur, 'estVotant' => $estVotant, 'user' => $user, 'voteState' => $voteState, 'canModif' => $canModif, 'canDelete' => $canDelete]);
         }else {
             MessageFlash::ajouter("warning", "Identifiant Reponse manquant");
             header("Location: frontController.php?controller=question&action=home");
@@ -48,14 +76,18 @@ class ControllerReponses{
         if(isset($_GET['idReponse'])){
             $reponse = (new ReponsesRepository())->select($_GET['idReponse']);
             $reponseSection = (new ReponseSectionRepository())->selectAllByIdReponse($reponse->getIdReponse());
-            //Liste des utilisateur qui sont des co-auteur
+            $titleReponse = $reponse->getTitleReponse();
+
+            //Liste des utilisateurs qui sont des co-auteurs
             $coauteur = (new PermissionsRepository())->getListePermissionCoAuteurParReponse($reponse->getIdReponse());
             $coauteurStr = '';
             foreach ($coauteur as $item){
                 $coauteurStr = $coauteurStr . ", " . (new UtilisateurRepository())->select($item->getIdUtilisateur())->getMail();
             }
             $coauteurStr = substr($coauteurStr, 2);
-            self::afficheVue('view.php', ['pagetitle' => "VoteIt - Modifier une réponse", 'cheminVueBody' => "reponses/update.php", 'reponse' => $reponse, 'reponseSection' => $reponseSection, 'coauteurStr' => $coauteurStr]);
+
+
+            self::afficheVue('view.php', ['pagetitle' => "VoteIt - Modifier une réponse", 'cheminVueBody' => "reponses/update.php", 'reponse' => $reponse, 'reponseSection' => $reponseSection, 'coauteurStr' => $coauteurStr, 'titleReponse' => $titleReponse]);
         }else {
             MessageFlash::ajouter("warning", "Identifiant Reponse manquant");
             header("Location: frontController.php?controller=question&action=home");
@@ -76,7 +108,9 @@ class ControllerReponses{
 
     public static function vote(){
         if(isset($_GET['idReponse'])){
-            self::afficheVue('view.php', ['pagetitle' => 'VoteIt - Voter pour une réponse', 'cheminVueBody' => "reponses/voter.php"]);
+            $reponse = (new ReponsesRepository())->select($_GET['idReponse']);
+            $titleReponse = $reponse->getTitreReponse();
+            self::afficheVue('view.php', ['pagetitle' => 'VoteIt - Voter pour une réponse', 'cheminVueBody' => "reponses/voter.php", 'titleReponse' => $titleReponse]);
         }else {
             MessageFlash::ajouter("warning", "Identifiant Reponse manquant");
             header("Location: frontController.php?controller=question&action=home");
@@ -153,7 +187,7 @@ class ControllerReponses{
             if(strlen($coauteurInput) > 0){
                 //SEPARATION EN ARGUMENT
                 $coauteurInputArgs = explode(", ", $coauteurInput);
-                //POUR TOUS LES UTILISATEUR
+                //POUR TOUS LES UTILISATEURS
                 foreach ($coauteurInputArgs as $item){
                     //J'ENTRE LEUR NOUVELLE PERMISSION
                     (new PermissionsRepository())->addReponsePermission((new UtilisateurRepository())->selectUserByMail($item)->getIdentifiant(), $_POST['idReponse'], "CoAuteur");
@@ -194,46 +228,6 @@ class ControllerReponses{
         }else {
             MessageFlash::ajouter('warning', "Identifiant Reponse manquant");
             header("Location: frontController.php?controller=question&action=home");
-        }
-    }
-
-
-
-
-
-    /*
-     * CO AUTEUR
-     */
-    public static function updatecoauteur() {
-        if(isset($_GET['idReponse'])){
-            $reponse = (new ReponsesRepository())->select($_GET['idReponse']);
-            $reponseSection = (new ReponseSectionRepository())->selectAllByIdReponse($reponse->getIdReponse());
-            //Liste des utilisateur qui sont des co-auteur
-            $coauteur = (new PermissionsRepository())->getListePermissionCoAuteurParReponse($reponse->getIdReponse());
-            $coauteurStr = '';
-            foreach ($coauteur as $item){
-                $coauteurStr = $coauteurStr . ", " . (new UtilisateurRepository())->select($item->getIdUtilisateur())->getMail();
-            }
-            $coauteurStr = substr($coauteurStr, 2);
-            self::afficheVue('view.php', ['pagetitle' => "VoteIt - Modifier une réponse", 'cheminVueBody' => "reponses/coauteur-update.php", 'reponse' => $reponse, 'reponseSection' => $reponseSection]);
-        }else {
-            ControllerErreur::erreurCodeErreur('RC-2');
-        }
-    }
-    public static function updatedcoauteur() {
-        if(isset($_POST['idReponse']) AND isset($_POST['nbSection']) AND isset($_POST['idQuestion'])){
-
-            for($i=1; $i<$_POST['nbSection']+1; $i++){
-                $modelSection = new ReponseSection($_POST['idSection'.$i], $_POST['idReponse'], $_POST['texteSection'.$i]);
-                (new ReponseSectionRepository())->updateReponseSection($modelSection);
-            }
-
-            MessageFlash::ajouter("info","Réponse mise à jour.");
-            header("Location: frontController.php?controller=questions&action=see&idQuestion=".$_POST['idQuestion']);
-            exit();
-        }else {
-            header("Location: frontController.php?controller=questions&action=update&idQuestion=".$_POST['idQuestion']);
-            exit();
         }
     }
 
