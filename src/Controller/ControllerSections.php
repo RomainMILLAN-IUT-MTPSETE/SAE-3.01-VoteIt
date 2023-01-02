@@ -36,7 +36,7 @@ class ControllerSections{
         if(isset($_POST['nbSections']) AND isset($_POST['idQuestion']) AND isset($_POST['section1']) and isset($_POST['description1'])){
             $nbSections = $_POST['nbSections'];
             for($i=1; $i<$nbSections+1; $i++){
-                $idSection = ((new SectionRepository())->getIdQuestionMax())+1;
+                $idSection = ((new SectionRepository())->getIdSectionMax())+1;
                 $idQuestion = $_POST['idQuestion'];
                 $sectionName = 'section'.$i;
                 $descriptionName = 'description'.$i;

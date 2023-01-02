@@ -17,6 +17,12 @@ class VoteRepository{
         return new Vote($objetFormatTableau['idQuestion'], $objetFormatTableau['idReponse'], $objetFormatTableau['idUtilisateur']);
     }
 
+    /**
+     * Retourne le status de vote pour une question et un utilisateur
+     * @param $idQuestion
+     * @param $idUtilisateur
+     * @return bool
+     */
     public function stateVote($idQuestion, $idUtilisateur): bool{
         $pdo = Model::getPdo();
         $sql = " SELECT COUNT(*) as nbVote FROM " .  static::getNomTable() . " WHERE idQuestion=:idQuestion AND idUtilisateur=:idUtilisateur";
@@ -43,6 +49,11 @@ class VoteRepository{
         return $res;
     }
 
+    /**
+     * Permet de voter pour l'utilisateur courant
+     * @param $reponse
+     * @return void
+     */
     public function vote($reponse){
         //USERCHANGE
         if($this->stateVote($reponse->getIdQuestion(), ConnexionUtilisateur::getLoginUtilisateurConnecte())){
@@ -62,6 +73,11 @@ class VoteRepository{
         }
     }
 
+    /**
+     * Retourne le nombre de vote pour une réponse
+     * @param $idReponse
+     * @return mixed
+     */
     public static function getNbVoteForReponse($idReponse){
         $pdo = Model::getPdo();
         $sql = " SELECT COUNT(*) as nbVote FROM " .  (new VoteRepository())->getNomTable() . " WHERE idReponse=:idReponse";
