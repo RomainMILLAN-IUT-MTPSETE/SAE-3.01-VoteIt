@@ -37,6 +37,11 @@ class Permissions extends AbstractDataObject{
         );
     }
 
+
+
+
+
+    //GETTER & SETTER
     /**
      * @return String
      */

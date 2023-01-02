@@ -2,8 +2,9 @@
 
 namespace App\VoteIt\Model\DataObject;
 
-class Categorie extends AbstractDataObject{
-    private String $nomCategorie;
+class Categorie extends AbstractDataObject
+{
+    private string $nomCategorie;
 
     /**
      * @param String $nomCategorie
@@ -12,7 +13,6 @@ class Categorie extends AbstractDataObject{
     {
         $this->nomCategorie = $nomCategorie;
     }
-
 
     public function formatTableau(): array
     {
@@ -23,6 +23,9 @@ class Categorie extends AbstractDataObject{
 
 
 
+
+
+    //GETTER & SETTER
     /**
      * @return String
      */

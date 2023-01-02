@@ -2,11 +2,12 @@
 
 namespace App\VoteIt\Model\DataObject;
 
-class Reponse extends AbstractDataObject{
-    private String $idReponse;
-    private String $idQuestion;
-    private String $titreReponse;
-    private String $autheurId;
+class Reponse extends AbstractDataObject
+{
+    private string $idReponse;
+    private string $idQuestion;
+    private string $titreReponse;
+    private string $autheurId;
 
     /**
      * @param String $idReponse
@@ -22,7 +23,8 @@ class Reponse extends AbstractDataObject{
     }
 
 
-    public function formatTableau(): array{
+    public function formatTableau(): array
+    {
         return array(
             "idReponse" => $this->getIdReponse(),
             "idQuestion" => $this->getIdQuestion(),
@@ -34,8 +36,8 @@ class Reponse extends AbstractDataObject{
 
 
 
-    //GETTER AND SETTER
 
+    //GETTER AND SETTER
     /**
      * @return String
      */
@@ -99,9 +101,6 @@ class Reponse extends AbstractDataObject{
     {
         $this->titreReponse = $titreReponse;
     }
-
-
-
 
 
 }

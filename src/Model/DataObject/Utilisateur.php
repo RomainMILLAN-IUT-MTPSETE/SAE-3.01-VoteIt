@@ -1,17 +1,19 @@
 <?php
+
 namespace App\VoteIt\Model\DataObject;
 
-class Utilisateur extends AbstractDataObject {
-    private String $identifiant;
-    private String $motDePasse;
-    private String $nom;
-    private String $prenom;
-    private String $dateNaissance;
-    private String $iconeLink;
-    private String $mail;
-    private String $mailAValider;
-    private String $nonce;
-    private String $grade;
+class Utilisateur extends AbstractDataObject
+{
+    private string $identifiant;
+    private string $motDePasse;
+    private string $nom;
+    private string $prenom;
+    private string $dateNaissance;
+    private string $iconeLink;
+    private string $mail;
+    private string $mailAValider;
+    private string $nonce;
+    private string $grade;
 
     /**
      * @param String $identifiant
@@ -53,6 +55,10 @@ class Utilisateur extends AbstractDataObject {
             );
         }
     }
+
+
+
+
 
 
     //GETTER & SETTER

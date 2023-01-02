@@ -1,15 +1,17 @@
 <?php
+
 namespace App\VoteIt\Model\DataObject;
 
-class Question extends AbstractDataObject {
-    private String $idQuestion;
-    private String $autheur;
-    private String $titreQuestion;
-    private String $dateEcritureDebut;
-    private String $dateEcritureFin;
-    private String $dateVoteDebut;
-    private String $dateVoteFin;
-    private String $categorieQuestion;
+class Question extends AbstractDataObject
+{
+    private string $idQuestion;
+    private string $autheur;
+    private string $titreQuestion;
+    private string $dateEcritureDebut;
+    private string $dateEcritureFin;
+    private string $dateVoteDebut;
+    private string $dateVoteFin;
+    private string $categorieQuestion;
     private bool $estVisible;
     private bool $estProposer;
 
@@ -55,6 +57,10 @@ class Question extends AbstractDataObject {
             "estProposer" => $this->isEstProposer(),
         );
     }
+
+
+
+
 
     //GETTER SETTERS
     /**
@@ -186,22 +192,23 @@ class Question extends AbstractDataObject {
     }
 
 
-
-
-
-
-
-
-    public function getDateEcritureDebutFR(){
+    public function getDateEcritureDebutFR()
+    {
         return date_format(date_create($this->dateEcritureDebut), 'd/m/Y');
     }
-    public function getDateEcritureFinFR(){
+
+    public function getDateEcritureFinFR()
+    {
         return date_format(date_create($this->dateEcritureFin), 'd/m/Y');
     }
-    public function getDateVoteDebutFR(){
+
+    public function getDateVoteDebutFR()
+    {
         return date_format(date_create($this->dateVoteDebut), 'd/m/Y');
     }
-    public function getDateVoteFinFR(){
+
+    public function getDateVoteFinFR()
+    {
         return date_format(date_create($this->dateVoteFin), 'd/m/Y');
     }
 
