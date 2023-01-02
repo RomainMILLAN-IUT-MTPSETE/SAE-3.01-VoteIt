@@ -73,8 +73,11 @@
     </section>
     <section class="dashboard-question-content">
         <div class="question-tab-to-proposer">
-            <table>
-                <thead>
+            <?php
+            if(count($idQuestionListToProposer) != 0){
+                ?>
+                <table>
+                    <thead>
                     <th>#</th>
                     <th>Autheur</th>
                     <th>Titre</th>
@@ -84,8 +87,8 @@
                     <th>Vote début</th>
                     <th>Vote fin</th>
                     <th>Action</th>
-                </thead>
-                <tbody>
+                    </thead>
+                    <tbody>
                     <?php
                     foreach ($idQuestionListToProposer as $item){
                         $question = (new QuestionsRepository())->select($item);
@@ -103,8 +106,11 @@
                         <?php
                     }
                     ?>
-                </tbody>
-            </table>
+                    </tbody>
+                </table>
+                <?php
+            }
+            ?>
         </div>
     </section>
 </section>
