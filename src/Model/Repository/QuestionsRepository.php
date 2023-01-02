@@ -149,6 +149,7 @@ class QuestionsRepository extends AbstractRepository {
             return false;
         }
     }
+
     public function selectAllQuestionVisible(){
         $pdo = Model::getPdo();
         $query = "SELECT * FROM ".$this->getNomTable()." WHERE estVisible=1 AND estProposer=0;";
@@ -160,6 +161,7 @@ class QuestionsRepository extends AbstractRepository {
         return $tab;
 
     }
+
     public function allIdQuestion(): ?array{
         try {
             $pdo = Model::getPdo();
@@ -222,6 +224,27 @@ class QuestionsRepository extends AbstractRepository {
         }
 
         return $resultat;
+    }
+
+    public function getAllIdQuestionToProposer(): ?array{
+        try {
+            $pdo = Model::getPdo();
+            $sql = "SELECT " . $this->getNomClePrimaire() . " FROM " . $this->getNomTable() . " WHERE estProposer=1 ORDER BY " . $this->getNomClePrimaire();
+
+            $pdoStatement = $pdo->query($sql);
+
+            $tab = [];
+
+            foreach ($pdoStatement as $tableauSelecter) {
+                $tab[] = $tableauSelecter[0];
+            }
+
+            return $tab;
+
+        }catch (PDOException $exception) {
+            echo $exception->getMessage();
+            return null;
+        }
     }
 
 }

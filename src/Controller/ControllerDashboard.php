@@ -4,6 +4,7 @@ namespace App\VoteIt\Controller;
 
 use App\VoteIt\Lib\ConnexionUtilisateur;
 use App\VoteIt\Lib\MessageFlash;
+use App\VoteIt\Model\Repository\QuestionsRepository;
 use App\VoteIt\Model\Repository\UtilisateurRepository;
 use http\Message;
 
@@ -16,7 +17,9 @@ class ControllerDashboard{
     public static function dashboard(){
         if(strcmp((new UtilisateurRepository())->select(ConnexionUtilisateur::getLoginUtilisateurConnecte())->getGrade(), "Administrateur") == 0){
             $usersList = (new UtilisateurRepository())->selectAll();
-            self::afficheVue('view.php', ['pagetitle' => "VoteIt - Dashboard", 'cheminVueBody' => "dashboard/dashboard.php", "usersList" => $usersList]);
+            $idQuestionListToProposer = (new QuestionsRepository())->getAllIdQuestionToProposer();
+
+            self::afficheVue('view.php', ['pagetitle' => "VoteIt - Dashboard", 'cheminVueBody' => "dashboard/dashboard.php", "usersList" => $usersList, 'idQuestionListToProposer' => $idQuestionListToProposer]);
         }else {
             header("Location: frontController.php");
             exit();

@@ -71,4 +71,39 @@
             </div>
         </div>
     </section>
+    <section class="dashboard-question-content">
+        <div class="question-tab-to-proposer">
+            <table>
+                <thead>
+                    <th>id</th>
+                    <th>Autheur</th>
+                    <th>Titre</th>
+                    <th>Categorie</th>
+                    <th>Ecriture début</th>
+                    <th>Ecriture fin</th>
+                    <th>Vote début</th>
+                    <th>Vote fin</th>
+                </thead>
+                <tbody>
+                    <?php
+                    foreach ($idQuestionListToProposer as $item){
+                        $question = (new QuestionsRepository())->select($item);
+                        ?>
+
+                        <th><?php echo($item); ?></th>
+                        <th><?php echo($question->getAutheur()) ?></th>
+                        <th><?php echo($question->getTitreQuestion()) ?></th>
+                        <th><?php echo($question->getCategorieQuestion()) ?></th>
+                        <th><?php echo($question->getDateEcritureDebutFR()) ?></th>
+                        <th><?php echo($question->getDateEcritureFinFR()) ?></th>
+                        <th><?php echo($question->getDateVoteDebutFR()) ?></th>
+                        <th><?php echo($question->getDateVoteFinFR()) ?></th>
+
+                        <?php
+                    }
+                    ?>
+                </tbody>
+            </table>
+        </div>
+    </section>
 </section>
