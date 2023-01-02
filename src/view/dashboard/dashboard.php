@@ -48,10 +48,9 @@
         </div>
         <div class="number--container">
             <div class="number">
-                <h2><?php echo((new \App\VoteIt\Model\Repository\QuestionsRepository())->countNbQuestionActive()) ?></h2>
+                <h2><?php echo($nbQuestionsActives) ?></h2>
                 <?php
-                use App\VoteIt\Model\Repository\QuestionsRepository;
-                if((new QuestionsRepository())->countNbQuestionActive()>0){
+                if($nbQuestionsActives>0){
                     echo '<p>Questions actives</p>';
                 }else{
                     echo '<p>Question active</p>';
@@ -59,10 +58,9 @@
                 ?>
             </div>
             <div class="number">
-                <h2><?php echo((new \App\VoteIt\Model\Repository\UtilisateurRepository())->countNbAccount()); ?></h2>
-                <?php 
-                use App\VoteIt\Model\Repository\UtilisateurRepository;
-                if((new UtilisateurRepository())->countNbAccount()>0){
+                <h2><?php echo($nbAccounts); ?></h2>
+                <?php
+                if($nbAccounts>0){
                     echo '<p>Réponses actives</p>';
                 }else{
                     echo '<p>Réponse active</p>';

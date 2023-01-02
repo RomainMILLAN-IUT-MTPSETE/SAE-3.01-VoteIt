@@ -18,8 +18,10 @@ class ControllerDashboard{
         if(strcmp((new UtilisateurRepository())->select(ConnexionUtilisateur::getLoginUtilisateurConnecte())->getGrade(), "Administrateur") == 0){
             $usersList = (new UtilisateurRepository())->selectAll();
             $idQuestionListToProposer = (new QuestionsRepository())->getAllIdQuestionToProposer();
+            $nbQuestionActives = (new QuestionsRepository())->countNbQuestionActive();
+            $nbAccounts = (new UtilisateurRepository())->countNbAccount();
 
-            self::afficheVue('view.php', ['pagetitle' => "VoteIt - Dashboard", 'cheminVueBody' => "dashboard/dashboard.php", "usersList" => $usersList, 'idQuestionListToProposer' => $idQuestionListToProposer]);
+            self::afficheVue('view.php', ['pagetitle' => "VoteIt - Dashboard", 'cheminVueBody' => "dashboard/dashboard.php", "usersList" => $usersList, 'idQuestionListToProposer' => $idQuestionListToProposer, 'nbQuestionsActives' => $nbQuestionActives, 'nbAccounts' => $nbAccounts]);
         }else {
             header("Location: frontController.php");
             exit();

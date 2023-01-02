@@ -11,11 +11,11 @@
         <div>
             <label for="password">Mot de passe</label>
             <input type="password" name="password" id="password" placeholder="********" required/>
-            <a href="#"><p id="passwordlosse">Mot de passe oublié ?</p></a>
+            <a href="frontController.php?controller=profil&action=mdpoublie"><p id="passwordlosse">Mot de passe oublié ?</p></a>
         </div>
         <div id="checkbox-div">
             <input type="checkbox" name="remember" id="remember">
-            <a href="frontController.php?controller=profil&action=mdpoublie"><p>Se souvenir de moi ?</p></a>
+            <a href="#"><p>Se souvenir de moi ?</p></a>
         </div>
 
 

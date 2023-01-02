@@ -35,13 +35,37 @@ class ControllerQuestions{
         //Si idQuestion existe
         if(isset($_GET['idQuestion'])){
             $idQuestion = $_GET['idQuestion'];
-            //Recuperation des infos de la BD
             $question = (new QuestionsRepository())->select($idQuestion);
-            //Recuperation des réponses de la question dans la BD
             $reponses = (new ReponsesRepository())->selectAllReponeByQuestionId($idQuestion);
-            //Recuperation des sections de la question dans la BD
             $sections = (new SectionRepository())->selectAllByIdQuestion($idQuestion);
-            self::afficheVue('view.php', ['pagetitle' => "VoteIt - Questions", 'cheminVueBody' => "questions/see.php", "question" => $question, "reponses" => $reponses, "sections" => $sections]);
+            $auteur = (new \App\VoteIt\Model\Repository\UtilisateurRepository())->select($question->getAutheur());
+            $allIdQuestion = (new QuestionsRepository())->allIdQuestion();
+
+            $userEstReponsableQuestion = (new PermissionsRepository())->getPermissionReponsableDePropositionParIdUtilisateurEtIdQuestion($idQuestion, ConnexionUtilisateur::getLoginUtilisateurConnecte());
+            $periodeReponse =  false;
+            $periodeVote = false;
+            $nbVoteMax = (new ReponsesRepository())->getNbVoteMax($question->getIdQuestion());
+
+            $dateNow = date("Y-m-d");
+            if ($question->getDateEcritureDebut() <= $dateNow && $dateNow <= $question->getDateEcritureFin()){
+                $periodeReponse = true;
+                $periodeVote = false;
+            }else if($question->getDateEcritureFin() <= $dateNow && $question->getDateVoteDebut() <= $dateNow && $dateNow <= $question->getDateVoteFin()){
+                $periodeReponse = false;
+                $periodeVote = true;
+            }
+
+            $canModifOrDelete = false;
+            $user = null;
+            if (ConnexionUtilisateur::estConnecte()) {
+                $user = (new UtilisateurRepository())->select(ConnexionUtilisateur::getLoginUtilisateurConnecte());
+
+                if((strcmp($question->getAutheur(), $user->getIdentifiant()) == 0) or (strcmp($user->getGrade(), "Administrateur") == 0)){
+                    $canModifOrDelete = true;
+                }
+            }
+
+            self::afficheVue('view.php', ['pagetitle' => "VoteIt - Questions", 'cheminVueBody' => "questions/see.php", "question" => $question, "reponses" => $reponses, "sections" => $sections, 'estReponsable' => $userEstReponsableQuestion, 'periodeReponse' => $periodeReponse, 'periodeVote' => $periodeVote, 'user' => $user, 'canModifOrDelete' => $canModifOrDelete, 'auteur' => $auteur, 'nbVoteMax' => $nbVoteMax, 'allIdQuestion' => $allIdQuestion]);
         }else {
             MessageFlash::ajouter('warning', "Identifiant question manquant");
             header("Location: frontController.php?controller=questions&action=home");
@@ -64,7 +88,9 @@ class ControllerQuestions{
         $peutProposerQuestion = self::getPeutProposerQuestion();
         $peutPoserQuestion = self::getPeutPoserQuestion();
 
-        self::afficheVue('view.php', ['pagetitle' => "VoteIt - Creation d'une question", 'cheminVueBody' => "questions/create.php", 'categories' => $categories, 'poserQuestion' => $peutPoserQuestion, 'proposerQuestion' => $peutProposerQuestion]);
+        $idAuteur = ConnexionUtilisateur::getLoginUtilisateurConnecte();
+
+        self::afficheVue('view.php', ['pagetitle' => "VoteIt - Creation d'une question", 'cheminVueBody' => "questions/create.php", 'categories' => $categories, 'poserQuestion' => $peutPoserQuestion, 'proposerQuestion' => $peutProposerQuestion, 'idAuteur' => $idAuteur]);
     }
 
     public static function update() {

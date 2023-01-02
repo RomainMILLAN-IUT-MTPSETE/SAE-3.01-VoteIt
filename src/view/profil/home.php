@@ -23,7 +23,7 @@
         </div>
         <div>
             <h2 class="souligner">Grade :</h2>
-            <p class="info-user"><?php echo($user->getGrade()) ?> </p>
+            <p class="info-user"><?php echo(htmlspecialchars($user->getGrade())) ?> </p>
         </div>
     </div>
     <h2 class="souligner">E-mail :</h2>
