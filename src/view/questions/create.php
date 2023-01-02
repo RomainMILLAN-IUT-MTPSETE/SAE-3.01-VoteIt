@@ -49,7 +49,20 @@
             <input type="hidden" name="controller" value="questions">
             <input type="hidden" name="action" value="created">
             <input type="text" name="autheur" id="autheur" placeholder="JohnDoe10" value="<?php echo(\App\VoteIt\Lib\ConnexionUtilisateur::getLoginUtilisateurConnecte())?>" hidden readonly/>
-            <input type="submit" value="Poser la question">
+
+            <?php
+            if($poserQuestion){
+                ?>
+                <input type="hidden" name="poserQuestion" value="<?php echo($poserQuestion); ?>">
+                <input type="submit" value="Poser la question">
+                <?php
+            }else {
+                ?>
+                <input type="hidden" name="proposerQuestion" value="<?php echo($proposerQuestion); ?>">
+                <input type="submit" value="Proposer la question">
+                <?php
+            }
+            ?>
         </div>
     </div>
 </form>

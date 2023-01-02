@@ -11,6 +11,7 @@ class Question extends AbstractDataObject {
     private String $dateVoteFin;
     private String $categorieQuestion;
     private bool $estVisible;
+    private bool $estProposer;
 
     /**
      * @param String $idQuestion
@@ -21,9 +22,10 @@ class Question extends AbstractDataObject {
      * @param String $dateVoteDebut
      * @param String $dateVoteFin
      * @param String $categorieQuestion
-     * @param String $estVisible
+     * @param bool $estVisible
+     * @param bool $estProposer
      */
-    public function __construct(string $idQuestion, string $autheur, string $titreQuestion, string $dateEcritureDebut, string $dateEcritureFin, string $dateVoteDebut, string $dateVoteFin, string $categorieQuestion, string $estVisible)
+    public function __construct(string $idQuestion, string $autheur, string $titreQuestion, string $dateEcritureDebut, string $dateEcritureFin, string $dateVoteDebut, string $dateVoteFin, string $categorieQuestion, bool $estVisible, bool $estProposer)
     {
         $this->idQuestion = $idQuestion;
         $this->autheur = $autheur;
@@ -34,6 +36,7 @@ class Question extends AbstractDataObject {
         $this->dateVoteFin = $dateVoteFin;
         $this->categorieQuestion = $categorieQuestion;
         $this->estVisible = $estVisible;
+        $this->estProposer = $estProposer;
     }
 
 
@@ -49,6 +52,7 @@ class Question extends AbstractDataObject {
             "dateVoteFin" => $this->getDateVoteFin(),
             "categorieQuestion" => $this->getCategorieQuestion(),
             "estVisible" => $this->isEstVisible(),
+            "estProposer" => $this->isEstProposer(),
         );
     }
 
@@ -164,6 +168,16 @@ class Question extends AbstractDataObject {
     {
         $this->estVisible = $estVisible;
     }
+
+    /**
+     * @return bool
+     */
+    public function isEstProposer(): bool
+    {
+        return $this->estProposer;
+    }
+
+
 
 
 

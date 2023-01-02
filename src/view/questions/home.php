@@ -1,14 +1,10 @@
 <link rel="stylesheet" href="css/Questions/questions-home.css" type="text/css" >
     <section class="button-top">
         <?php
-        use \App\VoteIt\Lib\ConnexionUtilisateur;
-        if(ConnexionUtilisateur::estConnecte()){
-        $user = (new \App\VoteIt\Model\Repository\UtilisateurRepository())->select(ConnexionUtilisateur::getLoginUtilisateurConnecte());
-
-            if((strcmp($user->getGrade(), "Organisateur") == 0) OR (strcmp($user->getGrade(), "Administrateur") == 0)){
-                ?><a href="frontController.php?controller=questions&action=create"><button id="buttonTop">Proposer une Question <img id="imgButtonTop" src="assets/questions/home/button-newquestion.png" alt="Icone de nouvelle question"></button></a><?php
-            }
-
+        if($peutPoserQuestion){
+            ?><a href="frontController.php?controller=questions&action=create"><button id="buttonTop">Poser une Question <img id="imgButtonTop" src="assets/questions/home/button-newquestion.png" alt="Icone de nouvelle question"></button></a><?php
+        }else if($peutProposerQuestion){
+            ?><a href="frontController.php?controller=questions&action=create"><button id="buttonTop">Proposer une Question <img id="imgButtonTop" src="assets/questions/home/button-newquestion.png" alt="Icone de nouvelle question"></button></a><?php
         }
         ?>
     </section>

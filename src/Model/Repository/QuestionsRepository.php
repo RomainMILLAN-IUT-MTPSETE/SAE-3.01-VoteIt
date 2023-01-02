@@ -15,10 +15,19 @@ class QuestionsRepository extends AbstractRepository {
     protected function construire(array $objetFormatTableau)
     {
         if($objetFormatTableau['estVisible'] == 1){
-            return new Question($objetFormatTableau['idQuestion'], $objetFormatTableau['autheur'], $objetFormatTableau['titreQuestion'], $objetFormatTableau['ecritureDateDebut'], $objetFormatTableau['ecritureDateFin'], $objetFormatTableau['voteDateDebut'], $objetFormatTableau['voteDateFin'], $objetFormatTableau['categorieQuestion'], true);
+            $estVisible = true;
         }else {
-            return new Question($objetFormatTableau['idQuestion'], $objetFormatTableau['autheur'], $objetFormatTableau['titreQuestion'], $objetFormatTableau['ecritureDateDebut'], $objetFormatTableau['ecritureDateFin'], $objetFormatTableau['voteDateDebut'], $objetFormatTableau['voteDateFin'], $objetFormatTableau['categorieQuestion'], false);
+            $estVisible = false;
         }
+
+        if($objetFormatTableau['estProposer'] == 1){
+            $estProposer = true;
+        }else {
+            $estProposer = false;
+        }
+
+        return new Question($objetFormatTableau['idQuestion'], $objetFormatTableau['autheur'], $objetFormatTableau['titreQuestion'], $objetFormatTableau['ecritureDateDebut'], $objetFormatTableau['ecritureDateFin'], $objetFormatTableau['voteDateDebut'], $objetFormatTableau['voteDateFin'], $objetFormatTableau['categorieQuestion'], $estVisible, $estProposer);
+
     }
 
     protected function getNomClePrimaire(): string
@@ -36,12 +45,13 @@ class QuestionsRepository extends AbstractRepository {
             5 => 'voteDateDebut',
             6 => 'voteDateFin',
             7 => 'categorieQuestion',
-            10 => 'estVisible'];
+            10 => 'estVisible',
+            11 => 'estProposer'];
     }
 
     public function recherche($search){
         $pdo = Model::getPdo();
-        $query = "SELECT * FROM ".$this->getNomTable()." WHERE titreQuestion LIKE '%".$search."%' OR categorieQuestion LIKE '%".$search."%' OR autheur LIKE '%".$search."%';";
+        $query = "SELECT * FROM ".$this->getNomTable()." WHERE titreQuestion LIKE '%".$search."%' OR categorieQuestion LIKE '%".$search."%' OR autheur LIKE '%".$search."%' AND estProposer='0';";
         $pdoStatement = $pdo->query($query);
 
         $tab = [];
@@ -74,9 +84,9 @@ class QuestionsRepository extends AbstractRepository {
         return $resultat;
     }
 
-    public function createQuestion($idQuestion, $autheur, $titre, $ecritureDebut, $ecritureFin, $voteDebut, $voteFin, $categorie, $estVisible){
+    public function createQuestion($idQuestion, $autheur, $titre, $ecritureDebut, $ecritureFin, $voteDebut, $voteFin, $categorie, $estVisible, $estProposer){
         $pdo = Model::getPdo();
-        $query = "INSERT INTO ".$this->getNomTable()."(idQuestion, autheur, titreQuestion, ecritureDateDebut, ecritureDateFin, voteDateDebut, voteDateFin, categorieQuestion, estVisible) VALUES(:idQuestion, :autheur, :titreQuestion, :ecritureDateDebut, :ecritureDateFin, :voteDateDebut, :voteDateFin, :categorieQuestion, :estVisible);";
+        $query = "INSERT INTO ".$this->getNomTable()."(idQuestion, autheur, titreQuestion, ecritureDateDebut, ecritureDateFin, voteDateDebut, voteDateFin, categorieQuestion, estVisible, estProposer) VALUES(:idQuestion, :autheur, :titreQuestion, :ecritureDateDebut, :ecritureDateFin, :voteDateDebut, :voteDateFin, :categorieQuestion, :estVisible, :estProposer);";
         $pdoStatement = $pdo->prepare($query);
 
         if($estVisible == true){
@@ -94,7 +104,8 @@ class QuestionsRepository extends AbstractRepository {
             'voteDateDebut' => $voteDebut,
             'voteDateFin' => $voteFin,
             'categorieQuestion' => $categorie,
-            'estVisible' => $estVisible];
+            'estVisible' => $estVisible,
+            'estProposer' => $estProposer];
 
         $pdoStatement->execute($values);
     }
@@ -102,7 +113,7 @@ class QuestionsRepository extends AbstractRepository {
     public function updateQuestion(Question $question){
         try {
             $pdo = Model::getPdo();
-            $sql = "UPDATE " . $this->getNomTable() . " SET autheur=:autheur, titreQuestion=:titreQuestion, ecritureDateDebut=:ecritureDateDebut, ecritureDateFin=:ecritureDateFin, voteDateDebut=:voteDateDebut, voteDateFin=:voteDateFin, categorieQuestion=:categorieQuestion, estVisible=:estVisible WHERE idQuestion=:idQuestion";
+            $sql = "UPDATE " . $this->getNomTable() . " SET autheur=:autheur, titreQuestion=:titreQuestion, ecritureDateDebut=:ecritureDateDebut, ecritureDateFin=:ecritureDateFin, voteDateDebut=:voteDateDebut, voteDateFin=:voteDateFin, categorieQuestion=:categorieQuestion, estVisible=:estVisible, estProposer=:estProposer WHERE idQuestion=:idQuestion";
 
             $pdoStatement = $pdo->prepare($sql);
 
@@ -110,6 +121,12 @@ class QuestionsRepository extends AbstractRepository {
                 $estVisible = 1;
             }else {
                 $estVisible = 0;
+            }
+
+            if($question->isEstProposer() == true){
+                $estProposer = 1;
+            }else {
+                $estProposer = 0;
             }
 
             $values = [
@@ -121,7 +138,8 @@ class QuestionsRepository extends AbstractRepository {
                 'voteDateDebut' => $question->getDateVoteDebut(),
                 'voteDateFin' => $question->getDateVoteFin(),
                 'categorieQuestion' => $question->getCategorieQuestion(),
-                'estVisible' => $estVisible];
+                'estVisible' => $estVisible,
+                'estProposer' => $estProposer];
 
             $pdoStatement->execute($values);
 
@@ -130,6 +148,17 @@ class QuestionsRepository extends AbstractRepository {
             echo $exception->getMessage();
             return false;
         }
+    }
+    public function selectAllQuestionVisible(){
+        $pdo = Model::getPdo();
+        $query = "SELECT * FROM ".$this->getNomTable()." WHERE estVisible=1 AND estProposer=0;";
+        $pdoStatement = $pdo->query($query);
+        $tab = [];
+        foreach ($pdoStatement as $tableauSelecter) {
+            $tab[] = $this->construire($tableauSelecter);
+        }
+        return $tab;
+
     }
     public function allIdQuestion(): ?array{
         try {

@@ -21,19 +21,6 @@ abstract class AbstractRepository{
 
     }
 
-
-    public function selectAllQuestionVisible(){
-        $pdo = Model::getPdo();
-        $query = "SELECT * FROM ".$this->getNomTable()." WHERE estVisible=1;";
-        $pdoStatement = $pdo->query($query);
-        $tab = [];
-        foreach ($pdoStatement as $tableauSelecter) {
-            $tab[] = $this->construire($tableauSelecter);
-        }
-        return $tab;
-
-    }
-
     public function select(string $valuePrimaire){
 
         $sql = " SELECT * FROM " .  static::getNomTable() . " WHERE " .  static::getNomClePrimaire() . "=:valuePrimaire";
