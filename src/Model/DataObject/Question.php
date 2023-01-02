@@ -177,6 +177,15 @@ class Question extends AbstractDataObject {
         return $this->estProposer;
     }
 
+    /**
+     * @param bool $estProposer
+     */
+    public function setEstProposer(bool $estProposer): void
+    {
+        $this->estProposer = $estProposer;
+    }
+
+
 
 
 

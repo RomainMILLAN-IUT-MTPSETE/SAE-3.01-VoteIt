@@ -80,3 +80,20 @@
     text-align: center;
     line-height: 15px;
 }
+
+
+.question-tab-to-proposer{
+    width: 95vw;
+    display: block;
+    margin: auto;
+}
+.question-tab-to-proposer table {
+    width: 100%;
+    font-size: 20px;
+}
+.question-tab-to-proposer table thead th {
+    font-weight: bold;
+}
+.question-tab-to-proposer table img {
+    height: 20px;
+}

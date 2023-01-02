@@ -75,7 +75,7 @@
         <div class="question-tab-to-proposer">
             <table>
                 <thead>
-                    <th>id</th>
+                    <th>#</th>
                     <th>Autheur</th>
                     <th>Titre</th>
                     <th>Categorie</th>
@@ -83,6 +83,7 @@
                     <th>Ecriture fin</th>
                     <th>Vote début</th>
                     <th>Vote fin</th>
+                    <th>Action</th>
                 </thead>
                 <tbody>
                     <?php
@@ -98,7 +99,7 @@
                         <th><?php echo($question->getDateEcritureFinFR()) ?></th>
                         <th><?php echo($question->getDateVoteDebutFR()) ?></th>
                         <th><?php echo($question->getDateVoteFinFR()) ?></th>
-
+                        <th><a href="frontController.php?controller=dashboard&action=changeProposerQuestion&id=<?php echo($item); ?>"><img src="assets/dashboard/edit.png" alt="Icone d'édition pour rendre un question visible"></a></th>
                         <?php
                     }
                     ?>
