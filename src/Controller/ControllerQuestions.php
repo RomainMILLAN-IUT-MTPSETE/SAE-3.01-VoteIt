@@ -152,8 +152,15 @@ class ControllerQuestions{
                     $responsableReponseArgs = explode(", ", $responsableReponse);
                     //POUR TOUS LES UTILISATEURS
                     foreach ($responsableReponseArgs as $item){
-                        //J'ENTRE LEUR NOUVELLE PERMISSION
-                        (new PermissionsRepository())->addQuestionPermission((new UtilisateurRepository())->selectUserByMail($item)->getIdentifiant(), $idQuestion, "ResponsableDeProposition");
+                        //VERIFICATION MAIL UTILISATEUR
+                        $user = (new UtilisateurRepository())->selectUserByMail($item);
+
+                        if($user != null){
+                            //J'ENTRE LEUR NOUVELLE PERMISSION
+                            (new PermissionsRepository())->addQuestionPermission($user->getIdentifiant(), $idQuestion, "ResponsableDeProposition");
+                        }else {
+                            MessageFlash::ajouter("warning", "Utilisateur responsable non trouvé dans la base de donné, verifier l'email");
+                        }
                     }
                 }
 
@@ -165,9 +172,17 @@ class ControllerQuestions{
                     $votantArgs = explode(', ', $votant);
                     //POUR TOUS LES ARGUMENTS
                     foreach ($votantArgs as $item){
-                        //J'ENTRE LA PERMISSION DANS LA BDD
-                        (new PermissionsRepository())->addQuestionPermission((new UtilisateurRepository())->selectUserByMail($item)->getIdentifiant(), $idQuestion, "Votant");
+                        //VERIFICATION MAIL UTILISATEUR
+                        $user = (new UtilisateurRepository())->selectUserByMail($item);
+
+                        if($user != null){
+                            //J'ENTRE LEUR NOUVELLE PERMISSION
+                            (new PermissionsRepository())->addQuestionPermission($user->getIdentifiant(), $idQuestion, "Votant");
+                        }else {
+                            MessageFlash::ajouter("warning", "Utilisateur votant non trouvé dans la base de donné, verifier l'email");
+                        }
                     }
+
                 }
 
                 header("Location: frontController.php?controller=sections&action=createSectionForCreateQuestion&idQuestion=".$idQuestion."&nbSections=".$nbSection);

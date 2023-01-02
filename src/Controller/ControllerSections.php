@@ -46,7 +46,7 @@ class ControllerSections{
                 (new SectionRepository())->createSection($sectionTemp);
             }
 
-            MessageFlash::ajouter("success", "Ajout de la question n°" . $_POST['idQuestion'] . " réussi!");
+            MessageFlash::ajouter("success", "Ajout de la question réussi!");
             header("Location: frontController.php?controller=questions&action=home");
             exit();
         }else {
