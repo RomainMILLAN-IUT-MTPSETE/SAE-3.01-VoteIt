@@ -210,7 +210,7 @@ class ControllerQuestions{
                 header("Location: frontController.php?controller=questions&action=update&idQuestion=".$_POST['idQuestion']);
                 exit();
             }else {
-                $modelQuestion = new Question($_POST['idQuestion'],$_POST['autheur'],$_POST['titreQuestion'],$_POST['ecritureDateDebut'],$_POST['ecritureDateFin'],$_POST['voteDateDebut'],$_POST['voteDateFin'], $_POST['categorieQuestion'], true);
+                $modelQuestion = new Question($_POST['idQuestion'],$_POST['autheur'],$_POST['titreQuestion'],$_POST['ecritureDateDebut'],$_POST['ecritureDateFin'],$_POST['voteDateDebut'],$_POST['voteDateFin'], $_POST['categorieQuestion'], true,false);
                 (new QuestionsRepository())->updateQuestion($modelQuestion);
 
                 $sectionId = (new SectionRepository())->selectAllByIdQuestion($_POST['idQuestion']);
@@ -233,8 +233,14 @@ class ControllerQuestions{
                     $responsableReponseArgs = explode(", ", $responsableReponse);
                     //POUR TOUS LES UTILISATEURS
                     foreach ($responsableReponseArgs as $item){
-                        //J'ENTRE LEUR NOUVELLE PERMISSION
-                        (new PermissionsRepository())->addQuestionPermission((new UtilisateurRepository())->selectUserByMail($item)->getIdentifiant(), $_POST['idQuestion'], "ResponsableDeProposition");
+                        $user = (new UtilisateurRepository())->selectUserByMail($item);
+
+                        if($user != null){
+                            //J'ENTRE LEUR NOUVELLE PERMISSION
+                            (new PermissionsRepository())->addQuestionPermission($user->getIdentifiant(), $_POST['idQuestion'], "ResponsableDeProposition");
+                        }else {
+                            MessageFlash::ajouter("warning", "Utilisateur reponsable non trouvé dans la base de donné, verifier l'email");
+                        }
                     }
                 }
 
@@ -246,8 +252,14 @@ class ControllerQuestions{
                     $votantArgs = explode(', ', $votant);
                     //POUR TOUS LES ARGUMENTS
                     foreach ($votantArgs as $item){
-                        //J'ENTRE LA PERMISSION DANS LA BDD
-                        (new PermissionsRepository())->addQuestionPermission((new UtilisateurRepository())->selectUserByMail($item)->getIdentifiant(), $_POST['idQuestion'], "Votant");
+                        $user = (new UtilisateurRepository())->selectUserByMail($item);
+
+                        if($user != null){
+                            //J'ENTRE LA PERMISSION DANS LA BDD
+                            (new PermissionsRepository())->addQuestionPermission($user->getIdentifiant(), $_POST['idQuestion'], "Votant");
+                        }else {
+                            MessageFlash::ajouter("warning", "Utilisateur votant non trouvé dans la base de donné, verifier l'email");
+                        }
                     }
                 }
 
