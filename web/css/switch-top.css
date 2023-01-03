@@ -1,0 +1,29 @@
+.switch-top{
+    width: 100%;
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+}
+
+a{
+    text-decoration: none;
+    color: black;
+}
+
+.switch-top .switch-top-left {
+    margin-left: 15px;
+}
+
+.switch-top .switch-top-right {
+    margin-right: 15px;
+}
+
+.fullright{
+    margin-left:auto;
+    margin-right: 0;
+}
+
+.fullleft{
+    margin-right:auto;
+    margin-left: 0;
+}

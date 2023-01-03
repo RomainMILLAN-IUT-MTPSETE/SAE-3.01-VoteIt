@@ -6,7 +6,6 @@ use App\VoteIt\Model\DataObject\Categorie;
 
 class CategorieRepository extends AbstractRepository {
 
-
     protected function getNomTable(): string
     {
         return "vit_Categorie";

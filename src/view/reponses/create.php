@@ -1,18 +1,14 @@
 <link rel="stylesheet" href="css/formulaire.css">
 <form class="formulaire--container" action="frontController.php?controller=reponses&action=created" method="post">
     <div class="formulaire-template">
-        <h2 class="title">Créer une réponse</h2>
-        <div class="div-form-normal">
-            <label for="idQuestion">Identifiant Question</label>
-            <input type="number" name="idQuestion" id="idQuestion" placeholder="11" value="<?php echo(htmlspecialchars($_GET['idQuestion'])); ?>" readonly/>
-        </div>
-        <div class="div-form-normal">
-            <label for="autheur">Auteur</label>
-            <input type="text" name="autheur" id="autheur" value="<?php echo(\App\VoteIt\Lib\ConnexionUtilisateur::getLoginUtilisateurConnecte()) ?>" placeholder="JohnDoe10" required/>
-        </div>
+        <h2 class="title">Création de la réponse</h2>
         <div class="div-form-normal">
             <label for="titreReponse">Titre de la réponse</label>
             <input type="text" name="titreReponse" id="titreReponse" placeholder="Titre de la réponse" required>
+        </div>
+        <div>
+            <label for="votant">Utilisateur(s) Co-Auteur(s)</label>
+            <input type="text" name="userCoAuteur" id="userCoAuteur" placeholder="johndoe10@gmail.com, xxx@xxx.fr"">
         </div>
         <div class="section-text--container">
             <?php
@@ -33,6 +29,8 @@
         </div>
         <div>
             <input type="hidden" name="nbSection" value="<?php echo(htmlspecialchars($i-1)); ?>">
+            <input type="number" name="idQuestion" id="idQuestion" placeholder="11" value="<?php echo(htmlspecialchars($_GET['idQuestion'])); ?>" hidden readonly/>
+            <input type="text" name="autheur" id="autheur" value="<?php echo(\App\VoteIt\Lib\ConnexionUtilisateur::getLoginUtilisateurConnecte()) ?>" placeholder="JohnDoe10" hidden required/>
             <input type="submit" value="Poser la question">
         </div>
     </div>

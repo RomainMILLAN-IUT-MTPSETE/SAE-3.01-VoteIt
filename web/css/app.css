@@ -75,3 +75,10 @@ body {
 .bolder {
   font-family: "Poppins Medium";
 }
+
+.red {
+  color: #a94442;
+}
+.green {
+  color: #3c763d;
+}

@@ -32,14 +32,19 @@ class UtilisateurRepository extends AbstractRepository {
             8 => 'nonce',
             9 => 'gradeUtilisateur'];
     }
-    
-    public static function selectUserByIdUser($idUser){
-        $sql = " SELECT * FROM vit_Utilisateurs WHERE idUtilisateur=:idUser";
+
+    /**
+     * Retourne un utilisateur par son mail
+     * @param $mail
+     * @return Utilisateur|null
+     */
+    public function selectUserByMail($mail): ?Utilisateur{
+        $sql = " SELECT * FROM vit_Utilisateurs WHERE mailUtilisateur=:mailUtilisateur";
         // Préparation de la requête
         $pdoStatement = Model::getPdo()->prepare($sql);
 
         $values = array(
-            "idUser" => $idUser,
+            "mailUtilisateur" => $mail,
             //nomdutag => valeur, ...
         );
         // On donne les valeurs et on exécute la requête
@@ -56,5 +61,27 @@ class UtilisateurRepository extends AbstractRepository {
         }
 
         return $res;
+    }
+
+    /*
+     * DASHBOARD
+     */
+    /**
+     * Retourne le nombre de compte
+     * @return int
+     */
+    public function countNbAccount(): int{
+        $pdo = Model::getPdo();
+        $query = "SELECT COUNT(idUtilisateur) as nbAccount FROM ".$this->getNomTable().";";
+        $pdoStatement = $pdo->query($query);
+        $resultatSQL = $pdoStatement->fetch();
+
+        $resultat = $resultatSQL['nbAccount'];
+
+        if($resultat == null){
+            $resultat = 0;
+        }
+
+        return $resultat;
     }
 }

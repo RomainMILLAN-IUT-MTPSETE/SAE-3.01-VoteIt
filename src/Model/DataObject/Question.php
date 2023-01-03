@@ -1,25 +1,33 @@
 <?php
+
 namespace App\VoteIt\Model\DataObject;
 
-class Question extends AbstractDataObject {
-    private String $idQuestion;
-    private String $autheur;
-    private String $titreQuestion;
-    private String $dateEcritureDebut;
-    private String $dateEcritureFin;
-    private String $dateVoteDebut;
-    private String $dateVoteFin;
-    private String $categorieQuestion;
+class Question extends AbstractDataObject
+{
+    private string $idQuestion;
+    private string $autheur;
+    private string $titreQuestion;
+    private string $dateEcritureDebut;
+    private string $dateEcritureFin;
+    private string $dateVoteDebut;
+    private string $dateVoteFin;
+    private string $categorieQuestion;
+    private bool $estVisible;
+    private bool $estProposer;
 
     /**
      * @param String $idQuestion
+     * @param String $autheur
      * @param String $titreQuestion
      * @param String $dateEcritureDebut
      * @param String $dateEcritureFin
      * @param String $dateVoteDebut
      * @param String $dateVoteFin
+     * @param String $categorieQuestion
+     * @param bool $estVisible
+     * @param bool $estProposer
      */
-    public function __construct(string $idQuestion, string $autheur, string $titreQuestion, string $dateEcritureDebut, string $dateEcritureFin, string $dateVoteDebut, string $dateVoteFin, string $categorieQuestion)
+    public function __construct(string $idQuestion, string $autheur, string $titreQuestion, string $dateEcritureDebut, string $dateEcritureFin, string $dateVoteDebut, string $dateVoteFin, string $categorieQuestion, bool $estVisible, bool $estProposer)
     {
         $this->idQuestion = $idQuestion;
         $this->autheur = $autheur;
@@ -29,6 +37,8 @@ class Question extends AbstractDataObject {
         $this->dateVoteDebut = $dateVoteDebut;
         $this->dateVoteFin = $dateVoteFin;
         $this->categorieQuestion = $categorieQuestion;
+        $this->estVisible = $estVisible;
+        $this->estProposer = $estProposer;
     }
 
 
@@ -43,8 +53,14 @@ class Question extends AbstractDataObject {
             "dateVoteDebut" => $this->getDateVoteDebut(),
             "dateVoteFin" => $this->getDateVoteFin(),
             "categorieQuestion" => $this->getCategorieQuestion(),
+            "estVisible" => $this->isEstVisible(),
+            "estProposer" => $this->isEstProposer(),
         );
     }
+
+
+
+
 
     //GETTER SETTERS
     /**
@@ -143,17 +159,57 @@ class Question extends AbstractDataObject {
         $this->categorieQuestion = $categorieQuestion;
     }
 
-    public function getDateEcritureDebutFR(){
-        return date('d/m/Y', strtotime($this->dateEcritureDebut));
+    /**
+     * @return bool
+     */
+    public function isEstVisible(): bool
+    {
+        return $this->estVisible;
     }
-    public function getDateEcritureFinFR(){
-        return date('d/m/Y', strtotime($this->dateEcritureFin));
+
+    /**
+     * @param bool $estVisible
+     */
+    public function setEstVisible(bool $estVisible): void
+    {
+        $this->estVisible = $estVisible;
     }
-    public function getDateVoteDebutFR(){
-        return date('d/m/Y', strtotime($this->dateVoteDebut));
+
+    /**
+     * @return bool
+     */
+    public function isEstProposer(): bool
+    {
+        return $this->estProposer;
     }
-    public function getDateVoteFinFR(){
-        return date('d/m/Y', strtotime($this->dateVoteFin));
+
+    /**
+     * @param bool $estProposer
+     */
+    public function setEstProposer(bool $estProposer): void
+    {
+        $this->estProposer = $estProposer;
+    }
+
+
+    public function getDateEcritureDebutFR()
+    {
+        return date_format(date_create($this->dateEcritureDebut), 'd/m/Y');
+    }
+
+    public function getDateEcritureFinFR()
+    {
+        return date_format(date_create($this->dateEcritureFin), 'd/m/Y');
+    }
+
+    public function getDateVoteDebutFR()
+    {
+        return date_format(date_create($this->dateVoteDebut), 'd/m/Y');
+    }
+
+    public function getDateVoteFinFR()
+    {
+        return date_format(date_create($this->dateVoteFin), 'd/m/Y');
     }
 
 

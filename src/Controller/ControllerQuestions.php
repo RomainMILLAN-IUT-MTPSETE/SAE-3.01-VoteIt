@@ -1,13 +1,16 @@
 <?php
 namespace App\VoteIt\Controller;
 
+use App\VoteIt\Lib\ConnexionUtilisateur;
 use App\VoteIt\Lib\MessageFlash;
 use App\VoteIt\Model\DataObject\Question;
 use App\VoteIt\Model\DataObject\Section;
+use App\VoteIt\Model\Repository\PermissionsRepository;
 use App\VoteIt\Model\Repository\QuestionsRepository;
 use App\VoteIt\Model\Repository\ReponsesRepository;
 use App\VoteIt\Model\Repository\SectionRepository;
-use http\Message;
+use App\VoteIt\Model\Repository\UtilisateurRepository;
+use \App\VoteIt\Model\Repository\CategorieRepository;
 
 class ControllerQuestions{
     private static function afficheVue(string $cheminVue, array $parametres = []) : void {
@@ -17,24 +20,54 @@ class ControllerQuestions{
 
     public static function home(){
         //Recuperation de toutes les questions
-        $questions = (new QuestionsRepository())->selectAll();
-        self::afficheVue('view.php', ['pagetitle' => "VoteIt - Liste des Questions", 'cheminVueBody' => "questions/home.php", 'questions' => $questions]);
+        $questions = (new QuestionsRepository())->selectAllQuestionVisible();
+
+        $peutProposerQuestion = self::getPeutProposerQuestion();
+        $peutPoserQuestion = self::getPeutPoserQuestion();
+
+
+        self::afficheVue('view.php', ['pagetitle' => "VoteIt - Liste des Questions", 'cheminVueBody' => "questions/home.php", 'questions' => $questions, 'peutPoserQuestion' => $peutPoserQuestion, 'peutProposerQuestion' => $peutProposerQuestion]);
     }
 
     public static function see(){
         //Si idQuestion existe
         if(isset($_GET['idQuestion'])){
             $idQuestion = $_GET['idQuestion'];
-            //Recuperation des infos de la BD
             $question = (new QuestionsRepository())->select($idQuestion);
-            //Recuperation des réponses de la questions dans la BD
             $reponses = (new ReponsesRepository())->selectAllReponeByQuestionId($idQuestion);
-            //Recuperation des sections de la questions dans la BD
             $sections = (new SectionRepository())->selectAllByIdQuestion($idQuestion);
-            self::afficheVue('view.php', ['pagetitle' => "VoteIt - Questions n°". $idQuestion, 'cheminVueBody' => "questions/see.php", "question" => $question, "reponses" => $reponses, "sections" => $sections]);
+            $auteur = (new \App\VoteIt\Model\Repository\UtilisateurRepository())->select($question->getAutheur());
+            $allIdQuestion = (new QuestionsRepository())->allIdQuestion();
+
+            $userEstReponsableQuestion = (new PermissionsRepository())->getPermissionReponsableDePropositionParIdUtilisateurEtIdQuestion($idQuestion, ConnexionUtilisateur::getLoginUtilisateurConnecte());
+            $periodeReponse =  false;
+            $periodeVote = false;
+            $nbVoteMax = (new ReponsesRepository())->getNbVoteMax($question->getIdQuestion());
+
+            $dateNow = date("Y-m-d");
+            if ($question->getDateEcritureDebut() <= $dateNow && $dateNow <= $question->getDateEcritureFin()){
+                $periodeReponse = true;
+                $periodeVote = false;
+            }else if($question->getDateEcritureFin() <= $dateNow && $question->getDateVoteDebut() <= $dateNow && $dateNow <= $question->getDateVoteFin()){
+                $periodeReponse = false;
+                $periodeVote = true;
+            }
+
+            $canModifOrDelete = false;
+            $user = null;
+            if (ConnexionUtilisateur::estConnecte()) {
+                $user = (new UtilisateurRepository())->select(ConnexionUtilisateur::getLoginUtilisateurConnecte());
+
+                if((strcmp($question->getAutheur(), $user->getIdentifiant()) == 0) or (strcmp($user->getGrade(), "Administrateur") == 0)){
+                    $canModifOrDelete = true;
+                }
+            }
+
+            self::afficheVue('view.php', ['pagetitle' => "VoteIt - Questions", 'cheminVueBody' => "questions/see.php", "question" => $question, "reponses" => $reponses, "sections" => $sections, 'estReponsable' => $userEstReponsableQuestion, 'periodeReponse' => $periodeReponse, 'periodeVote' => $periodeVote, 'user' => $user, 'canModifOrDelete' => $canModifOrDelete, 'auteur' => $auteur, 'nbVoteMax' => $nbVoteMax, 'allIdQuestion' => $allIdQuestion]);
         }else {
-            //Renvoye a la page d'erreur avec l'erreur QC-2
-            ControllerErreur::erreurCodeErreur('QC-2');
+            MessageFlash::ajouter('warning', "Identifiant question manquant");
+            header("Location: frontController.php?controller=questions&action=home");
+            exit();
         }
     }
 
@@ -48,19 +81,47 @@ class ControllerQuestions{
     }
 
     public static function create(){
-        $categories = (new \App\VoteIt\Model\Repository\CategorieRepository())->selectAll();
-        self::afficheVue('view.php', ['pagetitle' => "VoteIt - Creation d'une question", 'cheminVueBody' => "questions/create.php", 'categories' => $categories]);
+        $categories = (new CategorieRepository())->selectAll();
+
+        $peutProposerQuestion = self::getPeutProposerQuestion();
+        $peutPoserQuestion = self::getPeutPoserQuestion();
+
+        $idAuteur = ConnexionUtilisateur::getLoginUtilisateurConnecte();
+
+        self::afficheVue('view.php', ['pagetitle' => "VoteIt - Creation d'une question", 'cheminVueBody' => "questions/create.php", 'categories' => $categories, 'poserQuestion' => $peutPoserQuestion, 'proposerQuestion' => $peutProposerQuestion, 'idAuteur' => $idAuteur]);
     }
 
     public static function update() {
         $sectionId = (new SectionRepository())->selectAllByIdQuestion($_GET['idQuestion']);
+        $question = (new QuestionsRepository())->select($_GET['idQuestion']);
+        //Liste des utilisateurs qui sont des responsables
+        $resp = (new PermissionsRepository())->getListePermissionResponsableParQuestion($_GET['idQuestion']);
+        $respStr = '';
+        foreach ($resp as $item){
+            $respStr = $respStr . ", " . (new UtilisateurRepository())->select($item->getIdUtilisateur())->getMail();
+        }
+        $respStr = substr($respStr, 2);
+        //Liste des utilisateurs ayant la permission de voter
+        $userVotant = (new PermissionsRepository())->getListePermissionVotantParQuestion($_GET['idQuestion']);
+        $userVotantStr = '';
+        foreach ($userVotant as $item){
+            $userVotantStr = $userVotantStr . ", " . (new UtilisateurRepository())->select($item->getIdUtilisateur())->getMail();
+        }
+        $userVotantStr = substr($userVotantStr, 2);
+
+        $sectionPeutEtreModifier = false;
+        $dateNow = date("Y-m-d");
+        if ($question->getDateEcritureDebut() > $dateNow) {
+            $sectionPeutEtreModifier = true;
+        }
         self::afficheVue('view.php', ['pagetitle' => "VoteIt - Modifier une question", 'cheminVueBody' => "questions/update.php"
-            , 'question' => (new QuestionsRepository())->select($_GET['idQuestion']), 'sectionIds' => $sectionId]);
+            , 'question' => $question, 'sectionIds' => $sectionId, 'responsable' => $respStr, 'userVotant' => $userVotantStr, "sectionPeutEtreModifier" => $sectionPeutEtreModifier]);
     }
 
     public static function delete() {
         if (isset($_GET['idQuestion'])) {
-            self::afficheVue('view.php',['pagetitle' => "VoteIt - Suppression de la question n°" . $_GET['idQuestion'], 'cheminVueBody' => "questions/delete.php"]);
+            $question = (new QuestionsRepository())->select($_GET['idQuestion']);
+            self::afficheVue('view.php',['pagetitle' => "VoteIt - Suppression d'une question", 'cheminVueBody' => "questions/delete.php", 'question' => $question]);
         }
         else {
             echo 'Identifiant de la question non renseignée !';
@@ -68,7 +129,9 @@ class ControllerQuestions{
     }
 
     public static function error(){
-        ControllerErreur::erreurCodeErreur('QC-1');
+        MessageFlash::ajouter("warning", "Erreur sur la page de question");
+        header("Location: frontController.php?controller=home&action=home");
+        exit();
     }
 
     public static function created(){
@@ -95,14 +158,64 @@ class ControllerQuestions{
                 $voteDateDebut = $_POST['voteDateDebut'];
                 $voteDateFin = $_POST['voteDateFin'];
                 $idQuestion = ((new QuestionsRepository())->getIdQuestionMax())+1;
+                if(isset($_POST['poserQuestion'])){
+                    $estProposer = false;
+                }else if(isset($_POST['proposerQuestion'])){
+                    $estProposer = true;
+                }
 
-                (new QuestionsRepository())->createQuestion($idQuestion, $autheur, $titreQuestion, $ecritureDateDebut, $ecritureDateFin, $voteDateDebut, $voteDateFin, $categorieQuestion);
+                (new QuestionsRepository())->createQuestion($idQuestion, $autheur, $titreQuestion, $ecritureDateDebut, $ecritureDateFin, $voteDateDebut, $voteDateFin, $categorieQuestion, true, $estProposer);
+
+                //SUPPRESION DES PERMISSION EXISTANTE
+                (new PermissionsRepository())->deleteAllPermissionForIdQuestion($idQuestion);
+
+                //RECUPERATION DE LA LISTE DES UTILISATEUR
+                $responsableReponse = $_POST['respReponse'];
+                if(strlen($responsableReponse) > 0){
+                    //SEPARATION EN ARGUMENT
+                    $responsableReponseArgs = explode(", ", $responsableReponse);
+                    //POUR TOUS LES UTILISATEURS
+                    foreach ($responsableReponseArgs as $item){
+                        //VERIFICATION MAIL UTILISATEUR
+                        $user = (new UtilisateurRepository())->selectUserByMail($item);
+
+                        if($user != null){
+                            //J'ENTRE LEUR NOUVELLE PERMISSION
+                            (new PermissionsRepository())->addQuestionPermission($user->getIdentifiant(), $idQuestion, "ResponsableDeProposition");
+                        }else {
+                            MessageFlash::ajouter("warning", "Utilisateur responsable non trouvé dans la base de donné, verifier l'email");
+                        }
+                    }
+                }
+
+                //RECUPERATION DE LA LISTE DES VOTANT
+                $votant = $_POST['userVotant'];
+                //SI IL Y A UN UTILISATEUR
+                if(strlen($votant) > 0){
+                    //SEPARATION EN ARGUMENT
+                    $votantArgs = explode(', ', $votant);
+                    //POUR TOUS LES ARGUMENTS
+                    foreach ($votantArgs as $item){
+                        //VERIFICATION MAIL UTILISATEUR
+                        $user = (new UtilisateurRepository())->selectUserByMail($item);
+
+                        if($user != null){
+                            //J'ENTRE LEUR NOUVELLE PERMISSION
+                            (new PermissionsRepository())->addQuestionPermission($user->getIdentifiant(), $idQuestion, "Votant");
+                        }else {
+                            MessageFlash::ajouter("warning", "Utilisateur votant non trouvé dans la base de donné, verifier l'email");
+                        }
+                    }
+
+                }
 
                 header("Location: frontController.php?controller=sections&action=createSectionForCreateQuestion&idQuestion=".$idQuestion."&nbSections=".$nbSection);
                 exit();
             }
         }else {
-            ControllerErreur::erreurCodeErreur('QC-2');
+            MessageFlash::ajouter('warning', "Information manquante");
+            header("Location: frontController.php?controller=questions&action=create");
+            exit();
         }
     }
 
@@ -121,7 +234,7 @@ class ControllerQuestions{
                 header("Location: frontController.php?controller=questions&action=update&idQuestion=".$_POST['idQuestion']);
                 exit();
             }else {
-                $modelQuestion = new Question($_POST['idQuestion'],$_POST['autheur'],$_POST['titreQuestion'],$_POST['ecritureDateDebut'],$_POST['ecritureDateFin'],$_POST['voteDateDebut'],$_POST['voteDateFin'], $_POST['categorieQuestion']);
+                $modelQuestion = new Question($_POST['idQuestion'],$_POST['autheur'],$_POST['titreQuestion'],$_POST['ecritureDateDebut'],$_POST['ecritureDateFin'],$_POST['voteDateDebut'],$_POST['voteDateFin'], $_POST['categorieQuestion'], true,false);
                 (new QuestionsRepository())->updateQuestion($modelQuestion);
 
                 $sectionId = (new SectionRepository())->selectAllByIdQuestion($_POST['idQuestion']);
@@ -134,12 +247,54 @@ class ControllerQuestions{
                     (new SectionRepository())->updateSectionByIdSection($modelSection);
                 }
 
+                //SUPPRESION DES PERMISSION EXISTANTE
+                (new PermissionsRepository())->deleteAllPermissionForIdQuestion($_POST['idQuestion']);
 
-                MessageFlash::ajouter("info","Question n°" . $_POST['idQuestion'] . " modifiée");
+                //RECUPERATION DE LA LISTE DES UTILISATEUR
+                $responsableReponse = $_POST['respReponse'];
+                if(strlen($responsableReponse) > 0){
+                    //SEPARATION EN ARGUMENT
+                    $responsableReponseArgs = explode(", ", $responsableReponse);
+                    //POUR TOUS LES UTILISATEURS
+                    foreach ($responsableReponseArgs as $item){
+                        $user = (new UtilisateurRepository())->selectUserByMail($item);
+
+                        if($user != null){
+                            //J'ENTRE LEUR NOUVELLE PERMISSION
+                            (new PermissionsRepository())->addQuestionPermission($user->getIdentifiant(), $_POST['idQuestion'], "ResponsableDeProposition");
+                        }else {
+                            MessageFlash::ajouter("warning", "Utilisateur reponsable non trouvé dans la base de donné, verifier l'email");
+                        }
+                    }
+                }
+
+                //RECUPERATION DE LA LISTE DES VOTANT
+                $votant = $_POST['userVotant'];
+                //SI IL Y A UN UTILISATEUR
+                if(strlen($votant) > 0){
+                    //SEPARATION EN ARGUMENT
+                    $votantArgs = explode(', ', $votant);
+                    //POUR TOUS LES ARGUMENTS
+                    foreach ($votantArgs as $item){
+                        $user = (new UtilisateurRepository())->selectUserByMail($item);
+
+                        if($user != null){
+                            //J'ENTRE LA PERMISSION DANS LA BDD
+                            (new PermissionsRepository())->addQuestionPermission($user->getIdentifiant(), $_POST['idQuestion'], "Votant");
+                        }else {
+                            MessageFlash::ajouter("warning", "Utilisateur votant non trouvé dans la base de donné, verifier l'email");
+                        }
+                    }
+                }
+
+
+
+                MessageFlash::ajouter("info","Question modifiée");
                 header("Location: frontController.php?controller=questions&action=see&idQuestion=".$_POST['idQuestion']);
                 exit();
             }
         }else {
+            MessageFlash::ajouter("warning", "Il manque des informations");
             header("Location: frontController.php?controller=questions&action=update&idQuestion=".$_POST['idQuestion']);
             exit();
         }
@@ -147,11 +302,36 @@ class ControllerQuestions{
     }
 
     public static function deleted(){
-        (new QuestionsRepository())->delete($_GET['idQuestion']);
-        (new ReponsesRepository())->deleteReponseByIdQuestion($_GET['idQuestion']);
-        (new SectionRepository())->deleteSectionByIdQuestion($_GET['idQuestion']);
-        MessageFlash::ajouter("danger","Question n°" . $_GET['idQuestion'] . " supprimée");
+        (new QuestionsRepository())->setNonVisibleByIdQuestion($_GET['idQuestion']);
+        MessageFlash::ajouter("danger","Question supprimée");
         header("Location: frontController.php?controller=questions&action=home");
         exit();
+    }
+
+
+
+
+
+    public static function getPeutProposerQuestion(): bool{
+        if(ConnexionUtilisateur::estConnecte()){
+            $user = (new UtilisateurRepository())->select(ConnexionUtilisateur::getLoginUtilisateurConnecte());
+
+            if(strcmp($user->getGrade(), "Utilisateur") == 0){
+                return true;
+            }
+        }
+        
+        return false;
+    }
+    public static function getPeutPoserQuestion(): bool{
+        if(ConnexionUtilisateur::estConnecte()){
+            $user = (new UtilisateurRepository())->select(ConnexionUtilisateur::getLoginUtilisateurConnecte());
+
+            if(strcmp($user->getGrade(), "Organisateur") == 0 OR strcmp($user->getGrade(), "Administrateur") == 0){
+                return true;
+            }
+        }
+
+        return false;
     }
 }

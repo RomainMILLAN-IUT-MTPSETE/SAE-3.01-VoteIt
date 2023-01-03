@@ -31,7 +31,7 @@ class ReponsesRepository extends AbstractRepository{
 
 
     /**
-     * Selectionner toutes les réponse d'une question
+     * Selectionner toutes les réponses d'une question
      * @param String $idQuestion
      * @return array
      */
@@ -110,23 +110,11 @@ class ReponsesRepository extends AbstractRepository{
         $pdoStatement->execute($values);
     }
 
-    public function deleteReponseByIdQuestion($idQuestion) {
-        $reponseIds = (new ReponsesRepository())->selectReponseByIdReponse($idQuestion);
-        foreach ($reponseIds as $item){
-            (new ReponseSectionRepository())->deleteReponseSectionByIdReponse($item);
-        }
-
-        $sql = " DELETE FROM " .  static::getNomTable() . " WHERE idQuestion=:idQuestion";
-        // Préparation de la requête
-        $pdoStatement = Model::getPdo()->prepare($sql);
-        $values = array(
-            "idQuestion" => $idQuestion,
-            //nomdutag => valeur, ...
-        );
-        // On donne les valeurs et on exécute la requête
-        $pdoStatement->execute($values);
-    }
-
+    /**
+     * Suppressions de reponse par identifiant
+     * @param $idReponse
+     * @return void
+     */
     public function deleteReponseByIdReponse($idReponse) {
         (new ReponseSectionRepository())->deleteReponseSectionByIdReponse($idReponse);
 
@@ -141,7 +129,119 @@ class ReponsesRepository extends AbstractRepository{
         $pdoStatement->execute($values);
     }
 
-    public function updateQuestionById($reponse){
+    /**
+     * Tous les identifiants de reponse de question
+     * @param $idQuestion
+     * @return array|null
+     */
+    public function allIdReponseByIdQuestion($idQuestion): ?array
+    {
+        try {
+            $pdo = Model::getPdo();
+            $sql = "SELECT " . $this->getNomClePrimaire() . " FROM " . $this->getNomTable() . " WHERE idQuestion='" . $idQuestion . "' ORDER BY " . $this->getNomClePrimaire();
+
+            $pdoStatement = $pdo->query($sql);
+
+            $tab = [];
+
+            foreach ($pdoStatement as $tableauSelecter) {
+                $tab[] = $tableauSelecter[0];
+            }
+
+            return $tab;
+
+        }catch (PDOException $exception) {
+            echo $exception->getMessage();
+            return null;
+        }
+    }
+
+    /**
+     * Retourne le nombre de vote maximum d'une reponse à une question
+     * @param $idQuestion
+     * @return int|mixed
+     */
+    public function getNbVoteMax($idQuestion): int{
+        $pdo = Model::getPdo();
+        $sql = "SELECT idReponse, COUNT(idReponse) as nbVote FROM vit_Vote WHERE idQuestion=:idQuestion GROUP BY idReponse";
+
+        $pdoStatement = $pdo->prepare($sql);
+
+        $values = [
+            'idQuestion' => $idQuestion];
+
+        $pdoStatement->execute($values);
+
+
+
+        $nbVote = [];
+        foreach ($pdoStatement as $tableauSelecter) {
+            $nbVote[] = array($tableauSelecter[0], $tableauSelecter[1]);
+        }
+
+        $nbVoteMax = -1;
+        foreach ($nbVote as $item){
+            if($item[1] > $nbVoteMax){
+                $nbVoteMax = $item[1];
+            }
+        }
+
+        return $nbVoteMax;
+    }
+
+    /**
+     * Retourne l'identifiant reponse avec le maximum de vote pour une question
+     * @param $idQuestion
+     * @return array
+     */
+    public function getIdReponseWithVoteMaxParIdQuestion($idQuestion): array{
+        $pdo = Model::getPdo();
+        $sql = "SELECT idReponse, COUNT(idReponse) as nbVote FROM vit_Vote WHERE idQuestion=:idQuestion GROUP BY idReponse";
+        $pdoStatement = $pdo->prepare($sql);
+        $values = [
+            'idQuestion' => $idQuestion];
+        $pdoStatement->execute($values);
+
+
+
+        $idReponseEtNbVote = [];
+        foreach ($pdoStatement as $tableauSelecter) {
+            $idReponseEtNbVote[] = array($tableauSelecter[0], $tableauSelecter[1]);
+        }
+
+        $nbVoteMax = $this->getNbVoteMax($idQuestion);
+
+        $res = [];
+        foreach ($idReponseEtNbVote as $item){
+            if($item[1] == $nbVoteMax){
+                $res[] = $item[0];
+            }
+        }
+
+
+        return $res;
+    }
+
+
+
+    //A VERIFIER SI UTILISER
+    /*public function deleteReponseByIdQuestion($idQuestion) {
+        $reponseIds = (new ReponsesRepository())->selectReponseByIdReponse($idQuestion);
+        foreach ($reponseIds as $item){
+            (new ReponseSectionRepository())->deleteReponseSectionByIdReponse($item);
+        }
+
+        $sql = " DELETE FROM " .  static::getNomTable() . " WHERE idQuestion=:idQuestion";
+        // Préparation de la requête
+        $pdoStatement = Model::getPdo()->prepare($sql);
+        $values = array(
+            "idQuestion" => $idQuestion,
+            //nomdutag => valeur, ...
+        );
+        // On donne les valeurs et on exécute la requête
+        $pdoStatement->execute($values);
+    }*/
+    /*public function updateQuestionById($reponse){
         try {
             $pdo = Model::getPdo();
             $sql = "UPDATE " . $this->getNomTable() . " SET idReponse=:idReponse, titreReponse=:titreReponse, autheur=:autheur WHERE idQuestion=:idQuestion";
@@ -161,26 +261,5 @@ class ReponsesRepository extends AbstractRepository{
             echo $exception->getMessage();
             return false;
         }
-    }
-    public function allIdReponse(): ?array
-    {
-        try {
-            $pdo = Model::getPdo();
-            $sql = "SELECT " . $this->getNomClePrimaire() . " FROM " . $this->getNomTable();
-
-            $pdoStatement = $pdo->query($sql);
-
-            $tab = [];
-
-            foreach ($pdoStatement as $tableauSelecter) {
-                $tab[] = $tableauSelecter[0];
-            }
-
-            return $tab;
-
-        }catch (PDOException $exception) {
-            echo $exception->getMessage();
-            return null;
-        }
-    }
+    }*/
 }

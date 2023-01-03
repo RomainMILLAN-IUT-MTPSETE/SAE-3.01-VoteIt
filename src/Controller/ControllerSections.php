@@ -19,12 +19,16 @@ class ControllerSections{
             $idQuestion = $_GET['idQuestion'];
             self::afficheVue('view.php', ['pagetitle' => "VoteIt - Création des sections", 'cheminVueBody' => "sections/createForCreateQuestion.php", 'nbSections' => $nbSection, 'idQuestion' => $idQuestion]);
         }else {
-            ControllerErreur::erreurCodeErreur('SC-1');
+            MessageFlash::ajouter("warning", "Nombre de section et identifiant questions non données");
+            header("Location: frontController.php?controller=questions&action=home");
+            exit();
         }
     }
 
     public static function error(){
-        ControllerErreur::erreurCodeErreur('SC-1');
+        MessageFlash::ajouter("warning", "Erreur sur la page Sections");
+        header("Location: frontController.php?controller=questions&action=home");
+        exit();
     }
 
 
@@ -32,7 +36,7 @@ class ControllerSections{
         if(isset($_POST['nbSections']) AND isset($_POST['idQuestion']) AND isset($_POST['section1']) and isset($_POST['description1'])){
             $nbSections = $_POST['nbSections'];
             for($i=1; $i<$nbSections+1; $i++){
-                $idSection = ((new SectionRepository())->getIdQuestionMax())+1;
+                $idSection = ((new SectionRepository())->getIdSectionMax())+1;
                 $idQuestion = $_POST['idQuestion'];
                 $sectionName = 'section'.$i;
                 $descriptionName = 'description'.$i;
@@ -42,11 +46,13 @@ class ControllerSections{
                 (new SectionRepository())->createSection($sectionTemp);
             }
 
-            MessageFlash::ajouter("success", "Ajout de la question n°" . $_POST['idQuestion'] . " réussi!");
+            MessageFlash::ajouter("success", "Ajout de la question réussi!");
             header("Location: frontController.php?controller=questions&action=home");
             exit();
         }else {
-            ControllerErreur::erreurCodeErreur('SC-1');
+            MessageFlash::ajouter("warning", "Nombre de section ou identifiant question manquant");
+            header("Location: frontController.php?controller=questions&action=home");
+            exit();
         }
     }
 

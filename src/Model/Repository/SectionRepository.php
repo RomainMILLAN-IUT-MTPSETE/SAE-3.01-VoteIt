@@ -16,6 +16,11 @@ class SectionRepository{
         return new Section($objetFormatTableau['idSection'], $objetFormatTableau['idQuestion'], $objetFormatTableau['titreSection'], $objetFormatTableau['descriptionSection']);
     }
 
+    /**
+     * Retourne une liste d'identifiant question
+     * @param $idQuestion
+     * @return array
+     */
     public function selectAllByIdQuestion($idQuestion){
         $pdo = Model::getPdo();
         $query = "SELECT * FROM ".$this->getNomTable()." WHERE idQuestion='".$idQuestion."';";
@@ -33,10 +38,10 @@ class SectionRepository{
     }
 
     /**
-     * Retourne l'id de question maximum
+     * Retourne l'id de section maximum
      * @return mixed
      */
-    public function getIdQuestionMax(): int{
+    public function getIdSectionMax(): int{
         $pdo = Model::getPdo();
         $query = "SELECT MAX(idSection) as idSection FROM ".$this->getNomTable().";";
         $pdoStatement = $pdo->query($query);
@@ -51,6 +56,11 @@ class SectionRepository{
         return $resultat;
     }
 
+    /**
+     * Crée une section
+     * @param $section
+     * @return void
+     */
     public function createSection($section){
         $pdo = Model::getPdo();
         $query = "INSERT INTO ".$this->getNomTable()."(idSection, idQuestion, titreSection, descriptionSection) VALUES(:idSection, :idQuestion, :titreSection, :descriptionSection);";
@@ -65,8 +75,12 @@ class SectionRepository{
         $pdoStatement->execute($values);
     }
 
+    /**
+     * Retourne une section par son identifiant
+     * @param $idSection
+     * @return Section|null
+     */
     public function  selectFromIdSection($idSection){
-
         $sql = " SELECT * FROM " .  static::getNomTable() . " WHERE idSection=:idSection";
         // Préparation de la requête
         $pdoStatement = Model::getPdo()->prepare($sql);
@@ -88,38 +102,11 @@ class SectionRepository{
 
     }
 
-    public function deleteSectionByIdQuestion($idQuestion) {
-        $sql = " DELETE FROM " .  static::getNomTable() . " WHERE idQuestion=:idQuestion";
-        // Préparation de la requête
-        $pdoStatement = Model::getPdo()->prepare($sql);
-        $values = array(
-            "idQuestion" => $idQuestion,
-            //nomdutag => valeur, ...
-        );
-        // On donne les valeurs et on exécute la requête
-        $pdoStatement->execute($values);
-    }
-
-    public function updateSectionByIdQuestion(Section $section) {
-        try {
-            $pdo = Model::getPdo();
-            $sql = "UPDATE " . static::getNomTable() . " SET idQuestion=:idQuestion, titreSection=:titreSection, descriptionSection=:descriptionSection WHERE idSection=:idSection";
-            $pdoStatement = $pdo->prepare($sql);
-            $values = [
-                'idSection' => $section->getIdSection(),
-                'idQuestion' => $section->getIdQuestion(),
-                'titreSection' => $section->getTitreSection(),
-                'descriptionSection' => $section->getDescriptionSection()];
-
-            $pdoStatement->execute($values);
-
-            return true;
-        }catch (PDOException $exception) {
-            echo $exception->getMessage();
-            return false;
-        }
-    }
-
+    /**
+     * Mets à jour une section
+     * @param Section $section
+     * @return bool
+     */
     public function updateSectionByIdSection(Section $section) {
         try {
             $pdo = Model::getPdo();
@@ -139,5 +126,40 @@ class SectionRepository{
             return false;
         }
     }
+
+
+
+    //VERIFIER SI UTILISER
+    /*public function deleteSectionByIdQuestion($idQuestion) {
+        $sql = " DELETE FROM " .  static::getNomTable() . " WHERE idQuestion=:idQuestion";
+        // Préparation de la requête
+        $pdoStatement = Model::getPdo()->prepare($sql);
+        $values = array(
+            "idQuestion" => $idQuestion,
+            //nomdutag => valeur, ...
+        );
+        // On donne les valeurs et on exécute la requête
+        $pdoStatement->execute($values);
+    }*/
+
+    /*public function updateSectionByIdQuestion(Section $section) {
+        try {
+            $pdo = Model::getPdo();
+            $sql = "UPDATE " . static::getNomTable() . " SET idQuestion=:idQuestion, titreSection=:titreSection, descriptionSection=:descriptionSection WHERE idSection=:idSection";
+            $pdoStatement = $pdo->prepare($sql);
+            $values = [
+                'idSection' => $section->getIdSection(),
+                'idQuestion' => $section->getIdQuestion(),
+                'titreSection' => $section->getTitreSection(),
+                'descriptionSection' => $section->getDescriptionSection()];
+
+            $pdoStatement->execute($values);
+
+            return true;
+        }catch (PDOException $exception) {
+            echo $exception->getMessage();
+            return false;
+        }
+    }*/
 
 }

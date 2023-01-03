@@ -4,11 +4,12 @@ namespace App\VoteIt\Model\DataObject;
 
 use App\VoteIt\Model\Repository\AbstractRepository;
 
-class Section extends AbstractDataObject {
-    private String $idSection;
-    private String $idQuestion;
-    private String $titreSection;
-    private String $descriptionSection;
+class Section extends AbstractDataObject
+{
+    private string $idSection;
+    private string $idQuestion;
+    private string $titreSection;
+    private string $descriptionSection;
 
     /**
      * @param String $idSection
@@ -23,7 +24,8 @@ class Section extends AbstractDataObject {
         $this->descriptionSection = $descriptionSection;
     }
 
-    public function formatTableau(): array{
+    public function formatTableau(): array
+    {
         return array(
             "idSection" => $this->getIdSection(),
             "idQuestion" => $this->getIdQuestion(),
@@ -33,8 +35,10 @@ class Section extends AbstractDataObject {
     }
 
 
-    //GETTER SETTER
 
+
+
+    //GETTER SETTER
     /**
      * @return String
      */
@@ -90,11 +94,6 @@ class Section extends AbstractDataObject {
     {
         return $this->descriptionSection;
     }
-
-
-
-
-
 
 
 }

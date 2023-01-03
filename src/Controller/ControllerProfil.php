@@ -26,14 +26,12 @@ class ControllerProfil{
 
             //Si l'utilisateur est null
             if ($user == NULL) {
-                //Renvoye a la page d'erreur avec la code PC-3
-                ControllerErreur::erreurCodeErreur('PC-3');
+                MessageFlash::ajouter('warning', "L'utilisateur n'existe pas");
+                header("Location: frontController.php?controller=home&action=home");
+                exit();
             }
             self::afficheVue('view.php', ['pagetitle' => "VoteIt - Profil", 'cheminVueBody' => "profil/home.php", 'user' => $user]);
         }else {
-            //Renvoye a la page d'erreur avec la code PC-2
-            //ControllerErreur::erreurCodeErreur('PC-2');
-
             //Renvoye vers le formulaire de connexion
             header("Location: frontController.php?controller=profil&action=connection");
             exit();
@@ -62,8 +60,9 @@ class ControllerProfil{
     }
 
     public static function error(){
-        //Renvoye a la page d'erreur avec le code PC-1
-        ControllerErreur::erreurCodeErreur('PC-1');
+        MessageFlash::ajouter('warning', "Erreur sur la page de profil");
+        header("Location: frontController.php?controller=home&action=home");
+        exit();
     }
 
     //Function to not see
@@ -104,23 +103,32 @@ class ControllerProfil{
     }
     public static function connected(){
         //Si les informations du formulaire sont remplies
-        if(isset($_REQUEST['identifiant']) AND isset($_REQUEST['password'])){
-            $identifiant = $_REQUEST['identifiant'];
+        if(isset($_REQUEST['mail']) AND isset($_REQUEST['password'])){
+            $mail = $_REQUEST['mail'];
             $password = $_REQUEST['password'];
 
             //Si les informations de la BD correspondent
-            $user = (new UtilisateurRepository())->select($identifiant);
+            $user = (new UtilisateurRepository())->selectUserByMail($mail);
+            if($user == null){
+                MessageFlash::ajouter("warning", "Adresse mail inexistante");
+                header("Location: frontController.php?controller=profil&action=connection");
+                exit();
+            }
             if(MotDePasse::verifier($password, $user->getMotDePasse())){
-                ConnexionUtilisateur::connecter($identifiant);
+                ConnexionUtilisateur::connecter($user->getIdentifiant());
                 
                 MessageFlash::ajouter("success", "Connexion réussie à votre profil");
                 header("Location: frontController.php?controller=profil&action=home");
                 exit();
             }else {
-                ControllerErreur::erreurCodeErreur('PC-4');
+                MessageFlash::ajouter("warning", "Mot de passe incorrect");
+                header("Location: frontController.php?controller=profil&action=connection");
+                exit();
             }
         }else {
-            ControllerErreur::erreurCodeErreur('PC-2');
+            MessageFlash::ajouter('warning', "Mail ou Mot de passe manquant");
+            header("Location: frontController.php?controller=profil&action=connection");
+            exit();
         }
     }
 
@@ -130,6 +138,8 @@ class ControllerProfil{
             $identifiant = $_REQUEST['identifiant'];
             $mail = $_REQUEST['mail'];
             $password = $_REQUEST['password'];
+            $newpassword = $_REQUEST['newpassword'];
+            $confirmnewpassword = $_REQUEST['confirmnewpassword'];
             $prenom = $_REQUEST['prenom'];
             $nom = $_REQUEST['nom'];
             $dtnaissance = $_REQUEST['dtnaissance'];
@@ -137,35 +147,53 @@ class ControllerProfil{
 
             //Récuperation de l'utilisateur actuelle dans la BD
             $userBefore = (new UtilisateurRepository())->select($identifiant);
+            //MAIL
             $mailAValider = "";
             $nonce = "";
+            $emailModifier = false;
             if(strcmp($mail, $userBefore->getMail()) != 0){
                 $mailAValider = $mail;
                 $mail = "";
                 $nonce = MotDePasse::genererChaineAleatoire();
+                $emailModifier = true;
             }
+            //PASSWORD
+            if(strlen($newpassword) > 0){
+                if(strcmp($password, $newpassword) != 0){
+                    if(strcmp($newpassword, $confirmnewpassword) == 0){
+                        $password = $newpassword;
+                    }else {
+                        MessageFlash::ajouter("warning", "Nouveau mot de passe et confirmation non indentique");
+                        header("Location: frontController.php?controller=profil&action=modification");
+                        exit();
+                    }
+                }else {
+                    MessageFlash::ajouter("warning", "Nouveau mot de passe identique à l'actuelle");
+                    header("Location: frontController.php?controller=profil&action=modification");
+                    exit();
+                }
+            }
+            //ICONE+GRADE
             $iconeLink = $userBefore->getIconeLink();
             $grade = $userBefore->getGrade();
 
+            //Hash du mdp
+            $password = MotDePasse::hacher($password);
             //Création d'un nouvelle utilisateur avec les nouvelles informations
             $userEdit = new Utilisateur($identifiant, $password, $nom, $prenom, $dtnaissance, $iconeLink, $mail, $mailAValider, $nonce, $grade);
             //Mise à jour de l'utilisateur
             (new UtilisateurRepository())->update($userEdit);
 
-            VerificationEmail::envoiEmailValidation($userEdit);
+            if($emailModifier){
+                VerificationEmail::envoiEmailValidation($userEdit);
+            }
             //Redirection vers la page d'accueil
+            MessageFlash::ajouter("success", "Modification du profil réussi");
             header("Location: frontController.php?controller=profil&action=home");
             exit();
         }else {
-            //Si il y a au moins l'identifiant
-            if(isset($_REQUEST['identifiant'])){
-                //Redirection vers la page de modification
-                header("Location: frontController.php?controller=profil&action=modification&idUtilisateur=".$_REQUEST['identifiant']);
-                exit();
-            }else{
-                //Renvoye vers la page d'erreur avec le code PC-2
-                ControllerErreur::erreurCodeErreur('PC-2');
-            }
+            header("Location: frontController.php?controller=profil&action=modification");
+            exit();
         }
     }
     public static function deconnection(){

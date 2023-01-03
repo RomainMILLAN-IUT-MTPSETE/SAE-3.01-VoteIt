@@ -41,18 +41,12 @@
     margin-top: 0px;
     font-family: "Poppins Light";
 }
-.identifiant-grade--container .souligner{
-    margin-left: 0px;
-}
-
-.info-user--container {
+.info-user-row{
     display: flex;
     flex-direction: row;
 }
-
-.identifiant-grade--container{
-    padding-left: 200px;
-    align-items: start;
+.info-user-row div:nth-child(2) {
+    margin-left: 50px;
 }
 
 
@@ -60,5 +54,4 @@
 #icone-user{
     width: 120px;
     height: 120px;
-    float: left;
 }

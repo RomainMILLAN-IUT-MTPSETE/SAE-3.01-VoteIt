@@ -18,7 +18,7 @@ class ReponseSectionRepository{
     }
 
     /**
-     * Selectionner toutes les sections au réponse par l'id de réponse;
+     * Selectionner toutes les sections au réponse par l'id de réponse
      * @param $idReponse
      * @return array
      */
@@ -47,7 +47,7 @@ class ReponseSectionRepository{
 
 
     /**
-     * Creation de Section à une réponse par un object ReponseSection;
+     * Creation de Section à une réponse par un object ReponseSection
      * @param $ReponseSection
      */
     public function createReponseSection(ReponseSection $ReponseSection){
@@ -64,6 +64,11 @@ class ReponseSectionRepository{
 
     }
 
+    /**
+     * Supprime les reponses secitons qui on l'identifiant reponse
+     * @param $idreponse
+     * @return void
+     */
     public function deleteReponseSectionByIdReponse($idreponse) {
         $sql = " DELETE FROM " .  static::getNomTable() . " WHERE idReponse=:idReponse";
         // Préparation de la requête
@@ -76,6 +81,11 @@ class ReponseSectionRepository{
         $pdoStatement->execute($values);
     }
 
+    /**
+     * Mets à jour une réponse section
+     * @param ReponseSection $reponseSection
+     * @return bool
+     */
     public function updateReponseSection(ReponseSection $reponseSection){
         try {
             $pdo = Model::getPdo();

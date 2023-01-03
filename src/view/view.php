@@ -1,3 +1,8 @@
+<?php
+use App\VoteIt\Lib\ConnexionUtilisateur;
+use App\VoteIt\Lib\MessageFlash;
+use App\VoteIt\Model\Repository\UtilisateurRepository;
+?>
 <!DOCTYPE html>
 <html>
 <head>
@@ -34,8 +39,9 @@
                     <a href="frontController.php?controller=home&action=home"><p>Accueil</p></a>
                     <a href="frontController.php?controller=questions&action=home"><p>Questions</p></a>
                     <a href="frontController.php?controller=profil&action=home"><p>Profil</p></a>
+                    <?php if(ConnexionUtilisateur::estConnecte()){ if(strcmp((new UtilisateurRepository())->select(ConnexionUtilisateur::getLoginUtilisateurConnecte())->getGrade(), "Administrateur") == 0) { ?> <a href="frontController.php?controller=dashboard&action=dashboard"><p>Dashboard</p></a> <?php } } ?>
                 </nav>
-                <a href="#"><img src="assets/logo/logoAvecOmbre.png" alt="Icone du profile de la personne"></a>
+                <a href="frontController.php?controller=profil&action=home"><img src="assets/logo/logoAvecOmbre.png" alt="Icone du profile de la personne"></a>
             </div>
         </section>
     </header>
@@ -44,7 +50,7 @@
     <main>
         <?php
         //MESSAGES FLASH
-        use \App\VoteIt\Lib\MessageFlash;
+
         $array = MessageFlash::lireTousMessages();
         while($element = current($array)) {
             ?>

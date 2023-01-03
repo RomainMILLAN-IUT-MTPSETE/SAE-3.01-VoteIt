@@ -2,10 +2,11 @@
 
 namespace App\VoteIt\Model\DataObject;
 
-class ReponseSection extends AbstractDataObject{
-    private String $idSection;
-    private String $idReponse;
-    private String $texteSection;
+class ReponseSection extends AbstractDataObject
+{
+    private string $idSection;
+    private string $idReponse;
+    private string $texteSection;
 
     /**
      * @param String $idSection
@@ -19,7 +20,6 @@ class ReponseSection extends AbstractDataObject{
         $this->texteSection = $texteSection;
     }
 
-
     public function formatTableau(): array
     {
         return array(
@@ -31,8 +31,9 @@ class ReponseSection extends AbstractDataObject{
 
 
 
-    //GETTER SETTER
 
+
+    //GETTER SETTER
     /**
      * @return String
      */
@@ -80,7 +81,6 @@ class ReponseSection extends AbstractDataObject{
     {
         $this->texteSection = $texteSection;
     }
-
 
 
 }
