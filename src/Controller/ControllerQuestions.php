@@ -3,6 +3,7 @@ namespace App\VoteIt\Controller;
 
 use App\VoteIt\Lib\ConnexionUtilisateur;
 use App\VoteIt\Lib\MessageFlash;
+use App\VoteIt\Lib\MotDePasse;
 use App\VoteIt\Model\DataObject\Question;
 use App\VoteIt\Model\DataObject\Section;
 use App\VoteIt\Model\Repository\PermissionsRepository;
@@ -12,6 +13,7 @@ use App\VoteIt\Model\Repository\SectionRepository;
 use App\VoteIt\Model\Repository\UtilisateurRepository;
 use \App\VoteIt\Model\Repository\CategorieRepository;
 use App\VoteIt\Model\Repository\VoteRepository;
+use http\Message;
 
 class ControllerQuestions{
     private static function afficheVue(string $cheminVue, array $parametres = []) : void {
@@ -326,10 +328,18 @@ class ControllerQuestions{
     }
 
     public static function deleted(){
-        (new QuestionsRepository())->setNonVisibleByIdQuestion($_GET['idQuestion']);
-        MessageFlash::ajouter("danger","Question supprimée");
-        header("Location: frontController.php?controller=questions&action=home");
-        exit();
+        $user = (new UtilisateurRepository())->select(ConnexionUtilisateur::getLoginUtilisateurConnecte());
+        if(MotDePasse::verifier($_POST['mdpUser'], $user->getMotDePasse())){
+            (new QuestionsRepository())->setNonVisibleByIdQuestion($_GET['idQuestion']);
+
+            MessageFlash::ajouter("danger","Question supprimée");
+            header("Location: frontController.php?controller=questions&action=home");
+            exit();
+        }else {
+            MessageFlash::ajouter("warning", "Mot de passe incorrect");
+            header("Location: frontController.php?controller=questions&action=delete&idQuestion=".$_POST['idQuestion']);
+            exit();
+        }
     }
 
     public static function voted(){

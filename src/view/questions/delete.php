@@ -8,6 +8,10 @@
             <input type="text" name="titleQuestion" id="titleQuestion" value="<?php echo(htmlspecialchars($question->getTitreQuestion())); ?>" readonly required>
         </div>
         <div>
+            <label for="mdpUser">Votre mot de passe</label>
+            <input type="password" name="mdpUser" id="mdpUser" placeholder="******" required>
+        </div>
+        <div>
             <input type="number" name="idQuestion" id="idQuestion" value="<?php echo(htmlspecialchars($question->getIdQuestion())); ?>" readonly hidden required>
             <input type="submit" value="Supprimer la question">
         </div>
