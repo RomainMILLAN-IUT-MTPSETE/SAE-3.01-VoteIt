@@ -35,7 +35,7 @@ class ControllerQuestions{
         if(isset($_GET['idQuestion'])){
             $idQuestion = $_GET['idQuestion'];
             $question = (new QuestionsRepository())->select($idQuestion);
-            $reponses = (new ReponsesRepository())->selectAllReponeByQuestionId($idQuestion);
+            $reponses = (new ReponsesRepository())->selectAllReponeByQuestionIdWhereIsVisible($idQuestion);
             $sections = (new SectionRepository())->selectAllByIdQuestion($idQuestion);
             $auteur = (new \App\VoteIt\Model\Repository\UtilisateurRepository())->select($question->getAutheur());
             $allIdQuestion = (new QuestionsRepository())->allIdQuestion();

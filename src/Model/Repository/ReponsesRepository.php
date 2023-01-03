@@ -37,9 +37,9 @@ class ReponsesRepository extends AbstractRepository{
      * @param String $idQuestion
      * @return array
      */
-    public function selectAllReponeByQuestionId(String $idQuestion){
+    public function selectAllReponeByQuestionIdWhereIsVisible(String $idQuestion){
         $pdo = Model::getPdo();
-        $query = "SELECT * FROM ".$this->getNomTable()." WHERE idQuestion='".$idQuestion."';";
+        $query = "SELECT * FROM ".$this->getNomTable()." WHERE idQuestion='".$idQuestion."' AND estVisible=1;";
         $pdoStatement = $pdo->query($query);
 
         $tab = [];
@@ -114,21 +114,19 @@ class ReponsesRepository extends AbstractRepository{
     }
 
     /**
-     * Suppressions de reponse par identifiant
+     * Suppressions de reponse par identifiant (Passage de estVisible sur false)
      * @param $idReponse
      * @return void
      */
-    public function deleteReponseByIdReponse($idReponse) {
-        (new ReponseSectionRepository())->deleteReponseSectionByIdReponse($idReponse);
+    public function deleteReponseByIdReponse($idReponse): void {
+        //(new ReponseSectionRepository())->deleteReponseSectionByIdReponse($idReponse);
+        $sql = "UPDATE " .  static::getNomTable() . " SET estVisible=0 WHERE idReponse=:idReponse";
 
-        $sql = " DELETE FROM " .  static::getNomTable() . " WHERE idReponse=:idReponse";
-        // Préparation de la requête
         $pdoStatement = Model::getPdo()->prepare($sql);
         $values = array(
             "idReponse" => $idReponse,
-            //nomdutag => valeur, ...
         );
-        // On donne les valeurs et on exécute la requête
+
         $pdoStatement->execute($values);
     }
 
