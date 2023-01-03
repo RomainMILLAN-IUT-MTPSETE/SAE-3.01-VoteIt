@@ -46,14 +46,6 @@ use App\VoteIt\Model\Repository\SectionRepository;
             <div>
                 <span class="info-reponse-span"><p><span class="bolder">Auteur</span>: <?php echo(htmlspecialchars($reponse->getAutheurId())) ?></span>
             </div>
-            <div>
-                <span class="info-reponse-span">
-                    <p>
-                        <span class="bolder">Votes</span>: <?php echo(htmlspecialchars(VoteRepository::getNbVoteForReponse($reponse->getIdReponse()))); ?>
-                    </p>
-                    <img src="assets/reponses/see/like.png" alt="Icone de vote">
-                </span>
-            </div>
         </div>
     </div>
 

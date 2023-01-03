@@ -94,4 +94,26 @@ class VoteRepository{
 
         return $resultat;
     }
+
+    /**
+     * Retourne le nombre de réponse par une identifiant de question
+     * @param $idQuestion
+     * @return float|int
+     */
+    public function getNbVoteForQuestion($idQuestion){
+        $pdo = Model::getPdo();
+        $sql = "SELECT COUNT(*) as nbVote FROM " . self::getNomTable() . " WHERE idQuestion=:idQuestion";
+        $pdoStatement = $pdo->prepare($sql);
+
+        $values = array(
+            "idQuestion" => $idQuestion
+        );
+
+        $pdoStatement->execute($values);
+        $resultatSQL = $pdoStatement->fetch();
+        $nbReponse = (new ReponsesRepository())->getNbReponseForQuestion($idQuestion);
+
+        $res = $resultatSQL['nbVote'] / $nbReponse;
+        return $res;
+    }
 }
