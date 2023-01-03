@@ -72,6 +72,8 @@ class ControllerQuestions{
 
             if($question->getDateVoteFin() <= $dateNow){
                 $idReponseGagnante = (new VoteRepository())->getIdReponseGagnante($_GET['idQuestion']);
+            }else {
+                $idReponseGagnante = null;
             }
 
             self::afficheVue('view.php', ['pagetitle' => "VoteIt - Questions", 'cheminVueBody' => "questions/see.php", "question" => $question, "reponses" => $reponses, "sections" => $sections, 'estReponsable' => $userEstReponsableQuestion, 'periodeReponse' => $periodeReponse, 'periodeVote' => $periodeVote, 'user' => $user, 'canModifOrDelete' => $canModifOrDelete, 'auteur' => $auteur, 'nbVoteMax' => $nbVoteMax, 'allIdQuestion' => $allIdQuestion, 'nbVote' => $nbVote, 'canVote' => $canVote, 'idReponseGagnante' => $idReponseGagnante]);

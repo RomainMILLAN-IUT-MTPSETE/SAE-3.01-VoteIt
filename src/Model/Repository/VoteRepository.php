@@ -145,6 +145,11 @@ class VoteRepository{
         if($nbVote%2 == 0){
             //PAIR
             $mediane = $nbVote/2;
+
+            //Pour les petites valeurs
+            if($mediane == 1){
+                $mediane = 0;
+            }
         }else {
             //IMPAR
             $mediane = ($nbVote/2) + 1;
@@ -184,7 +189,7 @@ class VoteRepository{
 
     public function getVoteListeForIdReponseAndIdQuestion($idQuestion, $idReponse){
         $pdo = Model::getPdo();
-        $query = "SELECT vote FROM " . $this->getNomTable() . " WHERE idQuestion=:idQuestion AND idReponse=:idReponse";
+        $query = "SELECT vote FROM " . $this->getNomTable() . " WHERE idQuestion=:idQuestion AND idReponse=:idReponse ORDER BY vote ASC";
         $pdoStatement = $pdo->prepare($query);
 
         $values = array(
