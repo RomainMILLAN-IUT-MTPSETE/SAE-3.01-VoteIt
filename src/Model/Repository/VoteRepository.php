@@ -208,8 +208,6 @@ class VoteRepository{
                     $idReponseGagnante[] = $item->getIdReponse();
                 }
             }
-            echo("<br/><br/>");
-            var_dump($idReponseGagnante);
         }
 
 
