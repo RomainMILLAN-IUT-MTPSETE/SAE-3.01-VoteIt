@@ -1,5 +1,6 @@
 <?php
 use \App\VoteIt\Model\Repository\QuestionsRepository;
+use \App\VoteIt\Model\Repository\ReponsesRepository;
 ?>
 <link rel="stylesheet" href="css/Dashboard/dashboard-home.css">
 <section class="dashboard--container">
@@ -154,6 +155,36 @@ use \App\VoteIt\Model\Repository\QuestionsRepository;
                                 ?>
                             </tbody>
                         </table>
+                </div>
+            </section>
+            <section class="dashboard-content-table">
+                <h2 class="dashboard-content-title">Réponse désactivée:</h2>
+                <div class="tableau-dashboard">
+                    <table>
+                        <thead>
+                        <th>#</th>
+                        <th>idQuestion</th>
+                        <th>Titre</th>
+                        <th>idAuteur</th>
+                        <th>Action</th>
+                        </thead>
+                        <tbody>
+                        <?php
+                        foreach ($idReponseListDesactive as $item){
+                            $reponse = (new ReponsesRepository())->select($item);
+                            ?>
+                            <tr>
+                                <th><?php echo($item); ?></th>
+                                <th><?php echo($reponse->getIdQuestion()) ?></th>
+                                <th><?php echo($reponse->getTitreReponse()) ?></th>
+                                <th><?php echo($reponse->getAutheurId()) ?></th>
+                                <th><a href="frontController.php?controller=dashboard&action=changeDesactiveReponse&id=<?php echo($item); ?>"><img src="assets/dashboard/edit.png" alt="Icone d'édition pour rendre un question visible"></a></th>
+                            </tr>
+                            <?php
+                        }
+                        ?>
+                        </tbody>
+                    </table>
                 </div>
             </section>
         </section>

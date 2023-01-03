@@ -55,6 +55,21 @@ class ReponsesRepository extends AbstractRepository{
     }
 
     /**
+     * Retourne une liste d'identifiant de réponse désactive
+     * @return array
+     */
+    public function getAllIdReponseDesactive(){
+        $pdo = Model::getPdo();
+        $query = "SELECT idReponse FROM " . $this->getNomTable() . " WHERE estVisible=0;";
+        $pdoStatement = $pdo->query($query);
+        $tab = [];
+        foreach ($pdoStatement as $tableauSelecter) {
+            $tab[] = $tableauSelecter['idReponse'];
+        }
+        return $tab;
+    }
+
+    /**
      * Selectionner toutes les réponses d'une question
      * @param String $idQuestion
      * @return array

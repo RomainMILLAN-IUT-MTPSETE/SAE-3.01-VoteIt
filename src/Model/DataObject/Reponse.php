@@ -114,6 +114,16 @@ class Reponse extends AbstractDataObject
         return $this->estVisible;
     }
 
+    /**
+     * @param bool $estVisible
+     */
+    public function setEstVisible(bool $estVisible): void
+    {
+        $this->estVisible = $estVisible;
+    }
+
+
+
 
 
 
