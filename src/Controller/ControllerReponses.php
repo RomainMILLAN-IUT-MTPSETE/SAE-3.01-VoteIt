@@ -5,6 +5,7 @@ namespace App\VoteIt\Controller;
 use App\VoteIt\Controller\ControllerErreur;
 use App\VoteIt\Lib\ConnexionUtilisateur;
 use App\VoteIt\Lib\MessageFlash;
+use App\VoteIt\Lib\MotDePasse;
 use App\VoteIt\Model\DataObject\ReponseSection;
 use App\VoteIt\Model\DataObject\Reponse;
 use App\VoteIt\Model\Repository\PermissionsRepository;
@@ -192,17 +193,25 @@ class ControllerReponses{
     }
 
     public static function deleted(){
-        if(isset($_POST['idReponse'])){
-            $idQuestion = (new ReponsesRepository())->selectReponseByIdReponse($_POST['idReponse'])->getIdQuestion();
-            (new ReponsesRepository())->deleteReponseByIdReponse($_POST['idReponse']);
-            
-            MessageFlash::ajouter("danger", "Réponse supprimée.");
-            header("Location: frontController.php?controller=questions&action=see&idQuestion=".$idQuestion);
-            exit();
+        $user = (new UtilisateurRepository())->select(ConnexionUtilisateur::getLoginUtilisateurConnecte());
+        if(MotDePasse::verifier($_POST['mdpUser'], $user->getMotDePasse())){
+            if(isset($_POST['idReponse'])){
+                $idQuestion = (new ReponsesRepository())->selectReponseByIdReponse($_POST['idReponse'])->getIdQuestion();
+                (new ReponsesRepository())->deleteReponseByIdReponse($_POST['idReponse']);
+
+                MessageFlash::ajouter("danger", "Réponse supprimée.");
+                header("Location: frontController.php?controller=questions&action=see&idQuestion=".$idQuestion);
+                exit();
+            }else {
+                header("Location: frontController.php?controller=questions&action=home");
+                exit();
+            }
         }else {
-            header("Location: frontController.php?controller=questions&action=home");
+            MessageFlash::ajouter("warning", "Mot de passe incorrect");
+            header("Location: frontController.php?controller=reponses&action=delete&idReponse=".$_POST['idReponse']);
             exit();
         }
+
     }
 
 
