@@ -144,15 +144,10 @@ class VoteRepository{
 
         if($nbVote%2 == 0){
             //PAIR
-            $mediane = $nbVote/2;
-
-            //Pour les petites valeurs
-            if($mediane == 1){
-                $mediane = 0;
-            }
+            $mediane = $nbVote/2 -1;
         }else {
-            //IMPAR
-            $mediane = ($nbVote/2) + 1;
+            //IMPAIR
+            $mediane = $nbVote/2;
         }
 
         $voteMax = -1;
@@ -169,20 +164,37 @@ class VoteRepository{
             }
         }
 
-        while(count($idReponseGagnante) > 1 && $mediane < $nbVote){
-            $mediane++;
+        while(count($idReponseGagnante) > 1 && $mediane <= $nbVote){
+            foreach($allIdReponseForQuestion as $item){
+                unset($resVote[$item->getIdReponse()][$mediane]);
+            }
+
+            if($nbVote > 0){
+                $nbVote--;
+            }
+            if($nbVote < 2){
+                $mediane = 0;
+            }else if($nbVote%2 == 0){
+                //PAIR
+                $mediane = $nbVote/2 - 1;
+            }else {
+                //IMPAIR
+                $mediane = ($nbVote/2);
+            }
+
             $voteMax = -1;
 
-            foreach ($resVote as $item){
-                if(in_array($item, $idReponseGagnante)){
-                    if($item[$mediane] >= $voteMax){
-                        $voteMax = $item[$mediane];
-                    }else {
-                        unset($idReponseGagnante[$item]);
-                    }
+            foreach($allIdReponseForQuestion as $item){
+                if($resVote[$item->getIdReponse()][$mediane] > $voteMax){
+                    unset($idReponseGagnante);
+                    $voteMax = $resVote[$item->getIdReponse()][$mediane];
+                    $idReponseGagnante[] = $item->getIdReponse();
+                }else if($resVote[$item->getIdReponse()][$mediane] >= $voteMax){
+                    $idReponseGagnante[] = $item->getIdReponse();
                 }
             }
         }
+
 
         return $idReponseGagnante;
     }
