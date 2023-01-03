@@ -106,18 +106,6 @@ class ControllerReponses{
         }
     }
 
-    public static function vote(){
-        if(isset($_GET['idReponse'])){
-            $reponse = (new ReponsesRepository())->select($_GET['idReponse']);
-            $titleReponse = $reponse->getTitreReponse();
-            self::afficheVue('view.php', ['pagetitle' => 'VoteIt - Voter pour une réponse', 'cheminVueBody' => "reponses/voter.php", 'titleReponse' => $titleReponse]);
-        }else {
-            MessageFlash::ajouter("warning", "Identifiant Reponse manquant");
-            header("Location: frontController.php?controller=question&action=home");
-            exit();
-        }
-    }
-
     public static function error(){
         ControllerErreur::erreurCodeErreur('RC-1');
     }
@@ -214,20 +202,6 @@ class ControllerReponses{
         }else {
             header("Location: frontController.php?controller=questions&action=home");
             exit();
-        }
-    }
-
-    public static function voted(){
-        if(isset($_POST['idReponse'])){
-            (new VoteRepository())->vote((new ReponsesRepository())->selectReponseByIdReponse($_POST['idReponse']));
-            $reponse = (new ReponsesRepository())->selectReponseByIdReponse($_POST['idReponse']);
-
-            MessageFlash::ajouter("success", "Vous venez de voter pour la réponse.");
-            header("Location: frontController.php?controller=questions&action=see&idQuestion=".$reponse->getIdQuestion());
-            exit();
-        }else {
-            MessageFlash::ajouter('warning', "Identifiant Reponse manquant");
-            header("Location: frontController.php?controller=question&action=home");
         }
     }
 

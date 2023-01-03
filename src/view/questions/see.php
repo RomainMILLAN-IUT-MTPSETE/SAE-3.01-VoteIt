@@ -33,7 +33,9 @@ use \App\VoteIt\Model\Repository\ReponsesRepository;
             </a>
             <?php
         } else {
-            ?><button id="buttonTop-disable">Réponse Indisponible<img id="imgButtonTop" src="assets/questions/home/button-newquestion.png" alt="Icone de nouvelle reponse"></button><?php
+            ?><a href="frontController.php?controller=questions&action=vote&idQuestion=<?php echo(rawurlencode($_GET['idQuestion'])); ?>">
+                <button id="buttonTop">Voter pour cette réponse <img id="imgButtonTop" src="assets/reponses/see/like.png" alt="Icone de nouvelle reponse"></button>
+            </a><?php
         }
     }
 

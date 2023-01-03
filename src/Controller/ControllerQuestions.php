@@ -11,6 +11,7 @@ use App\VoteIt\Model\Repository\ReponsesRepository;
 use App\VoteIt\Model\Repository\SectionRepository;
 use App\VoteIt\Model\Repository\UtilisateurRepository;
 use \App\VoteIt\Model\Repository\CategorieRepository;
+use App\VoteIt\Model\Repository\VoteRepository;
 
 class ControllerQuestions{
     private static function afficheVue(string $cheminVue, array $parametres = []) : void {
@@ -77,6 +78,17 @@ class ControllerQuestions{
 
             $questions = (new QuestionsRepository())->recherche($search);
             self::afficheVue('view.php', ['pagetitle' => "VoteIt - Recherche: " . $search, 'cheminVueBody' => "questions/home.php", 'questions' => $questions]);
+        }
+    }
+
+    public static function vote(){
+        if(isset($_GET['idQuestion'])){
+            $reponses = (new ReponsesRepository())->selectAllReponeByQuestionId($_GET['idQuestion']);
+            self::afficheVue('view.php', ['pagetitle' => 'VoteIt - Voter pour une question', 'cheminVueBody' => "questions/voter.php", 'reponses' => $reponses]);
+        }else {
+            MessageFlash::ajouter("warning", "Identifiant Question manquant");
+            header("Location: frontController.php?controller=question&action=home");
+            exit();
         }
     }
 
@@ -306,6 +318,28 @@ class ControllerQuestions{
         MessageFlash::ajouter("danger","Question supprimée");
         header("Location: frontController.php?controller=questions&action=home");
         exit();
+    }
+
+    public static function voted(){
+        if(isset($_POST['idQuestion'])){
+            $reponsesQuestion = (new ReponsesRepository())->selectAllReponeByQuestionId($_POST['idQuestion']);
+
+            foreach($reponsesQuestion as $reponse){
+                if(isset($_POST[''.$reponse->getIdReponse()])){
+                    $vote = $_POST[$reponse->getIdReponse()];
+                    (new VoteRepository())->vote($reponse, $vote);
+                }else {
+                    (new VoteRepository())->vote($reponse, 0);
+                }
+            }
+
+            MessageFlash::ajouter("success", "Vous venez de voter pour la question.");
+            header("Location: frontController.php?controller=questions&action=see&idQuestion=".$reponse->getIdQuestion());
+            exit();
+        }else {
+            MessageFlash::ajouter('warning', "Identifiant question manquant");
+            header("Location: frontController.php?controller=question&action=home");
+        }
     }
 
 

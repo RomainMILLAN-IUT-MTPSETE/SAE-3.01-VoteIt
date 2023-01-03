@@ -55,22 +55,19 @@ class VoteRepository{
      * @return void
      */
     public function vote($reponse, $vote){
-        //USERCHANGE
-        if($this->stateVote($reponse->getIdQuestion(), ConnexionUtilisateur::getLoginUtilisateurConnecte())){
-            $pdo = Model::getPdo();
-            $query = "INSERT INTO ".$this->getNomTable()."(idQuestion, idReponse, idUtilisateur, :vote) VALUES(:idQuestion, :idReponse, :idUtilisateur, :vote);";
-            $pdoStatement = $pdo->prepare($query);
+        $pdo = Model::getPdo();
+        $query = "INSERT INTO ".$this->getNomTable()."(idQuestion, idReponse, idUtilisateur, vote) VALUES(:idQuestion, :idReponse, :idUtilisateur, :vote);";
+        $pdoStatement = $pdo->prepare($query);
 
-            $values = [
-                'idQuestion' => $reponse->getIdQuestion(),
-                'idReponse' => $reponse->getIdReponse(),
-                'idUtilisateur' => ConnexionUtilisateur::getLoginUtilisateurConnecte(),
-                'vote' => $vote];
+        $values = [
+            'idQuestion' => $reponse->getIdQuestion(),
+            'idReponse' => $reponse->getIdReponse(),
+            'idUtilisateur' => ConnexionUtilisateur::getLoginUtilisateurConnecte(),
+            'vote' => $vote];
 
-            $pdoStatement->execute($values);
+        $pdoStatement->execute($values);
 
-            //TO TEST: (new ReponsesRepository())->update(new Reponse($reponse->getIdReponse(), $reponse->getIdQuestion(), $reponse->getTitreReponse(), $reponse->getAutheurId()));
-        }
+        //TO TEST: (new ReponsesRepository())->update(new Reponse($reponse->getIdReponse(), $reponse->getIdQuestion(), $reponse->getTitreReponse(), $reponse->getAutheurId()));
     }
 
     /**
