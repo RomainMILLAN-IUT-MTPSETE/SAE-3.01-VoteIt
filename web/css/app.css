@@ -71,6 +71,12 @@ body {
   font-weight: bold;
 }
 
+.information-top{
+  text-align: center;
+  font-style: italic;
+  font-size: 12.5px;
+}
+
 
 .bolder {
   font-family: "Poppins Medium";

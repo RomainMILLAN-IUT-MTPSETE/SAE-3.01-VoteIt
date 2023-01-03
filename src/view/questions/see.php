@@ -32,10 +32,12 @@ use \App\VoteIt\Model\Repository\ReponsesRepository;
                 <button id="buttonTop">Proposer une Réponse <img id="imgButtonTop" src="assets/questions/home/button-newquestion.png" alt="Icone de nouvelle reponse"></button>
             </a>
             <?php
-        } else {
-            ?><a href="frontController.php?controller=questions&action=vote&idQuestion=<?php echo(rawurlencode($_GET['idQuestion'])); ?>">
-                <button id="buttonTop">Voter pour cette réponse <img id="imgButtonTop" src="assets/reponses/see/like.png" alt="Icone de nouvelle reponse"></button>
-            </a><?php
+        } else if($periodeVote) {
+            if($canVote){
+            }else {
+                ?><p class="information-top">Vous avez déja voter pour cette question</p><?php
+
+            }
         }
     }
 

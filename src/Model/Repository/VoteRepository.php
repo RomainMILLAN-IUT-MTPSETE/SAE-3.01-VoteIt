@@ -18,7 +18,7 @@ class VoteRepository{
     }
 
     /**
-     * Retourne le status de vote pour une question et un utilisateur
+     * Retourne le status de vote pour une question et un utilisateur | True= peut voter | False= ne peut pas voter
      * @param $idQuestion
      * @param $idUtilisateur
      * @return bool
