@@ -1,3 +1,6 @@
+<?php
+use \App\VoteIt\Model\Repository\QuestionsRepository;
+?>
 <link rel="stylesheet" href="css/Dashboard/dashboard-home.css">
 <section class="dashboard--container">
     <div class="title--section">
@@ -69,46 +72,90 @@
             </div>
         </div>
     </section>
-    <section class="dashboard-question-content">
-        <div class="question-tab-to-proposer">
-            <?php
-            if(count($idQuestionListToProposer) != 0){
-                ?>
-                <table>
-                    <thead>
-                    <th>#</th>
-                    <th>Autheur</th>
-                    <th>Titre</th>
-                    <th>Categorie</th>
-                    <th>Ecriture début</th>
-                    <th>Ecriture fin</th>
-                    <th>Vote début</th>
-                    <th>Vote fin</th>
-                    <th>Action</th>
-                    </thead>
-                    <tbody>
+    <section class="dashboard-content-all">
+        <section class="dashboard-column">
+            <section class="dashboard-content-table">
+                <h2 class="dashboard-content-title">Question Proposer:</h2>
+                <div class="tableau-dashboard">
                     <?php
-                    foreach ($idQuestionListToProposer as $item){
-                        $question = (new QuestionsRepository())->select($item);
+                    if(count($idQuestionListToProposer) != 0){
                         ?>
-
-                        <th><?php echo($item); ?></th>
-                        <th><?php echo($question->getAutheur()) ?></th>
-                        <th><?php echo($question->getTitreQuestion()) ?></th>
-                        <th><?php echo($question->getCategorieQuestion()) ?></th>
-                        <th><?php echo($question->getDateEcritureDebutFR()) ?></th>
-                        <th><?php echo($question->getDateEcritureFinFR()) ?></th>
-                        <th><?php echo($question->getDateVoteDebutFR()) ?></th>
-                        <th><?php echo($question->getDateVoteFinFR()) ?></th>
-                        <th><a href="frontController.php?controller=dashboard&action=changeProposerQuestion&id=<?php echo($item); ?>"><img src="assets/dashboard/edit.png" alt="Icone d'édition pour rendre un question visible"></a></th>
+                        <table>
+                            <thead>
+                            <th>#</th>
+                            <th>Autheur</th>
+                            <th>Titre</th>
+                            <th>Categorie</th>
+                            <th>Ecriture début</th>
+                            <th>Ecriture fin</th>
+                            <th>Vote début</th>
+                            <th>Vote fin</th>
+                            <th>Action</th>
+                            </thead>
+                            <tbody>
+                            <?php
+                            foreach ($idQuestionListToProposer as $item){
+                                $question = (new QuestionsRepository())->select($item);
+                                ?>
+                                <tr>
+                                    <th><?php echo($item); ?></th>
+                                    <th><?php echo($question->getAutheur()) ?></th>
+                                    <th><?php echo($question->getTitreQuestion()) ?></th>
+                                    <th><?php echo($question->getCategorieQuestion()) ?></th>
+                                    <th><?php echo($question->getDateEcritureDebutFR()) ?></th>
+                                    <th><?php echo($question->getDateEcritureFinFR()) ?></th>
+                                    <th><?php echo($question->getDateVoteDebutFR()) ?></th>
+                                    <th><?php echo($question->getDateVoteFinFR()) ?></th>
+                                    <th><a href="frontController.php?controller=dashboard&action=changeProposerQuestion&id=<?php echo($item); ?>"><img src="assets/dashboard/edit.png" alt="Icone d'édition pour rendre un question visible"></a></th>
+                                </tr>
+                                <?php
+                            }
+                            ?>
+                            </tbody>
+                        </table>
                         <?php
                     }
                     ?>
-                    </tbody>
-                </table>
-                <?php
-            }
-            ?>
-        </div>
+                </div>
+            </section>
+            <section class="dashboard-content-table">
+                <h2 class="dashboard-content-title">Question désactivée:</h2>
+                <div class="tableau-dashboard">
+                    <table>
+                            <thead>
+                                <th>#</th>
+                                <th>Autheur</th>
+                                <th>Titre</th>
+                                <th>Categorie</th>
+                                <th>Ecriture début</th>
+                                <th>Ecriture fin</th>
+                                <th>Vote début</th>
+                                <th>Vote fin</th>
+                                <th>Action</th>
+                            </thead>
+                            <tbody>
+                                <?php
+                                foreach ($idQuestionListDesactive as $item){
+                                    $question = (new QuestionsRepository())->select($item);
+                                    ?>
+                                    <tr>
+                                        <th><?php echo($item); ?></th>
+                                        <th><?php echo($question->getAutheur()) ?></th>
+                                        <th><?php echo($question->getTitreQuestion()) ?></th>
+                                        <th><?php echo($question->getCategorieQuestion()) ?></th>
+                                        <th><?php echo($question->getDateEcritureDebutFR()) ?></th>
+                                        <th><?php echo($question->getDateEcritureFinFR()) ?></th>
+                                        <th><?php echo($question->getDateVoteDebutFR()) ?></th>
+                                        <th><?php echo($question->getDateVoteFinFR()) ?></th>
+                                        <th><a href="frontController.php?controller=dashboard&action=changeDesactiveQuestion&id=<?php echo($item); ?>"><img src="assets/dashboard/edit.png" alt="Icone d'édition pour rendre un question visible"></a></th>
+                                    </tr>
+                                    <?php
+                                }
+                                ?>
+                            </tbody>
+                        </table>
+                </div>
+            </section>
+        </section>
     </section>
 </section>

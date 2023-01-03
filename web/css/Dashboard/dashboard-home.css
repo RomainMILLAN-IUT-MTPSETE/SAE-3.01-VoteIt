@@ -81,19 +81,45 @@
     line-height: 15px;
 }
 
-
-.question-tab-to-proposer{
-    width: 95vw;
+.dashboard-content-all{
     display: block;
     margin: auto;
 }
-.question-tab-to-proposer table {
+
+
+.dashboard-column{
+    display: flex;
+    flex-direction: column;
+    align-items: start;
+}
+.dashboard-content-title{
+    font-size: 20px;
+    margin-bottom: 0px;
+    margin-top: 0px;
+    text-decoration: underline;
+}
+
+.dashboard-content-table{
+    margin-left: 5%;
+}
+
+.tableau-dashboard{
+    width: 40vw;
+    display: block;
+    margin: auto;
+}
+.tableau-dashboard table {
     width: 100%;
     font-size: 20px;
+    margin-left: 10%;
 }
-.question-tab-to-proposer table thead th {
+.tableau-dashboard table thead th {
     font-weight: bold;
+    font-size: 17.5px;
 }
-.question-tab-to-proposer table img {
+.tableau-dashboard table tbody th{
+    font-size: 15px;
+}
+.tableau-dashboard table img {
     height: 20px;
 }

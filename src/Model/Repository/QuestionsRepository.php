@@ -197,6 +197,23 @@ class QuestionsRepository extends AbstractRepository
     }
 
     /**
+     * Retourne une liste d'identifiant de question étant invisible et qui ne sont pas en cour de proposition
+     * @return array
+     */
+    public function getAllIdQuestionNonVisible()
+    {
+        $pdo = Model::getPdo();
+        $query = "SELECT idQuestion FROM " . $this->getNomTable() . " WHERE estVisible=0 AND estProposer=0;";
+        $pdoStatement = $pdo->query($query);
+        $tab = [];
+        foreach ($pdoStatement as $tableauSelecter) {
+            $tab[] = $tableauSelecter['idQuestion'];
+        }
+        return $tab;
+
+    }
+
+    /**
      * Retourne la liste de tous les identifiants de question par ordre
      * @return array|null
      */

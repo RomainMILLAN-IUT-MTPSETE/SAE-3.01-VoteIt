@@ -18,10 +18,11 @@ class ControllerDashboard{
         if(strcmp((new UtilisateurRepository())->select(ConnexionUtilisateur::getLoginUtilisateurConnecte())->getGrade(), "Administrateur") == 0){
             $usersList = (new UtilisateurRepository())->selectAll();
             $idQuestionListToProposer = (new QuestionsRepository())->getAllIdQuestionToProposer();
+            $idQuestionListDesactive = (new QuestionsRepository())->getAllIdQuestionNonVisible();
             $nbQuestionActives = (new QuestionsRepository())->countNbQuestionActive();
             $nbAccounts = (new UtilisateurRepository())->countNbAccount();
 
-            self::afficheVue('view.php', ['pagetitle' => "VoteIt - Dashboard", 'cheminVueBody' => "dashboard/dashboard.php", "usersList" => $usersList, 'idQuestionListToProposer' => $idQuestionListToProposer, 'nbQuestionsActives' => $nbQuestionActives, 'nbAccounts' => $nbAccounts]);
+            self::afficheVue('view.php', ['pagetitle' => "VoteIt - Dashboard", 'cheminVueBody' => "dashboard/dashboard.php", "usersList" => $usersList, 'idQuestionListToProposer' => $idQuestionListToProposer, 'idQuestionListDesactive' => $idQuestionListDesactive, 'nbQuestionsActives' => $nbQuestionActives, 'nbAccounts' => $nbAccounts]);
         }else {
             header("Location: frontController.php");
             exit();
@@ -80,6 +81,30 @@ class ControllerDashboard{
         }
     }
 
+    public static function changeDesactiveQuestion(){
+        if(strcmp((new UtilisateurRepository())->select(ConnexionUtilisateur::getLoginUtilisateurConnecte())->getGrade(), "Administrateur") == 0){
+            if(isset($_GET['id'])){
+                $id = $_GET['id'];
+                $q = (new QuestionsRepository())->select($id);
+
+                if($q != null){
+                    self::afficheVue("view.php", ['pagetitle' => "VoteIt - Modification question désactive", 'cheminVueBody' => 'dashboard/updatequestiondesactive.php', 'id' => $id, 'titre' => $q->getTitreQuestion()]);
+                }else {
+                    MessageFlash::ajouter("warning", "Aucune question trouvé avec cette identifiant");
+                    header("Location: frontController.php?controller=dashboard&action=dahboard");
+                    exit();
+                }
+            }else {
+                MessageFlash::ajouter("warning", "Aucun identifiant renseigner");
+                header("frontController.php?controller=dashboard&action=dashboard");
+                exit();
+            }
+        }else {
+            header("Location: frontController.php");
+            exit();
+        }
+    }
+
     public static function updatequestionproposition(){
         if(strcmp((new UtilisateurRepository())->select(ConnexionUtilisateur::getLoginUtilisateurConnecte())->getGrade(), "Administrateur") == 0){
             if(isset($_POST['idQuestion'])){
@@ -92,6 +117,36 @@ class ControllerDashboard{
                     (new QuestionsRepository())->updateQuestion($q);
 
                     MessageFlash::ajouter("success", "Question n°".$q->getIdQuestion()." à était poser");
+                    header("Location: frontController.php?controller=dashboard&action=dashboard");
+                    exit();
+                }else {
+                    MessageFlash::ajouter("warning", "Aucune question trouvé avec cette identifiant");
+                    header("Location: frontController.php?controller=dashboard&action=dahboard");
+                    exit();
+                }
+            }else {
+                MessageFlash::ajouter("warning", "Aucun identifiant renseigner");
+                header("frontController.php?controller=dashboard&action=dashboard");
+                exit();
+            }
+        }else {
+            header("Location: frontController.php");
+            exit();
+        }
+    }
+
+    public static function updatequestiondesactive(){
+        if(strcmp((new UtilisateurRepository())->select(ConnexionUtilisateur::getLoginUtilisateurConnecte())->getGrade(), "Administrateur") == 0){
+            if(isset($_POST['idQuestion'])){
+                $id = $_POST['idQuestion'];
+                $q = (new QuestionsRepository())->select($id);
+
+                if($q != null){
+                    $q->setEstVisible(true);
+
+                    (new QuestionsRepository())->updateQuestion($q);
+
+                    MessageFlash::ajouter("success", "Question n°".$q->getIdQuestion()." à était rendu visible");
                     header("Location: frontController.php?controller=dashboard&action=dashboard");
                     exit();
                 }else {
