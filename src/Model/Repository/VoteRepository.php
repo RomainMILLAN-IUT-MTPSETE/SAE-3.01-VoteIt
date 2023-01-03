@@ -18,7 +18,7 @@ class VoteRepository{
     }
 
     /**
-     * Retourne le status de vote pour une question et un utilisateur
+     * Retourne le status de vote pour une question et un utilisateur | True= peut voter | False= ne peut pas voter
      * @param $idQuestion
      * @param $idUtilisateur
      * @return bool
@@ -54,23 +54,20 @@ class VoteRepository{
      * @param $reponse
      * @return void
      */
-    public function vote($reponse){
-        //USERCHANGE
-        if($this->stateVote($reponse->getIdQuestion(), ConnexionUtilisateur::getLoginUtilisateurConnecte())){
-            $pdo = Model::getPdo();
-            $query = "INSERT INTO ".$this->getNomTable()."(idQuestion, idReponse, idUtilisateur) VALUES(:idQuestion, :idReponse, :idUtilisateur);";
-            $pdoStatement = $pdo->prepare($query);
+    public function vote($reponse, $vote){
+        $pdo = Model::getPdo();
+        $query = "INSERT INTO ".$this->getNomTable()."(idQuestion, idReponse, idUtilisateur, vote) VALUES(:idQuestion, :idReponse, :idUtilisateur, :vote);";
+        $pdoStatement = $pdo->prepare($query);
 
-            //CHANGEUSER
-            $values = [
-                'idQuestion' => $reponse->getIdQuestion(),
-                'idReponse' => $reponse->getIdReponse(),
-                'idUtilisateur' => ConnexionUtilisateur::getLoginUtilisateurConnecte()];
+        $values = [
+            'idQuestion' => $reponse->getIdQuestion(),
+            'idReponse' => $reponse->getIdReponse(),
+            'idUtilisateur' => ConnexionUtilisateur::getLoginUtilisateurConnecte(),
+            'vote' => $vote];
 
-            $pdoStatement->execute($values);
+        $pdoStatement->execute($values);
 
-            (new ReponsesRepository())->update(new Reponse($reponse->getIdReponse(), $reponse->getIdQuestion(), $reponse->getTitreReponse(), $reponse->getAutheurId()));
-        }
+        //TO TEST: (new ReponsesRepository())->update(new Reponse($reponse->getIdReponse(), $reponse->getIdQuestion(), $reponse->getTitreReponse(), $reponse->getAutheurId()));
     }
 
     /**
@@ -96,5 +93,112 @@ class VoteRepository{
         $resultat = $resultatSQL['nbVote'];
 
         return $resultat;
+    }
+
+    /**
+     * Retourne le nombre de réponse par une identifiant de question
+     * @param $idQuestion
+     * @return float|int
+     */
+    public function getNbVoteForQuestion($idQuestion){
+        $pdo = Model::getPdo();
+        $sql = "SELECT COUNT(*) as nbVote FROM " . self::getNomTable() . " WHERE idQuestion=:idQuestion";
+        $pdoStatement = $pdo->prepare($sql);
+
+        $values = array(
+            "idQuestion" => $idQuestion
+        );
+
+        $pdoStatement->execute($values);
+        $resultatSQL = $pdoStatement->fetch();
+        $nbReponse = (new ReponsesRepository())->getNbReponseForQuestion($idQuestion);
+
+        $res = $resultatSQL['nbVote'] / $nbReponse;
+        return $res;
+    }
+
+    public function getIdReponseGagnante($idQuestion){
+        $pdo = Model::getPdo();
+        $query = "SELECT vote FROM " . $this->getNomTable() . " WHERE idQuestion=:idQuestion;";
+        $pdoStatement = $pdo->prepare($query);
+
+        $values = array(
+            "idQuestion" => $idQuestion
+        );
+
+        $pdoStatement->execute($values);
+
+
+        $resVote = [];
+        $allIdReponseForQuestion = (new ReponsesRepository())->selectAllReponeByQuestionId($idQuestion);
+        foreach ($allIdReponseForQuestion as $reponse) {
+            $resVote[$reponse->getIdReponse()] = $this->getVoteListeForIdReponseAndIdQuestion($idQuestion, $reponse->getIdReponse());
+        }
+
+        $nbVote = $this->getNbVoteForQuestion($idQuestion);
+
+        if($nbVote == 0){
+            $idReponseGagnante[] = -1;
+            return $idReponseGagnante;
+        }
+
+        if($nbVote%2 == 0){
+            //PAIR
+            $mediane = $nbVote/2;
+        }else {
+            //IMPAR
+            $mediane = ($nbVote/2) + 1;
+        }
+
+        $voteMax = -1;
+        $idReponseGagnante = [];
+
+        foreach($allIdReponseForQuestion as $item){
+            if($resVote[$item->getIdReponse()][$mediane] > $voteMax){
+                unset($idReponseGagnante);
+                $voteMax = $resVote[$item->getIdReponse()][$mediane];
+                $idReponseGagnante[] = $item->getIdReponse();
+            }else if($resVote[$item->getIdReponse()][$mediane] >= $voteMax){
+                $voteMax = $resVote[$item->getIdReponse()][$mediane];
+                $idReponseGagnante[] = $item->getIdReponse();
+            }
+        }
+
+        while(count($idReponseGagnante) > 1 && $mediane < $nbVote){
+            $mediane++;
+            $voteMax = -1;
+
+            foreach ($resVote as $item){
+                if(in_array($item, $idReponseGagnante)){
+                    if($item[$mediane] >= $voteMax){
+                        $voteMax = $item[$mediane];
+                    }else {
+                        unset($idReponseGagnante[$item]);
+                    }
+                }
+            }
+        }
+
+        return $idReponseGagnante;
+    }
+
+    public function getVoteListeForIdReponseAndIdQuestion($idQuestion, $idReponse){
+        $pdo = Model::getPdo();
+        $query = "SELECT vote FROM " . $this->getNomTable() . " WHERE idQuestion=:idQuestion AND idReponse=:idReponse";
+        $pdoStatement = $pdo->prepare($query);
+
+        $values = array(
+            "idQuestion" => $idQuestion,
+            "idReponse" => $idReponse
+        );
+
+        $pdoStatement->execute($values);
+
+        $res = [];
+        foreach ($pdoStatement as $item) {
+            $res[] = $item['vote'];
+        }
+
+        return $res;
     }
 }

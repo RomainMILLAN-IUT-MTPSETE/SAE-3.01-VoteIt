@@ -6,19 +6,22 @@ class Vote extends AbstractDataObject {
     private int $idQuestion;
     private int $idReponse;
     private String $idUtilisateur;
+    private int $vote;
 
     /**
      * @param int $idQuestion
      * @param int $idReponse
      * @param String $idUtilisateur
+     * @param int $vote
      */
-    public function __construct(int $idQuestion, int $idReponse, string $idUtilisateur)
+    public function
+    __construct(int $idQuestion, int $idReponse, string $idUtilisateur, int $vote)
     {
         $this->idQuestion = $idQuestion;
         $this->idReponse = $idReponse;
         $this->idUtilisateur = $idUtilisateur;
+        $this->vote = $vote;
     }
-
 
     public function formatTableau(): array
     {
@@ -26,6 +29,7 @@ class Vote extends AbstractDataObject {
             "idQuestion" => $this->getIdQuestion(),
             "idReponse" => $this->getIdReponse(),
             "idUtilisateur" => $this->getIdUtilisateur(),
+            "vote" => $this->getVote(),
         );
     }
 
@@ -81,4 +85,14 @@ class Vote extends AbstractDataObject {
     {
         $this->idUtilisateur = $idUtilisateur;
     }
+
+    /**
+     * @return int
+     */
+    public function getVote(): int
+    {
+        return $this->vote;
+    }
+
+
 }

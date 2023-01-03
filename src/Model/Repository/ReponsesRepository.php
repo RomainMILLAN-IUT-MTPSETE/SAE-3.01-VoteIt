@@ -222,6 +222,27 @@ class ReponsesRepository extends AbstractRepository{
         return $res;
     }
 
+    /**
+     * Retourne le nombre de réponse pour 1 question
+     * @param $idQuestion
+     * @return mixed
+     */
+    public function getNbReponseForQuestion($idQuestion){
+        $pdo = Model::getPdo();
+        $sql = "SELECT COUNT(idReponse) as nbReponse FROM " . self::getNomTable() . " WHERE idQuestion=:idQuestion";
+
+        $pdoStatement = $pdo->prepare($sql);
+
+        $values = [
+            'idQuestion' => $idQuestion];
+
+        $pdoStatement->execute($values);
+
+
+        $resultatSQL = $pdoStatement->fetch();
+        return $resultatSQL['nbReponse'];
+    }
+
 
 
     //A VERIFIER SI UTILISER

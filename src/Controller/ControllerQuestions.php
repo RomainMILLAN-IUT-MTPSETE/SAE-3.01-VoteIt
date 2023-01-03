@@ -11,6 +11,7 @@ use App\VoteIt\Model\Repository\ReponsesRepository;
 use App\VoteIt\Model\Repository\SectionRepository;
 use App\VoteIt\Model\Repository\UtilisateurRepository;
 use \App\VoteIt\Model\Repository\CategorieRepository;
+use App\VoteIt\Model\Repository\VoteRepository;
 
 class ControllerQuestions{
     private static function afficheVue(string $cheminVue, array $parametres = []) : void {
@@ -38,6 +39,7 @@ class ControllerQuestions{
             $sections = (new SectionRepository())->selectAllByIdQuestion($idQuestion);
             $auteur = (new \App\VoteIt\Model\Repository\UtilisateurRepository())->select($question->getAutheur());
             $allIdQuestion = (new QuestionsRepository())->allIdQuestion();
+            $nbVote = (new VoteRepository())->getNbVoteForQuestion($_GET['idQuestion']);
 
             $userEstReponsableQuestion = (new PermissionsRepository())->getPermissionReponsableDePropositionParIdUtilisateurEtIdQuestion($idQuestion, ConnexionUtilisateur::getLoginUtilisateurConnecte());
             $periodeReponse =  false;
@@ -53,6 +55,7 @@ class ControllerQuestions{
                 $periodeVote = true;
             }
 
+            $canVote = false;
             $canModifOrDelete = false;
             $user = null;
             if (ConnexionUtilisateur::estConnecte()) {
@@ -61,9 +64,17 @@ class ControllerQuestions{
                 if((strcmp($question->getAutheur(), $user->getIdentifiant()) == 0) or (strcmp($user->getGrade(), "Administrateur") == 0)){
                     $canModifOrDelete = true;
                 }
+
+                if((new VoteRepository())->stateVote($_GET['idQuestion'], ConnexionUtilisateur::getLoginUtilisateurConnecte())){
+                    $canVote = true;
+                }
             }
 
-            self::afficheVue('view.php', ['pagetitle' => "VoteIt - Questions", 'cheminVueBody' => "questions/see.php", "question" => $question, "reponses" => $reponses, "sections" => $sections, 'estReponsable' => $userEstReponsableQuestion, 'periodeReponse' => $periodeReponse, 'periodeVote' => $periodeVote, 'user' => $user, 'canModifOrDelete' => $canModifOrDelete, 'auteur' => $auteur, 'nbVoteMax' => $nbVoteMax, 'allIdQuestion' => $allIdQuestion]);
+            if($question->getDateVoteFin() <= $dateNow){
+                $idReponseGagnante = (new VoteRepository())->getIdReponseGagnante($_GET['idQuestion']);
+            }
+
+            self::afficheVue('view.php', ['pagetitle' => "VoteIt - Questions", 'cheminVueBody' => "questions/see.php", "question" => $question, "reponses" => $reponses, "sections" => $sections, 'estReponsable' => $userEstReponsableQuestion, 'periodeReponse' => $periodeReponse, 'periodeVote' => $periodeVote, 'user' => $user, 'canModifOrDelete' => $canModifOrDelete, 'auteur' => $auteur, 'nbVoteMax' => $nbVoteMax, 'allIdQuestion' => $allIdQuestion, 'nbVote' => $nbVote, 'canVote' => $canVote, 'idReponseGagnante' => $idReponseGagnante]);
         }else {
             MessageFlash::ajouter('warning', "Identifiant question manquant");
             header("Location: frontController.php?controller=questions&action=home");
@@ -77,6 +88,17 @@ class ControllerQuestions{
 
             $questions = (new QuestionsRepository())->recherche($search);
             self::afficheVue('view.php', ['pagetitle' => "VoteIt - Recherche: " . $search, 'cheminVueBody' => "questions/home.php", 'questions' => $questions]);
+        }
+    }
+
+    public static function vote(){
+        if(isset($_GET['idQuestion'])){
+            $reponses = (new ReponsesRepository())->selectAllReponeByQuestionId($_GET['idQuestion']);
+            self::afficheVue('view.php', ['pagetitle' => 'VoteIt - Voter pour une question', 'cheminVueBody' => "questions/voter.php", 'reponses' => $reponses]);
+        }else {
+            MessageFlash::ajouter("warning", "Identifiant Question manquant");
+            header("Location: frontController.php?controller=question&action=home");
+            exit();
         }
     }
 
@@ -306,6 +328,28 @@ class ControllerQuestions{
         MessageFlash::ajouter("danger","Question supprimée");
         header("Location: frontController.php?controller=questions&action=home");
         exit();
+    }
+
+    public static function voted(){
+        if(isset($_POST['idQuestion'])){
+            $reponsesQuestion = (new ReponsesRepository())->selectAllReponeByQuestionId($_POST['idQuestion']);
+
+            foreach($reponsesQuestion as $reponse){
+                if(isset($_POST[''.$reponse->getIdReponse()])){
+                    $vote = $_POST[$reponse->getIdReponse()];
+                    (new VoteRepository())->vote($reponse, $vote);
+                }else {
+                    (new VoteRepository())->vote($reponse, 0);
+                }
+            }
+
+            MessageFlash::ajouter("success", "Vous venez de voter pour la question.");
+            header("Location: frontController.php?controller=questions&action=see&idQuestion=".$reponse->getIdQuestion());
+            exit();
+        }else {
+            MessageFlash::ajouter('warning', "Identifiant question manquant");
+            header("Location: frontController.php?controller=question&action=home");
+        }
     }
 
 

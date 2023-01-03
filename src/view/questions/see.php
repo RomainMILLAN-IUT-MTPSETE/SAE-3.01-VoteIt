@@ -32,8 +32,12 @@ use \App\VoteIt\Model\Repository\ReponsesRepository;
                 <button id="buttonTop">Proposer une Réponse <img id="imgButtonTop" src="assets/questions/home/button-newquestion.png" alt="Icone de nouvelle reponse"></button>
             </a>
             <?php
-        } else {
-            ?><button id="buttonTop-disable">Réponse Indisponible<img id="imgButtonTop" src="assets/questions/home/button-newquestion.png" alt="Icone de nouvelle reponse"></button><?php
+        } else if($periodeVote) {
+            if($canVote){
+            }else {
+                ?><p class="information-top">Vous avez déja voter pour cette question</p><?php
+
+            }
         }
     }
 
@@ -56,6 +60,7 @@ use \App\VoteIt\Model\Repository\ReponsesRepository;
             </h2>
             <p class="title-question-p"><span class="bolder">Titre: </span><?php echo(htmlspecialchars($question->getTitreQuestion())) ?></p>
             <p><span class="bolder">Auteur: </span><?php echo(htmlspecialchars($auteur->getNom()) . " " . htmlspecialchars($auteur->getPrenom())) ?></p>
+            <p><span class="bolder">Nombre de vote: </span><?php echo(htmlspecialchars($nbVote)) ?></p>
         </div>
 
         <div class="sub-see-question-container">
@@ -122,64 +127,64 @@ use \App\VoteIt\Model\Repository\ReponsesRepository;
         $dateNow = date("Y-m-d");
 
         if ($question->getDateVoteFin() < $dateNow) {
-            if($nbVoteMax == -1){
-                foreach($reponses as $item){
+            if(count($idReponseGagnante) > 1){
+                foreach ($reponses as $item){
+                    if(in_array($item->getIdReponse(), $idReponseGagnante)){
+                        ?>
+                        <a href="frontController.php?controller=reponses&action=see&idReponse=<?php echo(rawurlencode($item->getIdReponse())) ?>&seeId=<?php echo($i); ?>">
+                            <div class="reponse-id--container">
+                                <p class="reponse-number">Réponse <span class="colored">Ex-Aequo</span></p>
+                                <p class="reponse-title"><?php echo(htmlspecialchars($item->getTitreReponse())) ?></p>
+                                <div class="autheur-and-nb-vote--container">
+                                    <?php
+                                    $autheur = (new UtilisateurRepository())->select($item->getAutheurId());
+                                    ?>
+                                    <p class="autheur-reponse">
+                                        Auteur: <?php echo(htmlspecialchars($autheur->getNom()) . " " . htmlspecialchars($autheur->getPrenom())) ?></p>
+                                </div>
+                            </div>
+                        </a>
+                        <?php
+                    }
+                }
+            }else if($idReponseGagnante[0] > -1) {
+                foreach ($reponses as $item){
+                    if($item->getIdReponse() == $idReponseGagnante[0]){
+                        ?>
+                        <a href="frontController.php?controller=reponses&action=see&idReponse=<?php echo(rawurlencode($item->getIdReponse())) ?>&seeId=<?php echo($i); ?>">
+                            <div class="reponse-id--container">
+                                <p class="reponse-number">Réponse <span class="colored">Gagnante</span></p>
+                                <p class="reponse-title"><?php echo(htmlspecialchars($item->getTitreReponse())) ?></p>
+                                <div class="autheur-and-nb-vote--container">
+                                    <?php
+                                    $autheur = (new UtilisateurRepository())->select($item->getAutheurId());
+                                    ?>
+                                    <p class="autheur-reponse">
+                                        Auteur: <?php echo(htmlspecialchars($autheur->getNom()) . " " . htmlspecialchars($autheur->getPrenom())) ?></p>
+                                </div>
+                            </div>
+                        </a>
+                        <?php
+                    }
+                }
+            }else {
+                foreach ($reponses as $item) {
                     ?>
                     <a href="frontController.php?controller=reponses&action=see&idReponse=<?php echo(rawurlencode($item->getIdReponse())) ?>&seeId=<?php echo($i); ?>">
                         <div class="reponse-id--container">
-                            <p class="reponse-number">Réponse <span class="red">non valide</span></p>
+                            <p class="reponse-number">Réponse <span class="red">Non valide</span></p>
                             <p class="reponse-title"><?php echo(htmlspecialchars($item->getTitreReponse())) ?></p>
                             <div class="autheur-and-nb-vote--container">
-                                <?php $autheur = (new UtilisateurRepository())->select($item->getAutheurId()); ?>
-                                <p class="autheur-reponse">Auteur: <?php echo(htmlspecialchars($autheur->getNom()) . " " . htmlspecialchars($autheur->getPrenom())) ?></p>
-                                <span class="nbVote-reponse"><img src="assets/questions/see/like.png" alt="Icone LikeVoteNombre"><?php echo(htmlspecialchars((VoteRepository::getNbVoteForReponse($item->getIdReponse())))); ?></span>
+                                <?php
+                                $autheur = (new UtilisateurRepository())->select($item->getAutheurId());
+                                ?>
+                                <p class="autheur-reponse">
+                                    Auteur: <?php echo(htmlspecialchars($autheur->getNom()) . " " . htmlspecialchars($autheur->getPrenom())) ?></p>
                             </div>
                         </div>
                     </a>
                     <?php
-                }
-            }else {
-                $idMaxVote = (new ReponsesRepository())->getIdReponseWithVoteMaxParIdQuestion($question->getIdQuestion());
-
-                foreach ($reponses as $item) {
-                    if(count($idMaxVote) > 1){
-                        for ($r=0; $r<count($idMaxVote); $r++) {
-                            if($item->getIdReponse() == $idMaxVote[$r]){
-                                $idMaxVote[$r] = -1;
-                                ?>
-                                <a href="frontController.php?controller=reponses&action=see&idReponse=<?php echo(rawurlencode($item->getIdReponse())) ?>&seeId=<?php echo($i); ?>">
-                                    <div class="reponse-id--container">
-                                        <p class="reponse-number">Réponse <span class="colored">gagnante ex-aequo</span></p>
-                                        <p class="reponse-title"><?php echo(htmlspecialchars($item->getTitreReponse())) ?></p>
-                                        <div class="autheur-and-nb-vote--container">
-                                            <?php $autheur = (new UtilisateurRepository())->select($item->getAutheurId()); ?>
-                                            <p class="autheur-reponse">Auteur: <?php echo(htmlspecialchars($autheur->getNom()) . " " . htmlspecialchars($autheur->getPrenom())) ?></p>
-                                            <span class="nbVote-reponse"><img src="assets/questions/see/like.png" alt="Icone LikeVoteNombre"><?php echo(htmlspecialchars((VoteRepository::getNbVoteForReponse($item->getIdReponse())))); ?></span>
-                                        </div>
-                                    </div>
-                                </a>
-                                <?php
-                            }
-                        }
-                    }else {
-                        if($item->getIdReponse() == $idMaxVote[0]){
-                            ?>
-                            <a href="frontController.php?controller=reponses&action=see&idReponse=<?php echo(rawurlencode($item->getIdReponse())) ?>&seeId=<?php echo($i); ?>">
-                                <div class="reponse-id--container">
-                                    <p class="reponse-number">Réponse <span class="colored">gagnante</span></p>
-                                    <p class="reponse-title"><?php echo(htmlspecialchars($item->getTitreReponse())) ?></p>
-                                    <div class="autheur-and-nb-vote--container">
-                                        <?php $autheur = (new UtilisateurRepository())->select($item->getAutheurId());?>
-                                        <p class="autheur-reponse">Auteur: <?php echo(htmlspecialchars($autheur->getNom()) . " " . htmlspecialchars($autheur->getPrenom())) ?></p>
-                                        <span class="nbVote-reponse"><img src="assets/questions/see/like.png" alt="Icone LikeVoteNombre"><?php echo(htmlspecialchars((VoteRepository::getNbVoteForReponse($item->getIdReponse())))); ?></span>
-                                    </div>
-                                </div>
-                            </a>
-                            <?php
-                        }
-                    }
-
-
+                    $i++;
                 }
             }
         }else {
@@ -195,8 +200,6 @@ use \App\VoteIt\Model\Repository\ReponsesRepository;
                             ?>
                             <p class="autheur-reponse">
                                 Auteur: <?php echo(htmlspecialchars($autheur->getNom()) . " " . htmlspecialchars($autheur->getPrenom())) ?></p>
-                            <span class="nbVote-reponse"><img src="assets/questions/see/like.png"
-                                                              alt="Icone LikeVoteNombre"><?php echo(htmlspecialchars((VoteRepository::getNbVoteForReponse($item->getIdReponse())))); ?></span>
                         </div>
                     </div>
                 </a>
