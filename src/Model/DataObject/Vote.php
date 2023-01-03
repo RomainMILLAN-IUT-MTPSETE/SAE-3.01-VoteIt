@@ -94,5 +94,5 @@ class Vote extends AbstractDataObject {
         return $this->vote;
     }
 
-    
+
 }
