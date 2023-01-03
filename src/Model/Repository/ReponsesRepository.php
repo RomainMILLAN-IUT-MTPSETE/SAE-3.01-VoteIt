@@ -13,7 +13,8 @@ class ReponsesRepository extends AbstractRepository{
 
     protected function construire(array $objetFormatTableau)
     {
-        return new Reponse($objetFormatTableau['idReponse'], $objetFormatTableau['idQuestion'], $objetFormatTableau['titreReponse'], $objetFormatTableau['autheurId']);
+        $objetFormatTableau['estVisible'] == 1 ? $estVisible = true : $estVisible = false;
+        return new Reponse($objetFormatTableau['idReponse'], $objetFormatTableau['idQuestion'], $objetFormatTableau['titreReponse'], $objetFormatTableau['autheurId'], $estVisible);
     }
 
     protected function getNomClePrimaire(): string
@@ -26,7 +27,8 @@ class ReponsesRepository extends AbstractRepository{
         return [ 0 => 'idReponse',
             1 => 'idQuestion',
             2 => 'titreReponse',
-            3 => 'autheurId'];
+            3 => 'autheurId',
+            4 => 'estVisible'];
     }
 
 
@@ -98,14 +100,15 @@ class ReponsesRepository extends AbstractRepository{
      */
     public function createReponse(Reponse $reponse){
         $pdo = Model::getPdo();
-        $query = "INSERT INTO ".$this->getNomTable()."(idReponse, idQuestion, titreReponse, autheurId) VALUES(:idReponse, :idQuestion, :titreReponse, :autheurId);";
+        $query = "INSERT INTO ".$this->getNomTable()."(idReponse, idQuestion, titreReponse, autheurId, estVisible) VALUES(:idReponse, :idQuestion, :titreReponse, :autheurId, :estVisible);";
         $pdoStatement = $pdo->prepare($query);
 
         $values = [
             'idReponse' => $reponse->getIdReponse(),
             'idQuestion' => $reponse->getIdQuestion(),
             'titreReponse' => $reponse->getTitreReponse(),
-            'autheurId' => $reponse->getAutheurId()];
+            'autheurId' => $reponse->getAutheurId(),
+            'estVisible' => 1];
 
         $pdoStatement->execute($values);
     }

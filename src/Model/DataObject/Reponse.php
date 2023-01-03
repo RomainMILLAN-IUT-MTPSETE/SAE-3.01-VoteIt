@@ -8,20 +8,23 @@ class Reponse extends AbstractDataObject
     private string $idQuestion;
     private string $titreReponse;
     private string $autheurId;
+    private bool $estVisible;
 
     /**
-     * @param String $idReponse
-     * @param String $idQuestion
-     * @param String $nbVote
+     * @param string $idReponse
+     * @param string $idQuestion
+     * @param string $titreReponse
+     * @param string $autheurId
+     * @param bool $estVisible
      */
-    public function __construct(string $idReponse, string $idQuestion, string $titreReponse, string $autheurId)
+    public function __construct(string $idReponse, string $idQuestion, string $titreReponse, string $autheurId, bool $estVisible)
     {
         $this->idReponse = $idReponse;
         $this->idQuestion = $idQuestion;
         $this->titreReponse = $titreReponse;
         $this->autheurId = $autheurId;
+        $this->estVisible = $estVisible;
     }
-
 
     public function formatTableau(): array
     {
@@ -30,6 +33,7 @@ class Reponse extends AbstractDataObject
             "idQuestion" => $this->getIdQuestion(),
             "titreReponse" => $this->getTitreReponse(),
             "autheurId" => $this->getAutheurId(),
+            "estVisible" => $this->isEstVisible(),
         );
     }
 
@@ -101,6 +105,16 @@ class Reponse extends AbstractDataObject
     {
         $this->titreReponse = $titreReponse;
     }
+
+    /**
+     * @return bool
+     */
+    public function isEstVisible(): bool
+    {
+        return $this->estVisible;
+    }
+
+
 
 
 }
