@@ -113,7 +113,7 @@ class VoteRepository{
         $resultatSQL = $pdoStatement->fetch();
         $nbReponse = (new ReponsesRepository())->getNbReponseForQuestion($idQuestion);
 
-        $res = $resultatSQL['nbVote'] / $nbReponse;
+        $nbReponse > 0 ? $res = $resultatSQL['nbVote'] / $nbReponse : $res = 0;
         return $res;
     }
 
@@ -164,10 +164,25 @@ class VoteRepository{
             }
         }
 
-        while(count($idReponseGagnante) > 1 && $mediane <= $nbVote){
-            foreach($allIdReponseForQuestion as $item){
-                unset($resVote[$item->getIdReponse()][$mediane]);
+
+        while(count($idReponseGagnante) > 1 && $mediane <= $nbVote && $mediane > 0 ){
+            foreach ($allIdReponseForQuestion as $reponse){
+                $list = [];
+
+                $indice = 0;
+                for($i=0; $i<$nbVote; $i++){
+                    if($i != $mediane){
+                        $list[$indice] = $resVote[$reponse->getIdReponse()][$indice];
+                        $indice++;
+                    }
+                }
+
+                unset($resVote[$reponse->getIdReponse()]);
+                $resVote[$reponse->getIdReponse()] = $list;
             }
+            $nbVote--;
+
+
 
             if($nbVote > 0){
                 $nbVote--;
@@ -183,16 +198,18 @@ class VoteRepository{
             }
 
             $voteMax = -1;
-
+            var_dump($resVote);
             foreach($allIdReponseForQuestion as $item){
                 if($resVote[$item->getIdReponse()][$mediane] > $voteMax){
                     unset($idReponseGagnante);
                     $voteMax = $resVote[$item->getIdReponse()][$mediane];
                     $idReponseGagnante[] = $item->getIdReponse();
-                }else if($resVote[$item->getIdReponse()][$mediane] >= $voteMax){
+                }else if($resVote[$item->getIdReponse()][$mediane] == $voteMax){
                     $idReponseGagnante[] = $item->getIdReponse();
                 }
             }
+            echo("<br/><br/>");
+            var_dump($idReponseGagnante);
         }
 
 

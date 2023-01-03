@@ -33,11 +33,33 @@ class ReponsesRepository extends AbstractRepository{
 
 
     /**
-     * Selectionner toutes les réponses d'une question
+     * Selectionner toutes les réponses d'une question qui sont actuellement visible pour les utilisateur
      * @param String $idQuestion
      * @return array
      */
     public function selectAllReponeByQuestionIdWhereIsVisible(String $idQuestion){
+        $pdo = Model::getPdo();
+        $query = "SELECT * FROM ".$this->getNomTable()." WHERE idQuestion='".$idQuestion."' AND estVisible=1;";
+        $pdoStatement = $pdo->query($query);
+
+        $tab = [];
+
+        foreach ($pdoStatement as $tableauSelecter) {
+
+            $tab[] = $this->construire($tableauSelecter);
+
+        }
+
+        return $tab;
+
+    }
+
+    /**
+     * Selectionner toutes les réponses d'une question
+     * @param String $idQuestion
+     * @return array
+     */
+    public function selectAllReponeByQuestionId(String $idQuestion){
         $pdo = Model::getPdo();
         $query = "SELECT * FROM ".$this->getNomTable()." WHERE idQuestion='".$idQuestion."' AND estVisible=1;";
         $pdoStatement = $pdo->query($query);
