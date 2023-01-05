@@ -382,6 +382,7 @@ class ControllerQuestions{
             $pdf = new QuestionPDFGenerator();
             $pdf->AliasNbPages();
             $pdf->AddPage();
+            $pdf->SetTitle("Resultat Question -> ".$question->getTitreQuestion());
 
             //QUESTION
             //Title
@@ -402,8 +403,13 @@ class ControllerQuestions{
             $pdf->Cell(0, 10, utf8_decode('Réponse gagnante'), 'B', 1);
 
             $idReponseGagnante = (new VoteRepository())->getIdReponseGagnante($_GET['idQuestion']);
+            $idReponsePDF = (new ReponsesRepository())->selectAllReponeByQuestionIdWhereIsVisible($question->getIdQuestion());
 
-            foreach ($idReponseGagnante as $item){
+            if(count($idReponseGagnante) > 0){
+                $idReponsePDF = $idReponseGagnante;
+            }
+
+            foreach ($idReponsePDF as $item){
                 $reponse = (new ReponsesRepository())->select($item);
 
                 $pdf->SetFont('Arial', '', 14);
@@ -424,7 +430,9 @@ class ControllerQuestions{
             }
 
 
-            $pdf->Output();
+
+
+            $pdf->Output('I', 'VoteItQuestionReport.pdf', true);
         }else {
             MessageFlash::ajouter("warning", "Identifiant Question manquant");
             header("Location: frontController.php?controller=questions&action=home");
