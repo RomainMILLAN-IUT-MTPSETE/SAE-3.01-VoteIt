@@ -162,6 +162,22 @@ class ControllerQuestions{
         }
     }
 
+    public static function departageQuestion(){
+        if(isset($_GET['idQuestion'])){
+            $idReponseGagnanteEnAttente = (new VoteRepository())->getIdReponseGagnante($_GET['idQuestion']);
+            $reponse = [];
+            foreach ($idReponseGagnanteEnAttente as $item){
+                $reponse[] = (new ReponsesRepository())->select($item);
+            }
+
+            self::afficheVue('view.php', ['pagetitle' => "VoteIt - Départagage de réponse", 'cheminVueBody' => "questions/departager.php", 'reponsesList' => $reponse]);
+        }else {
+            MessageFlash::ajouter("warning", "Identifiant Question manquant");
+            header("Location: frontController.php?controller=questions&action=home");
+            exit();
+        }
+    }
+
     public static function error(){
         MessageFlash::ajouter("warning", "Erreur sur la page de question");
         header("Location: frontController.php?controller=home&action=home");
@@ -454,7 +470,30 @@ class ControllerQuestions{
         }
     }
 
+    public static function departagedQuestion(){
+        if(isset($_POST['reponseSelect']) AND isset($_POST['idQuestion'])){
+            $reponse = (new ReponsesRepository())->select($_POST['reponseSelect']);
+            $reponsesQuestion = (new ReponsesRepository())->selectAllReponeByQuestionId($_POST['idQuestion']);
 
+            foreach($reponsesQuestion as $item){
+                if($item->getIdReponse() == $reponse->getIdReponse()){
+                    (new VoteRepository())->departagementReponse($item, true);
+                }else {
+                    (new VoteRepository())->departagementReponse($item, false);
+                }
+            }
+
+
+
+            MessageFlash::ajouter("success", "Départagement de vote réussi");
+            header("Location: frontController.php?controller=questions&action=see&idQuestion=".$_POST['idQuestion']);
+            exit();
+        }else {
+            MessageFlash::ajouter("warning", 'Aucune sélection trouvé');
+            header("Location: frontController.php?controller=questions&action=home");
+            exit();
+        }
+    }
 
 
 

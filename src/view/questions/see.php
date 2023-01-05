@@ -69,6 +69,13 @@ use \App\VoteIt\Model\Repository\ReponsesRepository;
                             <img class="ml12px" src="assets/questions/see/pdf.png" alt="Icone PDF"/>
                         </a>
                         <?php
+                        if($idReponseGagnante[0] != 1 && count($idReponseGagnante) > 1){
+                            ?>
+                            <a href="frontController.php?controller=questions&action=departageQuestion&idQuestion=<?php echo(rawurlencode($_GET['idQuestion'])) ?>">
+                                <img class="ml12px" src="assets/questions/see/split.png" alt="Icone departagage"/>
+                            </a>
+                            <?php
+                        }
                     }
                 } ?>
             </h2>

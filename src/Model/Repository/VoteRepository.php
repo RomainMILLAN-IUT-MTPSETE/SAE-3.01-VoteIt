@@ -71,6 +71,36 @@ class VoteRepository{
     }
 
     /**
+     * Permet de voter pour l'utilisateur courant
+     * @param $reponse
+     * @return void
+     */
+    public function departagementReponse($reponse, $estGagnante){
+        $pdo = Model::getPdo();
+        $query = "INSERT INTO ".$this->getNomTable()."(idQuestion, idReponse, idUtilisateur, vote) VALUES(:idQuestion, :idReponse, :idUtilisateur, :vote);";
+        $pdoStatement = $pdo->prepare($query);
+
+        if($estGagnante){
+            $values = [
+                'idQuestion' => $reponse->getIdQuestion(),
+                'idReponse' => $reponse->getIdReponse(),
+                'idUtilisateur' => 'admin',
+                'vote' => '5'];
+        }else{
+            $values = [
+                'idQuestion' => $reponse->getIdQuestion(),
+                'idReponse' => $reponse->getIdReponse(),
+                'idUtilisateur' => 'admin',
+                'vote' => '0'];
+        }
+
+
+        $pdoStatement->execute($values);
+
+        //TO TEST: (new ReponsesRepository())->update(new Reponse($reponse->getIdReponse(), $reponse->getIdQuestion(), $reponse->getTitreReponse(), $reponse->getAutheurId()));
+    }
+
+    /**
      * Retourne le nombre de vote pour une réponse
      * @param $idReponse
      * @return mixed
@@ -198,7 +228,6 @@ class VoteRepository{
             }
 
             $voteMax = -1;
-            var_dump($resVote);
             foreach($allIdReponseForQuestion as $item){
                 if($resVote[$item->getIdReponse()][$mediane] > $voteMax){
                     unset($idReponseGagnante);

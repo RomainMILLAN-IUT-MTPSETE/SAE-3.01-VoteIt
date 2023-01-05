@@ -137,6 +137,22 @@ a {
 hr{
     margin-top: 25px;
 }
-.titre
+
+#question-reponse-departagement{
+    display: flex;
+    flex-direction: row;
+    width: 400px;
+    margin-top: 15px;
+}
+#question-reponse-departagement input{
+    height: 20px;
+    margin-top: 0px;
+    width: 20px;
+}
+#question-reponse-departagement label{
+    margin-top: 0px;
+    margin-left: 0px;
+    width: 90%;
+}
 
 
