@@ -441,7 +441,7 @@ class ControllerQuestions{
             }
 
 
-            foreach ($idReponsePDF as $reponse){
+            foreach ($reponsePDF as $reponse){
                 $pdf->SetFont('Arial', '', 14);
                 $pdf->SetDrawColor(0, 204, 0);
                 $pdf->Cell(5, 12.5, ">", 0, 0);
