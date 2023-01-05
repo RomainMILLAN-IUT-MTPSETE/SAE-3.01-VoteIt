@@ -96,10 +96,13 @@ class ControllerQuestions{
 
     public static function recherche(){
         if(isset($_GET['search'])){
+            $peutProposerQuestion = self::getPeutProposerQuestion();
+            $peutPoserQuestion = self::getPeutPoserQuestion();
+
             $search = $_GET['search'];
 
             $questions = (new QuestionsRepository())->recherche($search);
-            self::afficheVue('view.php', ['pagetitle' => "VoteIt - Recherche: " . $search, 'cheminVueBody' => "questions/home.php", 'questions' => $questions]);
+            self::afficheVue('view.php', ['pagetitle' => "VoteIt - Recherche: " . $search, 'cheminVueBody' => "questions/home.php", 'questions' => $questions, 'peutPoserQuestion' => $peutPoserQuestion, 'peutProposerQuestion' => $peutProposerQuestion]);
         }
     }
 
