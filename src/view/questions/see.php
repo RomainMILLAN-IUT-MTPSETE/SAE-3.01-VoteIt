@@ -66,7 +66,7 @@ use \App\VoteIt\Model\Repository\ReponsesRepository;
                     if($periodeVoteFini){
                         ?>
                         <a href="frontController.php?controller=questions&action=pdf&idQuestion=<?php echo(rawurlencode($_GET['idQuestion'])) ?>" target="_blank">
-                            <img class="ml12px" src="assets/questions/see/edit.png" alt="Icone PDF"/>
+                            <img class="ml12px" src="assets/questions/see/pdf.png" alt="Icone PDF"/>
                         </a>
                         <?php
                     }
