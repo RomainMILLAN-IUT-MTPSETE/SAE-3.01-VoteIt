@@ -54,14 +54,23 @@ use \App\VoteIt\Model\Repository\ReponsesRepository;
     <section class="sect-see-question">
         <div class="sub-see-question-container">
             <h2><span class="title-sub-see-question">Détail de la question<span class="colored">:</span></span>
-                <?php if ($canModifOrDelete == true) { ?>
+                <?php
+                if ($canModifOrDelete) { ?>
                     <a href="frontController.php?controller=questions&action=update&idQuestion=<?php echo(rawurlencode($_GET['idQuestion'])) ?>">
                         <img class="ml12px" src="assets/questions/see/edit.png" alt="nope">
                     </a>
                     <a href="frontController.php?controller=questions&action=delete&idQuestion=<?php echo(rawurlencode($_GET['idQuestion'])) ?>">
                         <img class="ml8px" src="assets/questions/see/delete.png" alt="nope">
                     </a>
-                <?php } ?>
+                <?php
+                    if($periodeVoteFini){
+                        ?>
+                        <a href="frontController.php?controller=questions&action=pdf&idQuestion=<?php echo(rawurlencode($_GET['idQuestion'])) ?>">
+                            <img class="ml12px" src="assets/questions/see/edit.png" alt="Icone PDF"/>
+                        </a>
+                        <?php
+                    }
+                } ?>
             </h2>
             <p class="title-question-p"><span class="bolder">Titre: </span><?php echo(htmlspecialchars($question->getTitreQuestion())) ?></p>
             <p><span class="bolder">Auteur: </span><?php echo(htmlspecialchars($auteur->getNom()) . " " . htmlspecialchars($auteur->getPrenom())) ?></p>
@@ -131,7 +140,7 @@ use \App\VoteIt\Model\Repository\ReponsesRepository;
         $i = 1;
         $dateNow = date("Y-m-d");
 
-        if ($question->getDateVoteFin() < $dateNow) {
+        if ($periodeVoteFini) {
             if(count($idReponseGagnante) > 1){
                 foreach ($reponses as $item){
                     if(in_array($item->getIdReponse(), $idReponseGagnante)){

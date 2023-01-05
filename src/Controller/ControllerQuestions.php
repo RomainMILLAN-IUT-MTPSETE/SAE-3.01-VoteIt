@@ -2,18 +2,23 @@
 namespace App\VoteIt\Controller;
 
 use App\VoteIt\Lib\ConnexionUtilisateur;
+use App\VoteIt\Lib\FPDF;
 use App\VoteIt\Lib\MessageFlash;
 use App\VoteIt\Lib\MotDePasse;
+use App\VoteIt\Lib\QuestionPDFGenerator;
 use App\VoteIt\Model\DataObject\Question;
 use App\VoteIt\Model\DataObject\Section;
+use App\VoteIt\Model\DataObject\Vote;
 use App\VoteIt\Model\Repository\PermissionsRepository;
 use App\VoteIt\Model\Repository\QuestionsRepository;
+use App\VoteIt\Model\Repository\ReponseSectionRepository;
 use App\VoteIt\Model\Repository\ReponsesRepository;
 use App\VoteIt\Model\Repository\SectionRepository;
 use App\VoteIt\Model\Repository\UtilisateurRepository;
 use \App\VoteIt\Model\Repository\CategorieRepository;
 use App\VoteIt\Model\Repository\VoteRepository;
 use http\Message;
+use PDF;
 
 class ControllerQuestions{
     private static function afficheVue(string $cheminVue, array $parametres = []) : void {
@@ -46,6 +51,7 @@ class ControllerQuestions{
             $userEstReponsableQuestion = (new PermissionsRepository())->getPermissionReponsableDePropositionParIdUtilisateurEtIdQuestion($idQuestion, ConnexionUtilisateur::getLoginUtilisateurConnecte());
             $periodeReponse =  false;
             $periodeVote = false;
+            $periodeVoteFini = false;
             $nbVoteMax = (new ReponsesRepository())->getNbVoteMax($question->getIdQuestion());
 
             $dateNow = date("Y-m-d");
@@ -55,6 +61,8 @@ class ControllerQuestions{
             }else if($question->getDateEcritureFin() <= $dateNow && $question->getDateVoteDebut() <= $dateNow && $dateNow <= $question->getDateVoteFin()){
                 $periodeReponse = false;
                 $periodeVote = true;
+            }else if($question->getDateVoteFin() <= $dateNow){
+                $periodeVoteFini = true;
             }
 
             $canVote = false;
@@ -78,7 +86,7 @@ class ControllerQuestions{
                 $idReponseGagnante = null;
             }
 
-            self::afficheVue('view.php', ['pagetitle' => "VoteIt - Questions", 'cheminVueBody' => "questions/see.php", "question" => $question, "reponses" => $reponses, "sections" => $sections, 'estReponsable' => $userEstReponsableQuestion, 'periodeReponse' => $periodeReponse, 'periodeVote' => $periodeVote, 'user' => $user, 'canModifOrDelete' => $canModifOrDelete, 'auteur' => $auteur, 'nbVoteMax' => $nbVoteMax, 'allIdQuestion' => $allIdQuestion, 'nbVote' => $nbVote, 'canVote' => $canVote, 'idReponseGagnante' => $idReponseGagnante]);
+            self::afficheVue('view.php', ['pagetitle' => "VoteIt - Questions", 'cheminVueBody' => "questions/see.php", "question" => $question, "reponses" => $reponses, "sections" => $sections, 'estReponsable' => $userEstReponsableQuestion, 'periodeReponse' => $periodeReponse, 'periodeVote' => $periodeVote, 'periodeVoteFini' => $periodeVoteFini, 'user' => $user, 'canModifOrDelete' => $canModifOrDelete, 'auteur' => $auteur, 'nbVoteMax' => $nbVoteMax, 'allIdQuestion' => $allIdQuestion, 'nbVote' => $nbVote, 'canVote' => $canVote, 'idReponseGagnante' => $idReponseGagnante]);
         }else {
             MessageFlash::ajouter('warning', "Identifiant question manquant");
             header("Location: frontController.php?controller=questions&action=home");
@@ -360,7 +368,67 @@ class ControllerQuestions{
             exit();
         }else {
             MessageFlash::ajouter('warning', "Identifiant question manquant");
-            header("Location: frontController.php?controller=question&action=home");
+            header("Location: frontController.php?controller=questions&action=home");
+            exit();
+        }
+    }
+
+    public static function pdf(){
+        if(isset($_GET['idQuestion'])){
+            $question = (new QuestionsRepository())->select($_GET['idQuestion']);
+            $auteur = (new UtilisateurRepository())->select($question->getAutheur());
+            $nbVote = (new VoteRepository())->getNbVoteForQuestion($question->getIdQuestion());
+
+            $pdf = new QuestionPDFGenerator();
+            $pdf->AliasNbPages();
+            $pdf->AddPage();
+
+            //QUESTION
+            //Title
+            $pdf->SetFont('Arial','B',18);
+            $pdf->Cell(0, 10, $question->getTitreQuestion(), 'B', 1);
+            $pdf->setFont('Arial', 'U', 12.5);
+            $pdf->Cell(20,7.5, 'Auteur: ', 0, 0);
+            $pdf->setFont('Arial', '', 12.5);
+            $pdf->Cell(0,7.5, $auteur->getNom() . " " . $auteur->getPrenom(), 0, 1);
+            $pdf->setFont('Arial', 'U', 12.5);
+            $pdf->Cell(35,5, 'Nombre de vote: ', 0, 0);
+            $pdf->setFont('Arial', '', 12.5);
+            $pdf->Cell(0,5, $nbVote, 0, 1);
+
+            //REPONSES
+            $pdf->SetFont('Arial', 'B', 18);
+            $pdf->Cell(0, 10, '', 0, 1);
+            $pdf->Cell(0, 10, utf8_decode('Réponse gagnante'), 'B', 1);
+
+            $idReponseGagnante = (new VoteRepository())->getIdReponseGagnante($_GET['idQuestion']);
+
+            foreach ($idReponseGagnante as $item){
+                $reponse = (new ReponsesRepository())->select($item);
+
+                $pdf->SetFont('Arial', '', 14);
+                $pdf->SetDrawColor(0, 204, 0);
+                $pdf->Cell(5, 12.5, ">", 0, 0);
+                $pdf->SetFont('Arial', 'U', 14);
+                $pdf->SetDrawColor(0, 0, 0);
+                $pdf->Cell(100, 12.5, utf8_decode($reponse->getTitreReponse()) . " :", 0, 1);
+
+                //SECTIONS
+                $sectionsReponse = (new ReponseSectionRepository())->selectAllByIdReponse($reponse->getIdReponse());
+                foreach ($sectionsReponse as $sectionReponse){
+                    $pdf->SetFont('Arial', '', 13);
+                    $pdf->Cell(100, 10, "     " . utf8_decode((new SectionRepository())->selectFromIdSection($sectionReponse->getIdSection())->getTitreSection()), 0, 1);
+                    $pdf->Write(7, utf8_decode($sectionReponse->getTexteSection()));
+                    $pdf->Cell(0, 15, '', 0, 1);
+                }
+            }
+
+
+            $pdf->Output();
+        }else {
+            MessageFlash::ajouter("warning", "Identifiant Question manquant");
+            header("Location: frontController.php?controller=questions&action=home");
+            exit();
         }
     }
 
