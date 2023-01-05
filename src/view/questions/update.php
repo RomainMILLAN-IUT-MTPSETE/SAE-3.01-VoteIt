@@ -1,22 +1,24 @@
+<?php
+use App\VoteIt\Model\Repository\CategorieRepository;
+?>
 <link rel="stylesheet" href="css/formulaire.css">
 <link rel="stylesheet" href="css/Questions/questions-formulaire.css">
 <form id="form" class="formulaire--container" action="frontController.php?controller=questions&action=updated" method="post" autocomplete="off">
     <div class="formulaire-template">
-        <h2 class="title">Modification de question</h2>
+        <h2 class="title">Modification de la question</h2>
         <div>
             <label for="titreQuestion">Titre</label>
-            <input type="text" name="titreQuestion" id="titreQuestion" placeholder="TitreDeLaQuestion" value="<?php echo htmlspecialchars($question->getTitreQuestion()) ?>"   required/>
-        </div>
+            <input type="text" name="titreQuestion" id="titreQuestion" placeholder="TitreDeLaQuestion" value="<?php echo htmlspecialchars($question->getTitreQuestion()) ?>" required/></div>
         <div>
             <label for="categorieQuestion">Catégorie</label>
             <select name="categorieQuestion" id="categorieQuestion" required>
-                <option value="<?php echo($question->getCategorieQuestion()) ?>" selected>Actuel - <?php echo(htmlspecialchars($question->getCategorieQuestion())) ?></option>
-                <?php
-                $categories = (new \App\VoteIt\Model\Repository\CategorieRepository())->selectAll();
-                foreach ($categories as $categorie){
-                    ?><option value="<?php echo(htmlspecialchars($categorie->getNomCategorie())) ?>"><?php echo(htmlspecialchars($categorie->getNomCategorie())) ?></option><?php
-                }
-                ?>
+            <option value="<?php echo(htmlspecialchars($question->getCategorieQuestion())) ?>" selected>Actuel - <?php echo(htmlspecialchars($question->getCategorieQuestion())) ?></option>                
+            <?php
+            $categories = (new CategorieRepository())->selectAll();
+            foreach ($categories as $categorie) {
+                ?><option value="<?php echo(htmlspecialchars($categorie->getNomCategorie())) ?>"><?php echo(htmlspecialchars($categorie->getNomCategorie())) ?></option><?php
+            }
+            ?>
             </select>
         </div>
         <div>
