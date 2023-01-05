@@ -38,7 +38,7 @@ class ControllerReponses{
             $reponse = (new ReponsesRepository())->selectReponseByIdReponse($_GET['idReponse']);
             $question = (new QuestionsRepository())->select($reponse->getIdQuestion());
             $sectionsReponse = (new ReponseSectionRepository())->selectAllByIdReponse($reponse->getIdReponse());
-            $allIdReponses = (new ReponsesRepository())->allIdReponseByIdQuestion($reponse->getIdQuestion());
+            $allIdReponses = (new ReponsesRepository())->selectAllReponeByQuestionIdWhereIsVisible($reponse->getIdQuestion());
 
             $estCoAuteur = (new PermissionsRepository())->getPermissionCoAuteurParIdUtilisateurEtIdReponse($reponse->getIdReponse(), ConnexionUtilisateur::getLoginUtilisateurConnecte());
             $estVotant = (new PermissionsRepository())->getPermissionVotantParIdUtilisateurEtIdQuestion($reponse->getIdQuestion(), ConnexionUtilisateur::getLoginUtilisateurConnecte());

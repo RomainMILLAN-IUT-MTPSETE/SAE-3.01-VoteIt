@@ -398,20 +398,34 @@ class ControllerQuestions{
             $pdf->Cell(0,5, $nbVote, 0, 1);
 
             //REPONSES
-            $pdf->SetFont('Arial', 'B', 18);
-            $pdf->Cell(0, 10, '', 0, 1);
-            $pdf->Cell(0, 10, utf8_decode('Réponse gagnante'), 'B', 1);
-
             $idReponseGagnante = (new VoteRepository())->getIdReponseGagnante($_GET['idQuestion']);
             $idReponsePDF = (new ReponsesRepository())->selectAllReponeByQuestionIdWhereIsVisible($question->getIdQuestion());
+            $reponsePDF = [];
+            $haveReponseGagante = false;
 
-            if(count($idReponseGagnante) > 0){
-                $idReponsePDF = $idReponseGagnante;
+            if(!in_array(-1, $idReponseGagnante)){
+                $haveReponseGagante = true;
+                foreach ($idReponseGagnante as $item){
+                    $reponse = (new ReponsesRepository())->select($item);
+                    $reponsePDF[$item] = $reponse;
+                }
+            }else {
+                foreach ($idReponsePDF as $item){
+                    $reponsePDF[$item->getIdReponse()] = $item;
+                }
             }
 
-            foreach ($idReponsePDF as $item){
-                $reponse = (new ReponsesRepository())->select($item);
+            $pdf->SetFont('Arial', 'B', 18);
+            $pdf->Cell(0, 10, '', 0, 1);
 
+            if($haveReponseGagante){
+                $pdf->Cell(0, 10, utf8_decode('Réponse gagnante'), 'B', 1);
+            }else {
+                $pdf->Cell(0, 10, utf8_decode('Réponses de la question (Aucune réponse gagnante)'), 'B', 1);
+            }
+
+
+            foreach ($idReponsePDF as $reponse){
                 $pdf->SetFont('Arial', '', 14);
                 $pdf->SetDrawColor(0, 204, 0);
                 $pdf->Cell(5, 12.5, ">", 0, 0);
