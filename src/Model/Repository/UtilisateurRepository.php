@@ -32,13 +32,8 @@ class UtilisateurRepository extends AbstractRepository {
             8 => 'nonce',
             9 => 'gradeUtilisateur'];
     }
-
-    /**
-     * Retourne un utilisateur par son mail
-     * @param $mail
-     * @return Utilisateur|null
-     */
-    public function selectUserByMail($mail): ?Utilisateur{
+    
+    public function selectUserByMail($mail){
         $sql = " SELECT * FROM vit_Utilisateurs WHERE mailUtilisateur=:mailUtilisateur";
         // Préparation de la requête
         $pdoStatement = Model::getPdo()->prepare($sql);
@@ -63,12 +58,14 @@ class UtilisateurRepository extends AbstractRepository {
         return $res;
     }
 
+
+
+
+
+
+
     /*
      * DASHBOARD
-     */
-    /**
-     * Retourne le nombre de compte
-     * @return int
      */
     public function countNbAccount(): int{
         $pdo = Model::getPdo();
@@ -83,5 +80,16 @@ class UtilisateurRepository extends AbstractRepository {
         }
 
         return $resultat;
+    }
+
+    public function getMails() : array{
+        $pdo = Model::getPdo();
+        $query = "SELECT mailUtilisateur FROM vit_Utilisateurs";
+        $pdoStatement = $pdo->query($query);
+        $res = [];
+        foreach ($pdoStatement as $item) {
+            $res[] = $item[0];
+        }
+        return $res;
     }
 }
