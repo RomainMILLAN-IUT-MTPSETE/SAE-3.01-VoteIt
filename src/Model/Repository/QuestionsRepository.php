@@ -118,6 +118,12 @@ class QuestionsRepository extends AbstractRepository
             $estVisible = 0;
         }
 
+        if ($estProposer == true) {
+            $estProposer = 1;
+        } else {
+            $estProposer = 0;
+        }
+
         $values = [
             'idQuestion' => $idQuestion,
             'autheur' => $autheur,

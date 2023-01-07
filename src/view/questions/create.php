@@ -23,9 +23,17 @@
                 <img id="minus" style="width: 21px; height: 21px;" src="assets/questions/update/minus.png" alt="suppression d'un votant">
             </div>
         </div>
-        <div>
+        <div class="autocomplete" id="user-votant-container">
             <label for="votant">Utilisateur(s) votant(s)</label>
-            <input type="text" name="userVotant" id="userVotant" placeholder="johndoe10@gmail.com, xxx@xxx.fr">
+            <input type="text" id="userVotant" placeholder="johndoe10@gmail.com" class="autocomplete-input">
+        </div>
+        <div style="display: flex; flex-direction: row; align-items: left;">
+            <div id="ajout-votant" style="width: 21px; margin: 4px 2px;">
+                <img id="plus" style="width: 21px; height: 21px;" src="assets/questions/update/add.png" alt="ajout d'un votant">
+            </div>
+            <div id="supprimer-votant" style="width: 21px; margin: 4px 2px;">
+                <img id="minus" style="width: 21px; height: 21px;" src="assets/questions/update/minus.png" alt="suppression d'un votant">
+            </div>
         </div>
         <div>
             <label for="categorieQuestion">Catégorie</label>
@@ -80,9 +88,29 @@
             $mails = (new UtilisateurRepository())->getMails();
             ?>
             var mails = JSON.parse(atob('<?php echo base64_encode(json_encode($mails));?>'));
+            autocomplete(document.getElementById('userVotant'), mails);
             autocomplete(document.getElementById('respReponse'), mails);
+            const plusVotant = document.getElementById('ajout-votant');
+            const moinsVotant = document.getElementById('supprimer-votant');
             const plusResponsable = document.getElementById('ajout-responsable');
-            const moinsResponsable = document.getElementById('supprimer-responsable');
+            const moinsResponsable = document.getElementById('supprimer-responsable');            
+            const submit = document.getElementById('submit-btn');
+
+            plusVotant.addEventListener('click', () => {
+                const newInput = document.createElement('input');
+                newInput.type = 'text';
+                newInput.id = 'userVotant';
+                newInput.placeholder = 'johndoe10@gmail.com';
+                newInput.className = 'autocomplete-input';
+                newInput.style.marginTop = '20px';
+                document.getElementById('user-votant-container').appendChild(newInput);
+                autocomplete(newInput, mails);
+            })
+
+            moinsVotant.addEventListener('click', () => {
+                const parent = document.getElementById('user-votant-container');
+                parent.removeChild(parent.lastChild);
+            })
 
             plusResponsable.addEventListener('click', () => {
                 const newInput = document.createElement('input');
@@ -98,6 +126,37 @@
             moinsResponsable.addEventListener('click', () => {
                 const parent = document.getElementById('responsable-container');
                 parent.removeChild(parent.lastChild);
+            })
+
+            submit.addEventListener('click', () => {
+                //Votants
+                const votantContainer = document.querySelector('#user-votant-container');
+                const listVotant = votantContainer.querySelectorAll('input#userVotant');
+                var resVotant = "";
+                for(var i=0; i<listVotant.length-1; i++){
+                    resVotant += listVotant[i].value + ", ";
+                }
+                resVotant += listVotant[listVotant.length-1].value;
+                const inputVotant = document.createElement('input');
+                inputVotant.type = 'hidden';
+                inputVotant.name = 'userVotant';
+                inputVotant.value = resVotant;
+                document.getElementById('end-form').appendChild(inputVotant);
+                //Responsables
+                const responsableContainer = document.querySelector('#responsable-container');
+                const listResponsable = responsableContainer.querySelectorAll('input#respReponse');
+                var resResponsable = "";
+                for(var i=0; i<listResponsable.length-1; i++){
+                    resResponsable += listResponsable[i].value + ", ";
+                }
+                resResponsable += listResponsable[listResponsable.length-1].value;
+                const inputResponsable = document.createElement('input');
+                inputResponsable.type = 'hidden';
+                inputResponsable.name = 'respReponse';
+                inputResponsable.value = resResponsable;
+                document.getElementById('end-form').appendChild(inputResponsable);
+                //Submit
+                document.getElementById('form').submit();
             })
         </script>
     </div>
