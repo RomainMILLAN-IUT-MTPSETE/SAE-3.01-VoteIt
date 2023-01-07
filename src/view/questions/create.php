@@ -1,5 +1,6 @@
 <link rel="stylesheet" href="css/formulaire.css">
-<form class="formulaire--container" action="frontController.php?controller=questions&action=created" method="post">
+<link rel="stylesheet" href="css/Questions/questions-formulaire.css">
+<form class="formulaire--container" action="frontController.php?controller=questions&action=created" method="post" autocomplete="off">
     <div class="formulaire-template">
         <h2 class="title">Création de la question</h2>
         <div>
@@ -10,13 +11,21 @@
             <label for="nbSection">Nombre de sections</label>
             <input type="number" name="nbSection" id="nbSection" placeholder="3" min="3" max="8" required/>
         </div>
-        <div>
+        <div class="autocomplete" id="responsable-container">
             <label for="responsableReponse">Responsable de réponse</label>
-            <input type="text" name="respReponse" id="respReponse" placeholder="johndoe10@gmail.com, xxx@xxx.fr"">
+            <input type="text" id="respReponse" placeholder="johndoe10@gmail.com" class="autocomplete-input">
+        </div>
+        <div style="display: flex; flex-direction: row; align-items: left;">
+            <div id="ajout-responsable" style="width: 21px; margin: 4px 2px;">
+                <img id="plus" style="width: 21px; height: 21px;" src="assets/questions/update/add.png" alt="ajout d'un votant">
+            </div>
+            <div id="supprimer-responsable" style="width: 21px; margin: 4px 2px;">
+                <img id="minus" style="width: 21px; height: 21px;" src="assets/questions/update/minus.png" alt="suppression d'un votant">
+            </div>
         </div>
         <div>
             <label for="votant">Utilisateur(s) votant(s)</label>
-            <input type="text" name="userVotant" id="userVotant" placeholder="johndoe10@gmail.com, xxx@xxx.fr"">
+            <input type="text" name="userVotant" id="userVotant" placeholder="johndoe10@gmail.com, xxx@xxx.fr">
         </div>
         <div>
             <label for="categorieQuestion">Catégorie</label>
@@ -64,5 +73,32 @@
             }
             ?>
         </div>
+        <script type="text/javascript" src="src=../../../web/js/questions/script.js"></script>
+        <script type="text/javascript">
+            <?php
+            use App\VoteIt\Model\Repository\UtilisateurRepository;
+            $mails = (new UtilisateurRepository())->getMails();
+            ?>
+            var mails = JSON.parse(atob('<?php echo base64_encode(json_encode($mails));?>'));
+            autocomplete(document.getElementById('respReponse'), mails);
+            const plusResponsable = document.getElementById('ajout-responsable');
+            const moinsResponsable = document.getElementById('supprimer-responsable');
+
+            plusResponsable.addEventListener('click', () => {
+                const newInput = document.createElement('input');
+                newInput.type = 'text';
+                newInput.id = 'respReponse';
+                newInput.placeholder = 'johndoe10@gmail.com';
+                newInput.className = 'autocomplete-input';
+                newInput.style.marginTop = '20px';
+                document.getElementById('responsable-container').appendChild(newInput);
+                autocomplete(newInput, mails);
+            })
+
+            moinsResponsable.addEventListener('click', () => {
+                const parent = document.getElementById('responsable-container');
+                parent.removeChild(parent.lastChild);
+            })
+        </script>
     </div>
 </form>

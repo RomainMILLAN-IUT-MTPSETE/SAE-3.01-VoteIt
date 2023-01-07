@@ -21,9 +21,17 @@ use App\VoteIt\Model\Repository\CategorieRepository;
             ?>
             </select>
         </div>
-        <div class="autocomplete">
+        <div class="autocomplete" id="responsable-container">
             <label for="responsableReponse">Responsable de réponse</label>
-            <input type="text" name="respReponse" id="respReponse" placeholder="johndoe10@gmail.com, xxx@xxx.fr" value="<?php echo(htmlspecialchars($responsable)) ?>">
+            <input type="text" id="respReponse" placeholder="johndoe10@gmail.com" value="<?php echo(htmlspecialchars($responsable)) ?>" class="autocomplete-input">
+        </div>
+        <div style="display: flex; flex-direction: row; align-items: left;">
+            <div id="ajout-responsable" style="width: 21px; margin: 4px 2px;">
+                <img id="plus" style="width: 21px; height: 21px;" src="assets/questions/update/add.png" alt="ajout d'un votant">
+            </div>
+            <div id="supprimer-responsable" style="width: 21px; margin: 4px 2px;">
+                <img id="minus" style="width: 21px; height: 21px;" src="assets/questions/update/minus.png" alt="suppression d'un votant">
+            </div>
         </div>
         <div class="autocomplete" id="user-votant-container">
             <label for="votant">Utilisateur votant</label>
@@ -83,11 +91,13 @@ use App\VoteIt\Model\Repository\CategorieRepository;
             var mails = JSON.parse(atob('<?php echo base64_encode(json_encode($mails));?>'));
             autocomplete(document.getElementById('userVotant'), mails);
             autocomplete(document.getElementById('respReponse'), mails);
-            const plus = document.getElementById('ajout-votant');
-            const moins = document.getElementById('supprimer-votant');
+            const plusVotant = document.getElementById('ajout-votant');
+            const moinsVotant = document.getElementById('supprimer-votant');
+            const plusResponsable = document.getElementById('ajout-responsable');
+            const moinsResponsable = document.getElementById('supprimer-responsable');            
             const submit = document.getElementById('submit-btn');
 
-            plus.addEventListener('click', () => {
+            plusVotant.addEventListener('click', () => {
                 const newInput = document.createElement('input');
                 newInput.type = 'text';
                 newInput.id = 'userVotant';
@@ -98,24 +108,55 @@ use App\VoteIt\Model\Repository\CategorieRepository;
                 autocomplete(newInput, mails);
             })
 
-            moins.addEventListener('click', () => {
+            moinsVotant.addEventListener('click', () => {
                 const parent = document.getElementById('user-votant-container');
                 parent.removeChild(parent.lastChild);
             })
 
+            plusResponsable.addEventListener('click', () => {
+                const newInput = document.createElement('input');
+                newInput.type = 'text';
+                newInput.id = 'respReponse';
+                newInput.placeholder = 'johndoe10@gmail.com';
+                newInput.className = 'autocomplete-input';
+                newInput.style.marginTop = '20px';
+                document.getElementById('responsable-container').appendChild(newInput);
+                autocomplete(newInput, mails);
+            })
+
+            moinsResponsable.addEventListener('click', () => {
+                const parent = document.getElementById('responsable-container');
+                parent.removeChild(parent.lastChild);
+            })
+
             submit.addEventListener('click', () => {
-                const container = document.querySelector('#user-votant-container');
-                const list = container.querySelectorAll('input#userVotant');
-                var res = "";
-                for(var i=0; i<list.length-1; i++){
-                    res += list[i].value + ", ";
+                //Votants
+                const votantContainer = document.querySelector('#user-votant-container');
+                const listVotant = votantContainer.querySelectorAll('input#userVotant');
+                var resVotant = "";
+                for(var i=0; i<listVotant.length-1; i++){
+                    resVotant += listVotant[i].value + ", ";
                 }
-                res += list[i].value;
-                const input = document.createElement('input');
-                input.type = 'hidden';
-                input.name = 'userVotant';
-                input.value = res;
-                document.getElementById('end-form').appendChild(input);
+                resVotant += listVotant[listVotant.length-1].value;
+                const inputVotant = document.createElement('input');
+                inputVotant.type = 'hidden';
+                inputVotant.name = 'userVotant';
+                inputVotant.value = resVotant;
+                document.getElementById('end-form').appendChild(inputVotant);
+                //Responsables
+                const responsableContainer = document.querySelector('#responsable-container');
+                const listResponsable = responsableContainer.querySelectorAll('input#respReponse');
+                var resResponsable = "";
+                for(var i=0; i<listResponsable.length-1; i++){
+                    resResponsable += listResponsable[i].value + ", ";
+                }
+                resResponsable += listResponsable[listResponsable.length-1].value;
+                const inputResponsable = document.createElement('input');
+                inputResponsable.type = 'hidden';
+                inputResponsable.name = 'respReponse';
+                inputResponsable.value = resResponsable;
+                document.getElementById('end-form').appendChild(inputResponsable);
+                //Submit
                 document.getElementById('form').submit();
             })
         </script>
