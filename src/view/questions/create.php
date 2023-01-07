@@ -62,7 +62,7 @@
                 <input id="date-input" type="date" name="voteDateFin" id="voteDateFin " placeholder="01-01-2001" required/></span>
             </div>
         </div>
-        <div>
+        <div id="end-form">
             <input type="hidden" name="controller" value="questions">
             <input type="hidden" name="action" value="created">
             <input type="text" name="autheur" id="autheur" placeholder="JohnDoe10" value="<?php echo(htmlspecialchars($idAuteur))?>" hidden readonly/>
