@@ -74,30 +74,30 @@ use App\VoteIt\Model\Repository\UtilisateurRepository;
                 <span class="logo-and-title"><img src="assets/logo/logoSansOmbre.png" class="logofooter">    <h2>VoteIt<span class="colored">.</span></h2>   </span>
                     <p id="herault">34200, Hérault,Sète</p>
                     <span class="email-button"> <h2>Contactez-nous!</h2> <a href="mailto:contact@voteit.ml"><button class="bout-email">Envoyer un email</button></a> </span>
-                    <p id="droitreserv">© 2022 VoteIt. Tous droits réservés. </p>
+                    <p id="droitreserv">© 2023 VoteIt. Tous droits réservés.</p>
                 </div>
 
                 <div class="div blo footer-acceuil">
-                    <h3>Acceuil</h3>
-                    <a href="frontController.php?controller=home&action=home#quisommesnous"><p>Qui sommes-nous? </p></a>
-                    <a href="frontController.php?controller=home&action=home#leprojet"><p>Le projet </p></a>
+                    <h3>Accueil</h3>
+                    <a href="frontController.php?controller=home&action=home#quisommesnous"><p>Qui sommes-nous?</p></a>
+                    <a href="frontController.php?controller=home&action=home#leprojet"><p>Le projet</p></a>
                 </div>
                 <div class="div blo footer-question">
                     <h3>Questions</h3>
                     <a href="frontController.php?controller=questions&action=home"><p>Consulter les questions</p></a>
-                    <a href="frontController.php?controller=questions&action=create"><p>Proposer une question </p></a>
+                    <a href="frontController.php?controller=questions&action=create"><p>Proposer une question</p></a>
 
                 </div>
                 <div class="div blo footer-profil">
                     <h3>Profil</h3>
-                    <a href="frontController.php?controller=profil&action=home"><p>Consulter mon profil </p></a>
+                    <a href="frontController.php?controller=profil&action=home"><p>Consulter mon profil</p></a>
                     <a href="frontController.php?controller=profil&action=inscription"><p>S'inscrire</p></a>
                     <a href="frontController.php?controller=profil&action=connection"><p>Se connecter</p></a>
 
                 </div>
                 <div class="div blo footer-legal">
                     <h3>Légal</h3>
-                    <a href="frontController.php?controller=home&action=cgu"><p>Conditions générales d'utilisation </p></a>
+                    <a href="frontController.php?controller=home&action=cgu"><p>Conditions générales d'utilisation</p></a>
                 </div>
             </div>
     </footer>
