@@ -21,7 +21,7 @@ use App\VoteIt\Model\Repository\CategorieRepository;
             ?>
             </select>
         </div>
-        <div>
+        <div class="autocomplete">
             <label for="responsableReponse">Responsable de réponse</label>
             <input type="text" name="respReponse" id="respReponse" placeholder="johndoe10@gmail.com, xxx@xxx.fr" value="<?php echo(htmlspecialchars($responsable)) ?>">
         </div>
@@ -82,6 +82,7 @@ use App\VoteIt\Model\Repository\CategorieRepository;
             ?>
             var mails = JSON.parse(atob('<?php echo base64_encode(json_encode($mails));?>'));
             autocomplete(document.getElementById('userVotant'), mails);
+            autocomplete(document.getElementById('respReponse'), mails);
             const plus = document.getElementById('ajout-votant');
             const moins = document.getElementById('supprimer-votant');
             const submit = document.getElementById('submit-btn');
