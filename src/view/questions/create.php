@@ -17,10 +17,10 @@
         </div>
         <div style="display: flex; flex-direction: row; align-items: left;">
             <div id="ajout-responsable" style="width: 21px; margin: 4px 2px;">
-                <img id="plus" style="width: 21px; height: 21px;" src="assets/questions/update/add.png" alt="ajout d'un votant">
+                <img id="plus" style="width: 21px; height: 21px;" src="assets/questions/update/add.png" alt="ajout d'un responsable de réponse">
             </div>
             <div id="supprimer-responsable" style="width: 21px; margin: 4px 2px;">
-                <img id="minus" style="width: 21px; height: 21px;" src="assets/questions/update/minus.png" alt="suppression d'un votant">
+                <img id="minus" style="width: 21px; height: 21px;" src="assets/questions/update/minus.png" alt="suppression d'un responsable de réponse">
             </div>
         </div>
         <div class="autocomplete" id="user-votant-container">
@@ -71,12 +71,12 @@
             if($poserQuestion){
                 ?>
                 <input type="hidden" name="poserQuestion" value="<?php echo(htmlspecialchars($poserQuestion)); ?>">
-                <input type="submit" value="Poser la question">
+                <input type="submit" value="Poser la question" id="submit-btn">
                 <?php
             }else {
                 ?>
                 <input type="hidden" name="proposerQuestion" value="<?php echo(htmlspecialchars($proposerQuestion)); ?>">
-                <input type="submit" value="Proposer la question">
+                <input type="submit" value="Proposer la question" id="submit-btn">
                 <?php
             }
             ?>
@@ -105,12 +105,12 @@
                 newInput.style.marginTop = '20px';
                 document.getElementById('user-votant-container').appendChild(newInput);
                 autocomplete(newInput, mails);
-            })
+            });
 
             moinsVotant.addEventListener('click', () => {
                 const parent = document.getElementById('user-votant-container');
                 parent.removeChild(parent.lastChild);
-            })
+            });
 
             plusResponsable.addEventListener('click', () => {
                 const newInput = document.createElement('input');
@@ -121,12 +121,12 @@
                 newInput.style.marginTop = '20px';
                 document.getElementById('responsable-container').appendChild(newInput);
                 autocomplete(newInput, mails);
-            })
+            });
 
             moinsResponsable.addEventListener('click', () => {
                 const parent = document.getElementById('responsable-container');
                 parent.removeChild(parent.lastChild);
-            })
+            });
 
             submit.addEventListener('click', () => {
                 //Votants
@@ -157,7 +157,7 @@
                 document.getElementById('end-form').appendChild(inputResponsable);
                 //Submit
                 document.getElementById('form').submit();
-            })
+            });
         </script>
     </div>
 </form>
