@@ -40,7 +40,7 @@
             <input type="hidden" name="nbSection" value="<?php echo(htmlspecialchars($i-1)); ?>">
             <input type="number" name="idQuestion" id="idQuestion" placeholder="11" value="<?php echo(htmlspecialchars($_GET['idQuestion'])); ?>" hidden readonly/>
             <input type="text" name="autheur" id="autheur" value="<?php echo(\App\VoteIt\Lib\ConnexionUtilisateur::getLoginUtilisateurConnecte()) ?>" placeholder="JohnDoe10" hidden required/>
-            <input type="submit" value="Poser la question" id="submit-btn">
+            <input type="submit" value="Créer la réponse" id="submit-btn">
         </div>
         <script type="text/javascript" src="src=../../../web/js/questions/script.js"></script>
         <script type="text/javascript">

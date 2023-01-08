@@ -16,7 +16,7 @@
 
         <div>
             <input type="hidden" name="idQuestion" value="<?php echo($_GET['idQuestion']); ?>">
-            <input type="submit" value="Départagement pour la question">
+            <input type="submit" value="Départager les réponses">
         </div>
     </div>
 </form>

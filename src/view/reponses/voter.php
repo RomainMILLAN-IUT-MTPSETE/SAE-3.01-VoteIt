@@ -4,7 +4,7 @@
     <div class="formulaire-template">
         <h2 class="title">Voter pour la réponse</h2>
         <div>
-            <label for="titleReponse"Titre de la Réponse</label>
+            <label for="titleReponse">Titre de la Réponse</label>
             <input type="text" name="titreReponse" id="titreReponse" value="<?php echo(htmlspecialchars($titleReponse)); ?>">
         </div>
         <div>

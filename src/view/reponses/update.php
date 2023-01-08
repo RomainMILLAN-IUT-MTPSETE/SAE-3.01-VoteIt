@@ -42,7 +42,7 @@
             <input type="hidden" name="nbSection" value="<?php echo(htmlspecialchars($i-1)); ?>">
             <input type="number" name="idReponse" id="idReponse" placeholder="11" value="<?php echo(htmlspecialchars($reponse->getIdReponse())); ?>" readonly hidden required/>
             <input type="text" name="autheur" id="autheur" placeholder="JohnDoe10" value="<?php echo(htmlspecialchars($reponse->getAutheurId())) ?>" hidden required/>
-            <input type="submit" value="Modifier la question" id="submit-btn">
+            <input type="submit" value="Modifier la réponse" id="submit-btn">
         </div>
         <script type="text/javascript" src="src=../../../web/js/questions/script.js"></script>
         <script type="text/javascript">
