@@ -76,7 +76,7 @@ use \App\VoteIt\Model\Repository\ReponsesRepository;
     <section class="dashboard-content-all">
         <section class="dashboard-column">
             <section class="dashboard-content-table">
-                <h2 class="dashboard-content-title">Question Proposer:</h2>
+                <h2 class="dashboard-content-title">Question(s) proposée(s):</h2>
                 <div class="tableau-dashboard">
                     <?php
                     if(count($idQuestionListToProposer) != 0){
@@ -120,7 +120,7 @@ use \App\VoteIt\Model\Repository\ReponsesRepository;
                 </div>
             </section>
             <section class="dashboard-content-table">
-                <h2 class="dashboard-content-title">Question désactivée:</h2>
+                <h2 class="dashboard-content-title">Question(s) désactivée(s):</h2>
                 <div class="tableau-dashboard">
                     <table>
                             <thead>
@@ -158,7 +158,7 @@ use \App\VoteIt\Model\Repository\ReponsesRepository;
                 </div>
             </section>
             <section class="dashboard-content-table">
-                <h2 class="dashboard-content-title">Réponse désactivée:</h2>
+                <h2 class="dashboard-content-title">Réponse(s) désactivée(s):</h2>
                 <div class="tableau-dashboard">
                     <table>
                         <thead>

@@ -40,7 +40,7 @@ use \App\VoteIt\Model\Repository\ReponsesRepository;
                 </a>
                 <?php
             }else {
-                ?><p class="information-top">Vous avez déja voter pour cette question</p><?php
+                ?><p class="information-top">Vous avez déja voté pour cette question</p><?php
 
             }
         }
