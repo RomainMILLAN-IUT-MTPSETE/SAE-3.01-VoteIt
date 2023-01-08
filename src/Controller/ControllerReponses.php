@@ -77,7 +77,7 @@ class ControllerReponses{
         if(isset($_GET['idReponse'])){
             $reponse = (new ReponsesRepository())->select($_GET['idReponse']);
             $reponseSection = (new ReponseSectionRepository())->selectAllByIdReponse($reponse->getIdReponse());
-            $titleReponse = $reponse->getTitleReponse();
+            $titleReponse = $reponse->getTitreReponse();
 
             //Liste des utilisateurs qui sont des co-auteurs
             $coauteur = (new PermissionsRepository())->getListePermissionCoAuteurParReponse($reponse->getIdReponse());
