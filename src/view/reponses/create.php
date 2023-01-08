@@ -71,7 +71,7 @@
             });
 
             submit.addEventListener('click', () => {
-                //co auteurs
+                //Co-auteurs
                 const coAuteurContainer = document.querySelector('#co-auteur-container');
                 const listCoAuteur = coAuteurContainer.querySelectorAll('input#userCoAuteur');
                 var resCoAuteur = "";

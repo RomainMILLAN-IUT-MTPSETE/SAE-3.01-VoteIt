@@ -160,7 +160,7 @@ class ControllerReponses{
 
     public static function updated() {
         if(isset($_POST['idReponse']) and isset($_POST['autheur']) AND isset($_POST['titreReponse']) AND isset($_POST['nbSection']) AND isset($_POST['idQuestion'])){
-            $modelReponse = new Reponse($_POST['idReponse'], $_POST['idQuestion'], $_POST['titreReponse'], $_POST['autheur']);
+            $modelReponse = new Reponse($_POST['idReponse'], $_POST['idQuestion'], $_POST['titreReponse'], $_POST['autheur'], true);
             (new ReponsesRepository())->update($modelReponse);
 
             for($i=1; $i<$_POST['nbSection']+1; $i++){
