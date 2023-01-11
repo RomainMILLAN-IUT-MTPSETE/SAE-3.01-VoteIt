@@ -12,10 +12,10 @@
             <input type="text" id="userCoAuteur" placeholder="johndoe10@gmail.com">
         </div>
         <div style="display: flex; flex-direction: row; align-items: left;">
-            <div id="ajout-co-auteur" style="width: 21px; margin: 4px 2px;">
+            <div id="ajout-co-auteur" style="width: 21px; margin: 4px 2px; cursor: pointer;">
                 <img id="plus" style="width: 21px; height: 21px;" src="assets/questions/update/add.png" alt="ajout d'un co-auteur">
             </div>
-            <div id="supprimer-co-auteur" style="width: 21px; margin: 4px 2px;">
+            <div id="supprimer-co-auteur" style="width: 21px; margin: 4px 2px; cursor: pointer;">
                 <img id="minus" style="width: 21px; height: 21px;" src="assets/questions/update/minus.png" alt="suppression d'un co-auteur">
             </div>
         </div>
@@ -67,7 +67,9 @@
 
             moinsCoAuteur.addEventListener('click', () => {
                 const parent = document.getElementById('co-auteur-container');
-                parent.removeChild(parent.lastChild);
+                if(parent.childElementCount > 2){
+                    parent.removeChild(parent.lastChild);
+                }
             });
 
             submit.addEventListener('click', () => {
