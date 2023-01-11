@@ -26,10 +26,10 @@ use App\VoteIt\Model\Repository\CategorieRepository;
             <input type="text" id="respReponse" placeholder="johndoe10@gmail.com" value="<?php echo(htmlspecialchars($responsable)) ?>" class="autocomplete-input">
         </div>
         <div style="display: flex; flex-direction: row; align-items: left;">
-            <div id="ajout-responsable" style="width: 21px; margin: 4px 2px;">
+            <div id="ajout-responsable" style="width: 21px; margin: 4px 2px; cursor: pointer;">
                 <img id="plus" style="width: 21px; height: 21px;" src="assets/questions/update/add.png" alt="ajout d'un responsable de réponse">
             </div>
-            <div id="supprimer-responsable" style="width: 21px; margin: 4px 2px;">
+            <div id="supprimer-responsable" style="width: 21px; margin: 4px 2px; cursor: pointer;">
                 <img id="minus" style="width: 21px; height: 21px;" src="assets/questions/update/minus.png" alt="suppression d'un responsable de réponse">
             </div>
         </div>
@@ -38,10 +38,10 @@ use App\VoteIt\Model\Repository\CategorieRepository;
             <input type="text" id="userVotant" placeholder="johndoe10@gmail.com" value="<?php echo(htmlspecialchars($userVotant)) ?>" class="autocomplete-input">
         </div>
         <div style="display: flex; flex-direction: row; align-items: left;">
-            <div id="ajout-votant" style="width: 21px; margin: 4px 2px;">
+            <div id="ajout-votant" style="width: 21px; margin: 4px 2px; cursor: pointer;">
                 <img id="plus" style="width: 21px; height: 21px;" src="assets/questions/update/add.png" alt="ajout d'un votant">
             </div>
-            <div id="supprimer-votant" style="width: 21px; margin: 4px 2px;">
+            <div id="supprimer-votant" style="width: 21px; margin: 4px 2px; cursor: pointer;">
                 <img id="minus" style="width: 21px; height: 21px;" src="assets/questions/update/minus.png" alt="suppression d'un votant">
             </div>
         </div>
@@ -110,7 +110,9 @@ use App\VoteIt\Model\Repository\CategorieRepository;
 
             moinsVotant.addEventListener('click', () => {
                 const parent = document.getElementById('user-votant-container');
-                parent.removeChild(parent.lastChild);
+                if(parent.childElementCount > 2){
+                    parent.removeChild(parent.lastChild);
+                }
             });
 
             plusResponsable.addEventListener('click', () => {
@@ -126,7 +128,9 @@ use App\VoteIt\Model\Repository\CategorieRepository;
 
             moinsResponsable.addEventListener('click', () => {
                 const parent = document.getElementById('responsable-container');
-                parent.removeChild(parent.lastChild);
+                if(parent.childElementCount > 2){
+                    parent.removeChild(parent.lastChild);
+                }
             });
 
             submit.addEventListener('click', () => {
